@@ -47,4 +47,4 @@ Dimensional Pockets II on [Modrinth](https://modrinth.com/mod/dimensional-pocket
 ### Development Team Applications:
  - Please feel free to email: thecosmicnebula_@outlook.com
 
-| 2024 @ TheCosmicNebula | TCN | All Rights Reserved (Except Where Specified) |
+| 2024 @ TheCosmicNebula | TheCosmosSeries | All Rights Reserved (Except Where Specified) |
