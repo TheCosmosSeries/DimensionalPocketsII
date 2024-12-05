@@ -2,13 +2,20 @@
 
 ![dimensional-pockets-title-new](https://github.com/user-attachments/assets/fa29729d-1aee-430e-9f6c-45a8a9f38f82)
 
-# Dimensional Pockets II
+# **Dimensional Pockets II**
+
 Due to having a similiar idea to NPException's Dimensional Pockets, I have created DimensionalPocketsII with some features carried over, but with my own twist. Currently using MinecraftForge 1.20.1.
+
+### **Description**
+
+Dimensional Pockets II is a Minecraft mod that lets players create customizable, pocket-sized dimensions for storage, automation, and more. These portable dimensions function as personalized bases that can be accessed anywhere, offering limitless expansion within a limited space. Use modular upgrades to enhance your Pocket Dimension such as crafting stations, charging docks and interfaces making it a versatile tool for adventurers and builders alike.
+
+Dimensional Pockets II also introduces a variety of new armour, weapons and tools for the budding adventurer.
 
 ## Licence
 This repo does not have a licence. This means that by default, it is All Rights Reserved. However, due to having complete control over what rights that includes, here is a list of what you can and cannot do:
 
-## You can:
+### You can:
  - Modify the code for your own personal private use, so long as the modified code is significantly dissimilar from the original code.
  - Use the pull request feature.
  - Create a Fork of this repository if you satisfy the following conditions:
@@ -26,7 +33,7 @@ This repo does not have a licence. This means that by default, it is All Rights 
    - You do not re-route the link through comission sites such as Ad.Fly.
 - Copy any classes that have the #OPEN tag in the comment after the Imports.
 
-## You Cannot:
+### You Cannot:
  - Copy large chunks of code, entire Class files or any assets contained within the Mod.
  - Redistribute the Mod, unless the link you provide is the original. (CurseForge or GitHub)
  - Redistribute the Mod under a different name or Author.
@@ -47,4 +54,4 @@ Dimensional Pockets II on [Modrinth](https://modrinth.com/mod/dimensional-pocket
 ### Development Team Applications:
  - Please feel free to email: thecosmicnebula_@outlook.com
 
-| 2024 @ TheCosmicNebula | TheCosmosSeries | All Rights Reserved (Except Where Specified) |
+| 2024 @ TheCosmicNebula | The Cosmos Series | All Rights Reserved (Except Where Specified) |
