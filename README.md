@@ -2,11 +2,11 @@
 
 ![dimensional-pockets-title-new](https://github.com/user-attachments/assets/fa29729d-1aee-430e-9f6c-45a8a9f38f82)
 
-# **Dimensional Pockets II**
+# Dimensional Pockets II
 
 Due to having a similiar idea to NPException's Dimensional Pockets, I have created DimensionalPocketsII with some features carried over, but with my own twist. Currently using MinecraftForge 1.20.1.
 
-### **Description**
+### Description
 
 Dimensional Pockets II is a Minecraft mod that lets players create customizable, pocket-sized dimensions for storage, automation, and more. These portable dimensions function as personalized bases that can be accessed anywhere, offering limitless expansion within a limited space. Use modular upgrades to enhance your Pocket Dimension such as crafting stations, charging docks and interfaces making it a versatile tool for adventurers and builders alike.
 
@@ -41,9 +41,8 @@ This repo does not have a licence. This means that by default, it is All Rights 
 If you wish to view the original DimensionalPockets code, please refer to [NPException's GitHub](https://github.com/NPException/Dimensional-Pockets).
 
 ## Mod Pages
-Dimensional Pockets II on [CurseForge](https://minecraft.curseforge.com/projects/dimensional-pockets-ii)
-
-Dimensional Pockets II on [Modrinth](https://modrinth.com/mod/dimensional-pockets-ii)
+- Dimensional Pockets II on [CurseForge](https://minecraft.curseforge.com/projects/dimensional-pockets-ii)
+- Dimensional Pockets II on [Modrinth](https://modrinth.com/mod/dimensional-pockets-ii)
 
 ## Development Team:
 - TheCosmicNebula (Main Author)
@@ -53,5 +52,8 @@ Dimensional Pockets II on [Modrinth](https://modrinth.com/mod/dimensional-pocket
 
 ### Development Team Applications:
  - Please feel free to email: thecosmicnebula_@outlook.com
+
+## The Cosmos Series
+This mod is part of [The Cosmos Series](https://www.github.com/TheCosmosSeries).
 
 | 2024 @ TheCosmicNebula | The Cosmos Series | All Rights Reserved (Except Where Specified) |
