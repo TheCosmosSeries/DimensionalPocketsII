@@ -43,6 +43,9 @@ This repo does not have a licence. This means that by default, it is All Rights 
 ## Dimensional Pockets [1.7.10]
 If you wish to view the original DimensionalPockets code, please refer to [NPException's GitHub](https://github.com/NPException/Dimensional-Pockets).
 
+## Discord Server
+We have a Discord Server for this mod, for feature previews, release updates and more! Check it out [here](https://discord.gg/8ydCtzm).
+
 ## Mod Pages
 - Dimensional Pockets II on [CurseForge](https://minecraft.curseforge.com/projects/dimensional-pockets-ii)
 - Dimensional Pockets II on [Modrinth](https://modrinth.com/mod/dimensional-pockets-ii)
