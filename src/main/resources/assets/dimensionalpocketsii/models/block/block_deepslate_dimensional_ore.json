@@ -1,6 +1,0 @@
-{
-    "parent": "cosmoslibrary:block/modblock",
-    "textures": {
-    	"all": "dimensionalpocketsii:block/ore/block_deepslate_dimensional_ore"
-    }
-}

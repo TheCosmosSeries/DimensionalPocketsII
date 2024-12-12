@@ -1,7 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "dimensionalpocketsii:item/module/armour/base",
-        "layer1": "dimensionalpocketsii:item/module/armour/ender_chest"
-    }
-}
