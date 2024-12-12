@@ -1,0 +1,49 @@
+{
+    "entries": [
+        {
+            "enum": "net/minecraft/world/item/Rarity",
+            "name": "DIMENSIONALPOCKETSII_POCKET",
+            "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+            "parameters": {
+                "class": "com/tcn/dimensionalpocketsii/core/item/CoreItemRarity",
+                "field": "POCKET"
+            }
+        },
+        {
+            "enum": "net/minecraft/world/item/Rarity",
+            "name": "DIMENSIONALPOCKETSII_MODULE_ARMOUR",
+            "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+            "parameters": {
+                "class": "com/tcn/dimensionalpocketsii/core/item/CoreItemRarity",
+                "field": "MODULE_ARMOUR"
+            }
+        },
+        {
+            "enum": "net/minecraft/world/item/Rarity",
+            "name": "DIMENSIONALPOCKETSII_MODULE_POCKET",
+            "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+            "parameters": {
+                "class": "com/tcn/dimensionalpocketsii/core/item/CoreItemRarity",
+                "field": "MODULE_POCKET"
+            }
+        },
+        {
+            "enum": "net/minecraft/world/item/Rarity",
+            "name": "DIMENSIONALPOCKETSII_CREATIVE",
+            "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+            "parameters": {
+                "class": "com/tcn/dimensionalpocketsii/core/item/CoreItemRarity",
+                "field": "CREATIVE"
+            }
+        },
+		{
+		    "enum": "net/minecraft/client/RecipeBookCategories",
+		    "name": "DIMENSIONALPOCKETSII_UPGRADING",
+		    "constructor": "(Ljava/util/function/Supplier;)V",
+		    "parameters": {
+		        "class": "com/tcn/dimensionalpocketsii/core/recipe/CoreRecipeCategories",
+		        "field": "CUSTOM_RECIPE_CATEGORY_ENUM_PROXY"
+		    }
+		}
+    ]
+}

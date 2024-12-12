@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "NDN",
+        "DID",
+        "NDN"
+    ],
+    "key": {
+        "N": {
+            "item": "minecraft:netherite_ingot"
+        },
+        "D": {
+            "item": "dimensionalpocketsii:dimensional_gem"
+        },
+        "I" : {
+            "item": "dimensionalpocketsii:dimensional_ingot"
+        }
+    },
+    "result": {
+        "id": "dimensionalpocketsii:dimensional_ingot_enhanced"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "cosmoslibrary:block/modblock",
+    "textures": {
+    	"all": "dimensionalpocketsii:block/block_dimensional_metal_enhanced"
+    }
+}

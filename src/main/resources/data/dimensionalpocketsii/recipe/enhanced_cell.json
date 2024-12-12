@@ -1,0 +1,15 @@
+{
+	"type": "minecraft:smithing_transform",
+	"template": {
+		"item": "dimensionalpocketsii:dimensional_upgrade_template"
+	},
+	"base": {
+		"item": "dimensionalpocketsii:dimensional_energy_cell"
+	},
+	"addition": {
+		"item": "dimensionalpocketsii:dimensional_ingot_enhanced"
+	},
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_energy_cell_enhanced"
+	}
+}

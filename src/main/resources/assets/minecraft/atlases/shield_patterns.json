@@ -1,0 +1,25 @@
+{
+    "sources": [
+        {
+            "type": "single",
+            "resource": "dimensionalpocketsii:entity/dimensional_shield"
+        },
+        {
+            "type": "single",
+            "resource": "dimensionalpocketsii:entity/dimensional_shield_nopattern"
+        },
+        {
+            "type": "single",
+            "resource": "dimensionalpocketsii:entity/dimensional_shield_enhanced"
+        },
+        {
+            "type": "single",
+            "resource": "dimensionalpocketsii:entity/dimensional_shield_enhanced_nopattern"
+        },
+        {
+            "type": "directory",
+            "source": "entity",
+            "prefix": "entity/"
+        }
+    ]
+}

@@ -1,0 +1,39 @@
+{
+	"type": "dimensionalpocketsii:upgrading",
+	"focus": {
+		"item": "minecraft:netherite_helmet"
+	},
+	"topRow": [
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		{
+			"item": "minecraft:netherite_ingot"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		}
+	],
+	"middleRow": [
+		{
+			"item": "dimensionalpocketsii:dimensional_gem"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_gem"
+		}
+	],
+	"bottomRow": [
+		{
+			"item": "minecraft:netherite_ingot"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		{
+			"item": "minecraft:netherite_ingot"
+		}
+	],
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_helmet"
+	}
+}

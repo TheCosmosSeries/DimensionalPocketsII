@@ -1,0 +1,24 @@
+{
+	"type": "dimensionalpocketsii:pocket",
+	"generator": {
+		"type": "minecraft:flat",
+		"settings": {
+			"biome": "dimensionalpocketsii:pocket",
+			"lakes": false,
+			"features": false,
+			"layers": [
+				{
+					"block": "minecraft:bedrock",
+					"height": 1
+				},
+				{
+					"block": "minecraft:water",
+					"height": 1
+				}
+			],
+			"structures": {
+				"structures": {}
+			}
+		}
+	}
+}

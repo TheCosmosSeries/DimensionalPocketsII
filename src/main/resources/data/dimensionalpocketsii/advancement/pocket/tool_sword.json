@@ -1,0 +1,41 @@
+{
+	"parent": "dimensionalpocketsii:pocket/ingots",
+	"display": {
+		"icon": {
+			"id": "dimensionalpocketsii:dimensional_sword"
+		},
+		"title": {
+			"translate": "dimensionalpocketsii.advancements.sword.title"
+		},
+		"description": {
+			"translate": "dimensionalpocketsii.advancements.sword.desc"
+		},
+		"background": "dimensionalpocketsii:textures/gui/advancements/backgrounds/dimensional.png",
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"d_sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"dimensionalpocketsii:dimensional_sword"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"d_sword"
+		]
+	],
+	"rewards": {
+		"experience": 50
+	}
+}

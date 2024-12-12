@@ -1,0 +1,39 @@
+{
+	"type": "dimensionalpocketsii:upgrading",
+	"focus": {
+		"item": "minecraft:bow"
+	},
+	"topRow": [
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		{
+			"item": "minecraft:netherite_ingot"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_thread"
+		}
+	],
+	"middleRow": [
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_thread"
+		}
+	],
+	"bottomRow": [
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		{
+			"item": "minecraft:netherite_ingot"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_thread"
+		}
+	],
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_bow"
+	}
+}

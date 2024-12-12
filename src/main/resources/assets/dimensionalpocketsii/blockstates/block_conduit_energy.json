@@ -1,0 +1,28 @@
+{
+    "variants": {
+        "": {
+            "model": "dimensionalpocketsii:block/block_conduit_energy",
+            "transform": "forge:default-block"
+        }
+    },
+    "multipart": [
+        {   "when": { "north": "true" },
+            "apply": { "model": "dimensionalpocketsii:block/block_conduit_energy"}
+        },
+        {   "when": { "east": "true" },
+            "apply": { "model": "dimensionalpocketsii:block/block_conduit_energy"}
+        },
+        {   "when": { "south": "true" },
+            "apply": { "model": "dimensionalpocketsii:block/block_conduit_energy"}
+        },
+        {   "when": { "west": "true" },
+            "apply": { "model": "dimensionalpocketsii:block/block_conduit_energy"}
+        },
+        {   "when": { "up": "true" },
+            "apply": { "model": "dimensionalpocketsii:block/block_conduit_energy"}
+        },
+        {   "when": { "down": "true" },
+            "apply": { "model": "dimensionalpocketsii:block/block_conduit_energy"}
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "dimensionalpocketsii:item/device/shifter/normal_base",
+        "layer1": "dimensionalpocketsii:item/device/shifter/normal_top"
+    }
+}

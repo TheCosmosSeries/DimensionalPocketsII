@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " D ",
+        "DID",
+        " D "
+    ],
+    "key": {
+        "D": {
+            "item": "dimensionalpocketsii:dimensional_dust"
+        },
+        "I" : {
+            "item": "minecraft:diamond"
+        }
+    },
+    "result": {
+        "id": "dimensionalpocketsii:dimensional_gem"
+    }
+}

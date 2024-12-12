@@ -1,0 +1,8 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "dimensionalpocketsii:item/armour/colour/chestplate_base",
+        "layer1": "dimensionalpocketsii:item/armour/colour/elytraplate_wings_overlay",
+        "layer2": "dimensionalpocketsii:item/armour/colour/chestplate_enhanced_overlay"
+    }
+}

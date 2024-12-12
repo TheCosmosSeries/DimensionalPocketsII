@@ -1,0 +1,41 @@
+{
+	"parent": "dimensionalpocketsii:pocket/device_base",
+	"display": {
+		"icon": {
+			"id": "dimensionalpocketsii:dimensional_energy_cell"
+		},
+		"title": {
+			"translate": "dimensionalpocketsii.advancements.cell.title"
+		},
+		"description": {
+			"translate": "dimensionalpocketsii.advancements.cell.desc"
+		},
+		"background": "dimensionalpocketsii:textures/gui/advancements/backgrounds/dimensional.png",
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"cell": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"dimensionalpocketsii:dimensional_energy_cell"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"cell"
+		]
+	],
+	"rewards": {
+		"experience": 50
+	}
+}

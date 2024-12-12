@@ -1,0 +1,41 @@
+{
+	"parent": "dimensionalpocketsii:pocket/armour_set",
+	"display": {
+		"icon": {
+			"id": "dimensionalpocketsii:dimensional_elytraplate"
+		},
+		"title": {
+			"translate": "dimensionalpocketsii.advancements.elytraplate.title"
+		},
+		"description": {
+			"translate": "dimensionalpocketsii.advancements.elytraplate.desc"
+		},
+		"background": "dimensionalpocketsii:textures/gui/advancements/backgrounds/dimensional.png",
+		"frame": "challenge",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"elytraplate": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"dimensionalpocketsii:dimensional_elytraplate"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"elytraplate"
+		]
+	],
+	"rewards": {
+		"experience": 150
+	}
+}

@@ -1,0 +1,119 @@
+{
+    "parent": "block/block",
+    "display": {
+        "gui": {
+            "rotation": [ 30, 135, 0 ],
+            "translation": [ 0, 0, 0],
+            "scale":[ 0.625, 0.625, 0.625 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 90, 0 ],
+            "translation": [ 0, 0, 0],
+            "scale":[ 0.5, 0.5, 0.5 ]
+        }
+    },
+    "textures": {
+        "particle": "dimensionalpocketsii:block/focus/base",
+        "overlay": "dimensionalpocketsii:block/focus/overlay",
+        "shift": "dimensionalpocketsii:block/focus/shift_off",
+        "jump": "dimensionalpocketsii:block/focus/jump_on"
+    },
+    "elements": [
+        {
+        	"from": [1, 1, 1],
+            "to": [15, 15, 15],
+            "faces": {
+                "north": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "south": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "east": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "west": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "up": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "down": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                }
+            }
+        },
+        {
+        	"from": [1, 1, 1],
+            "to": [15, 15, 15],
+            "faces": {
+                "north": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#shift"
+                },
+                "south": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#shift"
+                },
+                "east": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#shift"
+                },
+                "west": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#shift"
+                },
+                "up": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#shift"
+                },
+                "down": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#shift"
+                }
+            }
+        },
+        {
+        	"from": [1, 1, 1],
+            "to": [15, 15, 15],
+            "faces": {
+                "north": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#jump"
+                },
+                "south": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#jump"
+                },
+                "east": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#jump"
+                },
+                "west": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#jump"
+                },
+                "up": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#jump"
+                },
+                "down": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#jump"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "dimensionalpocketsii:item/tool/trident_enhanced"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"throwing": 0
+			},
+			"model": "dimensionalpocketsii:item/dimensional_trident_enhanced_in_hand"
+		},
+		{
+			"predicate": {
+				"throwing": 1
+			},
+			"model": "dimensionalpocketsii:item/dimensional_trident_enhanced_throwing"
+		}
+	]
+}

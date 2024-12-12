@@ -1,0 +1,48 @@
+{
+	"parent": "dimensionalpocketsii:pocket/armour_set",
+	"display": {
+		"icon": {
+			"id": "dimensionalpocketsii:dimensional_chestplate_enhanced"
+		},
+		"title": {
+			"translate": "dimensionalpocketsii.advancements.armour_enhanced.title"
+		},
+		"description": {
+			"translate": "dimensionalpocketsii.advancements.armour_enhanced.desc"
+		},
+		"background": "dimensionalpocketsii:textures/gui/advancements/backgrounds/dimensional.png",
+		"frame": "challenge",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"armour_set": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": "dimensionalpocketsii:dimensional_helmet_enhanced"
+					},
+					{
+						"items": "dimensionalpocketsii:dimensional_chestplate_enhanced"
+					},
+					{
+						"items": "dimensionalpocketsii:dimensional_leggings_enhanced"
+					},
+					{
+						"items": "dimensionalpocketsii:dimensional_boots_enhanced"
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"armour_set"
+		]
+	],
+	"rewards": {
+		"experience": 50
+	}
+}

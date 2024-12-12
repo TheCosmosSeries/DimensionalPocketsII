@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern": [
+		"DID",
+		"IOI",
+		"DID"
+	],
+	"key": {
+		"D": {
+			"item": "dimensionalpocketsii:block_dimensional_metal"
+		},
+		"I":{
+            "item": "dimensionalpocketsii:dimensional_gem"
+        },
+		"O": {
+            "item": "dimensionalpocketsii:nether_star_shard"	
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:block_dimensional_core"
+	}
+}

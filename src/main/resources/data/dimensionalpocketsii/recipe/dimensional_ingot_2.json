@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " S ",
+        "SIS",
+        " S "
+    ],
+    "key": {
+        "S": {
+            "item": "dimensionalpocketsii:dimensional_shard"
+        },
+        "I" : {
+            "item": "minecraft:iron_ingot"
+        }
+    },
+    "result": {
+        "id": "dimensionalpocketsii:dimensional_ingot",
+        "count": 2
+    }
+}

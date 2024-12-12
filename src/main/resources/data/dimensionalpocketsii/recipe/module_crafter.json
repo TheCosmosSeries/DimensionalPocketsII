@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"C ",
+		"M "
+	],
+	"key": {
+		"C": {
+			"item": "minecraft:crafting_table"
+		},
+		"M" :{
+			"item": "dimensionalpocketsii:module_base"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:module_crafter"
+	}
+}

@@ -1,0 +1,13 @@
+{
+    "__comment": "Model for when only one side is connected.",
+	"parent": "cosmoslibrary:block/tinted_cube",
+    "textures": {
+		"particle": "dimensionalpocketsii:block/wall/glass_connected/normal",
+        "down": "dimensionalpocketsii:block/wall/glass_connected/normal",
+		"up": "dimensionalpocketsii:block/wall/glass_connected/udlr",
+		"north": "dimensionalpocketsii:block/wall/glass_connected/u",
+		"south": "dimensionalpocketsii:block/wall/glass_connected/u",
+		"west": "dimensionalpocketsii:block/wall/glass_connected/u",
+		"east": "dimensionalpocketsii:block/wall/glass_connected/u"
+    }
+}

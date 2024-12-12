@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IEI",
+		"PBP",
+		"ISI"
+	],
+	"key": {
+		"I": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"B" :{
+			"item": "dimensionalpocketsii:module_base"
+		},
+		"E" :{
+			"item": "dimensionalpocketsii:dimensional_gem"
+		},
+		"P" :{
+			"item": "dimensionalpocketsii:dimensional_pearl"
+		},
+		"S" :{
+			"item": "dimensionalpocketsii:dimensional_shifter_enhanced"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:armour_module_shifter"
+	}
+}

@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+        "GGG",
+        "GGG",
+        "GGG"
+    ],
+    "key": {
+        "G": {
+            "item": "dimensionalpocketsii:dimensional_gem"
+        }
+    },
+    "result": {
+        "id": "dimensionalpocketsii:block_dimensional_gem"
+    }
+}

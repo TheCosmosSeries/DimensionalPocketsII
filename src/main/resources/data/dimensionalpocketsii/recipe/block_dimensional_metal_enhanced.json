@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+        "SSS",
+        "SSS",
+        "SSS"
+    ],
+    "key": {
+        "S": {
+            "item": "dimensionalpocketsii:dimensional_ingot_enhanced"
+        }
+    },
+    "result": {
+        "id": "dimensionalpocketsii:block_dimensional_metal_enhanced"
+    }
+}

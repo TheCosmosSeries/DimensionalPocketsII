@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	
+	"ingredients": [
+        {
+            "item": "dimensionalpocketsii:block_dimensional_gem"
+        }
+	],
+	
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_gem",
+		"count": 9
+	}
+}

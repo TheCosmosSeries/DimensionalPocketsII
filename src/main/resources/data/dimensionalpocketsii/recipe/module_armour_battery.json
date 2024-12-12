@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IEI",
+		"GBG",
+		"ICI"
+	],
+	"key": {
+		"I": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"B" :{
+			"item": "dimensionalpocketsii:module_base"
+		},
+		"E" :{
+			"item": "minecraft:netherite_ingot"
+		},
+		"G" :{
+			"item": "minecraft:copper_block"
+		},
+		"C" :{
+			"item": "dimensionalpocketsii:dimensional_energy_cell_enhanced"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:armour_module_battery"
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern": [
+		"S  ",
+		"SS ",
+		"SSS"
+	],
+	"key": {
+		"S": {
+			"item": "dimensionalpocketsii:block_dimensional"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:block_dimensional_stair",
+		"count": 4
+	}
+}

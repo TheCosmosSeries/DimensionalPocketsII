@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"B ",
+		"S "
+	],
+	"key": {
+		"S": {
+			"item": "dimensionalpocketsii:dimensional_shard"
+		},
+		"B": {
+			"item": "minecraft:book"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_tome"
+	}
+}

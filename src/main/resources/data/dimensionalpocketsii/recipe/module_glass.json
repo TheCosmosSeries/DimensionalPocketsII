@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"C ",
+		"M "
+	],
+	"key": {
+		"C": {
+			"item": "minecraft:glass"
+		},
+		"M" :{
+			"item": "dimensionalpocketsii:module_base"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:module_glass",
+		"count": 64
+	}
+}

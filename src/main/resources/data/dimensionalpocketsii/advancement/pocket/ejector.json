@@ -1,0 +1,41 @@
+{
+	"parent": "dimensionalpocketsii:pocket/device_base",
+	"display": {
+		"icon": {
+			"id": "dimensionalpocketsii:dimensional_ejector"
+		},
+		"title": {
+			"translate": "dimensionalpocketsii.advancements.ejector.title"
+		},
+		"description": {
+			"translate": "dimensionalpocketsii.advancements.ejector.desc"
+		},
+		"background": "dimensionalpocketsii:textures/gui/advancements/backgrounds/dimensional.png",
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"ejector": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"dimensionalpocketsii:dimensional_ejector"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"ejector"
+		]
+	],
+	"rewards": {
+		"experience": 50
+	}
+}

@@ -1,0 +1,48 @@
+{
+	"parent": "dimensionalpocketsii:pocket/ingots",
+	"display": {
+		"icon": {
+			"id": "dimensionalpocketsii:dimensional_chestplate"
+		},
+		"title": {
+			"translate": "dimensionalpocketsii.advancements.armour.title"
+		},
+		"description": {
+			"translate": "dimensionalpocketsii.advancements.armour.desc"
+		},
+		"background": "dimensionalpocketsii:textures/gui/advancements/backgrounds/dimensional.png",
+		"frame": "goal",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"armour_set": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": "dimensionalpocketsii:dimensional_helmet"
+					},
+					{
+						"items": "dimensionalpocketsii:dimensional_chestplate"
+					},
+					{
+						"items": "dimensionalpocketsii:dimensional_leggings"
+					},
+					{
+						"items": "dimensionalpocketsii:dimensional_boots"
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"armour_set"
+		]
+	],
+	"rewards": {
+		"experience": 50
+	}
+}

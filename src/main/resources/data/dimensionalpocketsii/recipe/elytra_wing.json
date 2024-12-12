@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IPI",
+		"BEB",
+		" I "
+	],
+	"key": {
+		"I": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"P": {
+			"item": "minecraft:phantom_membrane"
+		},
+		"E" : {
+			"item": "minecraft:elytra"
+		},
+		"B" : {
+			"item": "minecraft:blaze_powder"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:elytra_wing"
+	}
+}

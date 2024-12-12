@@ -1,0 +1,41 @@
+{
+	"parent": "dimensionalpocketsii:pocket/ingots",
+	"display": {
+		"icon": {
+			"id": "dimensionalpocketsii:dimensional_ingot_enhanced"
+		},
+		"title": {
+			"translate": "dimensionalpocketsii.advancements.ingot_enhanced.title"
+		},
+		"description": {
+			"translate": "dimensionalpocketsii.advancements.ingot_enhanced.desc"
+		},
+		"background": "dimensionalpocketsii:textures/gui/advancements/backgrounds/dimensional.png",
+		"frame": "challenge",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"ingot": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"dimensionalpocketsii:dimensional_ingot_enhanced"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"ingot"
+		]
+	],
+	"rewards": {
+		"experience": 50
+	}
+}

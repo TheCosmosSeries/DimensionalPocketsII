@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	
+	"ingredients": [
+        {
+            "item": "dimensionalpocketsii:block_dimensional"
+        }
+	],
+	
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_shard",
+		"count": 4
+	}
+}

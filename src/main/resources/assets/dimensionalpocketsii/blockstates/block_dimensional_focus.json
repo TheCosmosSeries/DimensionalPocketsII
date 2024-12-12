@@ -1,0 +1,10 @@
+{
+    "multipart": [
+    	{ "apply": { "model": "dimensionalpocketsii:block/focus/base" } },
+    	
+    	{ "when": { "AND": [ { "jump_enabled": "true",  "shift_enabled": "true"  } ] }, "apply": { "model": "dimensionalpocketsii:block/focus/shift_jump"         } },
+    	{ "when": { "AND": [ { "jump_enabled": "false", "shift_enabled": "true"  } ] }, "apply": { "model": "dimensionalpocketsii:block/focus/shift_jump_off"     } },
+    	{ "when": { "AND": [ { "jump_enabled": "false", "shift_enabled": "false" } ] }, "apply": { "model": "dimensionalpocketsii:block/focus/shift_off_jump_off" } },
+    	{ "when": { "AND": [ { "jump_enabled": "true",  "shift_enabled": "false" } ] }, "apply": { "model": "dimensionalpocketsii:block/focus/shift_off_jump"     } }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	
+	"ingredients": [
+        {
+            "item": "dimensionalpocketsii:module_focus"
+        }
+	],
+	
+	"result": {
+		"id": "dimensionalpocketsii:block_dimensional_focus"
+	}
+}

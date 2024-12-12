@@ -1,0 +1,6 @@
+{
+	"type": "neoforge:add_features",
+	"biomes": "#minecraft:is_nether",
+	"features": "dimensionalpocketsii:dimensional_ore_nether_placed",
+	"step": "underground_ores"
+}

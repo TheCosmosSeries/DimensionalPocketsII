@@ -1,0 +1,9 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "dimensionalpocketsii:item/module/pocket/base_creative",
+        "layer1": "dimensionalpocketsii:item/module/pocket/background_fluid",
+        "layer2": "dimensionalpocketsii:item/module/pocket/overlay_creative_fluid",
+        "layer3": "dimensionalpocketsii:block/wall/module/fluid_display"
+    }
+}

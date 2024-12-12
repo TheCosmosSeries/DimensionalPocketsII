@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"DID",
+		"CRC",
+		"DCD"
+	],
+	"key": {
+		"D": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"I": {
+			"item": "dimensionalpocketsii:module_energy_display"
+		},
+		"C": {
+			"item": "minecraft:copper_block"
+		},
+		"R": {
+			"item": "dimensionalpocketsii:dimensional_device_base"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_energy_cell"
+	}
+}

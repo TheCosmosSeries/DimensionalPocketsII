@@ -1,0 +1,29 @@
+{
+   "multipart": [
+        { "when": { "energy": "0" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/0" } },
+        { "when": { "energy": "1" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/1" } },
+        { "when": { "energy": "2" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/2" } },
+        { "when": { "energy": "3" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/3" } },
+        { "when": { "energy": "4" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/4" } },
+        { "when": { "energy": "5" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/5" } },
+        { "when": { "energy": "6" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/6" } },
+        { "when": { "energy": "7" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/7" } },
+        { "when": { "energy": "8" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/8" } },
+        { "when": { "energy": "9" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/9" } },
+        { "when": { "energy": "10" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/10" } },
+        { "when": { "energy": "11" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/11" } },
+        { "when": { "energy": "12" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/12" } },
+        { "when": { "energy": "13" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/13" } },
+        { "when": { "energy": "14" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/14" } },
+        { "when": { "energy": "15" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/15" } },
+        { "when": { "energy": "16" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/16" } },
+        { "when": { "energy": "17" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/17" } },
+        { "when": { "energy": "18" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/18" } },
+        { "when": { "energy": "19" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/19" } },
+        { "when": { "energy": "20" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/20" } },
+        { "when": { "energy": "21" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/21" } },
+        { "when": { "energy": "22" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/22" } },
+        { "when": { "energy": "23" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/23" } },
+        { "when": { "energy": "24" }, "apply": { "model": "dimensionalpocketsii:block/module/energy/24" } }
+    ]
+}

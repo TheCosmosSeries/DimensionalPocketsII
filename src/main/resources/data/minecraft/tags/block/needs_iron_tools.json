@@ -1,0 +1,10 @@
+{
+	"replace": false,
+	"values": [
+		"dimensionalpocketsii:block_dimensional",
+		"dimensionalpocketsii:block_dimensional_slab",
+		"dimensionalpocketsii:block_dimensional_stair",
+		"dimensionalpocketsii:block_dimensional_metal",
+		"dimensionalpocketsii:block_dimensional_gem"
+	]
+}

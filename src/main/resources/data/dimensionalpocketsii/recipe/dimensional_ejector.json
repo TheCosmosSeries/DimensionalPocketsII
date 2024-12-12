@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"DID",
+		"DRD",
+		"DCD"
+	],
+	"key": {
+		"D": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"I": {
+			"item": "minecraft:glowstone"
+		},
+		"C": {
+			"item": "dimensionalpocketsii:dimensional_pearl"
+		},
+		"R": {
+			"item": "dimensionalpocketsii:dimensional_device_base"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_ejector"
+	}
+}

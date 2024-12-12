@@ -1,0 +1,39 @@
+{
+	"type": "dimensionalpocketsii:upgrading",
+	"focus": {
+		"item": "minecraft:netherite_shovel"
+	},
+	"topRow": [
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_gem"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		}
+	],
+	"middleRow": [
+		{
+			"item": "minecraft:netherite_ingot"
+		},
+		{
+			"item": "minecraft:netherite_ingot"
+		}
+	],
+	"bottomRow": [
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_gem"
+		},
+		{
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		}
+	],
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_shovel"
+	}
+}

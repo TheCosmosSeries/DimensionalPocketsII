@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern": [
+		"DGD",
+		"GEG",
+		"DGD"
+	],
+	"key": {
+		"D": {
+			"item": "dimensionalpocketsii:block_dimensional"
+		},
+		"G": {
+			"item": "minecraft:glowstone_dust"
+		},
+		"E": {
+			"item": "dimensionalpocketsii:dimensional_gem"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:block_dimensional_focus"
+	}
+}

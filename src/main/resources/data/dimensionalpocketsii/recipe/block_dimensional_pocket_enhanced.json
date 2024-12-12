@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"DID",
+		"IOI",
+		"DID"
+	],
+	"key": {
+		"D": {
+			"item": "dimensionalpocketsii:block_dimensional"
+		},
+		"I":{
+            "item": "dimensionalpocketsii:dimensional_ingot"
+        },
+		"O": {
+            "item": "dimensionalpocketsii:block_dimensional_core_enhanced"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:block_pocket_enhanced"
+	}
+}

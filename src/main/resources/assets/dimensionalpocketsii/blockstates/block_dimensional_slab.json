@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"type=bottom": {
+			"model": "dimensionalpocketsii:block/block_dimensional_slab"
+		},
+		"type=double": {
+			"model": "dimensionalpocketsii:block/block_dimensional"
+		},
+		"type=top": {
+			"model": "dimensionalpocketsii:block/block_dimensional_slab_top"
+		}
+	}
+}

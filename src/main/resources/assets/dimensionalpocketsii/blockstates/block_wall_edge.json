@@ -1,0 +1,80 @@
+{
+	"multipart": [ 
+		{	"when": { "AND": [ {"down": "false", "east": "false", "north": "false", "south": "false", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_0"} },
+		
+		{	"when": { "AND": [ {"down": "false", "east": "false", "north": "false", "south": "false", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_1"} },
+		{	"when": { "AND": [ {"down": "true", "east": "false", "north": "false", "south": "false", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_1",  "x": 180 } },
+		{	"when": { "AND": [ {"down": "false", "east": "false", "north": "true", "south": "false", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_1",  "x": 90 } },
+		{	"when": { "AND": [ {"down": "false", "east": "false", "north": "false", "south": "true", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_1", "x": -90 } },
+		{	"when": { "AND": [ {"down": "false", "east": "false", "north": "false", "south": "false", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_1", "x": 90, "y": -90 } },
+		{	"when": { "AND": [ {"down": "false", "east": "true", "north": "false", "south": "false", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_1", "x": 90, "y": 90 } },
+		
+	
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "false", "south": "false", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle" } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "false", "south": "false", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "y": 180 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "false", "south": "false", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "x": 180 } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "false", "south": "false", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "x": 180, "y": 180 } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "true", "south": "false", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "y": -90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "false", "south": "true", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "y": 90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "true", "south": "false", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "x": 180, "y": -90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "false", "south": "true", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "x": 180, "y": 90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "true", "south": "false", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "x": 90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "false", "south": "true", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "x": -90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "true", "south": "false", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "x": 90, "y": -90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "false", "south": "true", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2_angle", "x": -90, "y": 90 } },
+
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "false", "south": "false", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2" } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "false", "south": "false", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2", "x": -90, "y": 90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "true", "south": "true", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_2", "x": -90 } },
+
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "false", "south": "false", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t1" } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "false", "south": "true", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t1", "y": -90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "false", "south": "false", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t1", "y": -180 } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "true", "south": "false", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t1", "y": 90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "true", "south": "true", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t1", "x": -90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "true", "south": "true", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t1", "x": -90, "y": 180 } },
+
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "false", "south": "false", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t2" } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "false", "south": "true", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t2", "x": -90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "false", "south": "false", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t2", "x": 180 } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "true", "south": "false", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t2", "x": 90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "true", "south": "true", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t2", "y": 90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "true", "south": "true", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_t2", "x": 180, "y": 90 } },
+
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "false", "south": "true", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_angle" } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "false", "south": "true", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_angle", "y": 90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "true", "south": "false", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_angle", "x": 90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "true", "south": "false", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_angle", "x": 180 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "false", "south": "true", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_angle", "x": 270 } },
+
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "false", "south": "true", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_angle", "x": 180, "y": -180 } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "true", "south": "false", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_angle", "x": -90, "y": -180 } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "true", "south": "false", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_3_angle", "x": 90, "y": -90 } },
+
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "false", "south": "false", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross" } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "true", "south": "true", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross", "x": 90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "true", "south": "true", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross", "y": 90 } },
+
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "true", "south": "false", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle" } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "true", "south": "true", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "x": 90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "false", "north": "true", "south": "true", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "x": -90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "false", "south": "true", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "y": -90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "true", "south": "false", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "y": 90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "false", "south": "true", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "y": 180 } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "true", "south": "true", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "x": -90, "y": 180 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "true", "south": "true", "up": "false", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "x": 90, "y": 180 } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "false", "south": "true", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "x": -90, "y": -90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "false", "south": "true", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "x": -270, "y": -90 } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "true", "south": "false", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "x": -90, "y": 90 } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "true", "south": "false", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_angle", "x": -270, "y": -270} },
+
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "true", "south": "true", "up": "false", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross" } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "false", "south": "true", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross" } },
+        {   "when": { "AND": [ { "down": "true", "east": "false", "north": "true", "south": "true", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross" } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "true", "south": "true", "up": "true", "west": "false"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross" } },
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "true", "south": "false", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross" } },
+        {   "when": { "AND": [ { "down": "false", "east": "true", "north": "true", "south": "true", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross" } },
+
+        {   "when": { "AND": [ { "down": "true", "east": "true", "north": "true", "south": "true", "up": "true", "west": "true"} ]}, "apply": { "model": "dimensionalpocketsii:block/wall/edge_4_cross" } }
+	]
+}

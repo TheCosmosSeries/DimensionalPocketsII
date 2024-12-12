@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IRI",
+		"RBR",
+		"ILI"
+	],
+	"key": {
+		"I": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"B" :{
+			"item": "dimensionalpocketsii:module_base"
+		},
+		"R" :{
+			"item": "minecraft:bucket"
+		},
+		"L" :{
+			"item": "minecraft:iron_block"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:module_fluid_display"
+	}
+}

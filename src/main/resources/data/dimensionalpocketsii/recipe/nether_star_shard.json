@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	
+	"ingredients": [
+        {
+            "item": "minecraft:nether_star"
+        }
+	],
+	
+	"result": {
+		"id": "dimensionalpocketsii:nether_star_shard",
+		"count": 4
+	}
+}

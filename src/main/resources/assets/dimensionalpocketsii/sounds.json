@@ -1,0 +1,26 @@
+{
+	"sound_portal_in": {
+		"category": "block",
+		"sounds": [
+			"dimensionalpocketsii:portal_in"
+		]
+	},
+	"sound_portal_out": {
+		"category": "block",
+		"sounds": [
+			"dimensionalpocketsii:portal_out"
+		]
+	},
+	"sound_woosh": {
+		"category": "block",
+		"sounds": [
+			"dimensionalpocketsii:woosh"
+		]
+	},
+	"sound_tink": {
+		"category": "block",
+		"sounds": [
+			"dimensionalpocketsii:tink"
+		]
+	}
+}

@@ -1,0 +1,99 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "dimensionalpocketsii:item/device/cell/cell_base",
+        "layer1": "dimensionalpocketsii:item/device/cell/cell_top"
+    },
+    "overrides": [
+		 {
+            "predicate": {
+                "energy": 0
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_0"
+        },
+         {
+            "predicate": {
+                "energy": 1
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_1"
+        },
+        {
+            "predicate": {
+                "energy": 2
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_2"
+        },
+        {
+            "predicate": {
+                "energy": 3
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_3"
+        },
+        {
+            "predicate": {
+                "energy": 4
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_4"
+        },
+        {
+            "predicate": {
+                "energy": 5
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_5"
+        },
+        {
+            "predicate": {
+                "energy": 6
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_6"
+        },
+        {
+            "predicate": {
+                "energy": 7
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_7"
+        },
+        {
+            "predicate": {
+                "energy": 8
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_8"
+        },
+        {
+            "predicate": {
+                "energy": 9
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_9"
+        },
+        {
+            "predicate": {
+                "energy": 10
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_10"
+        },
+        {
+            "predicate": {
+                "energy": 11
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_11"
+        },
+        {
+            "predicate": {
+                "energy": 12
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_12"
+        },
+        {
+            "predicate": {
+                "energy": 13
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_13"
+        },
+        {
+            "predicate": {
+                "energy": 14
+            },
+            "model": "dimensionalpocketsii:item/dimensional_energy_cell_14"
+        }
+    ]
+}

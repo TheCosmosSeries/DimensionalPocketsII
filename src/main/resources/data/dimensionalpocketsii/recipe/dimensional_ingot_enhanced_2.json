@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+        {
+            "item": "dimensionalpocketsii:block_dimensional_metal_enhanced"
+        }
+	],
+	"result": {
+		"count": 9,
+		"id": "dimensionalpocketsii:dimensional_ingot_enhanced"
+	}
+}

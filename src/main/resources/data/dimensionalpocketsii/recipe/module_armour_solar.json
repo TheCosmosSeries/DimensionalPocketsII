@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IEI",
+		"GBG",
+		"ICI"
+	],
+	"key": {
+		"I": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"B" :{
+			"item": "dimensionalpocketsii:module_base"
+		},
+		"E" :{
+			"item": "minecraft:daylight_detector"
+		},
+		"C" :{
+			"item": "minecraft:copper_block"
+		},
+		"G" :{
+			"item": "minecraft:netherite_ingot"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:armour_module_solar"
+	}
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "dimensionalpocketsii:item/dimensional_energy_cell_enhanced",
+    "textures": {
+        "layer2": "dimensionalpocketsii:item/device/cell/energy_2"
+    }
+}

@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GSG",
+		"GBG",
+		"GGG"
+	],
+	"key": {
+		"S": {
+			"item": "dimensionalpocketsii:dimensional_shard"
+		},
+		"B": {
+			"item": "dimensionalpocketsii:block_dimensional"
+		},
+		"G": {
+			"item": "dimensionalpocketsii:dimensional_gem"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:dimensional_upgrade_template",
+		"count": 2
+	}
+}

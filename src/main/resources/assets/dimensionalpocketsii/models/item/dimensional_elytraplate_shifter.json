@@ -1,0 +1,9 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "dimensionalpocketsii:item/armour/colour/elytraplate_shift_overlay",
+        "layer1": "dimensionalpocketsii:item/armour/colour/elytraplate_shift_overlay",
+        "layer2": "dimensionalpocketsii:item/armour/colour/elytraplate_shift_overlay",
+        "layer3": "dimensionalpocketsii:item/armour/colour/elytraplate_shift_overlay"
+    }
+}

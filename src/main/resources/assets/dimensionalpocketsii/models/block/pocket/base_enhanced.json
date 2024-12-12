@@ -1,0 +1,51 @@
+{
+    "parent": "block/block",
+    "display": {
+        "gui": {
+            "rotation": [ 30, 135, 0 ],
+            "translation": [ 0, 0, 0],
+            "scale":[ 0.625, 0.625, 0.625 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 90, 0 ],
+            "translation": [ 0, 0, 0],
+            "scale":[ 0.5, 0.5, 0.5 ]
+        }
+    },
+    "textures": {
+        "core": "dimensionalpocketsii:block/pocket/core/core_enhanced",
+        "particle": "dimensionalpocketsii:block/pocket/core/normal"
+    },
+    "elements": [
+        {
+            "from": [4, 4, 4],
+            "to": [12, 12, 12],
+            "faces": {
+               "up": {
+                    "uv": [4, 4, 12, 12],
+                    "texture": "#core"
+                },
+                "down": {
+                    "uv": [4, 4, 12, 12],
+                    "texture": "#core"
+                },
+                "north": {
+                    "uv": [4, 4, 12, 12],
+                    "texture": "#core"
+                },
+                "south": {
+                    "uv": [4, 4, 12, 12],
+                    "texture": "#core"
+                },
+                "east": {
+                    "uv": [4, 4, 12, 12],
+                    "texture": "#core"
+                },
+                "west": {
+                    "uv": [4, 4, 12, 12],
+                    "texture": "#core"
+                }
+            }
+        }
+    ]
+}

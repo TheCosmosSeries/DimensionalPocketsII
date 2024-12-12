@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IDI",
+		"DMD",
+		"IDI"
+	],
+	"key": {
+		"D": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"I" :{
+			"item": "minecraft:iron_ingot"
+		},
+		"M" :{
+			"item": "dimensionalpocketsii:dimensional_gem"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:module_base",
+    	"count": 2
+	}
+}

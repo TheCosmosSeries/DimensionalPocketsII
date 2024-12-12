@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IEI",
+		"PBP",
+		"IRI"
+	],
+	"key": {
+		"I": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"B" :{
+			"item": "dimensionalpocketsii:module_base"
+		},
+		"E" :{
+			"item": "minecraft:furnace"
+		},
+		"P" :{
+			"item": "minecraft:bucket"
+		},
+		"R" :{
+			"item": "minecraft:copper_block"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:module_generator"
+	}
+}

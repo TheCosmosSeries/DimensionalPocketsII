@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern": [
+		"SS",
+		"SS"
+	],
+	"key": {
+		"S": {
+			"item": "dimensionalpocketsii:dimensional_shard"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:block_dimensional"
+	}
+}

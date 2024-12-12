@@ -1,0 +1,57 @@
+{
+    "parent": "block/block",
+    "display": {
+        "gui": {
+            "rotation": [ 30, 135, 0 ],
+            "translation": [ 0, 0, 0],
+            "scale":[ 0.625, 0.625, 0.625 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 90, 0 ],
+            "translation": [ 0, 0, 0],
+            "scale":[ 0.5, 0.5, 0.5 ]
+        }
+    },
+    "textures": {
+        "particle": "dimensionalpocketsii:block/wall/wall",
+        "overlay": "dimensionalpocketsii:block/wall/module/connector/mode_base"
+    },
+    "elements": [
+        {
+        	"from": [1, 1, 1],
+            "to": [15, 15, 15],
+            "faces": {
+                "north": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "south": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "east": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "west": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "up": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                },
+                "down": {
+                    "uv": [1, 1, 15, 15],
+                    "texture": "#overlay",
+                    "tintindex": 0
+                }
+            }
+        }
+    ]
+}
