@@ -1,10 +1,12 @@
-![Version](https://img.shields.io/badge/VERSION-1.20.1-success?style=for-the-badge) ![Repo Size](https://img.shields.io/github/repo-size/TheCosmosSeries/DimensionalPocketsII?label=REPO%20SIZE&style=for-the-badge) ![Open Issues](https://img.shields.io/github/issues/TheCosmosSeries/DimensionalPocketsII?style=for-the-badge) ![Closed Issues](https://img.shields.io/github/issues-closed/TheCosmosSeries/DimensionalPocketsII?color=green&style=for-the-badge) [![Discord](https://img.shields.io/discord/729402437051351040?color=blueviolet&label=DISCORD&style=for-the-badge)](https://discord.gg/8ydCtzm)
+![Version](https://img.shields.io/badge/VERSION-1.21.1-3eff8e?style=for-the-badge) ![Version](https://img.shields.io/badge/Loader-NeoForge-ffa835?style=for-the-badge) ![Repo Size](https://img.shields.io/github/repo-size/TheCosmosSeries/DimensionalPocketsII?label=REPO%20SIZE&style=for-the-badge) ![Open Issues](https://img.shields.io/github/issues/TheCosmosSeries/DimensionalPocketsII?style=for-the-badge) ![Closed Issues](https://img.shields.io/github/issues-closed/TheCosmosSeries/DimensionalPocketsII?color=green&style=for-the-badge) [![Discord](https://img.shields.io/discord/729402437051351040?color=blueviolet&label=DISCORD&style=for-the-badge)](https://discord.gg/8ydCtzm)
 
 ![dimensional-pockets-title-new](https://github.com/user-attachments/assets/fa29729d-1aee-430e-9f6c-45a8a9f38f82)
 
 # Dimensional Pockets II
 
-Due to having a similiar idea to NPException's Dimensional Pockets, I have created DimensionalPocketsII with some features carried over, but with my own twist. Currently using MinecraftForge 1.20.1.
+Due to having a similiar idea to NPException's Dimensional Pockets, I have created DimensionalPocketsII with some features carried over, but with my own twist.
+
+Currently supporting **1.21.1** and **NeoForge**.
 
 ### Description
 
@@ -38,6 +40,7 @@ This repo does not have a licence. This means that by default, it is All Rights 
  - Redistribute the Mod, unless the link you provide is the original. (CurseForge or GitHub)
  - Redistribute the Mod under a different name or Author.
 
+## Dimensional Pockets [1.7.10]
 If you wish to view the original DimensionalPockets code, please refer to [NPException's GitHub](https://github.com/NPException/Dimensional-Pockets).
 
 ## Mod Pages
