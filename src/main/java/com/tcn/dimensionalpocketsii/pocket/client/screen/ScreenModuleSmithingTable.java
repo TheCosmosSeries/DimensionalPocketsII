@@ -138,17 +138,15 @@ public class ScreenModuleSmithingTable extends CosmosScreenUIModeBE<ContainerMod
 			
 			CosmosUISystem.renderStaticElementWithUIMode(this, guiGraphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, RESOURCE.SMITHING_TABLE_OVERLAY);
 
-			if ((this.menu.getSlot(0).hasItem() || this.menu.getSlot(1).hasItem()) && !this.menu.getSlot(2).hasItem()) {
+			if ((this.getMenu().getSlot(0).hasItem() || this.getMenu().getSlot(1).hasItem()) && !this.getMenu().getSlot(2).hasItem()) {
 				guiGraphics.blit(blockEntity.getUIMode().equals(EnumUIMode.DARK) ? RESOURCE.SMITHING_TABLE_OVERLAY[1] : RESOURCE.SMITHING_TABLE_OVERLAY[0], this.getScreenCoords()[0] + 69, this.getScreenCoords()[1] + 49, this.imageWidth, 0, 28, 21);
 			}
 			
-	        this.templateIcon.render(this.menu, guiGraphics, partialTicks, this.leftPos, this.topPos);
-	        this.baseIcon.render(this.menu, guiGraphics, partialTicks, this.leftPos, this.topPos);
-	        this.additionalIcon.render(this.menu, guiGraphics, partialTicks, this.leftPos, this.topPos);
+	        this.templateIcon.render(this.getMenu(), guiGraphics, partialTicks, this.leftPos, this.topPos);
+	        this.baseIcon.render(this.getMenu(), guiGraphics, partialTicks, this.leftPos, this.topPos);
+	        this.additionalIcon.render(this.getMenu(), guiGraphics, partialTicks, this.leftPos, this.topPos);
 
-			int xPos = this.getScreenCoords()[0] + 128;
-			int yPos = this.getScreenCoords()[1] + 20;
-			
+			int xPos = this.getScreenCoords()[0] + 128;	int yPos = this.getScreenCoords()[1] + 20;
 			InventoryScreen.renderEntityInInventory(guiGraphics, (float)(xPos + xPos + 34) / 2.0F, (float)(yPos + yPos + 86) / 2.0F, 21.0F, ARMOR_STAND_TRANSLATION, ARMOR_STAND_ANGLE, null, this.armorStandPreview);
 		}
 	}

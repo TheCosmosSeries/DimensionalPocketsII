@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.Block;
 
 public enum CoreItemTier implements Tier {
 	
-	DIMENSIONAL(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 4000, 12.0F, 8.0F, 30, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get())),
-	DIMENSIONAL_ENHANCED(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 6000, 16.0F, 14.0F, 40, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get()));
+	DIMENSIONAL(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 4000, 12.0F, 6.0F, 25, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get())),
+	DIMENSIONAL_ENHANCED(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 6000, 16.0F, 8.0F, 35, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get()));
 
     private final TagKey<Block> incorrectBlocksForDrops;
 	private final int uses;
@@ -23,11 +23,11 @@ public enum CoreItemTier implements Tier {
 	private final int enchantmentValue;
     private final Supplier<Ingredient> repairIngredient;
 
-	private CoreItemTier(TagKey<Block> incorrectBlockForDrops, int usesIn, float speedIn, float damageIn, int enchantmentValueIn, Supplier<Ingredient> repairIngredientIn) {
+	private CoreItemTier(TagKey<Block> incorrectBlockForDrops, int usesIn, float speedIn, float damageBonusIn, int enchantmentValueIn, Supplier<Ingredient> repairIngredientIn) {
         this.incorrectBlocksForDrops = incorrectBlockForDrops;
 		this.uses = usesIn;
 		this.speed = speedIn;
-		this.damage = damageIn;
+		this.damage = damageBonusIn;
 		this.enchantmentValue = enchantmentValueIn;
         this.repairIngredient = Suppliers.memoize(repairIngredientIn::get);
 	}

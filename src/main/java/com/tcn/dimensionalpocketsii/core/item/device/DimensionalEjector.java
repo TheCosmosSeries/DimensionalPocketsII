@@ -58,8 +58,6 @@ public class DimensionalEjector extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-		super.appendHoverText(stack, context, tooltip, flagIn);
-		
 		if (!ComponentHelper.isShiftKeyDown(Minecraft.getInstance())) {
 			tooltip.add(ComponentHelper.getTooltipInfo("dimensionalpocketsii.info.ejector_info"));
 			
@@ -74,6 +72,7 @@ public class DimensionalEjector extends Item {
 			
 			tooltip.add(ComponentHelper.shiftForLessDetails());
 		}
+		super.appendHoverText(stack, context, tooltip, flagIn);
 	}
 	
 	@Override

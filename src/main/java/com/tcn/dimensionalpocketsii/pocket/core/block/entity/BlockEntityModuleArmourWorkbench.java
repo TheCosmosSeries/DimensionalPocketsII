@@ -47,7 +47,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, IBlockEntityUIMode, IBlockEntityUpdateable {
 
-	public NonNullList<ItemStack> inventoryItems = NonNullList.withSize(9, ItemStack.EMPTY);
+	public NonNullList<ItemStack> inventoryItems = NonNullList.withSize(11, ItemStack.EMPTY);
 	
 	private Pocket pocket;
 
@@ -55,8 +55,8 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
 	private EnumUILock uiLock = EnumUILock.PRIVATE;
 
-	public ComponentColour customColourWings = ComponentColour.POCKET_PURPLE;
 	public ComponentColour customColourArmour = ComponentColour.POCKET_PURPLE;
+	public ComponentColour customColourWings = ComponentColour.ELYTRA;
 	
 	public BlockEntityModuleArmourWorkbench(BlockPos posIn, BlockState stateIn) {
 		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_ARMOUR_WORKBENCH.get(), posIn, stateIn);
@@ -89,8 +89,8 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 		compound.putInt("ui_help", this.uiHelp.getIndex());
 		compound.putInt("ui_lock", this.uiLock.getIndex());
 
-		compound.putInt("wingColour", customColourWings.getIndex());
 		compound.putInt("armourColour", customColourArmour.getIndex());
+		compound.putInt("wingColour", customColourWings.getIndex());
 	}
 
 	public void saveToItemStack(ItemStack stackIn, HolderLookup.Provider provider) {
@@ -101,9 +101,9 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 		compound.putInt("ui_mode", this.uiMode.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
 		compound.putInt("ui_lock", this.uiLock.getIndex());
-
-		compound.putInt("wingColour", customColourWings.getIndex());
+		
 		compound.putInt("armourColour", customColourArmour.getIndex());
+		compound.putInt("wingColour", customColourWings.getIndex());
 		
 		stackIn.set(DataComponents.CUSTOM_DATA, CustomData.of(compound));
 	}
@@ -122,9 +122,9 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 		this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 		this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
 		this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
-		
-		this.customColourWings = ComponentColour.fromIndex(compound.getInt("wingColour"));
+
 		this.customColourArmour = ComponentColour.fromIndex(compound.getInt("armourColour"));
+		this.customColourWings = ComponentColour.fromIndex(compound.getInt("wingColour"));
 	}
 
 	public void loadFromItemStack(ItemStack stackIn, HolderLookup.Provider provider) {
@@ -138,8 +138,8 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 			this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
 			this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 
-			this.customColourWings = ComponentColour.fromIndex(compound.getInt("wingColour"));
 			this.customColourArmour = ComponentColour.fromIndex(compound.getInt("armourColour"));
+			this.customColourWings = ComponentColour.fromIndex(compound.getInt("wingColour"));
 		}
 	}
 	
@@ -253,10 +253,8 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 	}
 
 	@Override
-	public InteractionResult useWithoutItem(BlockState state, Level levelIn, BlockPos posIn, Player playerIn,
-			BlockHitResult hit) {
-		// TODO Auto-generated method stub
-		return null;
+	public InteractionResult useWithoutItem(BlockState state, Level levelIn, BlockPos posIn, Player playerIn, BlockHitResult hit) {
+		return InteractionResult.FAIL;
 	}
 	
 	public void applyToArmourItem(boolean colourIn, boolean moduleIn) {
@@ -264,12 +262,11 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 		
 		if (moduleIn) {
 			if (inputStack != ItemStack.EMPTY) {
-				for (int i = 3; i < 9; i++) {
+				for (int i = 3; i < 11; i++) {
 					ItemStack stackIn = this.getItem(i);
 					
 					if (!stackIn.isEmpty()) {
-						if (stackIn.getItem() instanceof IModuleItem) {
-							IModuleItem item = (IModuleItem) stackIn.getItem();
+						if (stackIn.getItem() instanceof IModuleItem item) {
 							BaseElytraModule module = item.getModule();
 							
 							if (DimensionalElytraplate.addModule(inputStack, module, true)) {
@@ -300,7 +297,7 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 		ItemStack inputStack = this.getItem(0);
 		
 		if (inputStack != ItemStack.EMPTY) {
-			for (int i = 3; i < 9; i++) {
+			for (int i = 3; i < 11; i++) {
 				ItemStack stackIn = this.getItem(i);
 				
 				if (stackIn.isEmpty()) {
@@ -327,12 +324,11 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 		
 		if (inputStack != ItemStack.EMPTY) {
 			if (moduleIn) {
-				for (int i = 3; i < 9; i++) {
+				for (int i = 3; i < 11; i++) {
 					ItemStack stackIn = this.getItem(i);
 					
 					if (!stackIn.isEmpty()) {
-						if (stackIn.getItem() instanceof IModuleItem) {
-							IModuleItem item = (IModuleItem) stackIn.getItem();
+						if (stackIn.getItem() instanceof IModuleItem item) {
 							BaseElytraModule module = item.getModule();
 							
 							if (useColour) {
@@ -526,7 +522,7 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 	public void updateColour(ComponentColour colourIn, boolean wingColour) {		
 		if (colourIn.isEmpty()) {
 			if(wingColour) {
-				this.customColourWings = ComponentColour.POCKET_PURPLE;
+				this.customColourWings = ComponentColour.ELYTRA;
 			} else {
 				 this.customColourArmour = ComponentColour.POCKET_PURPLE;
 			}
@@ -543,5 +539,4 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 	public ComponentColour getCustomColour(boolean wingColour) {
 		return wingColour ? this.customColourWings : this.customColourArmour;
 	}
-	
 }

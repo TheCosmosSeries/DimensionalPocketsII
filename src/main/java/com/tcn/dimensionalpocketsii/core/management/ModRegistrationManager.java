@@ -29,6 +29,7 @@ import com.tcn.dimensionalpocketsii.client.colour.ColourItem;
 import com.tcn.dimensionalpocketsii.client.container.ContainerElytraplateConnector;
 import com.tcn.dimensionalpocketsii.client.container.ContainerElytraplateEnderChest;
 import com.tcn.dimensionalpocketsii.client.container.ContainerElytraplateSettings;
+import com.tcn.dimensionalpocketsii.client.renderer.DimensionalTridentBEWLR;
 import com.tcn.dimensionalpocketsii.client.renderer.RendererDimensionalTrident;
 import com.tcn.dimensionalpocketsii.client.renderer.RendererDimensionalTridentEnhanced;
 import com.tcn.dimensionalpocketsii.client.screen.ScreenElytraplateConnector;
@@ -44,6 +45,7 @@ import com.tcn.dimensionalpocketsii.core.item.DimensionalTome;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleBattery;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleEnderChest;
+import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleFirework;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleScreen;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleShifter;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleSolar;
@@ -74,8 +76,8 @@ import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleSmith
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleUpgradeStation;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerPocket;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerPocketEnhanced;
-import com.tcn.dimensionalpocketsii.pocket.client.renderer.ter.RendererBlockEntityModuleCreativeFluid;
-import com.tcn.dimensionalpocketsii.pocket.client.renderer.ter.RendererBlockEntityModuleFluidDisplay;
+import com.tcn.dimensionalpocketsii.pocket.client.renderer.be.RendererBlockEntityModuleCreativeFluid;
+import com.tcn.dimensionalpocketsii.pocket.client.renderer.be.RendererBlockEntityModuleFluidDisplay;
 import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenFocus;
 import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenModuleAnvil;
 import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenModuleArmourWorkbench;
@@ -164,6 +166,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -175,11 +178,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
@@ -187,6 +195,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -251,11 +260,11 @@ public class ModRegistrationManager {
 	
 	public static final Holder<ArmorMaterial> ARMOUR_MATERIAL_DIMENSIONAL = ARMOUR_MATERIALS.register("dimensional", () -> new ArmorMaterial(
 		Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-			map.put(ArmorItem.Type.BOOTS, 1);
-			map.put(ArmorItem.Type.LEGGINGS, 2);
-			map.put(ArmorItem.Type.CHESTPLATE, 3);
-			map.put(ArmorItem.Type.HELMET, 4);
-			map.put(ArmorItem.Type.BODY, 5);
+			map.put(ArmorItem.Type.BOOTS, 5);
+			map.put(ArmorItem.Type.LEGGINGS, 8);
+			map.put(ArmorItem.Type.CHESTPLATE, 10);
+			map.put(ArmorItem.Type.HELMET, 5);
+			map.put(ArmorItem.Type.BODY, 14);
 		}), 30, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get()),
 		List.of(
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "base/tex"), "", false),
@@ -266,7 +275,11 @@ public class ModRegistrationManager {
 
 	public static final Holder<ArmorMaterial> ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED = ARMOUR_MATERIALS.register("dimensional_enhanced", () -> new ArmorMaterial(
 		Util.make(new EnumMap<>(ArmorItem.Type.class), (enumMap) -> {
-			enumMap.put(ArmorItem.Type.BOOTS, 1); enumMap.put(ArmorItem.Type.LEGGINGS, 2); enumMap.put(ArmorItem.Type.CHESTPLATE, 3); enumMap.put(ArmorItem.Type.HELMET, 4); enumMap.put(ArmorItem.Type.BODY, 5);
+			enumMap.put(ArmorItem.Type.BOOTS, 7); 
+			enumMap.put(ArmorItem.Type.LEGGINGS, 10); 
+			enumMap.put(ArmorItem.Type.CHESTPLATE, 12); 
+			enumMap.put(ArmorItem.Type.HELMET, 7); 
+			enumMap.put(ArmorItem.Type.BODY, 16);
 		}), 40, SoundEvents.ARMOR_EQUIP_GENERIC,() -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get()),
 		List.of(
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "enhanced/tex"), "", false),
@@ -277,7 +290,11 @@ public class ModRegistrationManager {
 
 	public static final Holder<ArmorMaterial> ARMOUR_MATERIAL_SPECIAL = ARMOUR_MATERIALS.register("special", () -> new ArmorMaterial(
 		Util.make(new EnumMap<>(ArmorItem.Type.class), (enumMap) -> {
-			enumMap.put(ArmorItem.Type.BOOTS, 1); enumMap.put(ArmorItem.Type.LEGGINGS, 2); enumMap.put(ArmorItem.Type.CHESTPLATE, 3); enumMap.put(ArmorItem.Type.HELMET, 4); enumMap.put(ArmorItem.Type.BODY, 5);
+			enumMap.put(ArmorItem.Type.BOOTS, 7); 
+			enumMap.put(ArmorItem.Type.LEGGINGS,10); 
+			enumMap.put(ArmorItem.Type.CHESTPLATE, 12); 
+			enumMap.put(ArmorItem.Type.HELMET, 7);
+			enumMap.put(ArmorItem.Type.BODY, 16);
 		}), 50, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get()),
 		List.of(
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "special/tex"), "", false),
@@ -288,7 +305,11 @@ public class ModRegistrationManager {
 
 	public static final Holder<ArmorMaterial> ARMOUR_MATERIAL_SPECIAL_SHIFTER = ARMOUR_MATERIALS.register("special_shifter", () -> new ArmorMaterial(
 		Util.make(new EnumMap<>(ArmorItem.Type.class), (enumMap) -> {
-			enumMap.put(ArmorItem.Type.BOOTS, 1); enumMap.put(ArmorItem.Type.LEGGINGS, 2); enumMap.put(ArmorItem.Type.CHESTPLATE, 3); enumMap.put(ArmorItem.Type.HELMET, 4); enumMap.put(ArmorItem.Type.BODY, 5);
+			enumMap.put(ArmorItem.Type.BOOTS, 7); 
+			enumMap.put(ArmorItem.Type.LEGGINGS,10); 
+			enumMap.put(ArmorItem.Type.CHESTPLATE, 12); 
+			enumMap.put(ArmorItem.Type.HELMET, 7);
+			enumMap.put(ArmorItem.Type.BODY, 16);
 		}), 50, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get()),
 		List.of(
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "shifter/tex"), "", false),
@@ -299,7 +320,11 @@ public class ModRegistrationManager {
 
 	public static final Holder<ArmorMaterial> ARMOUR_MATERIAL_SPECIAL_VISOR = ARMOUR_MATERIALS.register("special_visor", () -> new ArmorMaterial(
 		Util.make(new EnumMap<>(ArmorItem.Type.class), (enumMap) -> {
-			enumMap.put(ArmorItem.Type.BOOTS, 1); enumMap.put(ArmorItem.Type.LEGGINGS, 2); enumMap.put(ArmorItem.Type.CHESTPLATE, 3); enumMap.put(ArmorItem.Type.HELMET, 4); enumMap.put(ArmorItem.Type.BODY, 5);
+			enumMap.put(ArmorItem.Type.BOOTS, 7); 
+			enumMap.put(ArmorItem.Type.LEGGINGS,10); 
+			enumMap.put(ArmorItem.Type.CHESTPLATE, 12); 
+			enumMap.put(ArmorItem.Type.HELMET, 7);
+			enumMap.put(ArmorItem.Type.BODY, 16);
 		}), 50, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get()),
 		List.of(
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "visor/tex"), "", false),
@@ -308,98 +333,218 @@ public class ModRegistrationManager {
 		), 7.5F, 0.7F)
 	);
 
-	public static final Rarity RARITY_POCKET   = CoreItemRarity.POCKET.getValue();
-	public static final Rarity RARITY_ARMOUR   = CoreItemRarity.MODULE_ARMOUR.getValue();
+	public static final Rarity RARITY_POCKET  = CoreItemRarity.POCKET.getValue();
+	public static final Rarity RARITY_ARMOUR  = CoreItemRarity.MODULE_ARMOUR.getValue();
 	public static final Rarity RARITY_ENHANCED = CoreItemRarity.MODULE_POCKET.getValue();
 	public static final Rarity RARITY_CREATIVE = CoreItemRarity.CREATIVE.getValue();
 	
-	public static final DeferredItem<Item> DIMENSIONAL_TOME  = addToItemTab(ITEMS.register("dimensional_tome", () -> new  DimensionalTome(new Item.Properties().stacksTo(1).rarity(RARITY_POCKET))));
+	public static final DeferredItem<Item> DIMENSIONAL_TOME = addToItemTab(ITEMS.register("dimensional_tome", () -> new DimensionalTome(new Item.Properties().stacksTo(1).rarity(RARITY_POCKET))));
 	
-	public static final DeferredItem<Item> DIMENSIONAL_SHARD  = addToItemTab(ITEMS.register("dimensional_shard", () -> new  CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
-	public static final DeferredItem<Item> DIMENSIONAL_INGOT  = addToItemTab(ITEMS.register("dimensional_ingot", () -> new  CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
-	public static final DeferredItem<Item> DIMENSIONAL_INGOT_ENHANCED  = addToItemTab(ITEMS.register("dimensional_ingot_enhanced", () -> new  CosmosItemEffect(new Item.Properties().rarity(Rarity.RARE).fireResistant())));
-	public static final DeferredItem<Item> DIMENSIONAL_GEM  = addToItemTab(ITEMS.register("dimensional_gem", () -> new  CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
+	public static final DeferredItem<Item> DIMENSIONAL_SHARD = addToItemTab(ITEMS.register("dimensional_shard", () -> new CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
+	public static final DeferredItem<Item> DIMENSIONAL_INGOT = addToItemTab(ITEMS.register("dimensional_ingot", () -> new CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
+	public static final DeferredItem<Item> DIMENSIONAL_INGOT_ENHANCED = addToItemTab(ITEMS.register("dimensional_ingot_enhanced", () -> new CosmosItemEffect(new Item.Properties().rarity(Rarity.RARE).fireResistant())));
+	public static final DeferredItem<Item> DIMENSIONAL_GEM = addToItemTab(ITEMS.register("dimensional_gem", () -> new CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
 	
-	public static final DeferredItem<Item> DIMENSIONAL_DUST  = addToItemTab(ITEMS.register("dimensional_dust", () -> new  CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
-	public static final DeferredItem<Item> DIMENSIONAL_PEARL  = addToItemTab(ITEMS.register("dimensional_pearl", () -> new  CosmosItem(new Item.Properties().stacksTo(16).rarity(RARITY_POCKET))));
-	public static final DeferredItem<Item> DIMENSIONAL_THREAD  = addToItemTab(ITEMS.register("dimensional_thread", () -> new  CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
+	public static final DeferredItem<Item> DIMENSIONAL_DUST = addToItemTab(ITEMS.register("dimensional_dust", () -> new CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
+	public static final DeferredItem<Item> DIMENSIONAL_PEARL = addToItemTab(ITEMS.register("dimensional_pearl", () -> new CosmosItem(new Item.Properties().stacksTo(16).rarity(RARITY_POCKET))));
+	public static final DeferredItem<Item> DIMENSIONAL_THREAD = addToItemTab(ITEMS.register("dimensional_thread", () -> new CosmosItem(new Item.Properties().rarity(RARITY_POCKET))));
 	
-	public static final DeferredItem<Item> NETHER_STAR_SHARD  = addToItemTab(ITEMS.register("nether_star_shard", () -> new  CosmosItemEffect(new Item.Properties().stacksTo(16).rarity(Rarity.RARE).fireResistant())));
-	public static final DeferredItem<Item> ELYTRA_WING  = addToItemTab(ITEMS.register("elytra_wing", () -> new  CosmosItem(new Item.Properties().stacksTo(2).rarity(Rarity.RARE))));
+	public static final DeferredItem<Item> NETHER_STAR_SHARD = addToItemTab(ITEMS.register("nether_star_shard", () -> new CosmosItemEffect(new Item.Properties().stacksTo(16).rarity(Rarity.RARE).fireResistant())));
+	public static final DeferredItem<Item> ELYTRA_WING = addToItemTab(ITEMS.register("elytra_wing", () -> new CosmosItem(new Item.Properties().stacksTo(2).rarity(Rarity.RARE))));
 	
-	public static final DeferredItem<Item> DIMENSIONAL_WRENCH  = addToToolsTab(ITEMS.register("dimensional_wrench", () -> new  CosmosItemTool(new Item.Properties().stacksTo(1))));
+	public static final DeferredItem<Item> DIMENSIONAL_WRENCH = addToToolsTab(ITEMS.register("dimensional_wrench", () -> new CosmosItemTool(new Item.Properties().stacksTo(1))));
 	
-	public static final DeferredItem<Item> DIMENSIONAL_DEVICE_BASE  = addToToolsTab(ITEMS.register("dimensional_device_base", () -> new  CosmosItem(new Item.Properties().fireResistant().stacksTo(16))));
-	public static final DeferredItem<Item> DIMENSIONAL_EJECTOR  = addToToolsTab(ITEMS.register("dimensional_ejector", () -> new  DimensionalEjector(new Item.Properties().stacksTo(4))));
+	public static final DeferredItem<Item> DIMENSIONAL_DEVICE_BASE = addToToolsTab(ITEMS.register("dimensional_device_base", () -> new CosmosItem(new Item.Properties().fireResistant().stacksTo(16))));
+	public static final DeferredItem<Item> DIMENSIONAL_EJECTOR = addToToolsTab(ITEMS.register("dimensional_ejector", () -> new DimensionalEjector(new Item.Properties().stacksTo(4))));
 	
-	public static final DeferredItem<Item> DIMENSIONAL_SHIFTER  = addToToolsTab(ITEMS.register("dimensional_shifter", () -> new  DimensionalShifter(new Item.Properties().fireResistant().stacksTo(1).rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().maxEnergyStored(5000000).maxIO(50000).maxUse(60000))));
-	public static final DeferredItem<Item> DIMENSIONAL_SHIFTER_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_shifter_enhanced", () -> new  DimensionalShifterEnhanced(new Item.Properties().fireResistant().stacksTo(1).rarity(Rarity.RARE), new CosmosEnergyItem.Properties().maxEnergyStored(10000000).maxIO(100000).maxUse(50000))));
+	public static final DeferredItem<Item> DIMENSIONAL_SHIFTER = addToToolsTab(ITEMS.register("dimensional_shifter", () -> new DimensionalShifter(new Item.Properties().fireResistant().stacksTo(1).rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().maxEnergyStored(5000000).maxIO(50000).maxUse(60000))));
+	public static final DeferredItem<Item> DIMENSIONAL_SHIFTER_ENHANCED = addToToolsTab(ITEMS.register("dimensional_shifter_enhanced", () -> new DimensionalShifterEnhanced(new Item.Properties().fireResistant().stacksTo(1).rarity(Rarity.RARE), new CosmosEnergyItem.Properties().maxEnergyStored(10000000).maxIO(100000).maxUse(50000))));
 	
-	public static final DeferredItem<Item> DIMENSIONAL_ENERGY_CELL  = addToToolsTab(ITEMS.register("dimensional_energy_cell", () -> new  DimensionalEnergyCell(new Item.Properties().fireResistant().stacksTo(1).rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().maxEnergyStored(10000000).maxIO(100000))));
-	public static final DeferredItem<Item> DIMENSIONAL_ENERGY_CELL_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_energy_cell_enhanced", () -> new  DimensionalEnergyCellEnhanced(new Item.Properties().fireResistant().stacksTo(1).rarity(Rarity.RARE), new CosmosEnergyItem.Properties().maxEnergyStored(50000000).maxIO(200000))));
+	public static final DeferredItem<Item> DIMENSIONAL_ENERGY_CELL = addToToolsTab(ITEMS.register("dimensional_energy_cell", () -> new DimensionalEnergyCell(new Item.Properties().fireResistant().stacksTo(1).rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().maxEnergyStored(10000000).maxIO(100000))));
+	public static final DeferredItem<Item> DIMENSIONAL_ENERGY_CELL_ENHANCED = addToToolsTab(ITEMS.register("dimensional_energy_cell_enhanced", () -> new DimensionalEnergyCellEnhanced(new Item.Properties().fireResistant().stacksTo(1).rarity(Rarity.RARE), new CosmosEnergyItem.Properties().maxEnergyStored(50000000).maxIO(200000))));
 	
-	public static final DeferredItem<Item> DIMENSIONAL_SWORD  = addToToolsTab(ITEMS.register("dimensional_sword", () -> new  DimensionalSword(CoreItemTier.DIMENSIONAL, false, new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY))));
-	public static final DeferredItem<Item> DIMENSIONAL_PICKAXE  = addToToolsTab(ITEMS.register("dimensional_pickaxe", () -> new  DimensionalPickaxe(CoreItemTier.DIMENSIONAL, false, new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY))));
-	public static final DeferredItem<Item> DIMENSIONAL_AXE  = addToToolsTab(ITEMS.register("dimensional_axe", () -> new  DimensionalAxe(CoreItemTier.DIMENSIONAL, false, new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY))));
-	public static final DeferredItem<Item> DIMENSIONAL_SHOVEL  = addToToolsTab(ITEMS.register("dimensional_shovel", () -> new  DimensionalShovel(CoreItemTier.DIMENSIONAL, false, new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY))));
-	public static final DeferredItem<Item> DIMENSIONAL_HOE  = addToToolsTab(ITEMS.register("dimensional_hoe", () -> new  DimensionalHoe(CoreItemTier.DIMENSIONAL, false, new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY))));
+	public static final DeferredItem<Item> DIMENSIONAL_SWORD = addToToolsTab(ITEMS.register("dimensional_sword", () -> 
+		new DimensionalSword(CoreItemTier.DIMENSIONAL, false, 
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(SwordItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+	);
 	
-	public static final DeferredItem<Item> DIMENSIONAL_BOW  = addToToolsTab(ITEMS.register("dimensional_bow", () -> new  DimensionalBow(new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(10000), 64, 2, 1.5F, 1.4F)));
-	public static final DeferredItem<Item> DIMENSIONAL_TRIDENT  = addToToolsTab(ITEMS.register("dimensional_trident", () -> new  DimensionalTrident(new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY))));
-	public static final DeferredItem<Item> DIMENSIONAL_SHIELD  = addToToolsTab(ITEMS.register("dimensional_shield", () -> new CosmosEnergyShieldItem(new Item.Properties().fireResistant().stacksTo(1).rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY), ModReferences.RESOURCE.SHIELD, ModReferences.RESOURCE.SHIELD_NO_PATTERN)));
+	public static final DeferredItem<Item> DIMENSIONAL_PICKAXE = addToToolsTab(ITEMS.register("dimensional_pickaxe", () -> 
+		new DimensionalPickaxe(CoreItemTier.DIMENSIONAL, false, 
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(PickaxeItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+	);
 	
-	public static final DeferredItem<Item> DIMENSIONAL_HELMET  = addToToolsTab(ITEMS.register("dimensional_helmet", () -> new  CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL, ArmorItem.Type.HELMET, true, new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(6000))));
-	public static final DeferredItem<Item> DIMENSIONAL_CHESTPLATE  = addToToolsTab(ITEMS.register("dimensional_chestplate", () -> new  CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL, ArmorItem.Type.CHESTPLATE, false, new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(7000))));
-	public static final DeferredItem<Item> DIMENSIONAL_LEGGINGS  = addToToolsTab(ITEMS.register("dimensional_leggings", () -> new  CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL, ArmorItem.Type.LEGGINGS, false, new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(6000))));
-	public static final DeferredItem<Item> DIMENSIONAL_BOOTS  = addToToolsTab(ITEMS.register("dimensional_boots", () -> new  CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL, ArmorItem.Type.BOOTS, false, new Item.Properties().fireResistant().rarity(RARITY_POCKET), new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(5000))));
+	public static final DeferredItem<Item> DIMENSIONAL_AXE = addToToolsTab(ITEMS.register("dimensional_axe", () -> 
+		new DimensionalAxe(CoreItemTier.DIMENSIONAL, false, 
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(AxeItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+	);
+	
+	public static final DeferredItem<Item> DIMENSIONAL_SHOVEL = addToToolsTab(ITEMS.register("dimensional_shovel", () -> 
+		new DimensionalShovel(CoreItemTier.DIMENSIONAL, false, 
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(ShovelItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)),  
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+	);
+	
+	public static final DeferredItem<Item> DIMENSIONAL_HOE = addToToolsTab(ITEMS.register("dimensional_hoe", () -> 
+		new DimensionalHoe(CoreItemTier.DIMENSIONAL, false, 
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(HoeItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+	);
+	
+	public static final DeferredItem<Item> DIMENSIONAL_BOW = addToToolsTab(ITEMS.register("dimensional_bow", () -> 
+		new DimensionalBow(
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(10000), 6.0F))
+	);
+	
+	public static final DeferredItem<Item> DIMENSIONAL_TRIDENT = addToToolsTab(ITEMS.register("dimensional_trident", () -> 
+		new DimensionalTrident(
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(DimensionalTridentEnhanced.createAttributes(16.0F, 0.6F)).component(DataComponents.TOOL, DimensionalTridentEnhanced.createToolProperties(1.0F, 2)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY), 50000, 2, () -> new DimensionalTridentBEWLR()))
+	);
+	
+	public static final DeferredItem<Item> DIMENSIONAL_SHIELD = addToToolsTab(ITEMS.register("dimensional_shield", () -> 
+		new CosmosEnergyShieldItem(
+			new Item.Properties().fireResistant().stacksTo(1).rarity(RARITY_POCKET).component(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY), 
+			ModReferences.RESOURCE.SHIELD, ModReferences.RESOURCE.SHIELD_NO_PATTERN))
+	);
+	
+	public static final DeferredItem<Item> DIMENSIONAL_HELMET = addToToolsTab(ITEMS.register(
+		"dimensional_helmet", () -> 
+		new CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL, ArmorItem.Type.HELMET, true, 
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(6000)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_CHESTPLATE = addToToolsTab(ITEMS.register(
+		"dimensional_chestplate", () -> 
+		new CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL, ArmorItem.Type.CHESTPLATE, false, 
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(7000)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_LEGGINGS = addToToolsTab(ITEMS.register(
+		"dimensional_leggings", () -> 
+		new CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL, ArmorItem.Type.LEGGINGS, false, 
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(6000)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_BOOTS = addToToolsTab(ITEMS.register(
+		"dimensional_boots", () -> 
+		new CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL, ArmorItem.Type.BOOTS, false, 
+			new Item.Properties().fireResistant().rarity(RARITY_POCKET), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(2000000).maxIO(100000).maxUse(5000)))
+	);
 
-	public static final DeferredItem<Item> DIMENSIONAL_SWORD_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_sword_enhanced", () -> new  DimensionalSword(CoreItemTier.DIMENSIONAL_ENHANCED, true, new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED))));
-	public static final DeferredItem<Item> DIMENSIONAL_PICKAXE_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_pickaxe_enhanced", () -> new  DimensionalPickaxe(CoreItemTier.DIMENSIONAL_ENHANCED, true, new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED))));
-	public static final DeferredItem<Item> DIMENSIONAL_AXE_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_axe_enhanced", () -> new  DimensionalAxe(CoreItemTier.DIMENSIONAL_ENHANCED, true, new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED))));
-	public static final DeferredItem<Item> DIMENSIONAL_SHOVEL_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_shovel_enhanced", () -> new  DimensionalShovel(CoreItemTier.DIMENSIONAL_ENHANCED, true, new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED))));
-	public static final DeferredItem<Item> DIMENSIONAL_HOE_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_hoe_enhanced", () -> new  DimensionalHoe(CoreItemTier.DIMENSIONAL_ENHANCED, true, new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED))));
-
-	public static final DeferredItem<Item> DIMENSIONAL_BOW_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_bow_enhanced", () -> new  DimensionalBow(new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().maxEnergyStored(4000000).maxIO(200000).maxUse(15000), 64, 2, 2.25F, 2.0F)));
-	public static final DeferredItem<Item> DIMENSIONAL_TRIDENT_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_trident_enhanced", () -> new  DimensionalTridentEnhanced(new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED))));
-	public static final DeferredItem<Item> DIMENSIONAL_SHIELD_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_shield_enhanced", () -> new  CosmosEnergyShieldItem(new Item.Properties().fireResistant().stacksTo(1).rarity(Rarity.RARE), new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED), ModReferences.RESOURCE.SHIELD_ENHANCED, ModReferences.RESOURCE.SHIELD_ENHANCED_NO_PATTERN)));
 	
-	public static final DeferredItem<Item> DIMENSIONAL_HELMET_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_helmet_enhanced", () -> new  CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.HELMET, true, new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().maxEnergyStored(6000000).maxIO(100000).maxUse(6000))));
-	public static final DeferredItem<Item> DIMENSIONAL_CHESTPLATE_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_chestplate_enhanced", () -> new  CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.CHESTPLATE, false, new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().maxEnergyStored(6000000).maxIO(100000).maxUse(7000))));
-	public static final DeferredItem<Item> DIMENSIONAL_LEGGINGS_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_leggings_enhanced", () -> new  CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.LEGGINGS, false, new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().maxEnergyStored(6000000).maxIO(100000).maxUse(6000))));
-	public static final DeferredItem<Item> DIMENSIONAL_BOOTS_ENHANCED  = addToToolsTab(ITEMS.register("dimensional_boots_enhanced", () -> new  CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.BOOTS, false, new Item.Properties().fireResistant().rarity(Rarity.RARE), new CosmosEnergyItem.Properties().maxEnergyStored(6000000).maxIO(100000).maxUse(5000))));
+	public static final DeferredItem<Item> DIMENSIONAL_SWORD_ENHANCED = addToToolsTab(ITEMS.register("dimensional_sword_enhanced", () -> 
+		new DimensionalSword(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
+			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(SwordItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_PICKAXE_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_pickaxe_enhanced", () -> 
+		new DimensionalPickaxe(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
+			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(PickaxeItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_AXE_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_axe_enhanced", () -> 
+		new DimensionalAxe(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
+			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(AxeItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_SHOVEL_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_shovel_enhanced", () -> 
+		new DimensionalShovel(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
+			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(ShovelItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_HOE_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_hoe_enhanced", () -> 
+		new DimensionalHoe(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
+			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(HoeItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_BOW_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_bow_enhanced", () -> 
+		new DimensionalBow(
+			new Item.Properties().fireResistant().rarity(Rarity.RARE), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(4000000).maxIO(200000).maxUse(15000), 9.0F))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_TRIDENT_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_trident_enhanced", () -> 
+		new DimensionalTridentEnhanced(
+			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(DimensionalTridentEnhanced.createAttributes(12.0F, -1.0F)).component(DataComponents.TOOL, DimensionalTridentEnhanced.createToolProperties(1.0F, 2)), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED), 40000, 3, () -> new DimensionalTridentBEWLR()))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_SHIELD_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_shield_enhanced", () -> 
+		new CosmosEnergyShieldItem(
+			new Item.Properties().fireResistant().stacksTo(1).rarity(Rarity.RARE).component(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY), 
+			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED), 
+			ModReferences.RESOURCE.SHIELD_ENHANCED, ModReferences.RESOURCE.SHIELD_ENHANCED_NO_PATTERN))
+	);
 	
-	public static final DeferredItem<Item> DIMENSIONAL_ELYTRAPLATE  = addToToolsTab(ITEMS.register("dimensional_elytraplate", () -> new  DimensionalElytraplate(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.CHESTPLATE, (new Item.Properties().rarity(Rarity.RARE).fireResistant()), false, new CosmosEnergyItem.Properties().maxEnergyStored(10000000).maxIO(200000).maxUse(3500))));
+	public static final DeferredItem<Item> DIMENSIONAL_HELMET_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_helmet_enhanced", () -> 
+		new CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.HELMET, true, 
+			new Item.Properties().fireResistant().rarity(Rarity.RARE), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(6000000).maxIO(100000).maxUse(6000)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_CHESTPLATE_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_chestplate_enhanced", () -> 
+		new CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.CHESTPLATE, false, 
+			new Item.Properties().fireResistant().rarity(Rarity.RARE), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(6000000).maxIO(100000).maxUse(7000)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_LEGGINGS_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_leggings_enhanced", () -> 
+		new CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.LEGGINGS, false, 
+			new Item.Properties().fireResistant().rarity(Rarity.RARE), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(6000000).maxIO(100000).maxUse(6000)))
+	);
+	public static final DeferredItem<Item> DIMENSIONAL_BOOTS_ENHANCED = addToToolsTab(ITEMS.register(
+		"dimensional_boots_enhanced", () -> 
+		new CosmosEnergyArmourItemColourable(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.BOOTS, false, 
+			new Item.Properties().fireResistant().rarity(Rarity.RARE), 
+			new CosmosEnergyItem.Properties().maxEnergyStored(6000000).maxIO(100000).maxUse(5000)))
+	);
+	
+	public static final DeferredItem<Item> DIMENSIONAL_ELYTRAPLATE = addToToolsTab(ITEMS.register("dimensional_elytraplate", () -> new DimensionalElytraplate(ARMOUR_MATERIAL_DIMENSIONAL_ENHANCED, ArmorItem.Type.CHESTPLATE, (new Item.Properties().rarity(Rarity.RARE).fireResistant()), false, new CosmosEnergyItem.Properties().maxEnergyStored(10000000).maxIO(200000).maxUse(3500))));
 	public static final DeferredHolder<MenuType<?>, MenuType<ContainerElytraplateConnector>> CONTAINER_TYPE_ELYTRAPLATE_CONNECTOR = MENU_TYPES.register("container_elytraplate", () -> IMenuTypeExtension.create(ContainerElytraplateConnector::createContainerClientSide));
 	public static final DeferredHolder<MenuType<?>, MenuType<ContainerElytraplateSettings>> CONTAINER_TYPE_ELYTRAPLATE_SETTINGS = MENU_TYPES.register("container_elytraplate_settings", () -> IMenuTypeExtension.create(ContainerElytraplateSettings::createContainerClientSide));
 	public static final DeferredHolder<MenuType<?>, MenuType<ContainerElytraplateEnderChest>> CONTAINER_TYPE_ELYTRAPLATE_ENDER_CHEST = MENU_TYPES.register("container_elytraplate_ender_chest", () -> IMenuTypeExtension.create(ContainerElytraplateEnderChest::createContainerClientSide));
 	
-	public static final DeferredItem<Item> ARMOUR_MODULE_SCREEN  = addToItemTab(ITEMS.register("armour_module_screen", () -> new  ItemModuleScreen(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
-	public static final DeferredItem<Item> ARMOUR_MODULE_SHIFTER  = addToItemTab(ITEMS.register("armour_module_shifter", () -> new  ItemModuleShifter(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
-	public static final DeferredItem<Item> ARMOUR_MODULE_VISOR  = addToItemTab(ITEMS.register("armour_module_visor", () -> new  ItemModuleVisor(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
-	public static final DeferredItem<Item> ARMOUR_MODULE_SOLAR  = addToItemTab(ITEMS.register("armour_module_solar", () -> new  ItemModuleSolar(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
-	public static final DeferredItem<Item> ARMOUR_MODULE_BATTERY  = addToItemTab(ITEMS.register("armour_module_battery", () -> new  ItemModuleBattery(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
-	public static final DeferredItem<Item> ARMOUR_MODULE_ENDER_CHEST  = addToItemTab(ITEMS.register("armour_module_ender_chest", () -> new  ItemModuleEnderChest(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
+	public static final DeferredItem<Item> ARMOUR_MODULE_SCREEN = addToItemTab(ITEMS.register("armour_module_screen", () -> new ItemModuleScreen(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
+	public static final DeferredItem<Item> ARMOUR_MODULE_SHIFTER = addToItemTab(ITEMS.register("armour_module_shifter", () -> new ItemModuleShifter(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
+	public static final DeferredItem<Item> ARMOUR_MODULE_VISOR = addToItemTab(ITEMS.register("armour_module_visor", () -> new ItemModuleVisor(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
+	public static final DeferredItem<Item> ARMOUR_MODULE_SOLAR = addToItemTab(ITEMS.register("armour_module_solar", () -> new ItemModuleSolar(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
+	public static final DeferredItem<Item> ARMOUR_MODULE_BATTERY = addToItemTab(ITEMS.register("armour_module_battery", () -> new ItemModuleBattery(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
+	public static final DeferredItem<Item> ARMOUR_MODULE_ENDER_CHEST = addToItemTab(ITEMS.register("armour_module_ender_chest", () -> new ItemModuleEnderChest(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
+	public static final DeferredItem<Item> ARMOUR_MODULE_FIREWORK = addToItemTab(ITEMS.register("armour_module_firework", () -> new ItemModuleFirework(new Item.Properties().stacksTo(1).rarity(RARITY_ARMOUR))));
 	
-	public static final DeferredItem<Item> MODULE_BASE  = addToItemTab(ITEMS.register("module_base", () -> new  ModuleBase(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_CONNECTOR  = addToItemTab(ITEMS.register("module_connector", () -> new  ModuleConnector(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_CHARGER  = addToItemTab(ITEMS.register("module_charger", () -> new  ModuleCharger(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_CRAFTER  = addToItemTab(ITEMS.register("module_crafter", () -> new  ModuleCrafter(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_SMITHING_TABLE  = addToItemTab(ITEMS.register("module_smithing_table", () -> new  ModuleSmithingTable(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_FURNACE  = addToItemTab(ITEMS.register("module_furnace", () -> new  ModuleFurnace(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_BLAST_FURNACE  = addToItemTab(ITEMS.register("module_blast_furnace", () -> new  ModuleBlastFurnace(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_ENERGY_DISPLAY  = addToItemTab(ITEMS.register("module_energy_display", () -> new  ModuleEnergyDisplay(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_FLUID_DISPLAY  = addToItemTab(ITEMS.register("module_fluid_display", () -> new  ModuleFluidDisplay(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_ARMOUR_WORKBENCH  = addToItemTab(ITEMS.register("module_armour_workbench", () -> new  ModuleArmourWorkbench(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_GENERATOR  = addToItemTab(ITEMS.register("module_generator", () -> new  ModuleGenerator(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_UPGRADE_STATION  = addToItemTab(ITEMS.register("module_upgrade_station", () -> new  ModuleUpgradeStation(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_FOCUS  = addToItemTab(ITEMS.register("module_focus", () -> new  ModuleFocus(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_ANVIL  = addToItemTab(ITEMS.register("module_anvil", () -> new  ModuleAnvil(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
-	public static final DeferredItem<Item> MODULE_GLASS  = addToItemTab(ITEMS.register("module_glass", () -> new  ModuleGlass(new Item.Properties().stacksTo(64).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_BASE = addToItemTab(ITEMS.register("module_base", () -> new ModuleBase(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_CONNECTOR = addToItemTab(ITEMS.register("module_connector", () -> new ModuleConnector(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_CHARGER = addToItemTab(ITEMS.register("module_charger", () -> new ModuleCharger(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_CRAFTER = addToItemTab(ITEMS.register("module_crafter", () -> new ModuleCrafter(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_SMITHING_TABLE = addToItemTab(ITEMS.register("module_smithing_table", () -> new ModuleSmithingTable(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_FURNACE = addToItemTab(ITEMS.register("module_furnace", () -> new ModuleFurnace(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_BLAST_FURNACE = addToItemTab(ITEMS.register("module_blast_furnace", () -> new ModuleBlastFurnace(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_ENERGY_DISPLAY = addToItemTab(ITEMS.register("module_energy_display", () -> new ModuleEnergyDisplay(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_FLUID_DISPLAY = addToItemTab(ITEMS.register("module_fluid_display", () -> new ModuleFluidDisplay(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_ARMOUR_WORKBENCH = addToItemTab(ITEMS.register("module_armour_workbench", () -> new ModuleArmourWorkbench(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_GENERATOR = addToItemTab(ITEMS.register("module_generator", () -> new ModuleGenerator(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_UPGRADE_STATION = addToItemTab(ITEMS.register("module_upgrade_station", () -> new ModuleUpgradeStation(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_FOCUS = addToItemTab(ITEMS.register("module_focus", () -> new ModuleFocus(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_ANVIL = addToItemTab(ITEMS.register("module_anvil", () -> new ModuleAnvil(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_GLASS = addToItemTab(ITEMS.register("module_glass", () -> new ModuleGlass(new Item.Properties().stacksTo(64).rarity(RARITY_ENHANCED))));
 	
-	public static final DeferredItem<Item> MODULE_CREATIVE_ENERGY  = addToItemTab(ITEMS.register("module_creative_energy", () -> new  ModuleZCreativeEnergy(new Item.Properties().stacksTo(8).rarity(RARITY_CREATIVE))));
-	public static final DeferredItem<Item> MODULE_CREATIVE_FLUID  = addToItemTab(ITEMS.register("module_creative_fluid", () -> new  ModuleZCreativeFluid(new Item.Properties().stacksTo(8).rarity(RARITY_CREATIVE))));
+	public static final DeferredItem<Item> MODULE_CREATIVE_ENERGY = addToItemTab(ITEMS.register("module_creative_energy", () -> new ModuleZCreativeEnergy(new Item.Properties().stacksTo(8).rarity(RARITY_CREATIVE))));
+	public static final DeferredItem<Item> MODULE_CREATIVE_FLUID = addToItemTab(ITEMS.register("module_creative_fluid", () -> new ModuleZCreativeFluid(new Item.Properties().stacksTo(8).rarity(RARITY_CREATIVE))));
 
-	public static final DeferredItem<Item> DIMENSIONAL_UPGRADE_TEMPLATE  = addToToolsTab(ITEMS.register("dimensional_upgrade_template", () -> new  CosmosItem(new Item.Properties().rarity(RARITY_ENHANCED).stacksTo(16))));
+	public static final DeferredItem<Item> DIMENSIONAL_UPGRADE_TEMPLATE = addToToolsTab(ITEMS.register("dimensional_upgrade_template", () -> new CosmosItem(new Item.Properties().rarity(RARITY_ENHANCED).stacksTo(16))));
 	
 	
 	public static final DeferredBlock<Block> BLOCK_DIMENSIONAL_ORE = BLOCKS.register("block_dimensional_ore", () -> new CosmosBlock(Block.Properties.of().requiresCorrectToolForDrops().strength(4.0F, 4.0F)));
@@ -539,6 +684,7 @@ public class ModRegistrationManager {
 	public static KeyMapping SUIT_SCREEN_ENDER_CHEST;
 	public static KeyMapping SUIT_SHIFT;
 	public static KeyMapping SUIT_SETTINGS;
+	public static KeyMapping SUIT_FIREWORK;
 	
 	public static void register(IEventBus bus) {
 		ITEMS.register(bus);
@@ -648,11 +794,13 @@ public class ModRegistrationManager {
 		SUIT_SCREEN_ENDER_CHEST = new KeyMapping("dimensionalpocketsii.keybind.suit_ender_chest", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_WORLD_1, "dimensionalpocketsii.keybind.category");
 		SUIT_SHIFT = new KeyMapping("dimensionalpocketsii.keybind.suit_shift", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_BRACKET, "dimensionalpocketsii.keybind.category");
 		SUIT_SETTINGS = new KeyMapping("dimensionalpocketsii.keybind.suit_mode_change", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_APOSTROPHE, "dimensionalpocketsii.keybind.category");
+		SUIT_FIREWORK = new KeyMapping("dimensionalpocketsii.keybind.suit_firework", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_BRACKET, "dimensionalpocketsii.keybind.category");
 		
 		event.register(SUIT_SCREEN);
-		event.register(SUIT_SCREEN_ENDER_CHEST); 
+		event.register(SUIT_SCREEN_ENDER_CHEST);
 		event.register(SUIT_SHIFT);
 		event.register(SUIT_SETTINGS);
+		event.register(SUIT_FIREWORK);
 		
 		DimensionalPockets.CONSOLE.startup("Keybindings registration complete..");
 	}
@@ -752,7 +900,12 @@ public class ModRegistrationManager {
 		ItemProperties.register(DIMENSIONAL_SHIELD_ENHANCED.get(), ResourceLocation.parse("blocking"), (stack, level, entity, seed) -> { return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F; });
 
 		ItemProperties.register(DIMENSIONAL_ENERGY_CELL.get(), ResourceLocation.parse("energy"), (stack, level, entity, seed) -> { return stack.getItem() instanceof CosmosEnergyItem item ? (float) item.getScaledEnergy(stack, 14) : 0.0F; });
+//		ItemProperties.register(DIMENSIONAL_ENERGY_CELL.get(), ResourceLocation.parse("active"), (stack, level, entity, seed) -> { return stack.getItem() instanceof DimensionalEnergyCell item ? (item.isActive(stack) ? 1.0F : 0.0F) : 0.0F; });
+		
 		ItemProperties.register(DIMENSIONAL_ENERGY_CELL_ENHANCED.get(), ResourceLocation.parse("energy"), (stack, level, entity, seed) -> { return stack.getItem() instanceof CosmosEnergyItem item ? (float) item.getScaledEnergy(stack, 14) : 0.0F; });
+//		ItemProperties.register(DIMENSIONAL_ENERGY_CELL_ENHANCED.get(), ResourceLocation.parse("active"), (stack, level, entity, seed) -> { return stack.getItem() instanceof DimensionalEnergyCellEnhanced item ? (item.isActive(stack) ? 1.0F : 0.0F) : 0.0F; });
+		
+//		ItemProperties.register(NETHER_STAR_SHARD.get(), ResourceLocation.parse("stack"), (stack, level, entity, seed) -> { return (float) stack.getCount() < 5 ? 0.25F : stack.getCount() < 9 ? 0.5F : stack.getCount() < 13 ? 0.75F : 1; });
 		
 		EntityRenderers.register(ENTITY_TYPE_TRIDENT.get(), RendererDimensionalTrident::new);
 		EntityRenderers.register(ENTITY_TYPE_TRIDENT_ENHANCED.get(), RendererDimensionalTridentEnhanced::new);

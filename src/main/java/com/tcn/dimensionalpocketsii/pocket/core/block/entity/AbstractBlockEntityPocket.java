@@ -449,7 +449,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 	public void setPlacedBy(Level levelIn, BlockPos posIn, BlockState state, LivingEntity placer, ItemStack stack) {
 		boolean update = true;
 
-		DimensionalPockets.CONSOLE.debug("[Pocket Generation] <> Pocket has been placed");
+		//DimensionalPockets.CONSOLE.debug("[Pocket Generation] <> Pocket has been placed");
 		
 		if (PocketEventFactory.onPocketBlockPlaced(levelIn, placer, this, posIn)) {
 			if (!levelIn.isClientSide) {

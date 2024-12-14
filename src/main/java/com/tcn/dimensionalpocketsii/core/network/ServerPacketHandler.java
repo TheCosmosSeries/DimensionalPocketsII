@@ -23,6 +23,7 @@ import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytra
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUpdateUIHelp;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUpdateUIMode;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUseEnergy;
+import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUseFirework;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
@@ -37,8 +38,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
@@ -122,7 +125,7 @@ public class ServerPacketHandler {
 			context.enqueueWork(() -> {
 				ServerPlayer player = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(packet.playerUUID());
 				
-				ItemStack stack = player.getInventory().getArmor(packet.index());
+				ItemStack stack = player.getInventory().getArmor(packet.armourIndex());
 				
 				DimensionalElytraplate.addOrUpdateElytraSetting(stack, packet.setting(), packet.value());
 			});
@@ -225,6 +228,19 @@ public class ServerPacketHandler {
 					serverPlayer.openMenu(new MenuProviderElytraplateSettings(), (packetBuffer) -> {
 						ItemStack.STREAM_CODEC.encode(packetBuffer, stack);
 					});
+				}
+			});
+		}
+
+		if (data instanceof PacketElytraplateUseFirework packet) {
+			context.enqueueWork(() -> {
+				Player player = context.player();
+				
+				if (player.isFallFlying()) {
+					if (player instanceof ServerPlayer serverPlayer) {
+						FireworkRocketEntity fireworkrocketentity = new FireworkRocketEntity(serverPlayer.level(), new ItemStack(Items.FIREWORK_ROCKET), player);
+		                serverPlayer.level().addFreshEntity(fireworkrocketentity);
+					}
 				}
 			});
 		}

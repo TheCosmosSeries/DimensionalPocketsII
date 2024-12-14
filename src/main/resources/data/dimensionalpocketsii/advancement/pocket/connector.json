@@ -17,10 +17,23 @@
 		"hidden": false
 	},
 	"criteria": {
-		"use_wrench_": {
-			"trigger": "minecraft:item_used_on_block",
+		"connector": {
 			"conditions": {
-				"player": [
+				"location": [
+					{
+						"condition": "minecraft:location_check",
+						"predicate": {
+							"block": {
+								"blocks": "dimensionalpocketsii:block_wall"
+							}
+						}
+					},
+					{
+						"condition": "minecraft:match_tool",
+						"predicate": {
+							"items": "dimensionalpocketsii:module_connector"
+						}
+					},
 					{
 						"condition": "minecraft:entity_properties",
 						"entity": "this",
@@ -31,25 +44,14 @@
 							}
 						}
 					}
-				],
-				"location": {
-					"block": {
-						"blocks": [
-							"dimensionalpocketsii:block_wall"
-						]
-					}
-				},
-				"item": {
-					"items": [
-						"dimensionalpocketsii:module_connector"
-					]
-				}
-			}
+				]
+			},
+			"trigger": "minecraft:item_used_on_block"
 		}
 	},
 	"requirements": [
 		[
-			"use_wrench_"
+			"connector"
 		]
 	],
 	"rewards": {

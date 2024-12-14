@@ -18,22 +18,24 @@
 	},
 	"criteria": {
 		"use_wrench": {
-			"trigger": "minecraft:item_used_on_block",
-			"conditions": {
-				"location": {
-					"block": {
-						"blocks": [
-							"dimensionalpocketsii:block_pocket"
-						]
+			"location": [
+				{
+					"condition": "minecraft:location_check",
+					"predicate": {
+						"block": {
+							"blocks": "dimensionalpocketsii:block_pocket"
+						}
 					}
 				},
-				"item": {
-					"items": [
-						"dimensionalpocketsii:dimensional_wrench"
-					]
+				{
+					"condition": "minecraft:match_tool",
+					"predicate": {
+						"items": "dimensionalpocketsii:dimensional_wrench"
+					}
 				}
-			}
-		}
+			]
+		},
+		"trigger": "minecraft:item_used_on_block"
 	},
 	"requirements": [
 		[

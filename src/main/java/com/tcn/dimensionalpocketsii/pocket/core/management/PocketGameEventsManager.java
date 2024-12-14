@@ -168,8 +168,8 @@ public class PocketGameEventsManager {
 	public static void onJumpEvent(LivingEvent.LivingJumpEvent event) {
 		Entity entity = event.getEntity();
 		
-		if (entity instanceof Player && entity.level().isClientSide) {
-			tryTeleport((LocalPlayer) entity, Direction.UP);
+		if (entity instanceof Player playerEntity && entity.level().isClientSide) {
+			tryTeleport((LocalPlayer) playerEntity, Direction.UP);
 		}
 	}
 
@@ -197,18 +197,15 @@ public class PocketGameEventsManager {
             BlockEntity toEntity = world.getBlockEntity(toPos);
            
             if (focus != null && PocketFocusManager.isBlocked(world, toPos)) {
-            	if (entity instanceof BlockEntityFocus) {
-            		BlockEntityFocus fromFocusEntity = (BlockEntityFocus) entity;
-            		
-            		if (toEntity instanceof BlockEntityFocus) {
-            			BlockEntityFocus toFocusEntity = (BlockEntityFocus) toEntity;
-            			Pocket pocket = toFocusEntity.getPocket();
+            	if (entity instanceof BlockEntityFocus focusEntityFrom) {
+            		if (toEntity instanceof BlockEntityFocus focusEntityTo) {
+            			Pocket pocket = focusEntityTo.getPocket();
             			
-            			if (pocket != null && toPos.getY() == toFocusEntity.getPocket().getInternalHeight()) {
+            			if (pocket != null && toPos.getY() == focusEntityTo.getPocket().getInternalHeight()) {
             				return;
             			}
             			
-            			if (fromFocusEntity.getJumpEnabled() && toFocusEntity.getJumpEnabled()) {
+            			if (focusEntityFrom.getJumpEnabled() && focusEntityTo.getJumpEnabled()) {
             				PacketDistributor.sendToServer(new PacketFocusTeleport(fromPos, toPos));
  		                    break;
             			}
@@ -260,13 +257,11 @@ public class PocketGameEventsManager {
 		ResourceKey<Level> dimension = ResourceKey.create(Registries.DIMENSION, destDimension);
 		
 		if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
-			if (entity instanceof ServerPlayer) {
-				ServerPlayer playerIn = (ServerPlayer) entity;
-				
+			if (entity instanceof ServerPlayer playerEntity) {
 				Pocket pocket = StorageManager.getPocketFromChunkPosition(level, chunkPos);
-				if (!pocket.checkIfPlayerCanShift(playerIn, EnumShiftDirection.GENERIC)) {
+				if (!pocket.checkIfPlayerCanShift(playerEntity, EnumShiftDirection.GENERIC)) {
 					if (!entity.level().isClientSide) {
-						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <cosmosportals:portaltravel> { Player: '" + playerIn.getDisplayName().getString() + "', UUID: '" + playerIn.getUUID() + "' } tried to use a Portal to Pocket: { " + pocket.getDominantChunkPos() + " } that has been locked by the Owner. This event has been cancelled.");
+						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <cosmosportals:portaltravel> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to use a Portal to Pocket: { " + pocket.getDominantChunkPos() + " } that has been locked by the Owner. This event has been cancelled.");
 					}
 					event.setCanceled(true);
 				}
@@ -286,12 +281,10 @@ public class PocketGameEventsManager {
 		if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
 			Pocket pocket = StorageManager.getPocketFromChunkPosition(level, chunkPos);
 			
-			if (entity instanceof Player) {
-				Player playerIn = (Player) entity;
-				
-				if (!pocket.checkIfOwner(playerIn)) {
+			if (entity instanceof Player playerEntity) {
+				if (!pocket.checkIfOwner(playerEntity)) {
 					if (!entity.level().isClientSide) {
-						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <cosmosportals:containerlink> { Player: '" + playerIn.getDisplayName().getString() + "', UUID: '" + playerIn.getUUID() + "' } tried to create a Dimension Container inside Pocket: { " + pocket.getDominantChunkPos() + " } which they don't own. This event has been cancelled.");
+						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <cosmosportals:containerlink> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to create a Dimension Container inside Pocket: { " + pocket.getDominantChunkPos() + " } which they don't own. This event has been cancelled.");
 					}
 					event.setCanceled(true);
 				}
@@ -308,12 +301,10 @@ public class PocketGameEventsManager {
 			ResourceKey<Level> dimension = world.dimension();
 			
 			if (world != null) {
-				if (entity instanceof Player) {
-					Player playerIn = (Player) entity;
-					
+				if (entity instanceof Player playerEntity) {
 					if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
 						if (!world.isClientSide) {
-							DimensionalPockets.CONSOLE.debug("[Event Cancellation] <enderteleport> { Player: '" + playerIn.getDisplayName().getString() + "', UUID: '" + playerIn.getUUID() + "' } tried to ender teleport. This event has been cancelled.");
+							DimensionalPockets.CONSOLE.debug("[Event Cancellation] <enderteleport> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to ender teleport. This event has been cancelled.");
 						}
 						event.setCanceled(true);
 					}
@@ -331,13 +322,11 @@ public class PocketGameEventsManager {
 			ResourceKey<Level> dimension = world.dimension();
 			
 			if (world != null) {
-				if (entity instanceof Player) {
-					Player playerIn = (Player) entity;
-					
+				if (entity instanceof Player playerEntity) {
 					if (!ModConfigManager.getInstance().getCanUseItems()) {
 						if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
 							if (!world.isClientSide) {
-								DimensionalPockets.CONSOLE.debug("[Event Cancellation] <enderpearlteleport> { Player: '" + playerIn.getDisplayName().getString() + "', UUID: '" + playerIn.getUUID() + "' } tried to use an Ender Pearl. This event has been cancelled.");
+								DimensionalPockets.CONSOLE.debug("[Event Cancellation] <enderpearlteleport> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to use an Ender Pearl. This event has been cancelled.");
 							}
 							event.setCanceled(true);
 						}
@@ -361,14 +350,11 @@ public class PocketGameEventsManager {
 			
 			if (world != null) {
 				if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
-					if (entity instanceof ServerPlayer) {
+					if (entity instanceof ServerPlayer serverPlayer) {
 						boolean cancelled = false;
-						ServerPlayer playerIn = (ServerPlayer) entity;
-					
 						MinecraftServer serverIn = ServerLifecycleHooks.getCurrentServer();
 						
 						if (serverIn != null) {
-							
 							if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
 								for (int i = 0; i < ModConfigManager.getInstance().getBlockedCommands().size(); i++) {
 									Object obj = ModConfigManager.getInstance().getBlockedCommands().get(i);
@@ -378,13 +364,11 @@ public class PocketGameEventsManager {
 										
 										if (command.contains(string/* + " "*/)) {
 											if (serverIn.isSingleplayer()) {
-												System.out.println("SINGLE");
 												if (!ModConfigManager.getInstance().getCanUseCommands()) {
 													cancelled = true;
 												}
 											} else {
-												System.out.println("SERVER");
-												if (playerIn.hasPermissions(ModConfigManager.getInstance().getOPLevel())) {
+												if (serverPlayer.hasPermissions(ModConfigManager.getInstance().getOPLevel())) {
 													cancelled = false;
 												}
 											}
@@ -398,8 +382,8 @@ public class PocketGameEventsManager {
 							event.setCanceled(true);
 							
 							if (!world.isClientSide) {
-								playerIn.sendSystemMessage(ComponentHelper.getErrorText("dimensionalpocketsii.error.command.usage").append(" " + Value.YELLOW + " /" + command));
-								DimensionalPockets.CONSOLE.debug("[Event Cancellation] <usecommand> { Player: '" + playerIn.getDisplayName().getString() + "', UUID: '" + playerIn.getUUID() + "' } tried to use command: { " + command  + " }. This event has been cancelled.");
+								serverPlayer.sendSystemMessage(ComponentHelper.getErrorText("dimensionalpocketsii.error.command.usage").append(" " + Value.YELLOW + " /" + command));
+								DimensionalPockets.CONSOLE.debug("[Event Cancellation] <usecommand> { Player: '" + serverPlayer.getDisplayName().getString() + "', UUID: '" + serverPlayer.getUUID() + "' } tried to use command: { " + command  + " }. This event has been cancelled.");
 							}	
 						}
 					}
@@ -413,8 +397,8 @@ public class PocketGameEventsManager {
 		Entity entity = event.getEntity();
 		
 		if (entity != null) {
-			if (entity instanceof Player) {
-				Level world = entity.level();
+			if (entity instanceof Player playerEntity) {
+				Level world = playerEntity.level();
 				ResourceKey<Level> dimension = world.dimension();
 				
 				if (world != null) {
@@ -441,11 +425,7 @@ public class PocketGameEventsManager {
 						if (entity instanceof Player) {
 							if (entity.level().getDifficulty() == Difficulty.PEACEFUL) {
 								event.setNewDamage(0.0F);
-							} else {
-								//event.setCanceled(false);
 							}
-						} else {
-							//event.setCanceled(false);
 						}
 					}
 				}
@@ -467,7 +447,6 @@ public class PocketGameEventsManager {
 						event.setCanceled(true);
 						
 						world.sendBlockUpdated(event.getPos(), event.getState(), event.getState(), 3);
-						//world.notifyNeighborsOfStateChange(event.getPos(), event.getState().getBlock()); //.notifyBlockUpdate(event.getPos(), event.getState(), event.getState(), 3);
 					}
 				}
 			}
@@ -484,9 +463,9 @@ public class PocketGameEventsManager {
 			
 			if (world != null) {
 				if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
-					if (entity instanceof ServerPlayer) {
+					if (entity instanceof ServerPlayer serverPlayer) {
 						if(entity.level().getDifficulty() == Difficulty.PEACEFUL) {
-							((ServerPlayer) entity).setHealth(((Player) entity).getMaxHealth());
+							serverPlayer.setHealth(serverPlayer.getMaxHealth());
 							event.setCanceled(true);
 						}
 					}
@@ -539,13 +518,11 @@ public class PocketGameEventsManager {
 		Entity mounted = event.getEntityBeingMounted();
 		ResourceKey<Level> dimension = entity.level().dimension();
 		
-		if (entity instanceof Player) {
-			Player playerIn = (Player) entity;
-			
+		if (entity instanceof Player playerEntity) {
 			if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
 				if (mounted.getType().equals(EntityType.MINECART) || mounted.getType().equals(EntityType.BOAT)) {
 					if (!entity.level().isClientSide) {
-						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <entitymount> { Player: '" + playerIn.getDisplayName().getString() + "', UUID: '" + playerIn.getUUID() + "' } tried to mount entity: { " + mounted + " } This event has been cancelled.");
+						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <entitymount> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to mount entity: { " + mounted + " } This event has been cancelled.");
 					}
 					event.setCanceled(true);
 				}
@@ -756,9 +733,7 @@ public class PocketGameEventsManager {
 		BlockState state = event.getPlacedBlock();
 		Block block = state.getBlock();
 
-		if (block instanceof AbstractBlockPocket) {
-			AbstractBlockPocket blockPocket = (AbstractBlockPocket) block;
-			
+		if (block instanceof AbstractBlockPocket blockPocket) {
 			Entity entity = event.getEntity();
 			BlockPos pos = event.getPos();
 			

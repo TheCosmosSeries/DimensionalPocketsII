@@ -14,10 +14,9 @@ import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.energy.interfaces.ICosmosEnergyItem;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyArmourItemElytra;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyItem;
+import com.tcn.cosmoslibrary.energy.item.CosmosEnergyStorageItem;
 import com.tcn.dimensionalpocketsii.client.renderer.ElytraplateBEWLR;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.BaseElytraModule;
-import com.tcn.dimensionalpocketsii.core.item.device.DimensionalEnergyCell;
-import com.tcn.dimensionalpocketsii.core.item.device.DimensionalEnergyCellEnhanced;
 import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.AbstractBlockEntityPocket;
@@ -163,19 +162,18 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	public void inventoryTick(ItemStack stackIn, Level levelIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (!levelIn.isClientSide) {
 			if (entityIn instanceof Player) {
-				if (itemSlot == 2) {
+				if (itemSlot == 38) {
 					if (this.hasEnergy(stackIn)) {
 						if (hasModuleInstalled(stackIn, BaseElytraModule.BATTERY)) {
 							if (getElytraSetting(stackIn, ElytraSettings.CHARGER)[1]) {
-								if (entityIn instanceof ServerPlayer) {
-									ServerPlayer player = (ServerPlayer) entityIn;
-									Inventory inv = player.getInventory();
+								if (entityIn instanceof ServerPlayer serverPlayer) {
+									Inventory inv = serverPlayer.getInventory();
 									
 									for (int i = 0; i < inv.getContainerSize(); i++) {
 										ItemStack testStack = inv.getItem(i);
 										Item testItem = testStack.getItem();
 										
-										if (!(testItem instanceof DimensionalEnergyCell) && !(testItem instanceof DimensionalEnergyCellEnhanced) && !(testItem instanceof DimensionalElytraplate)) {
+										if (!(testItem instanceof CosmosEnergyStorageItem) && !(testItem instanceof DimensionalElytraplate)) {
 											if (testItem instanceof ICosmosEnergyItem energyItem) {
 												if (energyItem.canReceiveEnergy(testStack)) {
 													this.extractEnergy(stackIn, energyItem.receiveEnergy(testStack, Math.min(energyItem.getMaxReceive(testStack), this.getMaxExtract(stackIn)), false), false);
@@ -213,16 +211,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	@Override
 	public int getMaxEnergyStored(ItemStack stackIn) {
 		Item item = stackIn.getItem();
-		
-		int maxStored = 0;
-		
-		if (hasModuleInstalled(stackIn, BaseElytraModule.BATTERY)) {
-			maxStored = ((DimensionalElytraplate)item).maxEnergyStored * 6;
-		} else {
-			maxStored = ((DimensionalElytraplate)item).maxEnergyStored;
-		}
-		
-		return !(item instanceof DimensionalElytraplate) ? 0 : maxStored;
+		return !(item instanceof DimensionalElytraplate elytraItem) ? 0 : hasModuleInstalled(stackIn, BaseElytraModule.BATTERY) ? elytraItem.maxEnergyStored * 6 : elytraItem.maxEnergyStored;
 	}
 
 	@Override
@@ -237,15 +226,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 
 	@Override
 	public boolean isFlyEnabled(ItemStack stackIn) {
-		if (this.hasEnergy(stackIn)) {
-			if (getElytraSetting(stackIn, ElytraSettings.ELYTRA_FLY)[1]) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		return false;
+		return !(this.hasEnergy(stackIn)) ? false : getElytraSetting(stackIn, ElytraSettings.ELYTRA_FLY)[1];
 	}
 
 	@Override
@@ -262,21 +243,20 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
 		Player playerIn = context.getPlayer();
 		BlockPos pos = context.getClickedPos();
-		Level world = context.getLevel();
-		BlockEntity entity = world.getBlockEntity(pos);
+		Level level = context.getLevel();
+		BlockEntity entity = level.getBlockEntity(pos);
 		
 		if (entity != null) {
 			if (entity instanceof AbstractBlockEntityPocket blockEntity) {
 				Pocket pocket = blockEntity.getPocket();
 				
-				if (this.addOrUpdateShifterInformation(stack, pocket, world, playerIn)) {
-					return InteractionResult.SUCCESS;
+				if (this.addOrUpdateShifterInformation(stack, pocket, level, playerIn)) {
+					return InteractionResult.sidedSuccess(level.isClientSide);
 				}
 			} else {
 				return InteractionResult.PASS;
 			}
 		}
-		
 		return InteractionResult.FAIL;
 	}
 	
@@ -391,44 +371,44 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	}
 	
 	public boolean addOrUpdateShifterInformation(ItemStack stackIn, Pocket pocketIn, Level levelIn, Player playerIn) {
-		BlockPos player_pos = playerIn.blockPosition();
+		BlockPos playerPos = playerIn.blockPosition();
 		
 		if (pocketIn != null) {
 			if (pocketIn.checkIfOwner(playerIn)) {
-				CosmosChunkPos chunk_pos = pocketIn.getDominantChunkPos();
+				CosmosChunkPos chunkPos = pocketIn.getDominantChunkPos();
 
-				int x = chunk_pos.getX();
-				int z = chunk_pos.getZ();
+				int x = chunkPos.getX();
+				int z = chunkPos.getZ();
 
 				if (playerIn.isShiftKeyDown()) {
-					CompoundTag stack_tag = stackIn.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-					CompoundTag nbt_data = new CompoundTag();
+					CompoundTag stackTag = stackIn.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+					CompoundTag nbtTag = stackTag.contains("nbt_data") ? stackTag.getCompound("nbt_data") : new CompoundTag();
 					
-					CompoundTag chunk_tag = new CompoundTag();
-					chunk_tag.putInt("x", x);
-					chunk_tag.putInt("z", z);
-					nbt_data.put("chunk_pos", chunk_tag);
+					CompoundTag chunkTag = new CompoundTag();
+					chunkTag.putInt("x", x);
+					chunkTag.putInt("z", z);
+					nbtTag.put("chunk_pos", chunkTag);
 					
-					nbt_data.putInt("colour", pocketIn.getDisplayColour());
+					nbtTag.putInt("colour", pocketIn.getDisplayColour());
 					
-					CompoundTag pos_tag = new CompoundTag();
-					pos_tag.putInt("x", player_pos.getX());
-					pos_tag.putInt("y", player_pos.getY());
-					pos_tag.putInt("z", player_pos.getZ());
-					pos_tag.putFloat("yaw", playerIn.getRotationVector().y);
-					pos_tag.putFloat("pitch", playerIn.getRotationVector().x);
-					nbt_data.put("player_pos", pos_tag);
+					CompoundTag posTag = new CompoundTag();
+					posTag.putInt("x", playerPos.getX());
+					posTag.putInt("y", playerPos.getY());
+					posTag.putInt("z", playerPos.getZ());
+					posTag.putFloat("yaw", playerIn.getRotationVector().y);
+					posTag.putFloat("pitch", playerIn.getRotationVector().x);
+					nbtTag.put("player_pos", posTag);
 
 					addOrUpdateElytraSetting(stackIn, ElytraSettings.TELEPORT_TO_BLOCK, true);
 					
 					CompoundTag dimension = new CompoundTag();
 					dimension.putString("namespace", levelIn.dimension().location().getNamespace());
 					dimension.putString("path", levelIn.dimension().location().getPath());
-					nbt_data.put("dimension", dimension);
+					nbtTag.put("dimension", dimension);
 					
-					stack_tag.put("nbt_data", nbt_data);
+					stackTag.put("nbt_data", nbtTag);
 					
-					stackIn.set(DataComponents.CUSTOM_DATA, CustomData.of(stack_tag));
+					stackIn.set(DataComponents.CUSTOM_DATA, CustomData.of(stackTag));
 					CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.style(ComponentColour.PURPLE, "dimensionalpocketsii.item.message.elytraplate.linked").append(ComponentHelper.comp(Value.LIGHT_GRAY + " {" + x + ", " + z + "}")));
 					
 					return true;

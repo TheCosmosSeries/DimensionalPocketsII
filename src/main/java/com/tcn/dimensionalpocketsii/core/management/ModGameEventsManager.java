@@ -15,6 +15,7 @@ import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytra
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateShift;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateTagUpdate;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUseEnergy;
+import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUseFirework;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.ChunkLoadingManager;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
@@ -247,7 +248,31 @@ public class ModGameEventsManager {
 						}
 					}
 				}
-			}
+			} else if (ModRegistrationManager.SUIT_FIREWORK.isDown()) {
+				if (playerIn.getInventory().getArmor(2).getItem() != null) {
+					ItemStack armourStack = playerIn.getInventory().getArmor(2);
+					Item armour = armourStack.getItem();
+					
+					if (armour instanceof DimensionalElytraplate elytraplate) {						
+						if (DimensionalElytraplate.hasModuleInstalled(armourStack, BaseElytraModule.FIREWORK)) {
+							if (DimensionalElytraplate.getElytraSetting(armourStack, ElytraSettings.FIREWORK)[1]) {
+								if (elytraplate.hasEnergy(armourStack)) {
+									PacketDistributor.sendToServer(new PacketElytraplateUseFirework(2));
+									PacketDistributor.sendToServer(new PacketElytraplateUseEnergy(playerIn.getUUID(), 2, elytraplate.getMaxUse(armourStack)));
+									return;
+								} else {
+									CosmosChatUtil.sendClientPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.item.message.elytraplate.no_energy"));
+								}
+							} else {
+								CosmosChatUtil.sendClientPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.item.message.elytraplate.firework_disabled"));
+							}
+						} else {
+							CosmosChatUtil.sendClientPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.item.message.elytraplate.no_firework"));
+						}
+					}
+				}
+			} 
+			
 		}
 	}
 	

@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 public class GsonAdapterPocketItemsList implements JsonSerializer<NonNullList<ItemStack>>, JsonDeserializer<NonNullList<ItemStack>> {
@@ -58,9 +59,8 @@ public class GsonAdapterPocketItemsList implements JsonSerializer<NonNullList<It
 	@Override
 	public JsonElement serialize(NonNullList<ItemStack> src, Type typeOfSrc, JsonSerializationContext context) {
 		CompoundTag compound = new CompoundTag();
-		ContainerHelper.saveAllItems(compound, src, ServerLifecycleHooks.getCurrentServer().registryAccess());
-		compound.putInt("size", src.size());
 		
+		ContainerHelper.saveAllItems(compound, src, ServerLifecycleHooks.getCurrentServer().registryAccess());
 		String nbt_string = compound.toString();
 		
 		return new JsonPrimitive(nbt_string);

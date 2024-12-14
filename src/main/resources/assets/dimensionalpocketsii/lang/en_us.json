@@ -166,6 +166,7 @@
 	"item.dimensionalpocketsii.armour_module_solar": "Armour Module Solar Panel",
 	"item.dimensionalpocketsii.armour_module_battery": "Armour Module Battery",
 	"item.dimensionalpocketsii.armour_module_ender_chest": "Armour Module Ender Chest",
+	"item.dimensionalpocketsii.armour_module_firework": "Armour Module Firework",
 	
 	"item.dimensionalpocketsii.dimensional_helmet_enhanced": "Enhanced Dimensional Helmet",
 	"item.dimensionalpocketsii.dimensional_chestplate_enhanced": "Enhanced Dimensional Chestplate",
@@ -197,7 +198,7 @@
 	"item.dimensionalpocketsii.module_creative_energy": "Creative Energy Module",
 	"item.dimensionalpocketsii.module_creative_fluid": "Creative Fluid Module",
 	
-	"item.dimensionalpocketsii.dimensional_upgrade_template": "Dimensional Smithing Template",
+	"item.dimensionalpocketsii.dimensional_upgrade_template": "Dimensional Upgrade Template",
 	
 	"block.dimensionalpocketsii.block_dimensional_ore": "Dimensional Ore",
 	"block.dimensionalpocketsii.block_deepslate_dimensional_ore": "Deepslate Dimensional Ore",
@@ -359,7 +360,7 @@
 	"dimensionalpocketsii.gui.elytraplate.visor.dimension": "Dimension: ",
 	"dimensionalpocketsii.gui.elytraplate.visor.empty": "No Modules Installed!",
 	
-	"dimensionalpocketsii.gui.elytraplate.settings.title": "Elytraplate",
+	"dimensionalpocketsii.gui.elytraplate.settings.title": "Elytraplate Settings",
 	"dimensionalpocketsii.gui.elytraplate.settings.fly_info": "Enable or disable Elytra Flight.",
 	"dimensionalpocketsii.gui.elytraplate.settings.fly_value": "Elytra flight is currently: ",
 	"dimensionalpocketsii.gui.elytraplate.settings.tele_info": "Change Teleport to Block mode.",
@@ -371,6 +372,8 @@
 	"dimensionalpocketsii.gui.elytraplate.settings.solar_value": "Solar Generator is currently: ",
 	"dimensionalpocketsii.gui.elytraplate.settings.charger_info": "Enable or disable Item Charger.",
 	"dimensionalpocketsii.gui.elytraplate.settings.charger_value": "Item Charger is currently: ",
+	"dimensionalpocketsii.gui.elytraplate.settings.firework_info": "Enable or disable Firework Module.",
+	"dimensionalpocketsii.gui.elytraplate.settings.firework_value": "Firework Module is currently: ",
 	
 	"dimensionalpocketsii.gui.elytraplate.screen.title": "Elytraplate Pocket Connection",
 	
@@ -590,6 +593,10 @@
 	"dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_two": "the piece of Armour in the Focused",
 	"dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_three": "Armour Slot to the Module Slots.",
 	
+	"dimensionalpocketsii.gui.help.armour_workbench.view": "Armour Stand View",
+	"dimensionalpocketsii.gui.help.armour_workbench.view_one": "This will show you what the Armour is",
+	"dimensionalpocketsii.gui.help.armour_workbench.view_two": "going to look like if you apply.",
+	
 	"dimensionalpocketsii.gui.help.smithing_table.input_slot_a": "Template / Trim Item",
 	"dimensionalpocketsii.gui.help.smithing_table.input_slot_a_one": "This Slot is the template or",
 	"dimensionalpocketsii.gui.help.smithing_table.input_slot_a_two": "trim you are going to apply.",
@@ -782,6 +789,7 @@
 	"dimensionalpocketsii.keybind.suit_shift": "Elytraplate Shift Key",
 	"dimensionalpocketsii.keybind.suit_mode_change": "Elytraplate Settings Key",
 	"dimensionalpocketsii.keybind.suit_ender_chest": "Elytraplate Ender Chest Key",
+	"dimensionalpocketsii.keybind.suit_firework": "Elytraplate Firework Key",
 	
 	"dimensionalpocketsii.item.message.shifter.linked": "Dimensional Shifter linked to Pocket:",
 	"dimensionalpocketsii.item.message.shifter.not_linked": "You haven't linked your Shifter to a Pocket yet!",
@@ -856,12 +864,18 @@
 	"dimensionalpocketsii.item.info.armour_module.ender_chest_one": "Gives your Elytraplate access to your Ender Chest.",
 	"dimensionalpocketsii.item.info.armour_module.ender_chest_two": "To open your Ender Chest: press the ",
 	
+	"dimensionalpocketsii.item.info.armour_module.firework": "Firework Module for Elytraplates",
+	"dimensionalpocketsii.item.info.armour_module.firework_one": "Enables you to boost Elytra flight with energy.",
+	"dimensionalpocketsii.item.info.armour_module.firework_two": "To boost press the ",
+	
 	"dimensionalpocketsii.item.message.elytraplate.linked": "Elytraplate linked to Pocket:",
 	"dimensionalpocketsii.item.message.elytraplate.not_linked": "You haven't linked your Elytraplate to a Pocket yet!",
 	"dimensionalpocketsii.item.message.elytraplate.no_energy": "You're Elytraplate is out of energy!",
 	"dimensionalpocketsii.item.message.elytraplate.no_shifter": "You have not installed a Shifter Module!",
 	"dimensionalpocketsii.item.message.elytraplate.no_screen": "You have not installed a Screen Module!",
 	"dimensionalpocketsii.item.message.elytraplate.no_ender_chest": "You have not installed a Ender Chest Module!",
+	"dimensionalpocketsii.item.message.elytraplate.no_firework": "You have not installed a Firework Module!",
+	"dimensionalpocketsii.item.message.elytraplate.firework_disabled": "Your Firework Module is disabled!",
 	
 	"dimensionalpocketsii.item.info.elytraplate_key": " key. ",
 	"dimensionalpocketsii.item.info.elytraplate_usage": "Unlimted Elytra Flight which uses 6,000 FE/t.",
@@ -875,11 +889,13 @@
 	"dimensionalpocketsii.armour_module.solar": "Solar Module",
 	"dimensionalpocketsii.armour_module.battery": "Battery Module",
 	"dimensionalpocketsii.armour_module.ender_chest": "Ender Chest Module",
+	"dimensionalpocketsii.armour_module.firework": "Firework Module",
 	
 	"dimensionalpocketsii.item.info.elytraplate_settings": "Settings:",
 	"dimensionalpocketsii.item.info.elytraplate.setting.teleport": "Teleport to Block: ",
 	"dimensionalpocketsii.item.info.elytraplate.setting.teleport.true": "true",
 	"dimensionalpocketsii.item.info.elytraplate.setting.teleport.false": "false",
+	
 	"dimensionalpocketsii.item.info.elytraplate.setting.elytra_fly": "Elytra fly: ",
 	"dimensionalpocketsii.item.info.elytraplate.setting.elytra_fly.enabled": "enabled",
 	"dimensionalpocketsii.item.info.elytraplate.setting.elytra_fly.disabled": "disabled",
@@ -895,6 +911,10 @@
 	"dimensionalpocketsii.item.info.elytraplate.setting.charger": "Item Charger: ",
 	"dimensionalpocketsii.item.info.elytraplate.setting.charger.enabled": "enabled",
 	"dimensionalpocketsii.item.info.elytraplate.setting.charger.disabled": "disabled",
+	
+	"dimensionalpocketsii.item.info.elytraplate.setting.firework": "Firework: ",
+	"dimensionalpocketsii.item.info.elytraplate.setting.firework.enabled": "enabled",
+	"dimensionalpocketsii.item.info.elytraplate.setting.firework.disabled": "disabled",
 	
 	"dimensionalpocketsii.info.shifter_info": "Teleport to and from your Pocket from anywhere!",
 	"dimensionalpocketsii.info.shifter_shift_one": "To link: shift-right click this on a Pocket Block.",

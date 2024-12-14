@@ -13,6 +13,7 @@ import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytra
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUpdateUIHelp;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUpdateUIMode;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUseEnergy;
+import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateUseFirework;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -36,6 +37,7 @@ public class ModPacketManager {
 		registrar.playToServer(PacketElytraplateOpenConnector.TYPE, PacketElytraplateOpenConnector.STREAM_CODEC, ServerPacketHandler::handleDataOnNetwork);
 		registrar.playToServer(PacketElytraplateOpenSettings.TYPE, PacketElytraplateOpenSettings.STREAM_CODEC, ServerPacketHandler::handleDataOnNetwork);
 		registrar.playToServer(PacketElytraplateOpenEnderChest.TYPE, PacketElytraplateOpenEnderChest.STREAM_CODEC, ServerPacketHandler::handleDataOnNetwork);
+		registrar.playToServer(PacketElytraplateUseFirework.TYPE, PacketElytraplateUseFirework.STREAM_CODEC, ServerPacketHandler::handleDataOnNetwork);
 		
 		registrar.playToServer(PacketDimensionChange.TYPE, PacketDimensionChange.STREAM_CODEC, ServerPacketHandler::handleDataOnNetwork);
 		registrar.playToServer(PacketTomeUpdate.TYPE, PacketTomeUpdate.STREAM_CODEC, ServerPacketHandler::handleDataOnNetwork);

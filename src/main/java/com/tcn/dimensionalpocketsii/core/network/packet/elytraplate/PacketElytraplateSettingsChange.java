@@ -13,7 +13,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-public record PacketElytraplateSettingsChange(UUID playerUUID, int index, ElytraSettings setting, boolean value) implements CustomPacketPayload, DimensionalPacket {
+public record PacketElytraplateSettingsChange(UUID playerUUID, int armourIndex, ElytraSettings setting, boolean value) implements CustomPacketPayload, DimensionalPacket {
 
 	public static final CustomPacketPayload.Type<PacketElytraplateSettingsChange> TYPE = 
 		new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "packet_elytraplate_settings_change"));
@@ -22,7 +22,7 @@ public record PacketElytraplateSettingsChange(UUID playerUUID, int index, Elytra
 		UUIDUtil.STREAM_CODEC,
 		PacketElytraplateSettingsChange::playerUUID,
 		ByteBufCodecs.INT,
-		PacketElytraplateSettingsChange::index,
+		PacketElytraplateSettingsChange::armourIndex,
 		ElytraSettings.STREAM_CODEC,
 		PacketElytraplateSettingsChange::setting,
 		ByteBufCodecs.BOOL,

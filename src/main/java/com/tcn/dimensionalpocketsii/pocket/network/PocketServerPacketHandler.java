@@ -1,6 +1,5 @@
 package com.tcn.dimensionalpocketsii.pocket.network;
 
-import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
 import com.tcn.dimensionalpocketsii.core.management.ModSoundManager;
@@ -25,11 +24,11 @@ import com.tcn.dimensionalpocketsii.pocket.network.packet.connector.PacketConnec
 import com.tcn.dimensionalpocketsii.pocket.network.packet.connector.PacketSideState;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketArmourItem;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketChargerEnergyState;
-import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketWorkbench;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketFocus;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketFocusTeleport;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketGeneratorEmptyTank;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketGeneratorMode;
+import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketWorkbench;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.system.PacketSystem;
 
 import net.minecraft.core.BlockPos;

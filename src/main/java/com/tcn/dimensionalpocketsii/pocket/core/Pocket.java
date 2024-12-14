@@ -436,14 +436,14 @@ public class Pocket implements IEnergyHolder, Container {
 	
 	private void setOwnerInternal(Player playerIn) {
 		this.owner = new ObjectPlayerInformation(playerIn);
-		this.addAllowedPlayer(playerIn);
+		this.addAllowedPlayer(playerIn, true);
 	}
 
 	public void setOwner(Player playerIn) {
 		if (playerIn != null) {
 			if (!this.getGeneratedStateValue() || this.owner == null) {
 				this.owner = new ObjectPlayerInformation(playerIn);
-				this.addAllowedPlayer(playerIn);
+				this.addAllowedPlayer(playerIn, true);
 			}
 		}
 	}
@@ -580,11 +580,19 @@ public class Pocket implements IEnergyHolder, Container {
 	public ArrayList<String> getAllowedPlayersArray() {
 		return this.allowed_players_array;
 	}
-
-	public void addAllowedPlayer(Player playerIn) {
+	
+	public void addAllowedPlayer(Player playerIn, boolean replace) {
 		if (!this.checkIfAllowedPlayer(playerIn)) {
 			String player = playerIn.getDisplayName().getString();
-			this.allowed_players_array.add(player);
+			if (replace) {
+				if (this.allowed_players_array.size() > 0) {
+					this.allowed_players_array.set(0, player);
+				} else {
+					this.allowed_players_array.add(player);
+				}
+			} else {
+				this.allowed_players_array.add(player);
+			}
 		}
 	}
 	
@@ -666,14 +674,8 @@ public class Pocket implements IEnergyHolder, Container {
 		}
 	}
 	
-	public boolean canPlayerLeave(Player playerIn) {
-		if (this.checkIfOwner(playerIn) || this.checkIfAllowedPlayer(playerIn)) {
-			return true;
-		} else if (!this.getTrapStateValue()) {
-			return true;
-		} else {
-			return false;
-		}
+	public boolean canPlayerLeave(Player playerIn) {		
+		return this.checkIfOwner(playerIn) || this.checkIfAllowedPlayer(playerIn) ? true : !this.getTrapStateValue();
 	}
 	
 	/** 
@@ -1277,7 +1279,7 @@ public class Pocket implements IEnergyHolder, Container {
 			else if (!this.chunk_info.isSingleChunk()) {
 				int height = ModConfigManager.getInstance().getInternalHeightEnhanced();
 
-				System.out.println("HERE " + height + " " + this.getInternalHeight() + " " + (height != this.getInternalHeight()));
+				//System.out.println("HERE " + height + " " + this.getInternalHeight() + " " + (height != this.getInternalHeight()));
 				
 				BlockPos[] worldPos = new BlockPos[] { 
 					new BlockPos(CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getX(), 1, CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getZ()),
@@ -1819,10 +1821,10 @@ public class Pocket implements IEnergyHolder, Container {
 			
 			CompoundTag itemTag = new CompoundTag();
 			if (!stack.isEmpty()) {
-				stack.save(provider, itemTag);
+                itemTag.putByte("Slot", (byte)i);
+                itemTag.merge((CompoundTag) stack.save(provider));
+    			item_list.put(Integer.toString(i), itemTag);
 			}
-			
-			item_list.put(Integer.toString(i), itemTag);
 		}
 		compound_nbt.put(NBT_ITEMS_KEY, item_list);
 		
@@ -1833,10 +1835,10 @@ public class Pocket implements IEnergyHolder, Container {
 
 			CompoundTag itemTag = new CompoundTag();
 			if (!stack.isEmpty()) {
-				stack.save(provider, itemTag);
+                itemTag.putByte("Slot", (byte)i);
+                itemTag.merge((CompoundTag) stack.save(provider));
+    			surrounding_list.put(Integer.toString(i), itemTag);
 			}
-				
-			surrounding_list.put(Integer.toString(i), itemTag);
 		}
 		compound_nbt.put(NBT_SURROUNDING_KEY, surrounding_list);
 		
@@ -1920,7 +1922,7 @@ public class Pocket implements IEnergyHolder, Container {
 		CompoundTag itemsTag = pocketTag.getCompound(NBT_ITEMS_KEY);
 		for (int i = 0; i < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE; i++) {
 			CompoundTag item = itemsTag.getCompound(Integer.toString(i));
-			
+						
 			pocket.item_array.set(i, ItemStack.parseOptional(provider, item));
 		}
 

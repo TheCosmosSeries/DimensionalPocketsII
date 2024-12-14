@@ -21,7 +21,10 @@ public enum ElytraSettings {
 			"dimensionalpocketsii.item.info.elytraplate.setting.solar.enabled", "dimensionalpocketsii.item.info.elytraplate.setting.solar.disabled", ComponentColour.BLUE),
 	
 	CHARGER(4, "charger", "dimensionalpocketsii.elytraplate.setting.charger", "dimensionalpocketsii.item.info.elytraplate.setting.charger",
-			"dimensionalpocketsii.item.info.elytraplate.setting.charger.enabled", "dimensionalpocketsii.item.info.elytraplate.setting.charger.disabled", ComponentColour.RED);
+			"dimensionalpocketsii.item.info.elytraplate.setting.charger.enabled", "dimensionalpocketsii.item.info.elytraplate.setting.charger.disabled", ComponentColour.RED),
+
+	FIREWORK(5, "firework", "dimensionalpocketsii.elytraplate.setting.firework", "dimensionalpocketsii.item.info.elytraplate.setting.firework",
+			"dimensionalpocketsii.item.info.elytraplate.setting.firework.enabled", "dimensionalpocketsii.item.info.elytraplate.setting.firework.disabled", ComponentColour.YELLOW);
 	
 	private int index;
 	private String name;
@@ -93,6 +96,8 @@ public enum ElytraSettings {
 			case SOLAR:
 				return CHARGER;
 			case CHARGER:
+				return FIREWORK;
+			case FIREWORK:
 				return TELEPORT_TO_BLOCK;
 			default:
 				throw new IllegalStateException("Unable to obtain state of [" + this + "]");
@@ -110,6 +115,8 @@ public enum ElytraSettings {
 		case SOLAR:
 			return CHARGER;
 		case CHARGER:
+			return FIREWORK;
+		case FIREWORK:
 			return TELEPORT_TO_BLOCK;
 		default:
 			throw new IllegalStateException("Unable to obtain state of [" + previous + "]");
@@ -128,6 +135,8 @@ public enum ElytraSettings {
 				return SOLAR;
 			case 4:
 				return CHARGER;
+			case 5:
+				return FIREWORK;
 			default:
 				throw new IllegalStateException("No state exists with index: [" + index + "]");
 		}

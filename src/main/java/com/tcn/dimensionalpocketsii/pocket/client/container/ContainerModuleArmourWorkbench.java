@@ -22,48 +22,56 @@ import net.minecraft.world.item.ItemStack;
 public class ContainerModuleArmourWorkbench extends CosmosContainerMenuBlockEntity {
 	
 	public ContainerModuleArmourWorkbench(int indexIn, Inventory playerInventoryIn, FriendlyByteBuf extraData) {
-		this(indexIn, playerInventoryIn, new SimpleContainer(9), ContainerLevelAccess.NULL, extraData.readBlockPos());
+		this(indexIn, playerInventoryIn, new SimpleContainer(11), ContainerLevelAccess.NULL, extraData.readBlockPos());
 	}
 
 	public ContainerModuleArmourWorkbench(int indexIn, Inventory playerInventoryIn, Container contentsIn, ContainerLevelAccess accessIn, BlockPos posIn) {
 		super(ModRegistrationManager.CONTAINER_TYPE_ARMOUR_WORKBENCH.get(), indexIn, playerInventoryIn, accessIn, posIn);
 		
 		//Armour Slot
-		this.addSlot(new SlotColourableArmourItem(contentsIn, 0, 150, 32, 1));
+		this.addSlot(new SlotColourableArmourItem(contentsIn, 0, 57, 44, 1));
 		
-		//Colour Slots
-		//this.addSlot(new SlotColourItem(contentsIn, 1, 127, 21, ModRegistrationManager.DIMENSIONAL_SHARD.get(), 1));
-		//this.addSlot(new SlotColourItem(contentsIn, 2, 127, 42, ModRegistrationManager.DIMENSIONAL_SHARD.get(), 1));
-
-		//Preview Slot
-		this.addSlot(new SlotRestrictedAccess(contentsIn, 1, 173, 21, false, false));
-		this.addSlot(new SlotRestrictedAccess(contentsIn, 2, 173, 42, false, false));
+		//Preview Slot Applied
+		this.addSlot(new SlotRestrictedAccess(contentsIn, 1, 101, 23, false, false) {
+			@Override
+			public void setChanged() {
+				super.setChanged();
+				ContainerModuleArmourWorkbench.this.slotsChanged(this.container);
+				this.container.setChanged();
+				contentsIn.setChanged();
+			}
+		});
+		
+		//Preview Slot Removed
+		this.addSlot(new SlotRestrictedAccess(contentsIn, 2, 101, 45, false, false));
 
 		//Module Slots
-		this.addSlot(new SlotModuleItem(contentsIn, 3,  63, 21));
-		this.addSlot(new SlotModuleItem(contentsIn, 4,  84, 21));
-		this.addSlot(new SlotModuleItem(contentsIn, 5,  105, 21));
-		this.addSlot(new SlotModuleItem(contentsIn, 6,  63, 42));
-		this.addSlot(new SlotModuleItem(contentsIn, 7,  84, 42));
-		this.addSlot(new SlotModuleItem(contentsIn, 8, 105, 42));
+		this.addSlot(new SlotModuleItem(contentsIn, 3,  34, 21));
+		this.addSlot(new SlotModuleItem(contentsIn, 4,  57, 21));
+		this.addSlot(new SlotModuleItem(contentsIn, 5,  80, 21));
+		this.addSlot(new SlotModuleItem(contentsIn, 6,  34, 44));
+		this.addSlot(new SlotModuleItem(contentsIn, 7,  80, 44));
+		this.addSlot(new SlotModuleItem(contentsIn, 8,  34, 67));
+		this.addSlot(new SlotModuleItem(contentsIn, 9,  57, 67));
+		this.addSlot(new SlotModuleItem(contentsIn, 10, 80, 67));
 
 		//Player Inventory
 		for (int k = 0; k < 3; ++k) {
 			for (int i1 = 0; i1 < 9; ++i1) {
-				this.addSlot(new Slot(playerInventoryIn, i1 + k * 9 + 9, 12 + i1 * 18, 102 + k * 18));
+				this.addSlot(new Slot(playerInventoryIn, i1 + k * 9 + 9, 12 + i1 * 18, 128 + k * 18));
 			}
 		}
 
 		//Player Hotbar
 		for (int l = 0; l < 9; ++l) {
-			this.addSlot(new Slot(playerInventoryIn, l, 12 + l * 18, 160));
+			this.addSlot(new Slot(playerInventoryIn, l, 12 + l * 18, 186));
 		}
 
 		//Armour Slots
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 39, 55, 63, this.player, 0));
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 38, 76, 63, this.player, 1));
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 37, 97, 63, this.player, 2));
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 36, 118, 63, this.player, 3));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 39, 13, 23, this.player, 0));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 38, 13, 45, this.player, 1));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 37, 13, 66, this.player, 2));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 36, 13, 88, this.player, 3));
 	}
 
 	@Override
@@ -105,31 +113,31 @@ public class ContainerModuleArmourWorkbench extends CosmosContainerMenuBlockEnti
 			if (indexIn == 0) {
 				if (itemstack.getItem() instanceof ArmorItem) {
 					if (!this.moveItemStackTo(itemstack1, this.slots.size() - 4, this.slots.size(), false)) {
-						if (!this.moveItemStackTo(itemstack1, 9, this.slots.size() - 13, false)) {
+						if (!this.moveItemStackTo(itemstack1, 11, this.slots.size() - 13, false)) {
 							return ItemStack.EMPTY;
 						}
 					}
 				} else {
-					if (!this.moveItemStackTo(itemstack1, 9, this.slots.size() - 13, false)) {
+					if (!this.moveItemStackTo(itemstack1, 11, this.slots.size() - 13, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
-			} else if (indexIn >= 1 && indexIn <= 8) {
-				if (!this.moveItemStackTo(itemstack1, 9, this.slots.size() - 13, false)) {
+			} else if (indexIn >= 1 && indexIn <= 10) {
+				if (!this.moveItemStackTo(itemstack1, 11, this.slots.size() - 13, false)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (indexIn >= 9 && indexIn < this.slots.size()) {
 				if (itemstack.getItem() instanceof ArmorItem) {
 					if (!this.moveItemStackTo(itemstack, 0, 1, false)) {
 						if (!this.moveItemStackTo(itemstack1, this.slots.size() - 4, this.slots.size(), false)) {
-							if (!this.moveItemStackTo(itemstack1, 9, this.slots.size() - 13, false)) {
+							if (!this.moveItemStackTo(itemstack1, 11, this.slots.size() - 13, false)) {
 								return ItemStack.EMPTY;
 							}
 						}
 					}
 					slot.set(ItemStack.EMPTY);
 				} else if (itemstack.getItem() instanceof IModuleItem) {
-					if (!this.moveItemStackTo(itemstack, 3, 9, false)) {
+					if (!this.moveItemStackTo(itemstack, 3, 11, false)) {
 						return ItemStack.EMPTY;
 					}
 				
@@ -140,12 +148,12 @@ public class ContainerModuleArmourWorkbench extends CosmosContainerMenuBlockEnti
 					}
 				} else {
 					if (indexIn >= this.slots.size() - 13 && indexIn < this.slots.size()) {
-						if (!this.moveItemStackTo(itemstack1, 9, this.slots.size() - 13, false)) {
+						if (!this.moveItemStackTo(itemstack1, 11, this.slots.size() - 13, false)) {
 							return ItemStack.EMPTY;
 						}
 					}
 					
-					if (indexIn >= 8 && indexIn < this.slots.size() - 13) {
+					if (indexIn >= 10 && indexIn < this.slots.size() - 13) {
 						if (!this.moveItemStackTo(itemstack1, this.slots.size() - 13, this.slots.size(), false)) {
 							return ItemStack.EMPTY;
 						}
