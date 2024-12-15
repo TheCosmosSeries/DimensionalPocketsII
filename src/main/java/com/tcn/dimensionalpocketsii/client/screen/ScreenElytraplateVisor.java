@@ -39,9 +39,9 @@ public class ScreenElytraplateVisor implements LayeredDraw.Layer {
 		
 		float screenWidth = minecraft.getWindow().getGuiScaledWidth();
 		float screenHeight = minecraft.getWindow().getGuiScaledHeight();
-				
-		if (playerInventory.getArmor(2).getItem().equals(ModRegistrationManager.DIMENSIONAL_ELYTRAPLATE.get())) {
-	
+		ItemStack chestStack = player.getInventory().getArmor(2);
+		
+		if (playerInventory.getArmor(2).getItem() instanceof DimensionalElytraplate plate) {
 			int powerOffset = 26;
 			int powerWidth = 116;
 			
@@ -52,9 +52,6 @@ public class ScreenElytraplateVisor implements LayeredDraw.Layer {
 	
 			graphicsIn.pose().pushPose();
 			graphicsIn.pose().scale(scaleAll, scaleAll, 1.0F);
-			
-			ItemStack chestStack = player.getInventory().getArmor(2);
-			DimensionalElytraplate plate = (DimensionalElytraplate) chestStack.getItem();
 			
 			if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.VISOR) && DimensionalElytraplate.getElytraSetting(chestStack, ElytraSettings.VISOR)[1]) {
 				CosmosUISystem.renderStaticElement(graphicsIn, new int[] { 0, 0 }, 1, scaledHeight - 43, 0, 0, 242, 42, ModReferences.GUI.RESOURCE.ELYTRAPLATE_VISOR);
@@ -190,32 +187,24 @@ public class ScreenElytraplateVisor implements LayeredDraw.Layer {
 		int energy3 = 0;
 		int maxEnergy3 = 0;
 
-		if (playerInventory.getArmor(0).getItem() instanceof ICosmosEnergyItem) {
-			ICosmosEnergyItem item = (ICosmosEnergyItem) playerInventory.getArmor(0).getItem();
-
-			energy0 = item.getEnergy(playerInventory.getArmor(0));
-			maxEnergy0 = item.getMaxEnergyStored(playerInventory.getArmor(0));
+		if (playerInventory.getArmor(0).getItem() instanceof ICosmosEnergyItem energyItem) {
+			energy0 = energyItem.getEnergy(playerInventory.getArmor(0));
+			maxEnergy0 = energyItem.getMaxEnergyStored(playerInventory.getArmor(0));
 		}
 
-		if (playerInventory.getArmor(1).getItem() instanceof ICosmosEnergyItem) {
-			ICosmosEnergyItem item = (ICosmosEnergyItem) playerInventory.getArmor(1).getItem();
-
-			energy1 = item.getEnergy(playerInventory.getArmor(1));
-			maxEnergy1 = item.getMaxEnergyStored(playerInventory.getArmor(1));
+		if (playerInventory.getArmor(1).getItem() instanceof ICosmosEnergyItem energyItem) {
+			energy1 = energyItem.getEnergy(playerInventory.getArmor(1));
+			maxEnergy1 = energyItem.getMaxEnergyStored(playerInventory.getArmor(1));
 		}
 
-		if (playerInventory.getArmor(2).getItem() instanceof ICosmosEnergyItem) {
-			ICosmosEnergyItem item = (ICosmosEnergyItem) playerInventory.getArmor(2).getItem();
-
-			energy2 = item.getEnergy(playerInventory.getArmor(2));
-			maxEnergy2 = item.getMaxEnergyStored(playerInventory.getArmor(2));
+		if (playerInventory.getArmor(2).getItem() instanceof ICosmosEnergyItem energyItem) {
+			energy2 = energyItem.getEnergy(playerInventory.getArmor(2));
+			maxEnergy2 = energyItem.getMaxEnergyStored(playerInventory.getArmor(2));
 		}
 
-		if (playerInventory.getArmor(3).getItem() instanceof ICosmosEnergyItem) {
-			ICosmosEnergyItem item = (ICosmosEnergyItem) playerInventory.getArmor(3).getItem();
-
-			energy3 = item.getEnergy(playerInventory.getArmor(3));
-			maxEnergy3 = item.getMaxEnergyStored(playerInventory.getArmor(3));
+		if (playerInventory.getArmor(3).getItem() instanceof ICosmosEnergyItem energyItem) {
+			energy3 = energyItem.getEnergy(playerInventory.getArmor(3));
+			maxEnergy3 = energyItem.getMaxEnergyStored(playerInventory.getArmor(3));
 		}
 
 		return new int[] { energy0 + energy1 + energy2 + energy3, maxEnergy0 + maxEnergy1 + maxEnergy2 + maxEnergy3 };

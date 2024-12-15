@@ -53,9 +53,7 @@ public class ChunkLoadingManager {
 	}
 	
 	public static void addBlock(Level levelIn, CosmosChunkPos chunk, BlockPos loader) {
-		if (levelIn instanceof ServerLevel) {
-			ServerLevel serverLevel = (ServerLevel) levelIn;
-			
+		if (levelIn instanceof ServerLevel serverLevel) {
 			if (chunkLoadedBlocks.containsKey(chunk) && chunkLoadedBlocks.get(chunk).getPos().equals(loader)) {
 				DimensionalPockets.CONSOLE.warning("[PocketChunkLoader] <add> The following Pocket Block was already marked as loaded: { " + chunk + ", " + levelIn.dimension().location().getNamespace() + ":" + levelIn.dimension().location().getPath() + " }");
 				return;
@@ -70,9 +68,7 @@ public class ChunkLoadingManager {
 	}
 
 	public static void removeBlock(Level levelIn, CosmosChunkPos chunk, BlockPos loader) {
-		if (levelIn instanceof ServerLevel) {
-			ServerLevel serverLevel = (ServerLevel) levelIn;
-			
+		if (levelIn instanceof ServerLevel serverLevel) {
 			if (!chunkLoadedBlocks.containsKey(chunk) || !chunkLoadedBlocks.get(chunk).getPos().equals(loader)) {
 				DimensionalPockets.CONSOLE.warning("[PocketChunkLoader] <remove> Something tried to remove a loaded Pocket Block that was never loaded before { " + chunk + ", " + levelIn.dimension().location().getNamespace() + ":" + levelIn.dimension().location().getPath() + " }");
 				return;

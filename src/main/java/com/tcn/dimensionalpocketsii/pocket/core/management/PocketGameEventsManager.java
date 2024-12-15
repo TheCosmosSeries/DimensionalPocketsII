@@ -540,9 +540,7 @@ public class PocketGameEventsManager {
 		ResourceLocation registry_name = ResourceLocation.fromNamespaceAndPath(BuiltInRegistries.ITEM.getKey(item).getNamespace(), BuiltInRegistries.ITEM.getKey(item).getPath());
 		
 		if (!ModConfigManager.getInstance().getCanUseItems()) {
-			if (entity instanceof Player) {
-				Player playerIn = (Player) entity;
-				
+			if (entity instanceof Player playerEntity) {
 				if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {					
 					for (int i = 0; i < ModConfigManager.getInstance().getBlockedItems().size(); i++) {
 						Object obj = ModConfigManager.getInstance().getBlockedItems().get(i);
@@ -557,8 +555,8 @@ public class PocketGameEventsManager {
 								
 								if (registry_name.equals(string_location)) {									
 									if (!entity.level().isClientSide) {
-										CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.error.item.usage"));
-										DimensionalPockets.CONSOLE.debug("[Event Cancellation] <rightclickitem> { Player: '" + playerIn.getDisplayName().getString() + "', UUID: '" + playerIn.getUUID() + "' } tried to right click a blacklised Item. This event has been cancelled.");
+										CosmosChatUtil.sendServerPlayerMessage(playerEntity, ComponentHelper.getErrorText("dimensionalpocketsii.error.item.usage"));
+										DimensionalPockets.CONSOLE.debug("[Event Cancellation] <rightclickitem> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to right click a blacklised Item. This event has been cancelled.");
 									}
 									event.setCanceled(true);
 								}
@@ -580,9 +578,7 @@ public class PocketGameEventsManager {
 		ResourceLocation registry_name = ResourceLocation.fromNamespaceAndPath(BuiltInRegistries.ITEM.getKey(item).getNamespace(), BuiltInRegistries.ITEM.getKey(item).getPath());
 		
 		if (!ModConfigManager.getInstance().getCanUseItems()) {
-			if (entity instanceof Player) {
-				Player playerIn = (Player) entity;
-				
+			if (entity instanceof Player playerEntity) {
 				if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
 					for (int i = 0; i < ModConfigManager.getInstance().getBlockedItems().size(); i++) {
 						Object obj = ModConfigManager.getInstance().getBlockedItems().get(i);
@@ -597,8 +593,8 @@ public class PocketGameEventsManager {
 								
 								if (registry_name.equals(string_location)) {
 									if (!entity.level().isClientSide) {
-										CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.error.item.usage"));
-										DimensionalPockets.CONSOLE.debug("[Event Cancellation] <useitem> { Player: '" + playerIn.getDisplayName().getString() + "', UUID: '" + playerIn.getUUID() + "' } tried to use a blacklised Item. This event has been cancelled.");
+										CosmosChatUtil.sendServerPlayerMessage(playerEntity, ComponentHelper.getErrorText("dimensionalpocketsii.error.item.usage"));
+										DimensionalPockets.CONSOLE.debug("[Event Cancellation] <useitem> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to use a blacklised Item. This event has been cancelled.");
 									}
 									event.setDuration(0);
 								}
@@ -619,9 +615,7 @@ public class PocketGameEventsManager {
 
 		ResourceLocation registry_name = ResourceLocation.fromNamespaceAndPath(BuiltInRegistries.ITEM.getKey(block.asItem()).getNamespace(), BuiltInRegistries.ITEM.getKey(block.asItem()).getPath());
 		
-		if (entity instanceof Player) {
-			Player playerIn = (Player) entity;
-			
+		if (entity instanceof Player playerEntity) {
 			if (!ModConfigManager.getInstance().getCanPlaceStructures()) {
 				if (dimension.equals(ModDimensionManager.POCKET_WORLD)) {
 					for (int i = 0; i < ModConfigManager.getInstance().getBlockedStructures().size(); i++) {
@@ -636,8 +630,8 @@ public class PocketGameEventsManager {
 								
 								if (registry_name.equals(string_location)) {
 									if (!entity.level().isClientSide) {
-										CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.error.block.usage"));
-										DimensionalPockets.CONSOLE.debug("[Event Cancellation] <placeblock> Player: { " + playerIn.getDisplayName().getContents() + " } tried to right click a blacklised Item. This event has been cancelled.");
+										CosmosChatUtil.sendServerPlayerMessage(playerEntity, ComponentHelper.getErrorText("dimensionalpocketsii.error.block.usage"));
+										DimensionalPockets.CONSOLE.debug("[Event Cancellation] <placeblock> Player: { " + playerEntity.getDisplayName().getContents() + " } tried to right click a blacklised Item. This event has been cancelled.");
 									}
 									event.setCanceled(true);
 								}
@@ -648,8 +642,8 @@ public class PocketGameEventsManager {
 			}
 			
 			if (block instanceof BlockPocket || block instanceof BlockPocketEnhanced) {
-				ItemStack mainStack = playerIn.getMainHandItem();
-				ItemStack offHandStack = playerIn.getOffhandItem();
+				ItemStack mainStack = playerEntity.getMainHandItem();
+				ItemStack offHandStack = playerEntity.getOffhandItem();
 				
 				if (mainStack.getItem() instanceof ItemBlockPocket || offHandStack.getItem() instanceof ItemBlockPocketEnhanced) {
 					if (mainStack.has(DataComponents.CUSTOM_DATA)) {
@@ -737,9 +731,8 @@ public class PocketGameEventsManager {
 			Entity entity = event.getEntity();
 			BlockPos pos = event.getPos();
 			
-			if (entity != null && entity instanceof Player) {
-				Player player = (Player) entity;
-				Level level = player.level();
+			if (entity != null && entity instanceof Player playerEntity) {
+				Level level = playerEntity.level();
 				
 				if (level != null) {
 					ResourceKey<Level> dimension = level.dimension();

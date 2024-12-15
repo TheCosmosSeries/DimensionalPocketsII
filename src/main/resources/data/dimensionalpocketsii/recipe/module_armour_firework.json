@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"FIF",
+		"MBM",
+		"FIF"
+	],
+	"key": {
+		"I": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"B" :{
+			"item": "dimensionalpocketsii:module_base"
+		},
+		"F" :{
+			"item": "minecraft:firework_rocket"
+		},
+		"M" :{
+			"item": "minecraft:phantom_membrane"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:armour_module_firework"
+	}
+}

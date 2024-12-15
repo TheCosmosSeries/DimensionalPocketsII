@@ -353,10 +353,7 @@ public class Pocket implements IEnergyHolder, Container {
 	public void setDisplayColour(Player playerIn, Level levelIn, int colourIn) {
 		if (!(this.display_colour == colourIn)) {
 			this.display_colour = colourIn;
-			
-			//if (this.updateBaseConnectors(levelIn)) {
-				this.updateWallBlocks(playerIn, levelIn);
-			//}
+			this.updateWallBlocks(playerIn, levelIn);
 		}
 	}
 	
@@ -536,9 +533,7 @@ public class Pocket implements IEnergyHolder, Container {
 				BlockEntity entity = level.getBlockEntity(pos);
 				
 				if (entity != null) {
-					if (entity instanceof CosmosBlockEntityUpdateable) {
-						CosmosBlockEntityUpdateable blockEntity = (CosmosBlockEntityUpdateable) entity;
-						
+					if (entity instanceof CosmosBlockEntityUpdateable blockEntity) {
 						blockEntity.sendUpdates(true);
 					} else {
 						BlockState state = level.getBlockState(pos);
@@ -562,15 +557,11 @@ public class Pocket implements IEnergyHolder, Container {
 		if (level != null) {
 			BlockEntity entity = level.getBlockEntity(this.getLastBlockPos());
 			
-			if (entity instanceof BlockEntityPocket) {
-				BlockEntityPocket blockEntity = (BlockEntityPocket) entity;
-				
+			if (entity instanceof BlockEntityPocket blockEntity) {
 				blockEntity.sendUpdates(true);
 			}
 			
-			if (entity instanceof BlockEntityPocketEnhanced) {
-				BlockEntityPocketEnhanced blockEntity = (BlockEntityPocketEnhanced) entity;
-				
+			if (entity instanceof BlockEntityPocketEnhanced blockEntity) {
 				blockEntity.sendUpdates(true);
 			}
 		}
@@ -1158,10 +1149,8 @@ public class Pocket implements IEnergyHolder, Container {
 				BlockPos pos = CosmosChunkPos.scaleFromChunkPos(chunkPosIn);
 				BlockState state = pocketLevel.getBlockState(pos);
 				
-				if (pocketLevel.getBlockEntity(pos) instanceof BlockEntityModuleConnector) {
-					BlockEntityModuleConnector connector = (BlockEntityModuleConnector) pocketLevel.getBlockEntity(pos);
-					
-					connector.sendUpdates(false);
+				if (pocketLevel.getBlockEntity(pos) instanceof BlockEntityModuleConnector blockEntity) {					
+					blockEntity.sendUpdates(false);
 					pocketLevel.sendBlockUpdated(pos, state, state, 3);
 					
 					return true;

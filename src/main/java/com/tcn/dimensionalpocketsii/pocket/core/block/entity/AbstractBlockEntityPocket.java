@@ -482,8 +482,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 									this.setSide(c, EnumSideState.getStateFromIndex(side_tag.getInt("index_" + c.get3DDataValue())), true);
 								}
 								
-								if (placer instanceof Player) {
-									ServerPlayer player = (ServerPlayer) placer;
+								if (placer instanceof Player player) {
 									if (player.getItemInHand(InteractionHand.MAIN_HAND) == stack) {
 										player.getItemInHand(InteractionHand.MAIN_HAND).setCount(0);
 									}
@@ -506,8 +505,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 								this.setSide(c, EnumSideState.getStateFromIndex(side_tag.getInt("index_" + c.get3DDataValue())), true);
 							}
 							
-							if (placer instanceof Player) {
-								ServerPlayer player = (ServerPlayer) placer;
+							if (placer instanceof Player player) {
 								if (player.getItemInHand(InteractionHand.MAIN_HAND) == stack) {
 									player.getItemInHand(InteractionHand.MAIN_HAND).setCount(0);
 								}
@@ -775,7 +773,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 	public void checkFluidSlots() {
 		if (!this.level.isClientSide) {
 			if (!this.getItem(54).isEmpty()) {
-				if (this.getItem(54).getItem() instanceof BucketItem) {
+				if (this.getItem(54).getItem() instanceof BucketItem bucketItem) {
 					Optional<FluidStack> fluidStack = FluidUtil.getFluidContained(this.getItem(54));
 					
 					if (fluidStack.isPresent()) {

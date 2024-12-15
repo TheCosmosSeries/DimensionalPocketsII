@@ -44,7 +44,6 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent.Key;
-import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
@@ -72,25 +71,6 @@ public class ModGameEventsManager {
 				}
 			}
 		}
-	}
-	
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-	public static void onRenderGameOverlayEvent(RenderGuiLayerEvent.Post event) {
-		/*ScreenElytraplateVisor screenSettings = new ScreenElytraplateVisor();
-		
-		Minecraft mc = Minecraft.getInstance();
-		PoseStack type = event.getPoseStack();
-		Player player = mc.player;
-		Inventory playerInventory = player.getInventory();
-		
-		if (playerInventory.getArmor(2).getItem().equals(ObjectManager.dimensional_elytraplate)) {
-			if (screenSettings != null) {
-				type.pushPose();
-				//screenSettings.renderOverlay(event.getPoseStack());
-				type.popPose();
-			}
-		}*/
 	}
 	
 	@SubscribeEvent

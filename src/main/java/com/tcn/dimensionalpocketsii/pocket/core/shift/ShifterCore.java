@@ -36,25 +36,22 @@ public class ShifterCore {
 	}
 	
 	public static void sendPlayerToBedWithMessage(Player playerIn, @Nullable EnumShiftDirection directionIn, String messageIn) {
-		if (playerIn instanceof ServerPlayer) {
-			ServerPlayer server_player = (ServerPlayer) playerIn;
-			CosmosChatUtil.sendServerPlayerMessage(server_player, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.target_unknown_custom").append(ComponentHelper.style(ComponentColour.ORANGE, "bold", messageIn)));
+		if (playerIn instanceof ServerPlayer serverPlayer) {
+			CosmosChatUtil.sendServerPlayerMessage(serverPlayer, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.target_unknown_custom").append(ComponentHelper.style(ComponentColour.ORANGE, "bold", messageIn)));
 			
 			BlockPos pos = new BlockPos(0, 0, 0);
-			if (((ServerPlayer) playerIn).getRespawnPosition() != null) {
-				pos = ((ServerPlayer) playerIn).getRespawnPosition();
+			if (serverPlayer.getRespawnPosition() != null) {
+				pos = serverPlayer.getRespawnPosition();
 			} else {
 				pos = ServerLifecycleHooks.getCurrentServer().getLevel(((ServerPlayer) playerIn).getRespawnDimension()).getLevel().getSharedSpawnPos();
 			}
 			
-			shiftPlayerToDimension(server_player, Shifter.createTeleporter(server_player.getRespawnDimension(), directionIn, pos, playerIn.getRotationVector().y, playerIn.getRotationVector().x, false, false, true), true);
+			shiftPlayerToDimension(serverPlayer, Shifter.createTeleporter(serverPlayer.getRespawnDimension(), directionIn, pos, playerIn.getRotationVector().y, playerIn.getRotationVector().x, false, false, true), true);
 		}
 	}
 	
 	public static void sendPlayerToDimensionSpawn(Player playerIn, ResourceKey<Level> dimensionIn, @Nullable MutableComponent componentIn) {
-		if (playerIn instanceof ServerPlayer) {
-			ServerPlayer serverPlayer = (ServerPlayer) playerIn;
-			
+		if (playerIn instanceof ServerPlayer serverPlayer) {
 			if (dimensionIn != null) {
 				if (componentIn != null) {
 					CosmosChatUtil.sendServerPlayerMessage(serverPlayer, componentIn);
@@ -81,8 +78,7 @@ public class ShifterCore {
 
 	@SuppressWarnings("unused")
 	public static void shiftPlayerToDimension(Player playerIn, Shifter shifterIn, boolean protect) {
-		if (playerIn instanceof ServerPlayer) {
-			ServerPlayer server_player = (ServerPlayer) playerIn;
+		if (playerIn instanceof ServerPlayer serverPlayer) {
 			Level player_world = playerIn.level();
 			
 			ResourceKey<Level> dimension_key = shifterIn.getDimensionKey();
@@ -99,37 +95,37 @@ public class ShifterCore {
 							double[] position = shifterIn.getTargetPosA();
 							
 							if (shifterIn.getSendMessage()) {
-								CosmosChatUtil.sendPlayerMessageServer(server_player, direction.getChatComponentForDirection());
+								CosmosChatUtil.sendPlayerMessageServer(serverPlayer, direction.getChatComponentForDirection());
 							}
 							
 							DimensionTransition trans = new DimensionTransition(server_world, target_pos.getCenter(), playerIn.getDeltaMovement(), shifterIn.getTargetRotation()[0], shifterIn.getTargetRotation()[1], DimensionTransition.DO_NOTHING);
-							server_player.changeDimension(trans);
+							serverPlayer.changeDimension(trans);
 							
 							if (protect) {
-								server_player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticksProtection, strengthProtection));
+								serverPlayer.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticksProtection, strengthProtection));
 							}
 							
 							if (!shifterIn.playVanillaSound()) {
-								server_player.connection.send(new ClientboundSoundPacket(direction.getSound(), SoundSource.AMBIENT, position[0], position[1], position[2], 0.4F, 1, 0));
+								serverPlayer.connection.send(new ClientboundSoundPacket(direction.getSound(), SoundSource.AMBIENT, position[0], position[1], position[2], 0.4F, 1, 0));
 							}
 						} else {
 							DimensionTransition trans = new DimensionTransition(server_world, BlockPos.ZERO.getCenter(), playerIn.getDeltaMovement(), shifterIn.getTargetRotation()[0], shifterIn.getTargetRotation()[1], DimensionTransition.DO_NOTHING);
-							server_player.changeDimension(trans);
+							serverPlayer.changeDimension(trans);
 
 							if (protect) {
-								server_player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticksProtection, strengthProtection));
+								serverPlayer.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticksProtection, strengthProtection));
 							}
 							
-							CosmosChatUtil.sendPlayerMessageServer(server_player, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.target_unknown"));
+							CosmosChatUtil.sendPlayerMessageServer(serverPlayer, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.target_unknown"));
 						}
 					} else {
-						CosmosChatUtil.sendPlayerMessageServer(server_player, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.server_world_null"));
+						CosmosChatUtil.sendPlayerMessageServer(serverPlayer, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.server_world_null"));
 					}
 				} else {
-					CosmosChatUtil.sendPlayerMessageServer(server_player, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.direction_unknown"));
+					CosmosChatUtil.sendPlayerMessageServer(serverPlayer, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.direction_unknown"));
 				}
 			} else {
-				CosmosChatUtil.sendPlayerMessageServer(server_player, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.dimension_null"));
+				CosmosChatUtil.sendPlayerMessageServer(serverPlayer, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.dimension_null"));
 			}
 		}
 	}

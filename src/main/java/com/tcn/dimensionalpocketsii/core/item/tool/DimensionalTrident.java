@@ -58,11 +58,6 @@ public class DimensionalTrident extends CosmosEnergyTridentItem {
 			
 			tooltip.add(ComponentHelper.shiftForLessDetails());
 		}
-
-		if (stack.has(DataComponents.CUSTOM_DATA)) {
-			CompoundTag stackTag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
-			tooltip.add(ComponentHelper.style(ComponentColour.GRAY, "cosmoslibrary.tooltip.energy_item.stored").append(ComponentHelper.comp(Value.LIGHT_GRAY + "[ " + Value.RED + CosmosUtil.formatIntegerMillion(stackTag.getInt("energy")) + Value.LIGHT_GRAY + " / " + Value.RED + CosmosUtil.formatIntegerMillion(this.getMaxEnergyStored(stack)) + Value.LIGHT_GRAY + " ]")));
-		}
 		
 		super.appendHoverText(stack, context, tooltip, flagIn);
 	}

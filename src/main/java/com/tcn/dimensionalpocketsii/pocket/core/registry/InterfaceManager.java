@@ -184,48 +184,48 @@ public class InterfaceManager {
 			LinkedHashMap<PocketChunkInfo, Pocket> newPocketRegistry = new LinkedHashMap<>();
 			
 			if (fileTypeIn.isPlainText()) {
-				Pocket[] pocket_array = null;
+				Pocket[] pocketArray = null;
 				
 				try (FileReader reader = new FileReader(fileIn)) {
-					pocket_array = GSON.LOADER.fromJson(reader, Pocket[].class);
+					pocketArray = GSON.LOADER.fromJson(reader, Pocket[].class);
 					reader.close();
 				} catch (Exception e) {
 					DimensionalPockets.CONSOLE.fatal("[File System Error] <loadPocketRegistry> Could not load PocketRegistry. See stacktrace for more info:", e);
 				}
 				
-				if (pocket_array != null) {
+				if (pocketArray != null) {
 					if (broadcast) {
 						DimensionalPockets.CONSOLE.info("[File System Load] <loadPocketRegistry> Begin loading Pockets from PocketRegistry.");
 					}
 					
-					for (Pocket link : pocket_array) {
-						if (link.energy_capacity != ModReferences.CONSTANT.POCKET_FE_CAP) {
-							link.energy_capacity = ModReferences.CONSTANT.POCKET_FE_CAP;
+					for (Pocket pocket : pocketArray) {
+						if (pocket.energy_capacity != ModReferences.CONSTANT.POCKET_FE_CAP) {
+							pocket.energy_capacity = ModReferences.CONSTANT.POCKET_FE_CAP;
 						}
 						
-						if (link.energy_max_receive != ModReferences.CONSTANT.POCKET_FE_REC) {
-							link.energy_max_receive = ModReferences.CONSTANT.POCKET_FE_REC;
+						if (pocket.energy_max_receive != ModReferences.CONSTANT.POCKET_FE_REC) {
+							pocket.energy_max_receive = ModReferences.CONSTANT.POCKET_FE_REC;
 						}
 						
-						if (link.energy_max_extract != ModReferences.CONSTANT.POCKET_FE_EXT) {
-							link.energy_max_extract = ModReferences.CONSTANT.POCKET_FE_EXT;
+						if (pocket.energy_max_extract != ModReferences.CONSTANT.POCKET_FE_EXT) {
+							pocket.energy_max_extract = ModReferences.CONSTANT.POCKET_FE_EXT;
 						}
 	
-						if (link.fluid_tank.getFluidTank().getCapacity() != (ModReferences.CONSTANT.POCKET_FLUID_CAP)) {
-							link.fluid_tank.getFluidTank().setCapacity((ModReferences.CONSTANT.POCKET_FLUID_CAP));
+						if (pocket.fluid_tank.getFluidTank().getCapacity() != (ModReferences.CONSTANT.POCKET_FLUID_CAP)) {
+							pocket.fluid_tank.getFluidTank().setCapacity((ModReferences.CONSTANT.POCKET_FLUID_CAP));
 						}
 	
-						if (link.getChunkInfo() == null && link.chunk_pos != null) {
-							link.chunk_info = new PocketChunkInfo(link.chunk_pos, true);
+						if (pocket.getChunkInfo() == null && pocket.chunk_pos != null) {
+							pocket.chunk_info = new PocketChunkInfo(pocket.chunk_pos, true);
 						}
 						
-						newPocketRegistry.put(link.getChunkInfo(), link);
+						newPocketRegistry.put(pocket.getChunkInfo(), pocket);
 						
 						if (broadcast) {
-							if (link.getOwner() != null) {
-								DimensionalPockets.CONSOLE.info("[Pocket Load] <loadPocketRegistry> Pocket loaded into Registry: { ' claimed ' | '" + link.getChunkInfo() + "' | '" + link.getOwnerName() + "' }");
+							if (pocket.getOwner() != null) {
+								DimensionalPockets.CONSOLE.info("[Pocket Load] <loadPocketRegistry> Pocket loaded into Registry: { ' claimed ' | '" + pocket.getChunkInfo() + "' | '" + pocket.getOwnerName() + "' }");
 							} else {
-								DimensionalPockets.CONSOLE.info("[Pocket load] <loadPocketRegistry> Pocket loaded into Registry: { 'unclaimed' | '" + link.getChunkInfo() + "' }");
+								DimensionalPockets.CONSOLE.info("[Pocket load] <loadPocketRegistry> Pocket loaded into Registry: { 'unclaimed' | '" + pocket.getChunkInfo() + "' }");
 							}
 						}
 					}

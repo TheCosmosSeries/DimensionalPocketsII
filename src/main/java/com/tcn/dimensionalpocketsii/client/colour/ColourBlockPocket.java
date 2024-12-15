@@ -20,20 +20,20 @@ public class ColourBlockPocket implements BlockColor {
 	@Override
 	public int getColor(BlockState stateIn, BlockAndTintGetter displayReaderIn, BlockPos posIn, int colourIn) {
 		Block block = stateIn.getBlock();
-		BlockEntity tile = displayReaderIn.getBlockEntity(posIn);
+		BlockEntity entity = displayReaderIn.getBlockEntity(posIn);
 		
 		if (block != null) {
-			if (tile != null) {
-				if (tile instanceof BlockEntityPocket pocketTile) {					
-					Pocket pocket = pocketTile.getPocket();
+			if (entity != null) {
+				if (entity instanceof BlockEntityPocket blockEntity) {					
+					Pocket pocket = blockEntity.getPocket();
 					
 					if (pocket != null) {
 						return pocket.getDisplayColour();
 					}
 				}
 				
-				if (tile instanceof BlockEntityPocketEnhanced pocketTile) {					
-					Pocket pocket = pocketTile.getPocket();
+				if (entity instanceof BlockEntityPocketEnhanced blockEntity) {					
+					Pocket pocket = blockEntity.getPocket();
 					
 					if (pocket != null) {
 						return pocket.getDisplayColour();

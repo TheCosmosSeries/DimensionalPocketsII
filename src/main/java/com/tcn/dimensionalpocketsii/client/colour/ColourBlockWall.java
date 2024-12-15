@@ -24,9 +24,9 @@ public class ColourBlockWall implements BlockColor {
 			BlockPos scaledPos = CosmosChunkPos.scaleFromChunkPos(chunkPos);
 			BlockEntity entity = displayReaderIn.getBlockEntity(scaledPos);
 			
-			if (entity instanceof BlockEntityModuleConnector connectorTile) {				
-				if (connectorTile.getPocket() != null) {
-					Pocket pocket = connectorTile.getPocket();
+			if (entity instanceof BlockEntityModuleConnector blockEntity) {				
+				if (blockEntity.getPocket() != null) {
+					Pocket pocket = blockEntity.getPocket();
 					int colour = pocket.getDisplayColour();
 					
 					return colour;

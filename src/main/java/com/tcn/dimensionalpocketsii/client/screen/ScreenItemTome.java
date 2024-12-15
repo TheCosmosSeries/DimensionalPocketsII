@@ -45,7 +45,7 @@ public class ScreenItemTome extends Screen {
 	private int flipTimerMulti = 0;
 	
 	private int currPage;
-	private int pageCount = 48;
+	private int pageCount = 49;
 
 	protected CosmosButtonUIMode uiModeButton;
 	private UUID playerUUID;
@@ -90,7 +90,7 @@ public class ScreenItemTome extends Screen {
 		
 		int loadedPage = DimensionalTome.getPage(this.stack);
 		
-		if (loadedPage == 47) {
+		if (loadedPage == 48) {
 			this.currPage = 0;
 		} else {
 			this.currPage = DimensionalTome.getPage(this.stack);
@@ -128,11 +128,11 @@ public class ScreenItemTome extends Screen {
 
 		this.addButtons();
 
-		FONT.drawString(graphics, font, screen_coords, 23, 10, true, ComponentHelper.style2(ComponentColour.SCREEN_LIGHT, "dimensionalpocketsii.tome_page", Integer.toString(this.currPage)));
+		FONT.drawString(graphics, font, screen_coords, 23, 10, true, ComponentHelper.style2(this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT : ComponentColour.SCREEN_DARK, "dimensionalpocketsii.tome_page", Integer.toString(this.currPage)));
 		FONT.drawString(graphics, font, screen_coords, 69, 10, true, ComponentHelper.style(ComponentColour.POCKET_PURPLE_LIGHT, "underline", "dimensionalpocketsii.tome_heading"));
 		
 		if (this.currPage == 0) {
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, -9, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_one_body") 
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, -9, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_one_body") 
 					+ ComponentHelper.locString(Value.PURPLE + Value.UNDERLINE, "dimensionalpocketsii.tome_one_body_one") + ComponentHelper.locString("dimensionalpocketsii.tome_one_body_two"));
 			
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 58, ComponentColour.POCKET_PURPLE.dec(), ComponentHelper.locString(Value.UNDERLINE + Value.BOLD, "dimensionalpocketsii.tome_one_body_heading"), false);
@@ -158,15 +158,15 @@ public class ScreenItemTome extends Screen {
 			FONT.drawString(graphics, font, screen_coords, 30, 165, true, ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.tome_ten_tab"));
 			FONT.drawString(graphics, font, screen_coords, 149, 165, true, ComponentHelper.style(ComponentColour.RED, "45-46"));
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 142, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_two_body_three"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 142, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_two_body_three"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_one", " ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_one", " ]"), false);
 		}
 		
 		else if (this.currPage == 1) {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.POCKET_PURPLE_LIGHT.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_two_heading"), false);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 4, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_two_body_one"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 4, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_two_body_one"));
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 65, ComponentColour.POCKET_PURPLE_LIGHT.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_two_body_two"), false);
 			
 			FONT.drawString(graphics, font, screen_coords, 25, 110, true, ComponentHelper.style(ComponentColour.DARK_CYAN, "dimensionalpocketsii.tome_two_sub_one"));
@@ -176,7 +176,7 @@ public class ScreenItemTome extends Screen {
 			FONT.drawString(graphics, font, screen_coords, 25, 150, true, ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.tome_two_sub_five"));
 			FONT.drawString(graphics, font, screen_coords, 25, 160, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "dimensionalpocketsii.tome_two_sub_six"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_two", " ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_two", " ]"), false);
 		}
 		
 		else if (this.currPage == 2) {
@@ -184,16 +184,16 @@ public class ScreenItemTome extends Screen {
 			
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 75, 40, 0, 0, 60, 60, BLOCK_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 70, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_one"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 70, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_one"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 1 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 1 ]"), false);
 		} 
 		
 		else if (this.currPage == 3) {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.DARK_CYAN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_three_heading_one"), false);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 6, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_two"));
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 35, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_three"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 6, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_two"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 35, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_three"));
 			
 			FONT.drawString(graphics, font, screen_coords, 42, 90, true, ComponentHelper.style(ComponentColour.BLUE, "bold", "dimensionalpocketsii.tome_three_sub_one"));
 			FONT.drawString(graphics, font, screen_coords, 84, 90, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "bold", "dimensionalpocketsii.tome_three_sub_two"));
@@ -203,7 +203,7 @@ public class ScreenItemTome extends Screen {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 101 - 14, 102, 64, 96, 32, 32, FLAT_TEXTURES_0);
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 101 + 32, 102, 96, 96, 32, 32, FLAT_TEXTURES_0);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 108, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_four"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 108, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_four"));
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 47, 168, 128, 192, 32, 32, FLAT_TEXTURES);
 			
@@ -219,14 +219,14 @@ public class ScreenItemTome extends Screen {
 				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 127, 168, 96, 96, 32, 32, FLAT_TEXTURES_0);
 			}
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 2 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 2 ]"), false);
 		} 
 		
 		else if (this.currPage == 4) {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.DARK_CYAN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_three_heading_two"), false);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 6, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("You can also colour your<br>Pocket to any of the 16<br>vanilla Minecraft colours,<br>or any Mod colours.<br> <br>To apply a colour, right<br>click your Pocket Block,<br>or Connector with a Dye<br>Item.<br> <br>To reset the colour back<br>to purple, use a Dimensional<br>Shard instead of a Dye."));
-			//FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 35, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_three"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 6, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("You can also colour your<br>Pocket to any of the 16<br>vanilla Minecraft colours,<br>or any Mod colours.<br> <br>To apply a colour, right<br>click your Pocket Block,<br>or Connector with a Dye<br>Item.<br> <br>To reset the colour back<br>to purple, use a Dimensional<br>Shard instead of a Dye."));
+			//FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 35, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_three"));
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 92, 170, 236, 242, 20, 14, this.getUIMode().equals(EnumUIMode.DARK) ? TEXTURE[0] : TEXTURE[1]);
 			
@@ -244,21 +244,21 @@ public class ScreenItemTome extends Screen {
 				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 47, 160, 96, 128, 32, 32, FLAT_TEXTURES_0);
 			}
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 3 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 3 ]"), false);
 		} 
 		
 		else if (this.currPage == 5) {
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 4 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 4 ]"), false);
 		} 
 		
 		//Modules
 		else if (this.currPage == 6) {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading"), false);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 4, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 4, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 1 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 1 ]"), false);
 		} 
 		
 		else if (this.currPage == 7) {
@@ -283,11 +283,11 @@ public class ScreenItemTome extends Screen {
 				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 224, 32, 32, 32, FLAT_TEXTURES);
 			}
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_one"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_one"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 140, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_one_"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 140, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_one_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 2 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 2 ]"), false);
 		}
 		
 		else if (this.currPage == 8) {
@@ -295,11 +295,11 @@ public class ScreenItemTome extends Screen {
 			
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 64, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_two"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_two"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 155, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_two_"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 155, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_two_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 3 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 3 ]"), false);
 		}
 		
 		else if (this.currPage == 9) {
@@ -307,11 +307,11 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 32, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_three"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_three"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 115, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_three_"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 115, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_three_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 4 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 4 ]"), false);
 		}
 		
 		else if (this.currPage == 10) {
@@ -319,11 +319,11 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 0, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_four"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_four"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 115, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_four_"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 115, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_four_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 5 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 5 ]"), false);
 		}
 		
 		else if (this.currPage == 11) {
@@ -331,11 +331,11 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 128, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 60, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_five"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 60, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_five"));
 			
 			//FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 110, 0, CosmosColour.BLACK.dec(), CosmosCompHelper.locString("dimensionalpocketsii.tome_four_body_five_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 6 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 6 ]"), false);
 		}
 		
 		else if (this.currPage == 12) {
@@ -343,11 +343,11 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 160, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 60, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_six"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 60, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_six"));
 			
 			//FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 110, 0, CosmosColour.BLACK.dec(), CosmosCompHelper.locString("dimensionalpocketsii.tome_four_body_six_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 7 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 7 ]"), false);
 		}
 		
 		else if (this.currPage == 13) {
@@ -355,11 +355,11 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 96, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_seven"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_seven"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 125, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_seven_"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 125, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_seven_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 8 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 8 ]"), false);
 		}
 		
 		else if (this.currPage == 14) {
@@ -367,11 +367,11 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 192, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_eight"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_eight"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_eight_"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_eight_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 9 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 9 ]"), false);
 		}
 
 		else if (this.currPage == 15) {
@@ -379,11 +379,11 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 224, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_nine"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_nine"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_nine_"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_nine_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 9 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 9 ]"), false);
 		}
 
 		else if (this.currPage == 16) {
@@ -391,11 +391,11 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 224, 64, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_ten"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_ten"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_ten_"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_ten_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 10 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 10 ]"), false);
 		}
 		
 		else if (this.currPage == 17) {
@@ -406,9 +406,9 @@ public class ScreenItemTome extends Screen {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4, 40, 192, 192, 32, 32, FLAT_TEXTURES);
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 40, 40, 160, 192, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 1 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 1 ]"), false);
 		} 
 
 		else if (this.currPage == 18) {
@@ -416,9 +416,9 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 128, 192, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_one"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_one"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 2 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 2 ]"), false);
 		} 
 		
 		else if (this.currPage == 19) {
@@ -427,9 +427,9 @@ public class ScreenItemTome extends Screen {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 32, 40, 224, 224, 32, 32, FLAT_TEXTURES);
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4, 40, 192, 224, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_two"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_two"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 3 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 3 ]"), false);
 		} 
 
 		else if (this.currPage == 20) {
@@ -438,9 +438,9 @@ public class ScreenItemTome extends Screen {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 32, 40, 224, 192, 32, 32, FLAT_TEXTURES);
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4, 40, 192, 192, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_three"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_three"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 4 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 4 ]"), false);
 		} 
 
 		else if (this.currPage == 21) {
@@ -448,21 +448,21 @@ public class ScreenItemTome extends Screen {
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 160, 192, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_four"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_four"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 5 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 5 ]"), false);
 		} 
 		
 		else if (this.currPage == 21) {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GREEN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_six_heading"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_six", " 1 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_six", " 1 ]"), false);
 		}
 		
 		else if (this.currPage == 22) {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GRAY.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_seven_heading"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 1 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 1 ]"), false);
 		} 
 		
 		else if (this.currPage == 23) {
@@ -481,7 +481,7 @@ public class ScreenItemTome extends Screen {
 				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 40,  40, 224, 160, 32, 32, FLAT_TEXTURES);
 			}
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 2 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 2 ]"), false);
 		} 
 
 		else if (this.currPage == 24) {
@@ -491,17 +491,17 @@ public class ScreenItemTome extends Screen {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14,  40, 0, 128, 32, 32, FLAT_TEXTURES);
 			//CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 26,  40, 64, 128, 32, 32);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 3 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 3 ]"), false);
 		} 
 
 		else if (this.currPage == 25) {
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 4 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 4 ]"), false);
 		} 
 
 		else if (this.currPage == 26) {
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 5 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 5 ]"), false);
 		} 
 		
 		else if (this.currPage == 27) {
@@ -512,9 +512,9 @@ public class ScreenItemTome extends Screen {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4,   40, 64, 224, 32, 32, FLAT_TEXTURES);
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 40,  40, 96, 224, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_eight_body"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_eight_body"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_eight", " 1 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_eight", " 1 ]"), false);
 		} 
 		
 		else if (this.currPage == 28) {
@@ -524,12 +524,12 @@ public class ScreenItemTome extends Screen {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 192, 96, 32, 32, FLAT_TEXTURES);
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 26, 40, 224, 0, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_nine_body"));
+			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_nine_body"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " Intro ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " Intro ]"), false);
 		}
 		
-		else if (this.currPage >= 29 && this.currPage <= 38) {
+		else if (this.currPage >= 29 && this.currPage <= 39) {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 202 / 2 - 30, 225 / 2 - 30, 0, 64, 64, 64, FLAT_TEXTURES);
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 35, 202, 0, 54, 74, this.getTexture());
@@ -537,18 +537,18 @@ public class ScreenItemTome extends Screen {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 35, 202, 0, 54, 74, this.getTexture());
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 125, 202, 0, 54, 74, this.getTexture());
 
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
 			
 			if (this.currPage == 29) {
 				FONT.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading_one"), false);
 				
-				graphics.drawString(this.font, Value.BOLD + "4", screen_coords[0] + 67, screen_coords[1] + 102, ComponentColour.SCREEN_LIGHT.dec());
-				graphics.drawString(this.font, Value.BOLD + "2", screen_coords[0] + 160, screen_coords[1] + 102, ComponentColour.SCREEN_LIGHT.dec());
+				graphics.drawString(this.font, Value.BOLD + "4", screen_coords[0] + 67, screen_coords[1] + 102, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec());
+				graphics.drawString(this.font, Value.BOLD + "2", screen_coords[0] + 160, screen_coords[1] + 102, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec());
 			}
 			
 			if (this.currPage == 30) {
-				graphics.drawString(this.font, Value.BOLD + "4", screen_coords[0] + 67, screen_coords[1] + 192, ComponentColour.SCREEN_LIGHT.dec());
-				graphics.drawString(this.font, Value.BOLD + "2", screen_coords[0] + 67, screen_coords[1] + 102, ComponentColour.SCREEN_LIGHT.dec());
+				graphics.drawString(this.font, Value.BOLD + "4", screen_coords[0] + 67, screen_coords[1] + 192, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec());
+				graphics.drawString(this.font, Value.BOLD + "2", screen_coords[0] + 67, screen_coords[1] + 102, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec());
 			}
 			
 			if (this.currPage == 31) {
@@ -556,11 +556,16 @@ public class ScreenItemTome extends Screen {
 			}
 			
 			if (this.currPage == 34) {
-				graphics.drawString(this.font, Value.BOLD + "2", screen_coords[0] + 67, screen_coords[1] + 102, ComponentColour.SCREEN_LIGHT.dec());
+				graphics.drawString(this.font, Value.BOLD + "2", screen_coords[0] + 67, screen_coords[1] + 102, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec());
+			}
+
+			if (this.currPage == 39) {
+				graphics.drawString(this.font, Value.BOLD + "2", screen_coords[0] + 67, screen_coords[1] + 102, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec());
+				graphics.drawString(this.font, Value.BOLD + "2", screen_coords[0] + 160, screen_coords[1] + 102, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec());
 			}
 		}
 		
-		else if (this.currPage >= 39 && this.currPage <= 42) {
+		else if (this.currPage >= 40 && this.currPage <= 43) {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 202 / 2 - 30, 225 / 2 - 30, 128, 64, 64, 64, FLAT_TEXTURES);
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 35, 202, 116, 54, 74, this.getTexture());
@@ -572,10 +577,10 @@ public class ScreenItemTome extends Screen {
 				FONT.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading_two"), false);
 			}
 
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
 		}
 		
-		else if (this.currPage >= 43 && this.currPage <= 44) {
+		else if (this.currPage >= 44 && this.currPage <= 45) {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 202 / 2 - 30, 225 / 2 - 30, 64, 64, 64, 64, FLAT_TEXTURES);
 
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 35, 202, 76, 54, 38, this.getTexture());
@@ -588,15 +593,15 @@ public class ScreenItemTome extends Screen {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 119, 202, 76, 54, 38, this.getTexture());
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 161, 202, 76, 54, 38, this.getTexture());
 
-			if (this.currPage == 43) {
+			if (this.currPage == 44) {
 				FONT.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading_three"), false);
 				
 			}
 
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
 		}
 		
-		else if (this.currPage == 45) {
+		else if (this.currPage == 46) {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.RED.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_ten_heading"), false);
 			
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 5, ComponentColour.POCKET_PURPLE_LIGHT.dec(), "TheCosmicNebula", false);
@@ -619,10 +624,10 @@ public class ScreenItemTome extends Screen {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 150, ComponentColour.RED.dec(), "VsnGamer", false);
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 160, ComponentColour.RED.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_five"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_ten", " 1 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_ten", " 1 ]"), false);
 		}
 		
-		else if (this.currPage == 46) {
+		else if (this.currPage == 47) {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLURPLE_LIGHT.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_eleven_heading"), false);
 			
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 10, ComponentColour.ORANGE.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_one"), false);
@@ -633,12 +638,12 @@ public class ScreenItemTome extends Screen {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 66, ComponentColour.LIGHT_RED.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_two"), false);
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 78, ComponentColour.LIGHT_RED.dec(), "Tahlavos17", false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 98, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_three"), false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 111, ComponentColour.RED.dec(), "Pl�r1’", false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 98, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_three"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 111, ComponentColour.BLUE.dec(), "Pl�r1’", false);
 
 			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 130, 0, ComponentColour.BLURPLE_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_eleven_body_four"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_ten", " 2 ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_ten", " 2 ]"), false);
 		}
 		
 		this.renderSecret(graphics, screen_coords);
@@ -747,7 +752,7 @@ public class ScreenItemTome extends Screen {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 11, 3, 89, 8, 89, 3, 12, 3, 96 }, 1);
 			
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 11, 3, 18, 8, 18, 3, 108, 3, 109 }, 2);
-			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 87, 2, 87, 87, 45, 87, 87, 87, 87, 110 }, 3);
+			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 112, 3, 112, 14, 8, 14, 112, 3, 112, 111 }, 3);
 		}
 
 		else if (this.currPage == 36) {
@@ -773,8 +778,13 @@ public class ScreenItemTome extends Screen {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 65, 3, 71, 8, 71, 3, 89, 3, 91 }, 2);
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 14, 3, 13, 15, 13, -1, 3, -1, 16 }, 3);
 		}
-		
+
 		else if (this.currPage == 39) {
+			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 87, 113, 87, 87, 45, 87, 87, 87, 87, 110 }, 0);
+			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 87, 110, 87, 87, 45, 87, 87, 87, 87, 110 }, 1);
+		}
+		
+		else if (this.currPage == 40) {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 87, 3, 11, 22, 11, 3, 87, 3, 27 }, 20);
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 87, 3, 11, 23, 11, 3, 87, 3, 28 }, 21);
 
@@ -782,7 +792,7 @@ public class ScreenItemTome extends Screen {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 87, 3, 11, 24, 11, 3, 87, 3, 29 }, 23);
 		} 
 
-		else if (this.currPage == 40) {
+		else if (this.currPage == 41) {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 87, 3, 11, 25, 11, 3, 87, 3, 30 }, 20);
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 11, 20, 3, 19, 20, 3, 11, 20, 51 }, 21);
 
@@ -790,7 +800,7 @@ public class ScreenItemTome extends Screen {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 48, 88, 48, 16, 83, 16, 13, 3, 13, 39 }, 23);
 		}
 
-		else if (this.currPage == 41) {
+		else if (this.currPage == 42) {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 11, 3, 87, 31, 87, 11, 3, 11, 35 }, 20);
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 11, 3, 87, 32, 87, 11, 3, 11, 36 }, 21);
 
@@ -798,7 +808,7 @@ public class ScreenItemTome extends Screen {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 11, 3, 87, 34, 87, 11, 3, 11, 38 }, 23);
 		}
 
-		else if (this.currPage == 42) {
+		else if (this.currPage == 43) {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 3, 87, 3, 11, 104, 11, 3, 87, 3, 105 }, 20);
 			//this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 87, 11, 87, -1, 32, -1, 11, 87, 11, 36 }, 21);
 			
@@ -807,7 +817,7 @@ public class ScreenItemTome extends Screen {
 		}
 
 		// Smithing Table
-		else if (this.currPage == 43) {
+		else if (this.currPage == 44) {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 110, 27, 86, 76 }, 10);
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 110, 26, 86, 77 }, 11);
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 110, 28, 86, 78 }, 12);
@@ -819,7 +829,7 @@ public class ScreenItemTome extends Screen {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 110, 74, 86, 75 }, 17);
 		}
 		
-		else if (this.currPage == 44) {
+		else if (this.currPage == 45) {
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 110, 35, 86, 82 }, 10);
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 110, 36, 86, 83 }, 11);
 			this.renderCraftingGrid(graphics, screen_coords, mouseX, mouseY, new int[] { 110, 37, 86, 84 }, 12);
@@ -914,7 +924,7 @@ public class ScreenItemTome extends Screen {
 		this.tabRecipes = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 + 24, ComponentColour.DARK_GREEN.dec(), this.getTexture(), (button) -> { this.showPage(28); }, (button) -> { return button.get(); }));
 		this.tabCredits = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 + 50, ComponentColour.RED.dec(), this.getTexture(), (button) -> { this.showPage(45); }, (button) -> { return button.get(); }));
 		
-		this.tabConfiguration = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 +76,  ComponentColour.SCREEN_LIGHT.dec(), this.getTexture(), (button) -> {  }, (button) -> { return button.get(); }));
+		this.tabConfiguration = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 +76,  this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), this.getTexture(), (button) -> {  }, (button) -> { return button.get(); }));
 		
 		this.buttonMiss = this.addRenderableWidget(new TomeButton(0, 0, 10, 10, ComponentColour.WHITE.dec(), this.getTexture(), (button) -> { this.currPage = this.pageCount - 1; }, (button) -> { return button.get(); }));
 		
@@ -1140,6 +1150,10 @@ public class ScreenItemTome extends Screen {
 				new ItemStack(Blocks.ENDER_CHEST), // 108
 				new ItemStack(ModRegistrationManager.ARMOUR_MODULE_ENDER_CHEST.get()), // 109
 				new ItemStack(ModRegistrationManager.DIMENSIONAL_UPGRADE_TEMPLATE.get()), // 110
+				new ItemStack(ModRegistrationManager.ARMOUR_MODULE_FIREWORK.get()), // 111
+
+				new ItemStack(Items.FIREWORK_ROCKET), // 112
+				new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), // 113
 		};
 		
 		//Vanilla Crafting
@@ -1304,7 +1318,7 @@ public class ScreenItemTome extends Screen {
 	}
 	
 	public void renderSecret(GuiGraphics graphics, int[] screen_coords) {
-		if (this.currPage == 47) {
+		if (this.currPage == 48) {
 			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 202 / 2 - 16, 225 / 2 - 26, 223, 223, 32, 32, FLAT_TEXTURES_0);
 			
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 40, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "Adventuregell,"), false);
@@ -1312,7 +1326,7 @@ public class ScreenItemTome extends Screen {
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 90, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "I miss "), false);
 			FONT.drawCenteredString(graphics, font, screen_coords, 104, 100, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "who you used to be.."), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, ComponentColour.SCREEN_LIGHT.dec(), ComponentHelper.locString("[ ", "Tribute", " ]"), false);
+			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "Tribute", " ]"), false);
 		}
 	}
 }

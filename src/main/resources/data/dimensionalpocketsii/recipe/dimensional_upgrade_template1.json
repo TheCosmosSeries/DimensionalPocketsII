@@ -7,7 +7,7 @@
 	],
 	"key": {
 		"S": {
-			"item": "minecraft:netherite_upgrade_smithing_template"
+			"item": "dimensionalpocketsii:dimensional_upgrade_template"
 		},
 		"B": {
 			"item": "dimensionalpocketsii:block_dimensional"

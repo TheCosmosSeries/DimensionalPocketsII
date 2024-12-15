@@ -916,6 +916,11 @@
 	"dimensionalpocketsii.item.info.elytraplate.setting.firework.enabled": "enabled",
 	"dimensionalpocketsii.item.info.elytraplate.setting.firework.disabled": "disabled",
 	
+	"dimensionalpocketsii.smithing_template.applies_to": "Applies to:",
+	"dimensionalpocketsii.smithing_template.dimensional.applies_to": " Dimensional Equipment",
+	"dimensionalpocketsii.smithing_template.ingredients": "Ingredients:",
+	"dimensionalpocketsii.smithing_template.dimensional.ingredients": " Enhanced Dimensional Ingot",
+	
 	"dimensionalpocketsii.info.shifter_info": "Teleport to and from your Pocket from anywhere!",
 	"dimensionalpocketsii.info.shifter_shift_one": "To link: shift-right click this on a Pocket Block.",
 	"dimensionalpocketsii.info.shifter_shift_two": "To use: shift-right click this item facing open air.",

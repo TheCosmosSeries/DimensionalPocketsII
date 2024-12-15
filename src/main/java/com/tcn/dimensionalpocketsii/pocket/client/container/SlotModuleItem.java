@@ -8,8 +8,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class SlotModuleItem extends Slot {
 
-	public SlotModuleItem(Container containerIn, int indexIn, int posX, int posY) {
-		super(containerIn, indexIn, posX, posY);
+	public SlotModuleItem(Container containerIn, int indexIn, int xIn, int yIn) {
+		super(containerIn, indexIn, xIn, yIn);
 	}
 
 	@Override

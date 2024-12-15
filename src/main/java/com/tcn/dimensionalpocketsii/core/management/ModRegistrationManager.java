@@ -50,6 +50,7 @@ import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleScreen;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleShifter;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleSolar;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemModuleVisor;
+import com.tcn.dimensionalpocketsii.core.item.armour.module.ItemSmithingUpgrade;
 import com.tcn.dimensionalpocketsii.core.item.device.DimensionalEjector;
 import com.tcn.dimensionalpocketsii.core.item.device.DimensionalEnergyCell;
 import com.tcn.dimensionalpocketsii.core.item.device.DimensionalEnergyCellEnhanced;
@@ -544,7 +545,7 @@ public class ModRegistrationManager {
 	public static final DeferredItem<Item> MODULE_CREATIVE_ENERGY = addToItemTab(ITEMS.register("module_creative_energy", () -> new ModuleZCreativeEnergy(new Item.Properties().stacksTo(8).rarity(RARITY_CREATIVE))));
 	public static final DeferredItem<Item> MODULE_CREATIVE_FLUID = addToItemTab(ITEMS.register("module_creative_fluid", () -> new ModuleZCreativeFluid(new Item.Properties().stacksTo(8).rarity(RARITY_CREATIVE))));
 
-	public static final DeferredItem<Item> DIMENSIONAL_UPGRADE_TEMPLATE = addToToolsTab(ITEMS.register("dimensional_upgrade_template", () -> new CosmosItem(new Item.Properties().rarity(RARITY_ENHANCED).stacksTo(16))));
+	public static final DeferredItem<Item> DIMENSIONAL_UPGRADE_TEMPLATE = addToToolsTab(ITEMS.register("dimensional_upgrade_template", () -> new ItemSmithingUpgrade(new Item.Properties().rarity(RARITY_ENHANCED).stacksTo(16))));
 	
 	
 	public static final DeferredBlock<Block> BLOCK_DIMENSIONAL_ORE = BLOCKS.register("block_dimensional_ore", () -> new CosmosBlock(Block.Properties.of().requiresCorrectToolForDrops().strength(4.0F, 4.0F)));

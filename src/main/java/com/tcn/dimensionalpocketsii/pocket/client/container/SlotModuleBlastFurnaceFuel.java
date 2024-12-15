@@ -8,8 +8,8 @@ import net.minecraft.world.item.Items;
 public class SlotModuleBlastFurnaceFuel extends Slot {
    private final ContainerModuleBlastFurnace menu;
 
-   public SlotModuleBlastFurnaceFuel(ContainerModuleBlastFurnace menuIn, Container inventoryIn, int p_i50084_3_, int p_i50084_4_, int p_i50084_5_) {
-      super(inventoryIn, p_i50084_3_, p_i50084_4_, p_i50084_5_);
+   public SlotModuleBlastFurnaceFuel(ContainerModuleBlastFurnace menuIn, Container inventoryIn, int indexIn, int xIn, int yIn) {
+      super(inventoryIn, indexIn, xIn, yIn);
       this.menu = menuIn;
    }
 
