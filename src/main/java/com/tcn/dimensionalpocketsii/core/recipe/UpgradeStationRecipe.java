@@ -11,13 +11,10 @@ import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -90,15 +87,10 @@ public class UpgradeStationRecipe implements Recipe<UpgradingRecipeInput> {
 	}
 	
 	@Override
-	public ItemStack assemble(UpgradingRecipeInput containerIn, HolderLookup.Provider accessIn) {
-		ItemStack itemstack = this.getResultItemStack().copy();
-		CompoundTag compoundtag = containerIn.getItem(0).getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-		
-		if (compoundtag != null) {
-			itemstack.set(DataComponents.CUSTOM_DATA, CustomData.of(compoundtag));
-		}
-
-		return itemstack;
+	public ItemStack assemble(UpgradingRecipeInput recipeInput, HolderLookup.Provider accessIn) {
+		ItemStack itemstack = recipeInput.getItem(0).transmuteCopy(this.resultIngredient.getItem(), this.resultIngredient.getCount());
+        itemstack.applyComponents(this.resultIngredient.getComponentsPatch());
+        return itemstack;
 	}
 
 	@Override
@@ -183,11 +175,11 @@ public class UpgradeStationRecipe implements Recipe<UpgradingRecipeInput> {
 	public static class Serializer implements RecipeSerializer<UpgradeStationRecipe> {		
 		public static final MapCodec<UpgradeStationRecipe> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-    			Ingredient.CODEC.fieldOf("focus").forGetter(recipe -> recipe.focusIngredient),
+    			Ingredient.CODEC_NONEMPTY.fieldOf("focus").forGetter(recipe -> recipe.focusIngredient),
                 Ingredient.LIST_CODEC.fieldOf("topRow").forGetter(recipe -> recipe.topIngredients),
                 Ingredient.LIST_CODEC.fieldOf("middleRow").forGetter(recipe -> recipe.middleIngredients),
                 Ingredient.LIST_CODEC.fieldOf("bottomRow").forGetter(recipe -> recipe.bottomIngredients),
-                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.resultIngredient)
+                ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.resultIngredient)
             ).apply(instance, UpgradeStationRecipe::new)
         );
 		

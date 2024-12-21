@@ -3,6 +3,8 @@ package com.tcn.dimensionalpocketsii.pocket.core.block.entity;
 import java.util.Arrays;
 import java.util.Optional;
 
+import javax.annotation.Nullable;
+
 import com.tcn.cosmoslibrary.client.interfaces.IBlockEntityClientUpdated;
 import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
@@ -21,8 +23,8 @@ import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.ModReferences;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
+import com.tcn.dimensionalpocketsii.ModReferences;
 import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
 import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
@@ -68,10 +70,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdateable implements IBlockNotifier, IBlockInteract, WorldlyContainer, IBlockEntitySided, MenuProvider, Nameable, Container, IFluidHandler, IFluidStorage, IBlockEntityClientUpdated.FluidTile, IBlockEntityUIMode {
 	
@@ -203,7 +208,8 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 		}
 		
 		Arrays.stream(Direction.values()).parallel().forEach((d) -> {
-			BlockEntity tile = entityIn.getLevel().getBlockEntity(entityIn.getBlockPos().offset(d.getNormal()));
+			BlockPos otherPos = entityIn.getBlockPos().offset(d.getNormal());
+			BlockEntity tile = entityIn.getLevel().getBlockEntity(otherPos);
 
 			if (!(tile instanceof BlockEntityModuleConnector) && !(tile instanceof BlockEntityModuleFurnace) 
 					&& !(tile instanceof BlockEntityModuleArmourWorkbench) && !(tile instanceof BlockEntityModuleCrafter)
@@ -211,12 +217,10 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 				
 				if (tile != null && !tile.isRemoved()) {
 					if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_OUTPUT)) {
-						/*if (tile.getCapability(Capabilities.EnergyStorage.BLOCK, d).resolve().isPresent()) {
-							LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.ENERGY, d);
-
-							if (consumer.resolve().get() instanceof IEnergyStorage) {
-								IEnergyStorage storage = (IEnergyStorage) consumer.resolve().get();
-
+						Object object = entityIn.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, otherPos, d);
+						
+						if (object != null) {
+							if (object instanceof IEnergyStorage storage) {
 								if (storage.canReceive() && entityIn.canExtract(d)) {
 									int extract = entityIn.getPocket().extractEnergy(entityIn.getPocket().getMaxExtract(), true);
 									int actualExtract = storage.receiveEnergy(extract, true);
@@ -227,14 +231,12 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 									}
 								}
 							}
-						}*/
+						}
 						
-						/*if (tile.getCapability(ForgeCapabilities.ITEM_HANDLER, d).resolve().isPresent()) {
-							LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, d);
-
-							if (consumer.resolve().get() instanceof IItemHandler) {
-								IItemHandler storage = (IItemHandler) consumer.resolve().get();
-
+						Object object1 = entityIn.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, otherPos, d);
+						
+						if (object1 != null) {
+							if (object1 instanceof IItemHandler storage) {
 								for (int i = 40; i < 48; i++) {
 									if (!(entityIn.getPocket().getItem(i).isEmpty())) {
 										for (int j = 0; j < storage.getSlots(); j++) {
@@ -251,14 +253,12 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 									}
 								}
 							}
-						}*/
+						}
+
+						Object object2 = entityIn.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, otherPos, d);
 						
-						/*if (tile.getCapability(ForgeCapabilities.FLUID_HANDLER, d).resolve().isPresent()) {
-							LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, d);
-							
-							if (consumer.resolve().get() instanceof IFluidHandler) {
-								IFluidHandler storage = (IFluidHandler) consumer.resolve().get();
-								
+						if (object2 != null) {
+							if (object2 instanceof IFluidHandler storage) {
 								if (storage.isFluidValid(capacity, entityIn.getFluidInTank(0))) {
 									FluidStack stack = entityIn.drain(1000, FluidAction.SIMULATE);
 									int lost = storage.fill(stack, FluidAction.SIMULATE);
@@ -271,13 +271,13 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 									}
 								}
 							}
-						}*/
+						}
 					} else if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_INPUT)) {
-						/*if (tile.getCapability(ForgeCapabilities.ENERGY, d).resolve().isPresent()) {
-							LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.ENERGY, d);
+						Object object = entityIn.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, otherPos, d);
+						
+						if (object != null) {
+							if (object instanceof IEnergyStorage storage) {
 
-							if (consumer.resolve().get() instanceof IEnergyStorage) {
-								IEnergyStorage storage = (IEnergyStorage) consumer.resolve().get();
 
 								if (storage.canExtract() && entityIn.canReceive(d)) {
 									int extract = storage.extractEnergy(entityIn.getPocket().getMaxReceive(), true);
@@ -289,14 +289,12 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 									}
 								}
 							}
-						}*/
-						
-						/*if (tile.getCapability(ForgeCapabilities.ITEM_HANDLER, d).resolve().isPresent()) {
-							LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, d);
+						}
 
-							if (consumer.resolve().get() instanceof IItemHandler) {
-								IItemHandler storage = (IItemHandler) consumer.resolve().get();
-								
+						Object object1 = entityIn.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, otherPos, d);
+						
+						if (object1 != null) {
+							if (object1 instanceof IItemHandler storage) {
 								for (int i = 40; i < 48; i++) {
 									for (int j = 0; j < storage.getSlots(); j++) {
 										ItemStack homeStack = entityIn.getPocket().getItem(i);
@@ -313,14 +311,13 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 									}
 								}
 							}
-						}*/
+						}
 						
-						/*if (tile.getCapability(ForgeCapabilities.FLUID_HANDLER, d).resolve().isPresent()) {
-							LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, d);
-							
-							if (consumer.resolve().get() instanceof IFluidHandler) {
-								IFluidHandler storage = (IFluidHandler) consumer.resolve().get();
-								
+
+						Object object2 = entityIn.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, otherPos, d);
+						
+						if (object2 != null) {
+							if (object2 instanceof IFluidHandler storage) {
 								FluidStack stack = storage.drain(1000, FluidAction.SIMULATE);
 								int lost = entityIn.fill(stack, FluidAction.SIMULATE);
 								
@@ -331,7 +328,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 									}
 								}
 							}
-						}*/
+						}
 					}
 				}
 			}
@@ -999,9 +996,10 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 			
 		});
 	}
-
-	private LazyOptional<IEnergyStorage> createEnergyProxy(@Nullable Direction directionIn) {
-        return LazyOptional.of(() -> new IEnergyStorage() {
+*/
+	
+	public IEnergyStorage createEnergyProxy(@Nullable Direction directionIn) {
+        return new IEnergyStorage() {
             @Override
             public int extractEnergy(int maxExtract, boolean simulate) {
             	AbstractBlockEntityPocket.this.sendUpdates(true);
@@ -1033,9 +1031,9 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
             public boolean canExtract() {
                 return AbstractBlockEntityPocket.this.canExtract(directionIn);
             }
-        });
+        };
     }
-
+/*
 	LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.DOWN, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
 	
 	@Override
@@ -1053,7 +1051,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 				} else if (directionIn == Direction.EAST) {
 					return handlers[2].cast();
 				} else if (directionIn == Direction.WEST) {
-					return handlers[3].cast();
+					return handlers[3].cast()
 				} else if (directionIn == Direction.NORTH) {
 					return handlers[4].cast();
 				} else if (directionIn == Direction.SOUTH) {
@@ -1064,16 +1062,12 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 		
 		return super.getCapability(capability, directionIn);
 	}
-
+*/
 	@Override
 	public void invalidateCapabilities() {
 		super.invalidateCapabilities();
-		
-		for (int x = 0; x < handlers.length; x++) {
-			handlers[x].invalidate();
-		}
 	}
-*/
+
 	@Override
 	public EnumUIMode getUIMode() {
 		return this.uiMode;

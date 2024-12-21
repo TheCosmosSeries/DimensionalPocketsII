@@ -207,6 +207,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
@@ -870,7 +872,14 @@ public class ModRegistrationManager {
 		event.register(CONTAINER_TYPE_ELYTRAPLATE_SETTINGS.get(), ScreenElytraplateSettings::new);
 		event.register(CONTAINER_TYPE_ELYTRAPLATE_ENDER_CHEST.get(), ScreenElytraplateEnderChest::new);
 	}
-	
+
+	@SubscribeEvent
+	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
+		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, BLOCK_ENTITY_TYPE_POCKET.get(), (myBlockEntity, side) -> myBlockEntity.createEnergyProxy(side));
+		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get(), (myBlockEntity, side) -> myBlockEntity.createEnergyProxy(side));
+		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, BLOCK_ENTITY_TYPE_CONNECTOR.get(), (myBlockEntity, side) -> myBlockEntity.createEnergyProxy(side));
+	}
+
 	@SuppressWarnings("deprecation")
 	@OnlyIn(Dist.CLIENT)
 	public static void onFMLClientSetup(FMLClientSetupEvent event) {

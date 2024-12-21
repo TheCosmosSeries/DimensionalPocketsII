@@ -62,6 +62,6 @@ public class CategoryUpgradeStation implements IRecipeCategory<UpgradeStationRec
 
 	@Override
 	public RecipeType<UpgradeStationRecipe> getRecipeType() {
-		return CoreJeiPlugin.UPGRADING;
+		return DimensionalJEIPlugin.UPGRADING;
 	}
 }

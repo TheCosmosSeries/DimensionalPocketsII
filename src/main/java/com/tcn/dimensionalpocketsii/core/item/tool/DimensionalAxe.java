@@ -37,7 +37,6 @@ public class DimensionalAxe extends CosmosEnergyAxeItem {
 			} 
 			
 		} else {
-			
 			tooltip.add(ComponentHelper.getTooltipOne("dimensionalpocketsii.item.info.tool_charge"));
 			
 			if (this.enhanced) {

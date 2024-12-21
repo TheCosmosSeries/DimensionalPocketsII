@@ -3,6 +3,8 @@ package com.tcn.dimensionalpocketsii.pocket.core.block.entity;
 import java.util.Arrays;
 import java.util.Optional;
 
+import javax.annotation.Nullable;
+
 import com.tcn.cosmoslibrary.client.interfaces.IBlockEntityClientUpdated;
 import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
@@ -61,10 +63,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, MenuProvider, Nameable, WorldlyContainer, IBlockEntitySided, IFluidHandler, IFluidStorage, IBlockEntityClientUpdated.FluidTile, IBlockEntityConnectionType, IBlockEntityUIMode {
 
@@ -213,7 +218,8 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 		}
 		
 		Arrays.stream(Direction.values()).parallel().forEach((d) -> {
-			BlockEntity tile = entityIn.getLevel().getBlockEntity(entityIn.getBlockPos().offset(d.getNormal()));
+			BlockPos otherPos = entityIn.getBlockPos().offset(d.getNormal());
+			BlockEntity tile = entityIn.getLevel().getBlockEntity(otherPos);
 
 			if (!(tile instanceof BlockEntityModuleConnector) && !(tile instanceof BlockEntityModuleFurnace) 
 					&& !(tile instanceof BlockEntityModuleArmourWorkbench) && !(tile instanceof BlockEntityModuleCrafter)
@@ -222,12 +228,10 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 				if (tile != null && !tile.isRemoved()) {
 					if (entityIn.getConnectionType().equals(EnumConnectionType.ENERGY)) {
 						if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_OUTPUT)) {
-							/*if (tile.getCapability(ForgeCapabilities.ENERGY, d).resolve().isPresent()) {
-								LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.ENERGY, d);
-
-								if (consumer.resolve().get() instanceof IEnergyStorage) {
-									IEnergyStorage storage = (IEnergyStorage) consumer.resolve().get();
-
+							Object object = entityIn.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, otherPos, d);
+							
+							if (object != null) {
+								if (object instanceof IEnergyStorage storage) {
 									if (storage.canReceive() && entityIn.canExtract(d)) {
 										int extract = entityIn.getPocket().extractEnergy(entityIn.getPocket().getMaxExtract(), true);
 										int actualExtract = storage.receiveEnergy(extract, true);
@@ -238,13 +242,12 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 										}
 									}
 								}
-							}*/
+							}
 						} else if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_INPUT)) {
-							/*if (tile.getCapability(ForgeCapabilities.ENERGY, d).resolve().isPresent()) {
-							LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.ENERGY, d);
-
-								if (consumer.resolve().get() instanceof IEnergyStorage) {
-									IEnergyStorage storage = (IEnergyStorage) consumer.resolve().get();
+							Object object = entityIn.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, otherPos, d);
+							
+							if (object != null) {
+								if (object instanceof IEnergyStorage storage) {
 	
 									if (storage.canExtract() && entityIn.canReceive(d)) {
 										int extract = storage.extractEnergy(entityIn.getPocket().getMaxReceive(), true);
@@ -257,63 +260,61 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 									}
 								}
 							}
-						}*/
+						}
 					} else if (entityIn.getConnectionType().equals(EnumConnectionType.ITEM)) {
 						if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_OUTPUT)) {
-							/*if (tile.getCapability(ForgeCapabilities.ITEM_HANDLER, d).resolve().isPresent()) {
-								LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, d);
-	
-								if (consumer.resolve().get() instanceof IItemHandler) {
-									IItemHandler storage = (IItemHandler) consumer.resolve().get();
-	
-									for (int i = 40; i < 48; i++) {
-										if (!(entityIn.getPocket().getItem(i).isEmpty())) {
-											for (int j = 0; j < storage.getSlots(); j++) {
-												if (storage.isItemValid(j, entityIn.getPocket().getItem(i))) {
-													ItemStack stack = storage.getStackInSlot(j);
-													
-													if (stack.getItem().equals(entityIn.getPocket().getItem(i).getItem()) || stack.isEmpty()) {
-														storage.insertItem(j, entityIn.getPocket().removeItem(i, 1), false);
-														entityIn.sendUpdates(true);
-														break;
+							if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_OUTPUT)) {
+								Object object = entityIn.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, otherPos, d);
+								
+								if (object != null) {
+									if (object instanceof IItemHandler storage) {
+										for (int i = 40; i < 48; i++) {
+											if (!(entityIn.getPocket().getItem(i).isEmpty())) {
+												for (int j = 0; j < storage.getSlots(); j++) {
+													if (storage.isItemValid(j, entityIn.getPocket().getItem(i))) {
+														ItemStack stack = storage.getStackInSlot(j);
+														
+														if (stack.getItem().equals(entityIn.getPocket().getItem(i).getItem()) || stack.isEmpty()) {
+															storage.insertItem(j, entityIn.getPocket().removeItem(i, 1), false);
+															entityIn.sendUpdates(true);
+															break;
+														}
 													}
 												}
 											}
 										}
 									}
 								}
-							}*/
+							}
 						} else if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_INPUT)) {
-							/*if (tile.getCapability(ForgeCapabilities.ITEM_HANDLER, d).resolve().isPresent()) {
-								LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, d);
-	
-								if (consumer.resolve().get() instanceof IItemHandler) {
-									IItemHandler storage = (IItemHandler) consumer.resolve().get();
-									
-									for (int i = 40; i < 48; i++) {
-										for (int j = 0; j < storage.getSlots(); j++) {
-											ItemStack homeStack = entityIn.getPocket().getItem(i);
-											
-											if (homeStack.getItem().equals(storage.getStackInSlot(j).getItem()) || homeStack.isEmpty()) {
-												if (!storage.extractItem(j, 1, true).isEmpty()) {
-													entityIn.getPocket().insertItem(i, storage.extractItem(j, 1, false), false);
-													entityIn.sendUpdates(true);
-													return;
+							if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_OUTPUT)) {
+								Object object = entityIn.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, otherPos, d);
+								
+								if (object != null) {
+									if (object instanceof IItemHandler storage) {
+										for (int i = 40; i < 48; i++) {
+											for (int j = 0; j < storage.getSlots(); j++) {
+												ItemStack homeStack = entityIn.getPocket().getItem(i);
+												
+												if (homeStack.getItem().equals(storage.getStackInSlot(j).getItem()) || homeStack.isEmpty()) {
+													if (!storage.extractItem(j, 1, true).isEmpty()) {
+														entityIn.getPocket().insertItem(i, storage.extractItem(j, 1, false), false);
+														entityIn.sendUpdates(true);
+														return;
+													}
 												}
 											}
 										}
 									}
 								}
-							}*/
+							}
 						}
 					} else if (entityIn.getConnectionType().equals(EnumConnectionType.FLUID)) {
 						if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_OUTPUT)) {
-							/*if (tile.getCapability(ForgeCapabilities.FLUID_HANDLER, d).resolve().isPresent()) {
-								LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, d);
-								
-								if (consumer.resolve().get() instanceof IFluidHandler) {
-									IFluidHandler storage = (IFluidHandler) consumer.resolve().get();
-									
+							Object object = entityIn.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, otherPos, d);
+							
+							if (object != null) {
+								if (object instanceof IFluidHandler storage) {
 									if (storage.isFluidValid(capacity, entityIn.getFluidInTank(0))) {
 										FluidStack stack = entityIn.drain(1000, FluidAction.SIMULATE);
 										int lost = storage.fill(stack, FluidAction.SIMULATE);
@@ -325,27 +326,26 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 											}
 										}
 									}
-								}*/
+								}
 							}
 						} else if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_INPUT)) {
-							/*if (tile.getCapability(ForgeCapabilities.FLUID_HANDLER, d).resolve().isPresent()) {
-								LazyOptional<?> consumer = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, d);
-								
-								if (consumer.resolve().get() instanceof IFluidHandler) {
-									IFluidHandler storage = (IFluidHandler) consumer.resolve().get();
-									
-									FluidStack stack = storage.drain(1000, FluidAction.SIMULATE);
-									int lost = entityIn.fill(stack, FluidAction.SIMULATE);
-									
-									if (!stack.isEmpty()) {
-										if (lost > 0) {
-											entityIn.fill(stack, FluidAction.EXECUTE);
-											storage.drain(lost, FluidAction.EXECUTE);
+							Object object = entityIn.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, otherPos, d);
+							
+							if (object != null) {
+								if (object instanceof IFluidHandler storage) {
+									if (storage.isFluidValid(capacity, entityIn.getFluidInTank(0))) {
+										FluidStack stack = entityIn.drain(1000, FluidAction.SIMULATE);
+										int lost = storage.fill(stack, FluidAction.SIMULATE);
+										
+										if (!stack.isEmpty()) {
+											if (lost > 0) {
+												storage.fill(stack, FluidAction.EXECUTE);
+												entityIn.drain(lost, FluidAction.EXECUTE);
+											}
 										}
 									}
-									
 								}
-							}*/
+							}
 						}
 					}
 				}
@@ -892,9 +892,10 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 			
 		});
 	}
+*/
 
-	private LazyOptional<IEnergyStorage> createEnergyProxy(@Nullable Direction directionIn) {
-        return LazyOptional.of(() -> new IEnergyStorage() {
+	public IEnergyStorage createEnergyProxy(@Nullable Direction directionIn) {
+        return new IEnergyStorage() {
             @Override
             public int extractEnergy(int maxExtract, boolean simulate) {
             	BlockEntityModuleConnector.this.sendUpdates(true);
@@ -926,9 +927,9 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
             public boolean canExtract() {
                 return BlockEntityModuleConnector.this.canExtract(directionIn);
             }
-        });
+        };
     }
-
+/*
 	LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.DOWN, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
 	
 	@Override
@@ -958,6 +959,7 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 		return super.getCapability(capability, directionIn);
 	}
 	*/
+	
 	@Override
 	public EnumUIMode getUIMode() {
 		return this.uiMode;
