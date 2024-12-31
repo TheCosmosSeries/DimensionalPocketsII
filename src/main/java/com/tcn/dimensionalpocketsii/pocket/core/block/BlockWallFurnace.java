@@ -5,8 +5,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleFurnace;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleFurnace;
 
@@ -58,7 +58,7 @@ public class BlockWallFurnace extends BlockWallModule implements IBlankCreativeT
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModRegistrationManager.BLOCK_ENTITY_TYPE_FURNACE.get());
+		return createTicker(levelIn, entityTypeIn, PocketsRegistrationManager.BLOCK_ENTITY_TYPE_FURNACE.get());
 	}
 
 	@Nullable
@@ -138,7 +138,7 @@ public class BlockWallFurnace extends BlockWallModule implements IBlankCreativeT
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return this.defaultBlockState();
 		}
 		return Blocks.AIR.defaultBlockState();
@@ -146,6 +146,6 @@ public class BlockWallFurnace extends BlockWallModule implements IBlankCreativeT
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-		return new ItemStack(ModRegistrationManager.MODULE_FURNACE.get());
+		return new ItemStack(PocketsRegistrationManager.MODULE_FURNACE.get());
     }
 }

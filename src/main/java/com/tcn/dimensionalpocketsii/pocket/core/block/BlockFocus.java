@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.pocket.core.block;
 
 import com.tcn.cosmoslibrary.common.block.CosmosBlock;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityFocus;
 import com.tcn.dimensionalpocketsii.pocket.core.util.PocketUtil;
 
@@ -106,7 +106,7 @@ public class BlockFocus extends CosmosBlock implements EntityBlock {
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (PocketUtil.isDimensionEqual(context.getLevel(), ModDimensionManager.POCKET_WORLD)) {
+		if (PocketUtil.isDimensionEqual(context.getLevel(), PocketsDimensionManager.POCKET_WORLD)) {
 			return this.defaultBlockState();
 		}
 		return Blocks.AIR.defaultBlockState();

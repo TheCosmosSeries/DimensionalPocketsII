@@ -9,9 +9,7 @@ import com.google.common.collect.Lists;
 import com.ibm.icu.text.DecimalFormat;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.tcn.cosmoslibrary.CosmosReference.RESOURCE.BASE;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem.FONT;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem.IS_HOVERING;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonUIHelp;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonUIMode;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
@@ -141,7 +139,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 
 	@Override
 	protected void init() {
-		this.setScreenCoords(CosmosUISystem.getScreenCoords(this, this.imageWidth, this.imageHeight));
+		this.setScreenCoords(CosmosUISystem.Init.getScreenCoords(this, this.imageWidth, this.imageHeight));
 		this.initTextField();
 		this.addButtons();
 		super.init();
@@ -163,11 +161,11 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 			ComponentColour colour = ComponentColour.col(this.pocket.getDisplayColour());
 			ComponentColour textColour = this.getUIMode().equals(EnumUIMode.LIGHT) ? ComponentColour.BLACK : ComponentColour.SCREEN_LIGHT;
 			
-			FONT.drawString(graphics, font, this.getScreenCoords(), 93, 40, true, ComponentHelper.style(ComponentColour.getCompColourForScreen(colour), "dimensionalpocketsii.gui.header.allowed_players"));
-			FONT.drawString(graphics, font, this.getScreenCoords(), 8,   4, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.config"));
-			FONT.drawString(graphics, font, this.getScreenCoords(), 262, 4, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.pocket_inv"));
-			FONT.drawString(graphics, font, this.getScreenCoords(), 8, 169, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.storage"));
-			FONT.drawString(graphics, font, this.getScreenCoords(), 8, 110, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.settings"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 93, 40, true, ComponentHelper.style(ComponentColour.getCompColourForScreen(colour), "dimensionalpocketsii.gui.header.allowed_players"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 8,   4, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.config"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 262, 4, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.pocket_inv"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 8, 169, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.storage"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 8, 110, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.settings"));
 		}
 		
 		this.textField.render(graphics, mouseX, mouseY, partialTicks);
@@ -203,21 +201,21 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 	
 	@Override
 	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
-		CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, Mth.clamp(this.imageWidth, 0, 256), this.imageHeight, this.getUIMode(), RESOURCE.CONNECTOR);
-		CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 256, 0, 0, 0, 106, this.imageHeight, this.getUIMode(), RESOURCE.CONNECTOR_SIDE);
+		CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, Mth.clamp(this.imageWidth, 0, 256), this.imageHeight, this.getUIMode(), RESOURCE.CONNECTOR);
+		CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 256, 0, 0, 0, 106, this.imageHeight, this.getUIMode(), RESOURCE.CONNECTOR_SIDE);
 		
 		if (this.menu.getPocket() != null) {
 			ComponentColour colour = ComponentColour.col(this.pocket.getDisplayColour());
 			float[] rgb = colour.equals(ComponentColour.POCKET_PURPLE) ? ComponentColour.rgbFloatArray(ComponentColour.POCKET_PURPLE_LIGHT) : ComponentColour.rgbFloatArray(colour);
 			
-			CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, 256, 256, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, this.getUIMode(), GUI.RESOURCE.CONNECTOR_BASE_NORMAL);
-			CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 256, 0, 0, 0, 106, 256, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, this.getUIMode(), GUI.RESOURCE.CONNECTOR_BASE_SIDE);
+			CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, 256, 256, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, this.getUIMode(), GUI.RESOURCE.CONNECTOR_BASE_NORMAL);
+			CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 256, 0, 0, 0, 106, 256, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, this.getUIMode(), GUI.RESOURCE.CONNECTOR_BASE_SIDE);
 
-			CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, 256, 256, this.getUIMode(), GUI.RESOURCE.CONNECTOR_OVERLAY_NORMAL);
-			CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 256, 0, 0, 0, 106, 256, this.getUIMode(), GUI.RESOURCE.CONNECTOR_OVERLAY_SIDE);
+			CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, 256, 256, this.getUIMode(), GUI.RESOURCE.CONNECTOR_OVERLAY_NORMAL);
+			CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 256, 0, 0, 0, 106, 256, this.getUIMode(), GUI.RESOURCE.CONNECTOR_OVERLAY_SIDE);
 
-			CosmosUISystem.renderFluidTank(this, graphics, this.getScreenCoords(), this.fluidBarData[0], this.fluidBarData[2], this.pocket.getFluidTank(), this.pocket.getFluidLevelScaled(57), 57);
-			CosmosUISystem.renderEnergyDisplay(graphics, ComponentColour.RED, this.pocket, this.getScreenCoords(), this.energyBarData[0], this.energyBarData[1], 16, 58, false);
+			CosmosUISystem.Render.renderFluidTank(graphics, this.getScreenCoords(), this.fluidBarData[0], this.fluidBarData[2], this.pocket.getFluidTank(), this.pocket.getFluidLevelScaled(57), 57);
+			CosmosUISystem.Render.renderEnergyDisplay(graphics, ComponentColour.RED, this.pocket, this.getScreenCoords(), this.energyBarData[0], this.energyBarData[1], 16, 58, false);
 		}
 		this.textField.render(graphics, mouseX + 30, mouseY, partialTicks);
 	}
@@ -253,7 +251,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 				graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 			}
 	
-			else if (IS_HOVERING.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + this.fluidBarData[0] - 1, this.getScreenCoords()[0] + this.fluidBarData[0] + 16, this.getScreenCoords()[1] + this.fluidBarData[2], this.getScreenCoords()[1] + this.fluidBarData[2] + 57)) {
+			else if (CosmosUISystem.Hovering.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + this.fluidBarData[0] - 1, this.getScreenCoords()[0] + this.fluidBarData[0] + 16, this.getScreenCoords()[1] + this.fluidBarData[2], this.getScreenCoords()[1] + this.fluidBarData[2] + 57)) {
 				FluidTank tank = pocket.getFluidTank();
 				
 				DecimalFormat formatter = new DecimalFormat("#,###,###,###");
@@ -267,7 +265,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 				graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 			} 
 			
-			else if (IS_HOVERING.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + this.energyBarData[0] - 1, this.getScreenCoords()[0] + this.energyBarData[0] + 16, this.getScreenCoords()[1] + this.energyBarData[1] - 1, this.getScreenCoords()[1] + this.energyBarData[1] + 58)) {
+			else if (CosmosUISystem.Hovering.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + this.energyBarData[0] - 1, this.getScreenCoords()[0] + this.energyBarData[0] + 16, this.getScreenCoords()[1] + this.energyBarData[1] - 1, this.getScreenCoords()[1] + this.energyBarData[1] + 58)) {
 				DecimalFormat formatter = new DecimalFormat("#,###,###,###");
 				String amount_string = formatter.format(this.pocket.getEnergyStored());
 				String capacity_string = formatter.format(this.pocket.getMaxEnergyStored());
@@ -386,9 +384,9 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 	
 	protected void addButtons() {
 		this.clearWidgets();
-		int[] screen_coords = CosmosUISystem.getScreenCoords(this, this.imageWidth, this.imageHeight);
+		int[] screen_coords = CosmosUISystem.Init.getScreenCoords(this, this.imageWidth, this.imageHeight);
 		
-		this.uiModeButton = this.addRenderableWidget(new CosmosButtonUIMode(this.getUIMode(), this.getScreenCoords()[0] + 345, this.getScreenCoords()[1] + 5, true, true, ComponentHelper.empty(), (button) -> { this.changeUIMode(); } ));
+		this.uiModeButton = this.addRenderableWidget(new CosmosButtonUIMode(this.getUIMode(), this.getScreenCoords()[0] + 345, this.getScreenCoords()[1] + 5, false, true, true, ComponentHelper.empty(), (button) -> { this.changeUIMode(); } ));
 
 		if (this.getHasUIHelp()) {
 			this.addUIHelpButton(screen_coords, uiHelpButtonIndex, (button) -> { this.changeUIHelp(); });
@@ -836,7 +834,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 			
 			int type = this.getUIMode().equals(EnumUIMode.DARK) ? 0 : 1;
 			
-			CosmosUISystem.renderStaticElementToggled(graphics, BASE.GUI_ELEMENT_MISC_LOC, this.getScreenCoords(), posX, this.scrollEnabled ? posYUpdated : posY, scrollType[0], scrollType[type + 1], 13, 15, true);
+			CosmosUISystem.Render.renderStaticElementToggled(graphics, this.getScreenCoords(), posX, this.scrollEnabled ? posYUpdated : posY, scrollType[0], scrollType[type + 1], 13, 15, true, BASE.GUI_ELEMENT_MISC_LOC);
 		}
 	}
 

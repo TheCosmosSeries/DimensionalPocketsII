@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -133,10 +133,10 @@ public class ScreenModuleSmithingTable extends CosmosScreenUIModeBE<ContainerMod
 					rgb = ComponentColour.rgbFloatArray(decimal);
 				}
 				
-				CosmosUISystem.renderStaticElementWithUIMode(this, guiGraphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, RESOURCE.SMITHING_TABLE_BASE);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(guiGraphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, RESOURCE.SMITHING_TABLE_BASE);
 			}
 			
-			CosmosUISystem.renderStaticElementWithUIMode(this, guiGraphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, RESOURCE.SMITHING_TABLE_OVERLAY);
+			CosmosUISystem.Render.renderStaticElementWithUIMode(guiGraphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, RESOURCE.SMITHING_TABLE_OVERLAY);
 
 			if ((this.getMenu().getSlot(0).hasItem() || this.getMenu().getSlot(1).hasItem()) && !this.getMenu().getSlot(2).hasItem()) {
 				guiGraphics.blit(blockEntity.getUIMode().equals(EnumUIMode.DARK) ? RESOURCE.SMITHING_TABLE_OVERLAY[1] : RESOURCE.SMITHING_TABLE_OVERLAY[0], this.getScreenCoords()[0] + 69, this.getScreenCoords()[1] + 49, this.imageWidth, 0, 28, 21);

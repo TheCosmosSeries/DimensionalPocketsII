@@ -7,8 +7,8 @@ import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
@@ -44,7 +44,7 @@ public class BlockWallEdge extends CosmosBlockConnectedUnbreakable {
 	
 	@Override
 	public ItemInteractionResult useItemOn(ItemStack stackIn, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult hit) {
-		if (PocketUtil.isDimensionEqual(worldIn, ModDimensionManager.POCKET_WORLD)) {
+		if (PocketUtil.isDimensionEqual(worldIn, PocketsDimensionManager.POCKET_WORLD)) {
 			Pocket pocket = StorageManager.getPocketFromChunkPosition(worldIn, CosmosChunkPos.scaleToChunkPos(pos));
 			
 			if (pocket.exists()) {
@@ -70,7 +70,7 @@ public class BlockWallEdge extends CosmosBlockConnectedUnbreakable {
 	
 	@Override
 	protected boolean canConnect(@Nonnull BlockState orig, @Nonnull BlockState conn) {
-		if (ModConfigManager.getInstance().getConnectedTexturesInsidePocket()) {
+		if (PocketsConfigManager.getInstance().getConnectedTexturesInsidePocket()) {
 			if (conn.getBlock().equals(Blocks.AIR)) {
 				return false;
 			} else if (orig.getBlock().equals(conn.getBlock())) {
@@ -105,7 +105,7 @@ public class BlockWallEdge extends CosmosBlockConnectedUnbreakable {
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return this.defaultBlockState();
 		}
 		return Blocks.AIR.defaultBlockState();
@@ -113,7 +113,7 @@ public class BlockWallEdge extends CosmosBlockConnectedUnbreakable {
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return new ItemStack(this);
 		} else {
 			return ItemStack.EMPTY;

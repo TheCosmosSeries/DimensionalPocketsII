@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.pocket.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
@@ -104,16 +104,15 @@ public class ScreenModuleAnvil extends CosmosScreenUIModeBE<ContainerModuleAnvil
 					rgb = ComponentColour.rgbFloatArray(decimal);
 				}
 				
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, RESOURCE.ANVIL_BASE);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, RESOURCE.ANVIL_BASE);
 			}
 			
-			CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, RESOURCE.ANVIL_OVERLAY);
+			CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, RESOURCE.ANVIL_OVERLAY);
 
-			CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 45, 24, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 110, 16, blockEntity, RESOURCE.ANVIL_OVERLAY);
+			CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 45, 24, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 110, 16, blockEntity, RESOURCE.ANVIL_OVERLAY);
 			
 			if ((this.menu.getSlot(0).hasItem() || this.menu.getSlot(1).hasItem()) && !this.menu.getSlot(2).hasItem()) {
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 102, 49, this.imageWidth, 0, 28, 21, blockEntity, RESOURCE.ANVIL_OVERLAY);
-				
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 102, 49, this.imageWidth, 0, 28, 21, blockEntity, RESOURCE.ANVIL_OVERLAY);
 			}
 		}
 	}

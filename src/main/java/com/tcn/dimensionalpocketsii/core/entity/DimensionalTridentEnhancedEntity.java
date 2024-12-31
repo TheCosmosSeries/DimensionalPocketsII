@@ -2,7 +2,7 @@ package com.tcn.dimensionalpocketsii.core.entity;
 
 import javax.annotation.Nullable;
 
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -42,13 +42,13 @@ public class DimensionalTridentEnhancedEntity extends AbstractArrow {
 	}
 
 	public DimensionalTridentEnhancedEntity(Level levelIn, LivingEntity livingEntityIn, ItemStack pickupStack) {
-		super(ModRegistrationManager.ENTITY_TYPE_TRIDENT_ENHANCED.get(), livingEntityIn, levelIn, pickupStack, null);
+		super(PocketsRegistrationManager.ENTITY_TYPE_TRIDENT_ENHANCED.get(), livingEntityIn, levelIn, pickupStack, null);
 		this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(pickupStack));
 		this.entityData.set(ID_FOIL, pickupStack.hasFoil());
 	}
 
 	public DimensionalTridentEnhancedEntity(Level levelIn, double x, double y, double z, ItemStack pickupStack) {
-		super(ModRegistrationManager.ENTITY_TYPE_TRIDENT_ENHANCED.get(), x, y, z, levelIn, pickupStack, pickupStack);
+		super(PocketsRegistrationManager.ENTITY_TYPE_TRIDENT_ENHANCED.get(), x, y, z, levelIn, pickupStack, pickupStack);
 		this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(pickupStack));
 		this.entityData.set(ID_FOIL, pickupStack.hasFoil());
 	}

@@ -2,7 +2,7 @@ package com.tcn.dimensionalpocketsii.pocket.client.screen;
 
 import java.util.Arrays;
 
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
 import com.tcn.cosmoslibrary.common.enums.EnumGeneralEnableState;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -18,7 +18,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -55,22 +54,15 @@ public class ScreenFocus extends CosmosScreenUIModeBE<ContainerFocus> {
 	@Override
 	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
 		super.renderBg(graphics, partialTicks, mouseX, mouseY);
-		BlockEntity entity = this.getBlockEntity();
-		
-		if (entity instanceof BlockEntityFocus) {
-			BlockEntityFocus blockEntity = (BlockEntityFocus) entity;
-			
-			CosmosUISystem.renderStaticElementWithUIMode(this, graphics, getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, RESOURCE.FOCUS_SLOTS);
+
+		if (this.getBlockEntity() instanceof BlockEntityFocus blockEntity) {
+			CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, RESOURCE.FOCUS_SLOTS);
 		}
 	}
 	
 	@Override
-	public void renderComponentHoverEffect(GuiGraphics graphics, Style style, int mouseX, int mouseY) {
-		BlockEntity entity = this.getBlockEntity();
-		
-		if (entity instanceof BlockEntityFocus) {
-			BlockEntityFocus blockEntity = (BlockEntityFocus) entity;
-			
+	public void renderStandardHoverEffect(GuiGraphics graphics, Style style, int mouseX, int mouseY) {
+		if (this.getBlockEntity() instanceof BlockEntityFocus blockEntity) {
 			if (this.jumpEnabledButton.isMouseOver(mouseX, mouseY)) {
 				EnumGeneralEnableState state = blockEntity.getJump();
 				
@@ -96,11 +88,8 @@ public class ScreenFocus extends CosmosScreenUIModeBE<ContainerFocus> {
 	@Override
 	protected void addButtons() {
 		super.addButtons();
-		BlockEntity entity = this.getBlockEntity();
 		
-		if (entity instanceof BlockEntityFocus) {
-			BlockEntityFocus blockEntity = (BlockEntityFocus) entity;
-			
+		if (this.getBlockEntity() instanceof BlockEntityFocus blockEntity) {
 			this.jumpEnabledButton = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + 93, this.getScreenCoords()[1] + 19, 20, true, true, blockEntity.getJumpEnabled() ? 26 : 27, ComponentHelper.empty(), (button) -> { this.clickButton(button, true); }, (button) -> { return button.get(); }));
 			this.shiftEnabledButton = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + 59, this.getScreenCoords()[1] + 19, 20, true, true, blockEntity.getShiftEnabled() ? 28 : 29, ComponentHelper.empty(), (button) -> { this.clickButton(button, true); }, (button) -> { return button.get(); }));
 		}
@@ -111,11 +100,8 @@ public class ScreenFocus extends CosmosScreenUIModeBE<ContainerFocus> {
 		super.clickButton(button, isLeftClick);
 		
 		if (isLeftClick) {
-			BlockEntity entity = this.getBlockEntity();
 			
-			if (entity instanceof BlockEntityFocus) {
-				BlockEntityFocus blockEntity = (BlockEntityFocus) entity;
-				
+			if (this.getBlockEntity() instanceof BlockEntityFocus blockEntity) {
 				if (button.equals(this.jumpEnabledButton)) {
 					EnumGeneralEnableState state = blockEntity.getJump();
 					

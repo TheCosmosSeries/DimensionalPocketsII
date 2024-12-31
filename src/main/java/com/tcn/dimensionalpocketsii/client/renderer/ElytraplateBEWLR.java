@@ -2,10 +2,10 @@ package com.tcn.dimensionalpocketsii.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.tcn.cosmoslibrary.client.renderer.lib.CosmosRendererHelper;
+import com.tcn.cosmoslibrary.client.renderer.CosmosRendererHelper;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.BaseElytraModule;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -44,7 +44,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 		boolean flag = transformIn == ItemDisplayContext.GUI;
 		
 		if (flag) {
-			if (item.equals(ModRegistrationManager.DIMENSIONAL_ELYTRAPLATE.get())) {
+			if (item.equals(PocketsRegistrationManager.DIMENSIONAL_ELYTRAPLATE.get())) {
 				poseStack.pushPose();
 				ResourceLocation resBase = ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_base");
 				BakedModel itemModelBase = manager.getModel(new ModelResourceLocation(resBase, "standalone"));

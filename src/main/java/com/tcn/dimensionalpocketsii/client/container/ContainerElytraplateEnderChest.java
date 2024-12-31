@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.client.container;
 
 import com.tcn.cosmoslibrary.client.container.slot.SlotArmourItem;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -31,7 +31,7 @@ public class ContainerElytraplateEnderChest extends AbstractContainerMenu {
 	}
 	
 	public ContainerElytraplateEnderChest(int indexIn, Inventory playerInventoryIn, Container containerIn, ItemStack stackIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_ENDER_CHEST.get(), indexIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_ENDER_CHEST.get(), indexIn);
 		
 		this.stack = stackIn;
 		this.player = playerInventoryIn.player;

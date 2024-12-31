@@ -9,9 +9,9 @@ import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuBlockEntity;
 import com.tcn.cosmoslibrary.client.container.slot.SlotArmourItem;
 import com.tcn.cosmoslibrary.client.container.slot.SlotBooleanItem;
 import com.tcn.cosmoslibrary.client.container.slot.SlotRestrictedAccess;
-import com.tcn.dimensionalpocketsii.core.management.ModRecipeManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
-import com.tcn.dimensionalpocketsii.core.management.ModSoundManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRecipeManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsSoundManager;
 import com.tcn.dimensionalpocketsii.core.recipe.UpgradeStationRecipe;
 import com.tcn.dimensionalpocketsii.core.recipe.UpgradingRecipeInput;
 
@@ -55,7 +55,7 @@ public class ContainerModuleUpgradeStation extends CosmosContainerMenuBlockEntit
 	}
 
 	public ContainerModuleUpgradeStation(int indexIn, Inventory playerInventoryIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_UPGRADE_STATION.get(), indexIn, playerInventoryIn, accessIn, posIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_UPGRADE_STATION.get(), indexIn, playerInventoryIn, accessIn, posIn);
 //        this.recipes = this.getLevel().getRecipeManager().getAllRecipesFor(ModRecipeManager.RECIPE_TYPE_UPGRADE_STATION.get());
 
 		//Focus Slot
@@ -133,7 +133,7 @@ public class ContainerModuleUpgradeStation extends CosmosContainerMenuBlockEntit
 
 	@Override
 	public boolean stillValid(Player playerIn) {
-		return stillValid(this.access, playerIn, ModRegistrationManager.BLOCK_WALL_UPGRADE_STATION.get());
+		return stillValid(this.access, playerIn, PocketsRegistrationManager.BLOCK_WALL_UPGRADE_STATION.get());
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class ContainerModuleUpgradeStation extends CosmosContainerMenuBlockEntit
 			}
 		}
 		
-		player.level().playSound(playerIn, this.getBlockPos(), ModSoundManager.TINK.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+		player.level().playSound(playerIn, this.getBlockPos(), PocketsSoundManager.TINK.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 	}
 
 	private List<ItemStack> getRelevantItems() {
@@ -184,7 +184,7 @@ public class ContainerModuleUpgradeStation extends CosmosContainerMenuBlockEntit
 			UpgradingRecipeInput recipeInput = this.createRecipeInput();
 			ServerPlayer serverPlayer = (ServerPlayer) playerIn;
 			ItemStack itemstack = ItemStack.EMPTY;
-			Optional<RecipeHolder<UpgradeStationRecipe>> optional = levelIn.getServer().getRecipeManager().getRecipeFor(ModRecipeManager.RECIPE_TYPE_UPGRADE_STATION.get(), recipeInput, levelIn);
+			Optional<RecipeHolder<UpgradeStationRecipe>> optional = levelIn.getServer().getRecipeManager().getRecipeFor(PocketsRecipeManager.RECIPE_TYPE_UPGRADE_STATION.get(), recipeInput, levelIn);
 			
 //			System.out.println(levelIn.getServer().getRecipeManager().getAllRecipesFor(ModRecipeManager.RECIPE_TYPE_UPGRADE_STATION.get()).get(0).value().getFocusIngredient().getItems()[0].getItem());
 			

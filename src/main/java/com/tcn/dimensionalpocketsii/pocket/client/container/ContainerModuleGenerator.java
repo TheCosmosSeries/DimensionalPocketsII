@@ -4,7 +4,7 @@ import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuBlockEntity;
 import com.tcn.cosmoslibrary.client.container.slot.SlotBucket;
 import com.tcn.cosmoslibrary.client.container.slot.SlotBurnableItem;
 import com.tcn.cosmoslibrary.client.container.slot.SlotRestrictedAccess;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -34,7 +34,7 @@ public class ContainerModuleGenerator extends CosmosContainerMenuBlockEntity {
 	}
 
 	public ContainerModuleGenerator(int indexIn, Inventory playerInventoryIn, Container contentsIn, ContainerData containerDataIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_GENERATOR.get(), indexIn, playerInventoryIn, accessIn, posIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_GENERATOR.get(), indexIn, playerInventoryIn, accessIn, posIn);
 		
 		this.data = containerDataIn;
 		
@@ -78,7 +78,7 @@ public class ContainerModuleGenerator extends CosmosContainerMenuBlockEntity {
 
 	@Override
 	public boolean stillValid(Player playerIn) {
-		return stillValid(this.access, playerIn, ModRegistrationManager.BLOCK_WALL_GENERATOR.get());
+		return stillValid(this.access, playerIn, PocketsRegistrationManager.BLOCK_WALL_GENERATOR.get());
 	}
 
 	@Override

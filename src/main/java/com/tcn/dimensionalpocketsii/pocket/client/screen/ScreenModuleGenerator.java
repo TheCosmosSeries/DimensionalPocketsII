@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.ibm.icu.text.DecimalFormat;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem.IS_HOVERING;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
@@ -91,14 +90,14 @@ public class ScreenModuleGenerator extends CosmosScreenUIModeBE<ContainerModuleG
 					rgb = ComponentColour.rgbFloatArray(decimal);
 				}
 				
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.GENERATOR_BASE);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.GENERATOR_BASE);
 				
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, GUI.RESOURCE.GENERATOR_OVERLAY);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, GUI.RESOURCE.GENERATOR_OVERLAY);
 				
-				CosmosUISystem.renderScaledElementUpNestled(this, graphics, blockEntity.getUIMode().equals(EnumUIMode.DARK) ? GUI.RESOURCE.GENERATOR_OVERLAY[1] : GUI.RESOURCE.GENERATOR_OVERLAY[0], this.getScreenCoords(), 72, 54, 184, 0, 18, 19, blockEntity.getBurnTimeScaled(19));
+				CosmosUISystem.Render.renderScaledElementUpNestled(graphics, this.getScreenCoords(), 72, 54, 184, 0, 18, 19, blockEntity.getBurnTimeScaled(19), blockEntity.getUIMode().equals(EnumUIMode.DARK) ? GUI.RESOURCE.GENERATOR_OVERLAY[1] : GUI.RESOURCE.GENERATOR_OVERLAY[0]);
 
-				CosmosUISystem.renderEnergyDisplay(graphics, ComponentColour.RED, pocket, this.getScreenCoords(), 42, 19, 16, 37, false);
-				CosmosUISystem.renderFluidTank(this, graphics, this.getScreenCoords(), 105, 19, blockEntity.getFluidTank(), blockEntity.getFluidLevelScaled(58), 58);
+				CosmosUISystem.Render.renderEnergyDisplay(graphics, ComponentColour.RED, pocket, this.getScreenCoords(), 42, 19, 16, 37, false);
+				CosmosUISystem.Render.renderFluidTank(graphics, this.getScreenCoords(), 105, 19, blockEntity.getFluidTank(), blockEntity.getFluidLevelScaled(58), 58);
 			}
 		}
 	}
@@ -113,7 +112,7 @@ public class ScreenModuleGenerator extends CosmosScreenUIModeBE<ContainerModuleG
 				Pocket pocket = blockEntity.getPocket();
 				
 				if (pocket != null) {
-					if (IS_HOVERING.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + 42 - 1, this.getScreenCoords()[0] + 42 + 16, this.getScreenCoords()[1] + 20 - 1, this.getScreenCoords()[1] + 20 + 37 - 1)) {
+					if (CosmosUISystem.Hovering.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + 42 - 1, this.getScreenCoords()[0] + 42 + 16, this.getScreenCoords()[1] + 20 - 1, this.getScreenCoords()[1] + 20 + 37 - 1)) {
 						DecimalFormat formatter = new DecimalFormat("#,###,###,###");
 						String amount_string = formatter.format(pocket.getEnergyStored());
 						String capacity_string = formatter.format(pocket.getMaxEnergyStored());
@@ -160,7 +159,7 @@ public class ScreenModuleGenerator extends CosmosScreenUIModeBE<ContainerModuleG
 					}
 				}
 				
-				if (IS_HOVERING.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + 105, this.getScreenCoords()[0] + 105 + 16, this.getScreenCoords()[1] + 19, this.getScreenCoords()[1] + 19 + 58 - 1)) {
+				if (CosmosUISystem.Hovering.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + 105, this.getScreenCoords()[0] + 105 + 16, this.getScreenCoords()[1] + 19, this.getScreenCoords()[1] + 19 + 58 - 1)) {
 					FluidTank tank = blockEntity.getFluidTank();
 					
 					DecimalFormat formatter = new DecimalFormat("#,###,###,###");

@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.pocket.client.container;
 
 import com.tcn.cosmoslibrary.client.container.CosmosContainerRecipeBookBlockEntity;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -33,7 +33,7 @@ public class ContainerModuleBlastFurnace extends CosmosContainerRecipeBookBlockE
 	}
 	
 	public ContainerModuleBlastFurnace(int indexIn, Inventory playerInventoryIn, Container furnaceInventoryIn, ContainerData furnaceDataIn, BlockPos posIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_BLAST_FURNACE.get(), indexIn, playerInventoryIn, null, posIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_BLAST_FURNACE.get(), indexIn, playerInventoryIn, null, posIn);
 		
 		this.recipeType = RecipeType.BLASTING;
 		this.recipeBookType = RecipeBookType.BLAST_FURNACE;

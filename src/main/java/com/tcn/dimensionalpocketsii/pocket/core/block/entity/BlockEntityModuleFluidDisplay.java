@@ -6,7 +6,7 @@ import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
@@ -33,7 +33,7 @@ public class BlockEntityModuleFluidDisplay extends CosmosBlockEntityUpdateable i
 	private int update = 0;
 	
 	public BlockEntityModuleFluidDisplay(BlockPos posIn, BlockState stateIn) {
-		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_FLUID_DISPLAY.get(), posIn, stateIn);
+		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_FLUID_DISPLAY.get(), posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -140,9 +140,9 @@ public class BlockEntityModuleFluidDisplay extends CosmosBlockEntityUpdateable i
 				if (CosmosUtil.holdingWrench(playerIn)) {
 					if (pocketIn.checkIfOwner(playerIn)) {
 						if (!levelIn.isClientSide) {
-							levelIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+							levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 							
-							CosmosUtil.addItem(levelIn, playerIn, ModRegistrationManager.MODULE_FLUID_DISPLAY.get(), 1);
+							CosmosUtil.addItem(levelIn, playerIn, PocketsRegistrationManager.MODULE_FLUID_DISPLAY.get(), 1);
 							pocketIn.removeUpdateable(pos);
 						}
 						

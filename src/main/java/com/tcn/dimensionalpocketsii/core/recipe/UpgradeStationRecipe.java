@@ -6,8 +6,8 @@ import java.util.stream.Stream;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.tcn.dimensionalpocketsii.core.management.ModRecipeManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRecipeManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -105,17 +105,17 @@ public class UpgradeStationRecipe implements Recipe<UpgradingRecipeInput> {
 
 	@Override
 	public ItemStack getToastSymbol() {
-		return new ItemStack(ModRegistrationManager.MODULE_UPGRADE_STATION.get());
+		return new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get());
 	}
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return ModRecipeManager.RECIPE_SERIALIZER_UPGRADE_STATION.get();
+		return PocketsRecipeManager.RECIPE_SERIALIZER_UPGRADE_STATION.get();
 	}
 
 	@Override
 	public RecipeType<?> getType() {
-		return ModRecipeManager.RECIPE_TYPE_UPGRADE_STATION.get();
+		return PocketsRecipeManager.RECIPE_TYPE_UPGRADE_STATION.get();
 	}
 	
 	@Override

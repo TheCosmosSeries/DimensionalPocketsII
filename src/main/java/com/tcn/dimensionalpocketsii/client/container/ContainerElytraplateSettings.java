@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.client.container;
 
 import com.tcn.cosmoslibrary.client.container.slot.SlotArmourItem;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,7 +27,7 @@ public class ContainerElytraplateSettings extends AbstractContainerMenu {
 	}
 	
 	protected ContainerElytraplateSettings(int id, Inventory playerInventoryIn, ItemStack stackIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_SETTINGS.get(), id);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_SETTINGS.get(), id);
 		
 		this.stack = stackIn;
 		this.player = playerInventoryIn.player;

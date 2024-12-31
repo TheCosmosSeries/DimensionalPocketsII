@@ -8,7 +8,7 @@ import com.tcn.cosmoslibrary.client.container.slot.SlotBucket;
 import com.tcn.cosmoslibrary.client.container.slot.SlotRestrictedAccess;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.dimensionalpocketsii.ModReferences;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 
@@ -21,9 +21,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
@@ -68,7 +66,7 @@ public class ContainerElytraplateConnector extends AbstractContainerMenu {
 	}
 	
 	protected ContainerElytraplateConnector(int id, Inventory playerInventoryIn, Container pocketIn, Container contentsIn, @Nullable Pocket pocketActual, ItemStack stackIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_CONNECTOR.get(), id);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_CONNECTOR.get(), id);
 		
 		this.stack = stackIn;
 		this.player = playerInventoryIn.player;
@@ -111,7 +109,7 @@ public class ContainerElytraplateConnector extends AbstractContainerMenu {
 			public void set(ItemStack stackIn) {
 				super.set(stackIn);
 				
-				if (stackIn.getItem() instanceof BucketItem) {
+				if (!contentsIn.getItem(0).isEmpty()) {
 					Optional<FluidStack> fluidStack = FluidUtil.getFluidContained(stackIn);
 					
 					if (fluidStack.isPresent()) {
@@ -119,44 +117,39 @@ public class ContainerElytraplateConnector extends AbstractContainerMenu {
 						
 						if (fluid != null) {
 							int amount = ContainerElytraplateConnector.this.pocket.fill(fluid, FluidAction.SIMULATE);
-							
 							if (amount == fluid.getAmount()) {
-								if (contentsIn.getItem(1).getItem().equals(Items.BUCKET) && contentsIn.getItem(1).getCount() < 17) {
+								if (contentsIn.getItem(0).getItem().equals(FluidUtil.tryEmptyContainer(stackIn, ContainerElytraplateConnector.this.pocket.getFluidTank(), amount, null, false).result.getItem()) && contentsIn.getItem(1).getCount() < contentsIn.getItem(1).getMaxStackSize()) {
 									ContainerElytraplateConnector.this.pocket.fill(fluid, FluidAction.EXECUTE);
-									
-									stackIn.shrink(1);
+									contentsIn.getItem(0).shrink(1);
 									contentsIn.getItem(1).grow(1);
-									this.setChanged();
-								} if (contentsIn.getItem(1).isEmpty()) {
+								}
+								
+								if (contentsIn.getItem(1).isEmpty()) {
 									ContainerElytraplateConnector.this.pocket.fill(fluid, FluidAction.EXECUTE);
-									
-									stackIn.shrink(1);
-									contentsIn.setItem(1, new ItemStack(Items.BUCKET));
-									this.setChanged();
+									contentsIn.setItem(1, FluidUtil.tryEmptyContainer(stackIn, ContainerElytraplateConnector.this.pocket.getFluidTank(), amount, null, false).result);
+									contentsIn.getItem(0).shrink(1);
 								}
 							}
 						}
 					} else {
 						if (ContainerElytraplateConnector.this.pocket.getCurrentFluidAmount() > 0) {
-							if (contentsIn.getItem(51).isEmpty()) {
-								ItemStack fillStack = FluidUtil.tryFillContainer(stackIn, ContainerElytraplateConnector.this.pocket.getFluidTank(), 1000, null, true).result;
+							if (contentsIn.getItem(1).isEmpty()) {
+								ItemStack fillStack = FluidUtil.tryFillContainer(stackIn, ContainerElytraplateConnector.this.pocket.getFluidTank(), ContainerElytraplateConnector.this.pocket.getCurrentFluidAmount(), null, true).result;
 								
-								if (fillStack.getItem() instanceof BucketItem) {
-									stackIn.shrink(1);
+								if (!fillStack.isEmpty()) {
 									contentsIn.setItem(1, fillStack);
-									this.setChanged();
-								} else {
-									stackIn.shrink(1);
-									contentsIn.setItem(1, new ItemStack(Items.BUCKET));
+									contentsIn.getItem(0).shrink(1);
 									this.setChanged();
 								}
 							}
-						}	
+						}
+					
 					}
 				}
 			}
 		});
 		this.addSlot(new SlotRestrictedAccess(contentsIn, 1, 60, 205, 1, false, true));
+		
 		
 		/** - Player Inventory - */
 		for (int x = 0; x < 3; ++x) {

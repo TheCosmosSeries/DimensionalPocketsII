@@ -10,11 +10,12 @@ import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
 import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
-import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallFurnace;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
@@ -36,7 +37,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -66,7 +66,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 @SuppressWarnings("unchecked")
-public class BlockEntityModuleFurnace extends BlockEntity implements IBlockInteract, Container, WorldlyContainer, RecipeCraftingHolder, StackedContentsCompatible, IBlockEntityUIMode {
+public class BlockEntityModuleFurnace extends BlockEntity implements IBlockInteract, WorldlyContainer, RecipeCraftingHolder, StackedContentsCompatible, IBEUIMode, IBEUILockable {
 	private static final int[] SLOTS_FOR_UP = new int[] { 0 };
 	private static final int[] SLOTS_FOR_DOWN = new int[] { 0 };
 	private static final int[] SLOTS_FOR_SIDES = new int[] { 0, 2, 1 };
@@ -130,7 +130,7 @@ public class BlockEntityModuleFurnace extends BlockEntity implements IBlockInter
 	private Pocket pocket;
 	
 	public BlockEntityModuleFurnace(BlockPos posIn, BlockState stateIn) {
-		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_FURNACE.get(), posIn, stateIn);
+		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_FURNACE.get(), posIn, stateIn);
 
 		this.recipeType = RecipeType.SMELTING;
 		this.quickCheck = RecipeManager.createCheck((RecipeType<AbstractCookingRecipe>)recipeType);
@@ -318,10 +318,10 @@ public class BlockEntityModuleFurnace extends BlockEntity implements IBlockInter
 				if(pocketIn.exists()) {
 					if (CosmosUtil.holdingWrench(playerIn)) {
 						if (pocketIn.checkIfOwner(playerIn)) {
-							ItemStack stack = new ItemStack(ModRegistrationManager.MODULE_FURNACE.getDelegate());
+							ItemStack stack = new ItemStack(PocketsRegistrationManager.MODULE_FURNACE.getDelegate());
 							this.saveToItemStack(stack, levelIn.registryAccess());
 							
-							levelIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+							levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 							levelIn.removeBlockEntity(pos);
 							
 							CosmosUtil.addStack(levelIn, playerIn, stack);

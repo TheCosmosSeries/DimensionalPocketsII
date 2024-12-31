@@ -5,7 +5,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 import com.tcn.cosmoslibrary.client.container.CosmosContainerRecipeBookBlockEntity;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -40,7 +40,7 @@ public class ContainerModuleCrafter extends CosmosContainerRecipeBookBlockEntity
 	}
 
 	public ContainerModuleCrafter(int indexIn, Inventory playerInventoryIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_CRAFTER.get(), indexIn, playerInventoryIn, accessIn, posIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_CRAFTER.get(), indexIn, playerInventoryIn, accessIn, posIn);
 		
 		this.addSlot(new ResultSlot(playerInventoryIn.player, this.craftSlots, this.resultSlots, 0, 128, 35));
 
@@ -129,7 +129,7 @@ public class ContainerModuleCrafter extends CosmosContainerRecipeBookBlockEntity
 
 	@Override
 	public boolean stillValid(Player playerIn) {
-		return stillValid(this.access, playerIn, ModRegistrationManager.BLOCK_WALL_CRAFTER.get());
+		return stillValid(this.access, playerIn, PocketsRegistrationManager.BLOCK_WALL_CRAFTER.get());
 	}
 
 	@Override

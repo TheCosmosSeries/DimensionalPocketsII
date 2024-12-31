@@ -5,7 +5,7 @@ import java.util.List;
 import com.tcn.cosmoslibrary.common.item.CosmosItem;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
@@ -35,7 +35,7 @@ public class ItemModuleShifter extends CosmosItem implements IModuleItem {
 		} else {
 			tooltip.add(ComponentHelper.getTooltipOne("dimensionalpocketsii.item.info.armour_module.shifter_one"));
 			tooltip.add(ComponentHelper.getTooltipTwo("dimensionalpocketsii.item.info.armour_module.shifter_two_pre")
-				.append(ComponentHelper.style(ComponentColour.YELLOW, ModRegistrationManager.SUIT_SHIFT.getKey().getName()))
+				.append(ComponentHelper.style(ComponentColour.YELLOW, PocketsRegistrationManager.SUIT_SHIFT.getKey().getName()))
 				.append(ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.item.info.elytraplate_key"))
 			);
 			tooltip.add(ComponentHelper.getTooltipThree("dimensionalpocketsii.item.info.armour_module.shifter_three"));

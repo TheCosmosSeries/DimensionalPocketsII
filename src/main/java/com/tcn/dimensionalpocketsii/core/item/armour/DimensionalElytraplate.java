@@ -11,13 +11,13 @@ import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper.Value;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
-import com.tcn.cosmoslibrary.energy.interfaces.ICosmosEnergyItem;
+import com.tcn.cosmoslibrary.energy.interfaces.IEnergyStorageBulk;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyArmourItemElytra;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyItem;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyStorageItem;
 import com.tcn.dimensionalpocketsii.client.renderer.ElytraplateBEWLR;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.BaseElytraModule;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.AbstractBlockEntityPocket;
 
@@ -44,7 +44,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 
@@ -65,7 +67,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 			tooltip.add(ComponentHelper.getTooltipTwo("dimensionalpocketsii.item.info.elytraplate_two"));
 
 			tooltip.add(ComponentHelper.getTooltipThree("dimensionalpocketsii.item.info.elytraplate_three")
-				.append(ComponentHelper.style(ComponentColour.YELLOW, ModRegistrationManager.SUIT_SETTINGS.getKey().getName()))
+				.append(ComponentHelper.style(ComponentColour.YELLOW, PocketsRegistrationManager.SUIT_SETTINGS.getKey().getName()))
 				.append(ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.item.info.elytraplate_key"))
 			);
 			tooltip.add(ComponentHelper.getTooltipFour("dimensionalpocketsii.item.info.elytraplate_usage"));
@@ -164,8 +166,8 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 			if (entityIn instanceof Player) {
 				if (itemSlot == 38) {
 					if (this.hasEnergy(stackIn)) {
-						if (hasModuleInstalled(stackIn, BaseElytraModule.BATTERY)) {
-							if (getElytraSetting(stackIn, ElytraSettings.CHARGER)[1]) {
+						if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.BATTERY)) {
+							if (DimensionalElytraplate.getElytraSetting(stackIn, ElytraSettings.CHARGER)[1]) {
 								if (entityIn instanceof ServerPlayer serverPlayer) {
 									Inventory inv = serverPlayer.getInventory();
 									
@@ -174,9 +176,13 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 										Item testItem = testStack.getItem();
 										
 										if (!(testItem instanceof CosmosEnergyStorageItem) && !(testItem instanceof DimensionalElytraplate)) {
-											if (testItem instanceof ICosmosEnergyItem energyItem) {
-												if (energyItem.canReceiveEnergy(testStack)) {
-													this.extractEnergy(stackIn, energyItem.receiveEnergy(testStack, Math.min(energyItem.getMaxReceive(testStack), this.getMaxExtract(stackIn)), false), false);
+											Object object = testStack.getCapability(Capabilities.EnergyStorage.ITEM);
+
+											if (!(object instanceof IEnergyStorageBulk)) {
+												if (object instanceof IEnergyStorage energyItem) {
+													if (energyItem.canReceive()) {
+														this.extractEnergy(stackIn, energyItem.receiveEnergy(this.getMaxExtract(stackIn), false), false);
+													}
 												}
 											}
 										}
@@ -187,16 +193,15 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 					}
 					
 					if (this.getEnergy(stackIn) < this.getMaxEnergyStored(stackIn)) {
-						if (hasModuleInstalled(stackIn, BaseElytraModule.SOLAR)) {
-							if (getElytraSetting(stackIn, ElytraSettings.SOLAR)[1]) {
+						if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.SOLAR)) {
+							if (DimensionalElytraplate.getElytraSetting(stackIn, ElytraSettings.SOLAR)[1]) {
 								if (levelIn.canSeeSky(new BlockPos(entityIn.blockPosition()))) {
 									if (levelIn.isDay()) {
 										//MATH BITCH :)
 										float energy = ((Mth.clamp(Mth.sin((float) (((levelIn.dayTime() / 1000.0F) * 0.525F) + 4.6F)), 0.0F, 1.0F)) + 1.1F) * 200;
-										int actual = (int) energy;
 										
-										if (this.receiveEnergy(stackIn, actual, true) > 0) {
-											this.receiveEnergy(stackIn, actual, false);
+										if (this.receiveEnergy(stackIn, (int) energy, true) > 0) {
+											this.receiveEnergy(stackIn, (int) energy, false);
 										}
 									}
 								}
@@ -211,7 +216,42 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	@Override
 	public int getMaxEnergyStored(ItemStack stackIn) {
 		Item item = stackIn.getItem();
-		return !(item instanceof DimensionalElytraplate elytraItem) ? 0 : hasModuleInstalled(stackIn, BaseElytraModule.BATTERY) ? elytraItem.maxEnergyStored * 6 : elytraItem.maxEnergyStored;
+		return !(item instanceof DimensionalElytraplate elytraItem) ? 0 : DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.BATTERY) ? elytraItem.maxEnergyStored * 6 : elytraItem.maxEnergyStored;
+	}
+
+	@Override
+	public IEnergyStorageBulk getEnergyCapability(ItemStack stackIn) {
+		return new IEnergyStorageBulk() {
+			@Override
+			public int extractEnergy(int maxExtract, boolean simulate) {
+				return DimensionalElytraplate.this.extractEnergy(stackIn, maxExtract, simulate);
+			}
+	
+			@Override
+			public int getEnergyStored() {
+				return DimensionalElytraplate.this.getEnergy(stackIn);
+			}
+	
+			@Override
+			public int getMaxEnergyStored() {
+				return DimensionalElytraplate.this.getMaxEnergyStored(stackIn);
+			}
+	
+			@Override
+			public int receiveEnergy(int maxReceive, boolean simulate) {
+				return DimensionalElytraplate.this.receiveEnergy(stackIn, maxReceive, simulate);
+			}
+	
+			@Override
+			public boolean canReceive() {
+				return DimensionalElytraplate.this.canReceiveEnergy(stackIn) && DimensionalElytraplate.this.doesExtract(stackIn);
+			}
+	
+			@Override
+			public boolean canExtract() {
+				return DimensionalElytraplate.this.canReceiveEnergy(stackIn) && DimensionalElytraplate.this.doesCharge(stackIn);
+			}
+		};
 	}
 
 	@Override
@@ -251,7 +291,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 				Pocket pocket = blockEntity.getPocket();
 				
 				if (this.addOrUpdateShifterInformation(stack, pocket, level, playerIn)) {
-					return InteractionResult.sidedSuccess(level.isClientSide);
+					return InteractionResult.sidedSuccess(level.isClientSide());
 				}
 			} else {
 				return InteractionResult.PASS;
@@ -261,7 +301,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	}
 	
 	public static boolean removeAllModules(ItemStack stackIn, boolean simulate) {
-		if (stackIn.getItem() instanceof DimensionalElytraplate elytraplate) {
+		if (stackIn.getItem() instanceof DimensionalElytraplate) {
 			if (stackIn.has(DataComponents.CUSTOM_DATA)) {
 				CompoundTag compound = stackIn.get(DataComponents.CUSTOM_DATA).copyTag();
 				
@@ -278,9 +318,9 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	}
 	
 	public static ItemStack removeModule(ItemStack stackIn, BaseElytraModule moduleIn, boolean simulate) {
-		if (stackIn.getItem() instanceof DimensionalElytraplate elytraplate) {
+		if (stackIn.getItem() instanceof DimensionalElytraplate) {
 			if (hasModuleInstalled(stackIn, moduleIn)) {
-				ArrayList<BaseElytraModule> list = getInstalledModules(stackIn);
+				ArrayList<BaseElytraModule> list = DimensionalElytraplate.getInstalledModules(stackIn);
 				
 				if (!simulate) {
 					list.remove(moduleIn);
@@ -295,14 +335,14 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	}
 	
 	public static boolean addModule(ItemStack stackIn, BaseElytraModule moduleIn, boolean simulate) {
-		ArrayList<BaseElytraModule> list = getInstalledModules(stackIn);
+		ArrayList<BaseElytraModule> list = DimensionalElytraplate.getInstalledModules(stackIn);
 		
-		if (stackIn.getItem() instanceof DimensionalElytraplate elytraplate) {
+		if (stackIn.getItem() instanceof DimensionalElytraplate) {
 			if (!hasModuleInstalled(stackIn, moduleIn)) {
 				if (!simulate) {
 					list.add(moduleIn);
-					addOrUpdateElytraSetting(stackIn, moduleIn.getElytraSetting(), true);
-					saveModuleList(list, stackIn);
+					DimensionalElytraplate.addOrUpdateElytraSetting(stackIn, moduleIn.getElytraSetting(), true);
+					DimensionalElytraplate.saveModuleList(list, stackIn);
 				}
 				return true;
 			}
@@ -312,7 +352,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	}
 	
 	public static boolean hasModuleInstalled(ItemStack stackIn, BaseElytraModule moduleIn) {
-		ArrayList<BaseElytraModule> list = getInstalledModules(stackIn);
+		ArrayList<BaseElytraModule> list = DimensionalElytraplate.getInstalledModules(stackIn);
 		
 		if (stackIn.getItem() instanceof DimensionalElytraplate) {
 			if (!list.isEmpty()) {
@@ -354,9 +394,9 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	public static ArrayList<BaseElytraModule> getInstalledModules(ItemStack stackIn) {
 		ArrayList<BaseElytraModule> list = new ArrayList<BaseElytraModule>();
 		
-		CompoundTag compound = getModuleList(stackIn);
+		CompoundTag compound = DimensionalElytraplate.getModuleList(stackIn);
 		
-		if (stackIn.getItem() instanceof DimensionalElytraplate elytraplate) {
+		if (stackIn.getItem() instanceof DimensionalElytraplate) {
 			if (compound != null) {
 				int size = compound.getInt("size");
 				

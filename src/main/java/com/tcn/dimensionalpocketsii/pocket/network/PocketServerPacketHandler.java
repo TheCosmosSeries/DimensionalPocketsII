@@ -1,8 +1,8 @@
 package com.tcn.dimensionalpocketsii.pocket.network;
 
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
-import com.tcn.dimensionalpocketsii.core.management.ModSoundManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsSoundManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.AbstractBlockEntityPocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityFocus;
@@ -187,7 +187,7 @@ public class PocketServerPacketHandler {
 		
 		if (data instanceof PacketConnectionType packet) {
 			context.enqueueWork(() -> {
-				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(ModDimensionManager.POCKET_WORLD);
+				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD);
 				BlockEntity entity = world.getBlockEntity(packet.pos());
 				
 				if (entity instanceof BlockEntityModuleConnector blockEntity) {
@@ -203,7 +203,7 @@ public class PocketServerPacketHandler {
 		
 		if (data instanceof PacketSideState packet) {
 			context.enqueueWork(() -> {
-				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(ModDimensionManager.POCKET_WORLD);
+				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD);
 				BlockEntity entity = world.getBlockEntity(packet.pos());
 				
 				if (entity instanceof BlockEntityModuleConnector blockEntity) {
@@ -235,7 +235,7 @@ public class PocketServerPacketHandler {
 		
 		if (data instanceof PacketArmourItem packet) {
 			context.enqueueWork(() -> {
-				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(ModDimensionManager.POCKET_WORLD);
+				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD);
 				BlockEntity entity = world.getBlockEntity(packet.pos());
 				
 				if (entity instanceof BlockEntityModuleArmourWorkbench blockEntity) {
@@ -254,7 +254,7 @@ public class PocketServerPacketHandler {
 		
 		if (data instanceof PacketChargerEnergyState packet) {
 			context.enqueueWork(() -> {
-				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(ModDimensionManager.POCKET_WORLD);
+				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD);
 				BlockEntity entity = world.getBlockEntity(packet.pos());
 				
 				if (entity instanceof BlockEntityModuleCharger blockEntity) {
@@ -268,7 +268,7 @@ public class PocketServerPacketHandler {
 		
 		if (data instanceof PacketGeneratorMode packet) {
 			context.enqueueWork(() -> {
-				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(ModDimensionManager.POCKET_WORLD);
+				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD);
 				BlockEntity entity = world.getBlockEntity(packet.pos());
 				
 				if (entity instanceof BlockEntityModuleGenerator blockEntity) {
@@ -282,7 +282,7 @@ public class PocketServerPacketHandler {
 		
 		if (data instanceof PacketGeneratorEmptyTank packet) {
 			context.enqueueWork(() -> {
-				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(ModDimensionManager.POCKET_WORLD);
+				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD);
 				BlockEntity entity = world.getBlockEntity(packet.pos());
 				
 				if (entity instanceof BlockEntityModuleGenerator blockEntity) {
@@ -296,7 +296,7 @@ public class PocketServerPacketHandler {
 		
 		if (data instanceof PacketFocus packet) {
 			context.enqueueWork(() -> {
-				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(ModDimensionManager.POCKET_WORLD);
+				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD);
 				BlockEntity entity = world.getBlockEntity(packet.pos());
 				
 				if (entity instanceof BlockEntityFocus blockEntity) {
@@ -339,14 +339,14 @@ public class PocketServerPacketHandler {
 					double blockYOffset = toState.getBlockSupportShape(world, toPos).max(Direction.Axis.Y);
 					serverPlayer.teleportTo(world, toX, toPos.getY() + blockYOffset, toZ, yaw, pitch);
 					serverPlayer.setDeltaMovement(serverPlayer.getDeltaMovement().multiply(new Vec3(1D, 0D, 1D)));
-					world.playSound(null, toPos, ModSoundManager.WOOSH.get(), SoundSource.BLOCKS, 0.6F, 1F);
+					world.playSound(null, toPos, PocketsSoundManager.WOOSH.get(), SoundSource.BLOCKS, 0.6F, 1F);
 				}
 			});
 		}
 		
 		if (data instanceof PacketWorkbench packet) {
 			context.enqueueWork(() -> {
-				BlockEntity entity = ServerLifecycleHooks.getCurrentServer().getLevel(ModDimensionManager.POCKET_WORLD).getBlockEntity(packet.pos());
+				BlockEntity entity = ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD).getBlockEntity(packet.pos());
 				
 				if (entity instanceof BlockEntityModuleArmourWorkbench blockEntity) {
 					blockEntity.updateColour(packet.colour(), packet.wingColour());

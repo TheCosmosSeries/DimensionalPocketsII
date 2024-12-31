@@ -1,6 +1,5 @@
 {
 	"type": "minecraft:crafting_shapeless",
-	
 	"ingredients": [
         {
             "item": "dimensionalpocketsii:block_dimensional_metal"

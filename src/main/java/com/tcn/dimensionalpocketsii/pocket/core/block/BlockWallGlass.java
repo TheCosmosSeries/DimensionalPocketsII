@@ -7,9 +7,9 @@ import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
@@ -47,7 +47,7 @@ public class BlockWallGlass extends CosmosBlockConnectedUnbreakable {
 			return ItemInteractionResult.FAIL;
 		}
 		
-		if (PocketUtil.isDimensionEqual(levelIn, ModDimensionManager.POCKET_WORLD)) {
+		if (PocketUtil.isDimensionEqual(levelIn, PocketsDimensionManager.POCKET_WORLD)) {
 			Pocket pocket = StorageManager.getPocketFromChunkPosition(levelIn, CosmosChunkPos.scaleToChunkPos(pos));
 			
 			if (pocket.exists()) {
@@ -65,9 +65,9 @@ public class BlockWallGlass extends CosmosBlockConnectedUnbreakable {
 						if(pocketIn.exists()) {
 							if (CosmosUtil.holdingWrench(playerIn)) {
 								if (pocketIn.checkIfOwner(playerIn)) {
-									ItemStack stack = new ItemStack(ModRegistrationManager.MODULE_GLASS.get());
+									ItemStack stack = new ItemStack(PocketsRegistrationManager.MODULE_GLASS.get());
 									
-									levelIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+									levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 									
 									CosmosUtil.addStack(levelIn, playerIn, stack);
 									
@@ -104,7 +104,7 @@ public class BlockWallGlass extends CosmosBlockConnectedUnbreakable {
 	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return this.defaultBlockState();
 		}
 		
@@ -113,7 +113,7 @@ public class BlockWallGlass extends CosmosBlockConnectedUnbreakable {
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return new ItemStack(this);
 		} else {
 			return ItemStack.EMPTY;
@@ -137,7 +137,7 @@ public class BlockWallGlass extends CosmosBlockConnectedUnbreakable {
 
 	@Override
 	protected boolean canConnect(@Nonnull BlockState orig, @Nonnull BlockState conn) {
-		if (ModConfigManager.getInstance().getConnectedTexturesInsidePocket()) {
+		if (PocketsConfigManager.getInstance().getConnectedTexturesInsidePocket()) {
 			if (conn.getBlock().equals(Blocks.AIR)) {
 				return false;
 			} else if (orig.getBlock().equals(conn.getBlock())) {

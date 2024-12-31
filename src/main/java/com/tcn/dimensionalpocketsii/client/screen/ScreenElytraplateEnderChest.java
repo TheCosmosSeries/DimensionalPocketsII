@@ -3,7 +3,7 @@ package com.tcn.dimensionalpocketsii.client.screen;
 import java.util.Arrays;
 import java.util.UUID;
 
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonUIMode;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -51,7 +51,7 @@ public class ScreenElytraplateEnderChest extends AbstractContainerScreen<Contain
 
 	@Override
 	protected void init() {
-		this.setScreenCoords(CosmosUISystem.getScreenCoords(this, this.imageWidth, this.imageHeight));
+		this.setScreenCoords(CosmosUISystem.Init.getScreenCoords(this, this.imageWidth, this.imageHeight));
 		super.init();
 		this.addButtons();
 	}
@@ -74,8 +74,8 @@ public class ScreenElytraplateEnderChest extends AbstractContainerScreen<Contain
 	
 	@Override
 	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
-		CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, this.getUIMode(), RESOURCE.ELYTRAPLATE_ENDER_CHEST);
-		CosmosUISystem.renderStaticElementWithUIMode(this, graphics, getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, this.getUIMode(), RESOURCE.ELYTRAPLATE_ENDER_CHEST_OVERLAY);
+		CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, this.getUIMode(), RESOURCE.ELYTRAPLATE_ENDER_CHEST);
+		CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, this.getUIMode(), RESOURCE.ELYTRAPLATE_ENDER_CHEST_OVERLAY);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class ScreenElytraplateEnderChest extends AbstractContainerScreen<Contain
 	protected void addButtons() {
 		this.clearWidgets();
 		
-		this.uiModeButton = this.addRenderableWidget(new CosmosButtonUIMode(this.getUIMode(), this.getScreenCoords()[0] + 185, this.getScreenCoords()[1] + 5, true, true, ComponentHelper.empty(), (button) -> { this.changeUIMode(); } ));
+		this.uiModeButton = this.addRenderableWidget(new CosmosButtonUIMode(this.getUIMode(), this.getScreenCoords()[0] + 185, this.getScreenCoords()[1] + 5, false, true, true, ComponentHelper.empty(), (button) -> { this.changeUIMode(); } ));
 	}
 	
 	protected void setImageDims(int widthIn, int heightIn) {

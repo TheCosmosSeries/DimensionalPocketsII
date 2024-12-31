@@ -3,7 +3,7 @@ package com.tcn.dimensionalpocketsii.pocket.client.renderer.be;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.tcn.cosmoslibrary.client.renderer.lib.CosmosRendererHelper;
+import com.tcn.cosmoslibrary.client.renderer.CosmosRendererHelper;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityZModuleCreativeFluid;
 

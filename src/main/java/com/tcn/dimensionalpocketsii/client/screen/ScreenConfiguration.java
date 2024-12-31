@@ -15,7 +15,7 @@ import com.tcn.cosmoslibrary.client.ui.screen.option.CosmosOptions;
 import com.tcn.cosmoslibrary.client.ui.screen.option.CosmosOptionsList;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -87,9 +87,9 @@ public final class ScreenConfiguration extends Screen {
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.height_info"), 
 							ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.config.height_info_two")
 					), 
-					ModConfigManager.getInstance().getInternalHeight(), 15, 255, 15,
+					PocketsConfigManager.getInstance().getInternalHeight(), 15, 255, 15,
 					ComponentColour.WHITE, ComponentHelper.style(ComponentColour.GREEN, "Min"), ComponentHelper.style(ComponentColour.DARK_YELLOW, "Blocks"), ComponentHelper.style(ComponentColour.RED, "Max"), (intValue) -> {
-					ModConfigManager.getInstance().setInternalHeight(intValue);
+					PocketsConfigManager.getInstance().setInternalHeight(intValue);
 				})
 			);
 
@@ -98,9 +98,9 @@ public final class ScreenConfiguration extends Screen {
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.height_enhanced_info"), 
 							ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.config.height_enhanced_info_two")
 					), 
-					ModConfigManager.getInstance().getInternalHeightEnhanced(), 31, 255, 31,
+					PocketsConfigManager.getInstance().getInternalHeightEnhanced(), 31, 255, 31,
 					ComponentColour.WHITE, ComponentHelper.style(ComponentColour.GREEN, "Min"), ComponentHelper.style(ComponentColour.DARK_YELLOW, "Blocks"), ComponentHelper.style(ComponentColour.RED, "Max"), (intValue) -> {
-					ModConfigManager.getInstance().setInternalHeightEnhanced(intValue);
+					PocketsConfigManager.getInstance().setInternalHeightEnhanced(intValue);
 				})
 			);
 			
@@ -109,9 +109,9 @@ public final class ScreenConfiguration extends Screen {
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.jump_range_info"), 
 							ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.config.jump_range_info_two")
 					), 
-					ModConfigManager.getInstance().getFocusJumpRange(), 4, 32, 12,
+					PocketsConfigManager.getInstance().getFocusJumpRange(), 4, 32, 12,
 					ComponentColour.WHITE, ComponentHelper.style(ComponentColour.GREEN, "Min"), ComponentHelper.style(ComponentColour.DARK_YELLOW, "Blocks"), ComponentHelper.style(ComponentColour.RED, "Max"), (intValue) -> {
-					ModConfigManager.getInstance().setFocusJumpRange(intValue);
+					PocketsConfigManager.getInstance().setFocusJumpRange(intValue);
 				})
 			);
 			
@@ -119,14 +119,14 @@ public final class ScreenConfiguration extends Screen {
 				new CosmosOptionBoolean(
 					ComponentColour.ORANGE, "", "dimensionalpocketsii.gui.config.use_structures", TYPE.YES_NO,
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.use_structures_info"), ComponentHelper.style(ComponentColour.LIME, "dimensionalpocketsii.gui.config.use_structures_info_two")),
-					ModConfigManager.getInstance().getCanPlaceStructures(),
-					(newValue) -> ModConfigManager.getInstance().setCanPlaceStructures(newValue), ":"
+					PocketsConfigManager.getInstance().getCanPlaceStructures(),
+					(newValue) -> PocketsConfigManager.getInstance().setCanPlaceStructures(newValue), ":"
 				),
 				new CosmosOptionBoolean(
 					ComponentColour.ORANGE, "", "dimensionalpocketsii.gui.config.use_items", TYPE.YES_NO,
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.use_items_info"), ComponentHelper.style(ComponentColour.LIME, "dimensionalpocketsii.gui.config.use_items_info_two")),
-					ModConfigManager.getInstance().getCanUseItems(),
-					(newValue) -> ModConfigManager.getInstance().setCanUseItems(newValue), ":"
+					PocketsConfigManager.getInstance().getCanUseItems(),
+					(newValue) -> PocketsConfigManager.getInstance().setCanUseItems(newValue), ":"
 				)
 			);
 			
@@ -134,14 +134,14 @@ public final class ScreenConfiguration extends Screen {
 				new CosmosOptionBoolean(
 					ComponentColour.ORANGE, "", "dimensionalpocketsii.gui.config.use_commands", TYPE.YES_NO,
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.use_commands_info"), ComponentHelper.style(ComponentColour.LIME, "dimensionalpocketsii.gui.config.use_commands_info_two")),
-					ModConfigManager.getInstance().getCanUseCommands(),
-					(newValue) -> ModConfigManager.getInstance().setCanUseCommands(newValue), ":"
+					PocketsConfigManager.getInstance().getCanUseCommands(),
+					(newValue) -> PocketsConfigManager.getInstance().setCanUseCommands(newValue), ":"
 				),
 				new CosmosOptionBoolean(
 					ComponentColour.ORANGE, "", "dimensionalpocketsii.gui.config.chunks", TYPE.ON_OFF,
 					CosmosOptionInstance.getTooltipSplitComponent( ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.chunks_info")),
-					ModConfigManager.getInstance().getKeepChunksLoaded(), 
-					(newValue) -> ModConfigManager.getInstance().setKeepChunksLoaded(newValue), ":"
+					PocketsConfigManager.getInstance().getKeepChunksLoaded(), 
+					(newValue) -> PocketsConfigManager.getInstance().setKeepChunksLoaded(newValue), ":"
 				)
 			);
 	
@@ -149,14 +149,14 @@ public final class ScreenConfiguration extends Screen {
 				new CosmosOptionBoolean(
 					ComponentColour.ORANGE, "", "dimensionalpocketsii.gui.config.replace", TYPE.YES_NO, 
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.replace_info")),
-					ModConfigManager.getInstance().getInternalReplace(),
-					(newValue) -> ModConfigManager.getInstance().setInternalReplace(newValue), ":"
+					PocketsConfigManager.getInstance().getInternalReplace(),
+					(newValue) -> PocketsConfigManager.getInstance().setInternalReplace(newValue), ":"
 				),
 				new CosmosOptionBoolean(
 					ComponentColour.ORANGE, "", "dimensionalpocketsii.gui.config.hostile", TYPE.YES_NO, 
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.hostile_info")),
-					ModConfigManager.getInstance().getStopHostileSpawns(),
-					(newValue) -> ModConfigManager.getInstance().setStopHostileSpawns(newValue), ":"
+					PocketsConfigManager.getInstance().getStopHostileSpawns(),
+					(newValue) -> PocketsConfigManager.getInstance().setStopHostileSpawns(newValue), ":"
 				)
 			);
 			
@@ -164,14 +164,14 @@ public final class ScreenConfiguration extends Screen {
 				new CosmosOptionBoolean(
 					ComponentColour.ORANGE, "", "dimensionalpocketsii.gui.config.walls", TYPE.YES_NO,
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.walls_info")),
-					ModConfigManager.getInstance().getCanDestroyWalls(),
-					(newValue) -> ModConfigManager.getInstance().setCanDestroyWalls(newValue), ":"
+					PocketsConfigManager.getInstance().getCanDestroyWalls(),
+					(newValue) -> PocketsConfigManager.getInstance().setCanDestroyWalls(newValue), ":"
 				),
 				new CosmosOptionBoolean(
 					ComponentColour.ORANGE, "", "dimensionalpocketsii.gui.config.backups", TYPE.YES_NO,
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.backups_info")),
-					ModConfigManager.getInstance().getCreateBackups(),
-					(newValue) -> ModConfigManager.getInstance().setCreateBackups(newValue), ":"
+					PocketsConfigManager.getInstance().getCreateBackups(),
+					(newValue) -> PocketsConfigManager.getInstance().setCreateBackups(newValue), ":"
 				)
 			);
 	
@@ -183,14 +183,14 @@ public final class ScreenConfiguration extends Screen {
 				new CosmosOptionBoolean(
 					ComponentColour.CYAN, "", "dimensionalpocketsii.gui.config.message.info", TYPE.ON_OFF, 
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.message.info_DESC_COLOUR"), ComponentHelper.style(ComponentColour.RED, "bold", "dimensionalpocketsii.gui.config.message.restart")),
-					ModConfigManager.getInstance().getInfoMessage(),
-					(newValue) -> ModConfigManager.getInstance().setInfoMessage(newValue), ":"
+					PocketsConfigManager.getInstance().getInfoMessage(),
+					(newValue) -> PocketsConfigManager.getInstance().setInfoMessage(newValue), ":"
 				),
 				new CosmosOptionBoolean(
 					ComponentColour.CYAN, "", "dimensionalpocketsii.gui.config.message.debug", TYPE.ON_OFF, 
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.message.debug_DESC_COLOUR"), ComponentHelper.style(ComponentColour.RED, "bold", "dimensionalpocketsii.gui.config.message.restart")),
-					ModConfigManager.getInstance().getDebugMessage(),
-					(newValue) -> ModConfigManager.getInstance().setDebugMessage(newValue), ":"
+					PocketsConfigManager.getInstance().getDebugMessage(),
+					(newValue) -> PocketsConfigManager.getInstance().setDebugMessage(newValue), ":"
 				)
 			);
 	
@@ -202,8 +202,8 @@ public final class ScreenConfiguration extends Screen {
 				new CosmosOptionBoolean(
 					ComponentColour.MAGENTA, "", "dimensionalpocketsii.gui.config.textures", TYPE.ON_OFF, 
 					CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.textures_info")),
-					ModConfigManager.getInstance().getConnectedTexturesInsidePocket(),
-					(newValue) -> ModConfigManager.getInstance().setConnectedTexturesInsidePocket(newValue), ":"
+					PocketsConfigManager.getInstance().getConnectedTexturesInsidePocket(),
+					(newValue) -> PocketsConfigManager.getInstance().setConnectedTexturesInsidePocket(newValue), ":"
 				) 
 			);
 			
@@ -247,22 +247,22 @@ public final class ScreenConfiguration extends Screen {
 			);
 			
 			this.EDIT_BOX_BLOCKS.setOnPressFunction((button) -> { 
-				ModConfigManager.getInstance().addBlockedStructure(this.EDIT_BOX_BLOCKS.getEditBox().getValue());
+				PocketsConfigManager.getInstance().addBlockedStructure(this.EDIT_BOX_BLOCKS.getEditBox().getValue());
 				this.EDIT_BOX_BLOCKS.getEditBox().setValue("");
 				this.updateWidgets();
 			});
 			
 			this.OPTIONS_ROW_LIST.addBig(EDIT_BOX_BLOCKS);
 			
-			for (int i = 0; i < ModConfigManager.getInstance().getBlockedStructures().size(); i++) {
-				String object = ModConfigManager.getInstance().getBlockedStructures().get(i);
+			for (int i = 0; i < PocketsConfigManager.getInstance().getBlockedStructures().size(); i++) {
+				String object = PocketsConfigManager.getInstance().getBlockedStructures().get(i);
 				
 				this.OPTIONS_ROW_LIST.addBig(
 					new CosmosOptionListElement(ComponentHelper.style(ComponentColour.WHITE, "", object), true, 
 					ComponentHelper.style(ComponentColour.RED, "bold", "-"), 
 					ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.config.remove"),
 					(button) -> { 
-						ModConfigManager.getInstance().removeBlockedStructure(object);
+						PocketsConfigManager.getInstance().removeBlockedStructure(object);
 						this.updateWidgets();
 					}, 
 					(button) -> {
@@ -287,22 +287,22 @@ public final class ScreenConfiguration extends Screen {
 			);
 
 			this.EDIT_BOX_ITEMS.setOnPressFunction((button) -> { 
-				ModConfigManager.getInstance().addBlockedItem(this.EDIT_BOX_ITEMS.getEditBox().getValue());
+				PocketsConfigManager.getInstance().addBlockedItem(this.EDIT_BOX_ITEMS.getEditBox().getValue());
 				this.EDIT_BOX_ITEMS.getEditBox().setValue("");
 				this.updateWidgets();
 			});
 			
 			this.OPTIONS_ROW_LIST.addBig(EDIT_BOX_ITEMS);
 			
-			for (int i = 0; i < ModConfigManager.getInstance().getBlockedItems().size(); i++) {
-				String object = ModConfigManager.getInstance().getBlockedItems().get(i);
+			for (int i = 0; i < PocketsConfigManager.getInstance().getBlockedItems().size(); i++) {
+				String object = PocketsConfigManager.getInstance().getBlockedItems().get(i);
 				
 				this.OPTIONS_ROW_LIST.addBig(
 					new CosmosOptionListElement(ComponentHelper.style(ComponentColour.WHITE, "", object), true, 
 					ComponentHelper.style(ComponentColour.RED, "bold", "-"), 
 					ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.config.remove"), 
 					(button) -> { 
-						ModConfigManager.getInstance().removeBlockedItem(object);
+						PocketsConfigManager.getInstance().removeBlockedItem(object);
 						this.updateWidgets();
 					},
 					(button) -> {
@@ -330,30 +330,30 @@ public final class ScreenConfiguration extends Screen {
 				CosmosOptionInstance.createIntSlider(ComponentHelper.style(ComponentColour.ORANGE, "dimensionalpocketsii.gui.config.op_level"),
 				CosmosOptionInstance.getTooltipSplitComponent(ComponentHelper.style(DESC_COLOUR, "dimensionalpocketsii.gui.config.op_level_info"), 
 				ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.config.op_level_info_two")), 
-				ModConfigManager.getInstance().getOPLevel(), 0, 4, 4, ComponentColour.WHITE, ComponentHelper.style(ComponentColour.GREEN, "Min"), 
+				PocketsConfigManager.getInstance().getOPLevel(), 0, 4, 4, ComponentColour.WHITE, ComponentHelper.style(ComponentColour.GREEN, "Min"), 
 				ComponentHelper.style(ComponentColour.DARK_YELLOW, "dimensionalpocketsii.gui.config.op_level_slide"), ComponentHelper.style(ComponentColour.RED, "Max"), 
 				(intValue) -> {
-					ModConfigManager.getInstance().setOPLevel(intValue);
+					PocketsConfigManager.getInstance().setOPLevel(intValue);
 				})
 			);
 
 			this.EDIT_BOX_COMMANDS.setOnPressFunction((button) -> { 
-				ModConfigManager.getInstance().addBlockedCommand(this.EDIT_BOX_COMMANDS.getEditBox().getValue());
+				PocketsConfigManager.getInstance().addBlockedCommand(this.EDIT_BOX_COMMANDS.getEditBox().getValue());
 				this.EDIT_BOX_COMMANDS.getEditBox().setValue("");
 				this.updateWidgets();
 			});
 			
 			this.OPTIONS_ROW_LIST.addBig(EDIT_BOX_COMMANDS);
 			
-			for (int i = 0; i < ModConfigManager.getInstance().getBlockedCommands().size(); i++) {
-				String object = ModConfigManager.getInstance().getBlockedCommands().get(i);
+			for (int i = 0; i < PocketsConfigManager.getInstance().getBlockedCommands().size(); i++) {
+				String object = PocketsConfigManager.getInstance().getBlockedCommands().get(i);
 				
 				this.OPTIONS_ROW_LIST.addBig(
 					new CosmosOptionListElement(ComponentHelper.style(ComponentColour.WHITE, "", object), true, 
 					ComponentHelper.style(ComponentColour.RED, "bold", "-"), 
 					ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.config.remove"), 
 					(button) -> { 
-						ModConfigManager.getInstance().removeBlockedCommand(object);
+						PocketsConfigManager.getInstance().removeBlockedCommand(object);
 						this.updateWidgets();
 					}, (button) -> {
 						return button.get();
@@ -475,7 +475,7 @@ public final class ScreenConfiguration extends Screen {
 	}
 	
 	public void switchScreen(String screen) {
-        ModConfigManager.save();
+        PocketsConfigManager.save();
         
 		this.CURRENT_SCREEN = screen;
 		this.updateWidgets();
@@ -485,7 +485,7 @@ public final class ScreenConfiguration extends Screen {
 	@Override
 	public void removed() {
 		this.minecraft.options.save();
-        ModConfigManager.save();
+        PocketsConfigManager.save();
 	}
 	
     public void exit() {

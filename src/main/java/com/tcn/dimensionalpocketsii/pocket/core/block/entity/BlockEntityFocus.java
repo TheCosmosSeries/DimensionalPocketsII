@@ -6,13 +6,14 @@ import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
 import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
-import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerFocus;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockFocus;
@@ -44,7 +45,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockEntityFocus extends BlockEntity implements IBlockInteract, MenuProvider, Nameable, IBlockEntityUIMode {
+public class BlockEntityFocus extends BlockEntity implements IBlockInteract, MenuProvider, Nameable, IBEUIMode, IBEUILockable {
 	
 	private Pocket pocket;
 	private EnumGeneralEnableState jumpEnabled = EnumGeneralEnableState.ENABLED;
@@ -55,7 +56,7 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 	private EnumUILock uiLock = EnumUILock.PRIVATE;
 
 	public BlockEntityFocus(BlockPos posIn, BlockState stateIn) {
-		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_FOCUS.get(), posIn, stateIn);
+		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_FOCUS.get(), posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -173,7 +174,7 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 			return ItemInteractionResult.FAIL;
 		}
 		
-		if (PocketUtil.isDimensionEqual(levelIn, ModDimensionManager.POCKET_WORLD)) {
+		if (PocketUtil.isDimensionEqual(levelIn, PocketsDimensionManager.POCKET_WORLD)) {
 			Pocket pocket = this.getPocket();
 			
 			if (pocket != null) {
@@ -195,17 +196,17 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 						
 						if (CosmosUtil.holdingWrench(playerIn)) {
 							if (pocketIn.checkIfOwner(playerIn)) {
-								if (this.getBlockPos().getY() == 1 || this.getBlockPos().getY() == this.getPocket().getInternalHeight() || this.getBlockPos().getY() == ModConfigManager.getInstance().getInternalHeight()) {
-									ItemStack stack = new ItemStack(ModRegistrationManager.MODULE_FOCUS.get());
+								if (this.getBlockPos().getY() == 1 || this.getBlockPos().getY() == this.getPocket().getInternalHeight() || this.getBlockPos().getY() == PocketsConfigManager.getInstance().getInternalHeight()) {
+									ItemStack stack = new ItemStack(PocketsRegistrationManager.MODULE_FOCUS.get());
 									
-									levelIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+									levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 									levelIn.removeBlockEntity(pos);
 									
 									CosmosUtil.addStack(levelIn, playerIn, stack);
 									
 									return ItemInteractionResult.SUCCESS;
 								} else {
-									ItemStack stack = new ItemStack(ModRegistrationManager.BLOCK_FOCUS.get());
+									ItemStack stack = new ItemStack(PocketsRegistrationManager.BLOCK_FOCUS.get());
 									levelIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 									CosmosUtil.addStack(levelIn, playerIn, stack);
 									

@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.core.management.ModSoundManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsSoundManager;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
@@ -15,8 +15,8 @@ import net.minecraft.sounds.SoundEvents;
 
 public enum EnumShiftDirection {
 	
-	ENTER(0, "enter", "Enter", "dimensionalpocketsii.pocket.direction.enter", ComponentColour.GREEN, ModSoundManager.PORTAL_IN.get()),
-	LEAVE(1, "leave", "Leave", "dimensionalpocketsii.pocket.direction.leave", ComponentColour.ORANGE, ModSoundManager.PORTAL_OUT.get()),
+	ENTER(0, "enter", "Enter", "dimensionalpocketsii.pocket.direction.enter", ComponentColour.GREEN, PocketsSoundManager.PORTAL_IN.get()),
+	LEAVE(1, "leave", "Leave", "dimensionalpocketsii.pocket.direction.leave", ComponentColour.ORANGE, PocketsSoundManager.PORTAL_OUT.get()),
 	GENERIC(2, "generic", "Generic", "dimensionalpocketsii.pocket.direcion.generic", ComponentColour.CYAN, SoundEvents.PORTAL_TRAVEL),
 	UNKNOWN(-1, "unknown", "Unknown", "dimensionalpocketsii.pocket.direction.unknown", ComponentColour.RED, null);
 	

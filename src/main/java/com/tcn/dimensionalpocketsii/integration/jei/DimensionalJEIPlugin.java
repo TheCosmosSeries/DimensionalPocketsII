@@ -3,7 +3,7 @@ package com.tcn.dimensionalpocketsii.integration.jei;
 import javax.annotation.Nullable;
 
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.core.recipe.UpgradeStationRecipe;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleBlastFurnace;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleCrafter;
@@ -76,25 +76,25 @@ public class DimensionalJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-		registration.addRecipeTransferHandler(ContainerModuleUpgradeStation.class, ModRegistrationManager.CONTAINER_TYPE_UPGRADE_STATION.get(), UPGRADING, 0, 9, 10, 36);
+		registration.addRecipeTransferHandler(ContainerModuleUpgradeStation.class, PocketsRegistrationManager.CONTAINER_TYPE_UPGRADE_STATION.get(), UPGRADING, 0, 9, 10, 36);
 		
-		registration.addRecipeTransferHandler(ContainerModuleCrafter.class, ModRegistrationManager.CONTAINER_TYPE_CRAFTER.get(), RecipeTypes.CRAFTING, 1, 9, 10, 36);
-		registration.addRecipeTransferHandler(ContainerModuleSmithingTable.class, ModRegistrationManager.CONTAINER_TYPE_SMITHING_TABLE.get(), RecipeTypes.SMITHING, 0, 3, 3, 36);
-		registration.addRecipeTransferHandler(ContainerModuleFurnace.class, ModRegistrationManager.CONTAINER_TYPE_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
-		registration.addRecipeTransferHandler(ContainerModuleFurnace.class, ModRegistrationManager.CONTAINER_TYPE_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
+		registration.addRecipeTransferHandler(ContainerModuleCrafter.class, PocketsRegistrationManager.CONTAINER_TYPE_CRAFTER.get(), RecipeTypes.CRAFTING, 1, 9, 10, 36);
+		registration.addRecipeTransferHandler(ContainerModuleSmithingTable.class, PocketsRegistrationManager.CONTAINER_TYPE_SMITHING_TABLE.get(), RecipeTypes.SMITHING, 0, 3, 3, 36);
+		registration.addRecipeTransferHandler(ContainerModuleFurnace.class, PocketsRegistrationManager.CONTAINER_TYPE_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
+		registration.addRecipeTransferHandler(ContainerModuleFurnace.class, PocketsRegistrationManager.CONTAINER_TYPE_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
 
-		registration.addRecipeTransferHandler(ContainerModuleBlastFurnace.class, ModRegistrationManager.CONTAINER_TYPE_BLAST_FURNACE.get(), RecipeTypes.BLASTING, 0, 1, 3, 36);
-		registration.addRecipeTransferHandler(ContainerModuleBlastFurnace.class, ModRegistrationManager.CONTAINER_TYPE_BLAST_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
+		registration.addRecipeTransferHandler(ContainerModuleBlastFurnace.class, PocketsRegistrationManager.CONTAINER_TYPE_BLAST_FURNACE.get(), RecipeTypes.BLASTING, 0, 1, 3, 36);
+		registration.addRecipeTransferHandler(ContainerModuleBlastFurnace.class, PocketsRegistrationManager.CONTAINER_TYPE_BLAST_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
 	}
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) { 
-		registration.addRecipeCatalyst(new ItemStack(ModRegistrationManager.MODULE_UPGRADE_STATION.get()), UPGRADING);
+		registration.addRecipeCatalyst(new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get()), UPGRADING);
 		
-		registration.addRecipeCatalyst(new ItemStack(ModRegistrationManager.MODULE_CRAFTER.get()), RecipeTypes.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModRegistrationManager.MODULE_FURNACE.get()), RecipeTypes.SMELTING);
-		registration.addRecipeCatalyst(new ItemStack(ModRegistrationManager.MODULE_BLAST_FURNACE.get()), RecipeTypes.BLASTING);
-		registration.addRecipeCatalyst(new ItemStack(ModRegistrationManager.MODULE_SMITHING_TABLE.get()), RecipeTypes.SMITHING);
+		registration.addRecipeCatalyst(new ItemStack(PocketsRegistrationManager.MODULE_CRAFTER.get()), RecipeTypes.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(PocketsRegistrationManager.MODULE_FURNACE.get()), RecipeTypes.SMELTING);
+		registration.addRecipeCatalyst(new ItemStack(PocketsRegistrationManager.MODULE_BLAST_FURNACE.get()), RecipeTypes.BLASTING);
+		registration.addRecipeCatalyst(new ItemStack(PocketsRegistrationManager.MODULE_SMITHING_TABLE.get()), RecipeTypes.SMITHING);
 	}
 
 	@Override

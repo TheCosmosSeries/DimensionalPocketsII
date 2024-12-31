@@ -3,8 +3,8 @@ package com.tcn.dimensionalpocketsii.pocket.core.block;
 import javax.annotation.Nullable;
 
 import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleGenerator;
 
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,7 @@ public class BlockWallGenerator extends BlockWallModule implements IBlankCreativ
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModRegistrationManager.BLOCK_ENTITY_TYPE_GENERATOR.get());
+		return createTicker(levelIn, entityTypeIn, PocketsRegistrationManager.BLOCK_ENTITY_TYPE_GENERATOR.get());
 	}
 
 	@Nullable
@@ -76,7 +76,7 @@ public class BlockWallGenerator extends BlockWallModule implements IBlankCreativ
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return this.defaultBlockState();
 		}
 		return Blocks.AIR.defaultBlockState();
@@ -84,6 +84,6 @@ public class BlockWallGenerator extends BlockWallModule implements IBlankCreativ
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-       return new ItemStack(ModRegistrationManager.MODULE_GENERATOR.get());
+       return new ItemStack(PocketsRegistrationManager.MODULE_GENERATOR.get());
     }
 }

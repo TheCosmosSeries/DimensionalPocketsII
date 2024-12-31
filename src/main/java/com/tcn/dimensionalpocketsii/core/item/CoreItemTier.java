@@ -3,7 +3,7 @@ package com.tcn.dimensionalpocketsii.core.item;
 import java.util.function.Supplier;
 
 import com.google.common.base.Suppliers;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.Block;
 
 public enum CoreItemTier implements Tier {
 	
-	DIMENSIONAL(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 4000, 12.0F, 6.0F, 25, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get())),
-	DIMENSIONAL_ENHANCED(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 6000, 16.0F, 8.0F, 35, () -> Ingredient.of(ModRegistrationManager.DIMENSIONAL_INGOT.get()));
+	DIMENSIONAL(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 4000, 12.0F, 6.0F, 25, () -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get())),
+	DIMENSIONAL_ENHANCED(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 6000, 16.0F, 8.0F, 35, () -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()));
 
     private final TagKey<Block> incorrectBlocksForDrops;
 	private final int uses;

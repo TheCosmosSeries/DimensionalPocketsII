@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
@@ -119,10 +119,10 @@ public class ScreenModuleArmourWorkbench extends CosmosScreenUIModeBE<ContainerM
 				ComponentColour colour = ComponentColour.col(decimal);
 				float[] rgb = colour.equals(ComponentColour.POCKET_PURPLE) ? ComponentColour.rgbFloatArray(ComponentColour.POCKET_PURPLE_LIGHT.dec()) : ComponentColour.rgbFloatArray(decimal);
 				
-				CosmosUISystem.renderStaticElementWithUIMode(this, guiGraphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.ARMOUR_WORKBENCH_BASE);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(guiGraphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.ARMOUR_WORKBENCH_BASE);
 			}
 			
-			CosmosUISystem.renderStaticElementWithUIMode(this, guiGraphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, GUI.RESOURCE.ARMOUR_WORKBENCH_OVERLAY);
+			CosmosUISystem.Render.renderStaticElementWithUIMode(guiGraphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, GUI.RESOURCE.ARMOUR_WORKBENCH_OVERLAY);
 		}
 		
 		int xPos = this.getScreenCoords()[0] + 122; int yPos = this.getScreenCoords()[1] + 56;

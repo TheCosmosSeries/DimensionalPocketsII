@@ -3,8 +3,7 @@ package com.tcn.dimensionalpocketsii.client.screen;
 import java.util.Arrays;
 import java.util.UUID;
 
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem.FONT;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonUIMode;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -14,7 +13,7 @@ import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.client.screen.button.TomeButton;
 import com.tcn.dimensionalpocketsii.client.screen.button.TomeChangeButton;
 import com.tcn.dimensionalpocketsii.core.item.DimensionalTome;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.core.network.packet.PacketTomeUpdate;
 
 import net.minecraft.client.Minecraft;
@@ -100,9 +99,9 @@ public class ScreenItemTome extends Screen {
 	@Override
 	public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float ticks) {
 		super.renderBackground(graphics, mouseX, mouseY, ticks);
-		int[] screen_coords = CosmosUISystem.getScreenCoords(this, 202, 225);
+		int[] screen_coords = CosmosUISystem.Init.getScreenCoords(this, 202, 225);
 		
-		CosmosUISystem.renderStaticElementWithUIMode(this, graphics, screen_coords, 0, 0, 0, 0, 202, 225, this.getUIMode(), TEXTURE);
+		CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, screen_coords, 0, 0, 0, 0, 202, 225, this.getUIMode(), this.TEXTURE);
 	}
 
 	@Override
@@ -110,9 +109,9 @@ public class ScreenItemTome extends Screen {
 		this.renderBackground(graphics, mouseY, mouseY, partialTicks);
 		super.render(graphics, mouseX, mouseY, partialTicks);
 		
-		CosmosUISystem.setTextureColour(new float[] { 1, 1, 1, 1 });
+		CosmosUISystem.Setup.setTextureColour(new float[] { 1, 1, 1, 1 });
 		
-		int[] screen_coords = CosmosUISystem.getScreenCoords(this, 202, 225);
+		int[] screen_coords = CosmosUISystem.Init.getScreenCoords(this, 202, 225);
 		
 		if (this.flipTimer < 2000) {
 			this.flipTimer += 2;
@@ -128,419 +127,419 @@ public class ScreenItemTome extends Screen {
 
 		this.addButtons();
 
-		FONT.drawString(graphics, font, screen_coords, 23, 10, true, ComponentHelper.style2(this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT : ComponentColour.SCREEN_DARK, "dimensionalpocketsii.tome_page", Integer.toString(this.currPage)));
-		FONT.drawString(graphics, font, screen_coords, 69, 10, true, ComponentHelper.style(ComponentColour.POCKET_PURPLE_LIGHT, "underline", "dimensionalpocketsii.tome_heading"));
+		CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 23, 10, true, ComponentHelper.style2(this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT : ComponentColour.SCREEN_DARK, "dimensionalpocketsii.tome_page", Integer.toString(this.currPage)));
+		CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 69, 10, true, ComponentHelper.style(ComponentColour.POCKET_PURPLE_LIGHT, "underline", "dimensionalpocketsii.tome_heading"));
 		
 		if (this.currPage == 0) {
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, -9, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_one_body") 
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, -9, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_one_body") 
 					+ ComponentHelper.locString(Value.PURPLE + Value.UNDERLINE, "dimensionalpocketsii.tome_one_body_one") + ComponentHelper.locString("dimensionalpocketsii.tome_one_body_two"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 58, ComponentColour.POCKET_PURPLE.dec(), ComponentHelper.locString(Value.UNDERLINE + Value.BOLD, "dimensionalpocketsii.tome_one_body_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 58, ComponentColour.POCKET_PURPLE.dec(), ComponentHelper.locString(Value.UNDERLINE + Value.BOLD, "dimensionalpocketsii.tome_one_body_heading"), false);
 			
-			FONT.drawString(graphics, font, screen_coords, 30, 105, true, ComponentHelper.style(ComponentColour.POCKET_PURPLE_LIGHT, "dimensionalpocketsii.tome_two_heading"));
-			FONT.drawString(graphics, font, screen_coords, 173, 105, true, ComponentHelper.style(ComponentColour.POCKET_PURPLE_LIGHT, "1"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 30, 105, true, ComponentHelper.style(ComponentColour.POCKET_PURPLE_LIGHT, "dimensionalpocketsii.tome_two_heading"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 173, 105, true, ComponentHelper.style(ComponentColour.POCKET_PURPLE_LIGHT, "1"));
 			
-			FONT.drawString(graphics, font, screen_coords, 30, 115, true, ComponentHelper.style(ComponentColour.DARK_CYAN, "dimensionalpocketsii.tome_three_heading"));
-			FONT.drawString(graphics, font, screen_coords, 161, 115, true, ComponentHelper.style(ComponentColour.DARK_CYAN, "2-5"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 30, 115, true, ComponentHelper.style(ComponentColour.DARK_CYAN, "dimensionalpocketsii.tome_three_heading"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 161, 115, true, ComponentHelper.style(ComponentColour.DARK_CYAN, "2-5"));
 			
-			FONT.drawString(graphics, font, screen_coords, 30, 125, true, ComponentHelper.style(ComponentColour.BLUE, "dimensionalpocketsii.tome_four_heading"));
-			FONT.drawString(graphics, font, screen_coords, 155, 125, true, ComponentHelper.style(ComponentColour.BLUE, "6-15"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 30, 125, true, ComponentHelper.style(ComponentColour.BLUE, "dimensionalpocketsii.tome_four_heading"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 155, 125, true, ComponentHelper.style(ComponentColour.BLUE, "6-15"));
 			
-			FONT.drawString(graphics, font, screen_coords, 30, 135, true, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.tome_five_heading"));
-			FONT.drawString(graphics, font, screen_coords, 149, 135, true, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "16-20"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 30, 135, true, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.tome_five_heading"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 149, 135, true, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "16-20"));
 			
-			FONT.drawString(graphics, font, screen_coords, 30, 145, true, ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.tome_seven_heading"));
-			FONT.drawString(graphics, font, screen_coords, 149, 145, true, ComponentHelper.style(ComponentColour.GRAY, "24-27"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 30, 145, true, ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.tome_seven_heading"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 149, 145, true, ComponentHelper.style(ComponentColour.GRAY, "24-27"));
 			
-			FONT.drawString(graphics, font, screen_coords, 30, 155, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "dimensionalpocketsii.tome_nine_heading"));
-			FONT.drawString(graphics, font, screen_coords, 149, 155, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "28-44"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 30, 155, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "dimensionalpocketsii.tome_nine_heading"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 149, 155, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "28-44"));
 			
-			FONT.drawString(graphics, font, screen_coords, 30, 165, true, ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.tome_ten_tab"));
-			FONT.drawString(graphics, font, screen_coords, 149, 165, true, ComponentHelper.style(ComponentColour.RED, "45-46"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 30, 165, true, ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.tome_ten_tab"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 149, 165, true, ComponentHelper.style(ComponentColour.RED, "45-46"));
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 142, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_two_body_three"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 142, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_two_body_three"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_one", " ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_one", " ]"), false);
 		}
 		
 		else if (this.currPage == 1) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.POCKET_PURPLE_LIGHT.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_two_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.POCKET_PURPLE_LIGHT.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_two_heading"), false);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 4, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_two_body_one"));
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 65, ComponentColour.POCKET_PURPLE_LIGHT.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_two_body_two"), false);
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 4, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_two_body_one"));
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 65, ComponentColour.POCKET_PURPLE_LIGHT.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_two_body_two"), false);
 			
-			FONT.drawString(graphics, font, screen_coords, 25, 110, true, ComponentHelper.style(ComponentColour.DARK_CYAN, "dimensionalpocketsii.tome_two_sub_one"));
-			FONT.drawString(graphics, font, screen_coords, 25, 120, true, ComponentHelper.style(ComponentColour.BLUE, "dimensionalpocketsii.tome_two_sub_two"));
-			FONT.drawString(graphics, font, screen_coords, 25, 130, true, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.tome_two_sub_three"));
-			FONT.drawString(graphics, font, screen_coords, 25, 140, true, ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.tome_two_sub_four"));
-			FONT.drawString(graphics, font, screen_coords, 25, 150, true, ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.tome_two_sub_five"));
-			FONT.drawString(graphics, font, screen_coords, 25, 160, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "dimensionalpocketsii.tome_two_sub_six"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 25, 110, true, ComponentHelper.style(ComponentColour.DARK_CYAN, "dimensionalpocketsii.tome_two_sub_one"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 25, 120, true, ComponentHelper.style(ComponentColour.BLUE, "dimensionalpocketsii.tome_two_sub_two"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 25, 130, true, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.tome_two_sub_three"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 25, 140, true, ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.tome_two_sub_four"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 25, 150, true, ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.tome_two_sub_five"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 25, 160, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "dimensionalpocketsii.tome_two_sub_six"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_two", " ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_two", " ]"), false);
 		}
 		
 		else if (this.currPage == 2) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.DARK_CYAN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_three_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.DARK_CYAN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_three_heading"), false);
 			
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 75, 40, 0, 0, 60, 60, BLOCK_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 75, 40, 0, 0, 60, 60, BLOCK_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 70, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_one"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 70, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_one"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 1 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 1 ]"), false);
 		} 
 		
 		else if (this.currPage == 3) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.DARK_CYAN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_three_heading_one"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.DARK_CYAN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_three_heading_one"), false);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 6, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_two"));
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 35, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_three"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 6, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_two"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 35, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_three"));
 			
-			FONT.drawString(graphics, font, screen_coords, 42, 90, true, ComponentHelper.style(ComponentColour.BLUE, "bold", "dimensionalpocketsii.tome_three_sub_one"));
-			FONT.drawString(graphics, font, screen_coords, 84, 90, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "bold", "dimensionalpocketsii.tome_three_sub_two"));
-			FONT.drawString(graphics, font, screen_coords, 126, 90, true, ComponentHelper.style(ComponentColour.GRAY, "bold", "dimensionalpocketsii.tome_three_sub_three"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 42, 90, true, ComponentHelper.style(ComponentColour.BLUE, "bold", "dimensionalpocketsii.tome_three_sub_one"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 84, 90, true, ComponentHelper.style(ComponentColour.DARK_GREEN, "bold", "dimensionalpocketsii.tome_three_sub_two"));
+			CosmosUISystem.FontRenderer.drawString(graphics, font, screen_coords, 126, 90, true, ComponentHelper.style(ComponentColour.GRAY, "bold", "dimensionalpocketsii.tome_three_sub_three"));
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 101 - 60, 102, 32, 96, 32, 32, FLAT_TEXTURES_0);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 101 - 14, 102, 64, 96, 32, 32, FLAT_TEXTURES_0);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 101 + 32, 102, 96, 96, 32, 32, FLAT_TEXTURES_0);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 101 - 60, 102, 32, 96, 32, 32, FLAT_TEXTURES_0);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 101 - 14, 102, 64, 96, 32, 32, FLAT_TEXTURES_0);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 101 + 32, 102, 96, 96, 32, 32, FLAT_TEXTURES_0);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 108, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_four"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 108, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_four"));
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 47, 168, 128, 192, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 47, 168, 128, 192, 32, 32, FLAT_TEXTURES);
 			
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 92, 178, 236, 242, 20, 14, this.getUIMode().equals(EnumUIMode.DARK) ? TEXTURE[0] : TEXTURE[1]);
+			CosmosUISystem.Render.renderStaticElement( graphics, screen_coords, 92, 178, 236, 242, 20, 14, this.getUIMode().equals(EnumUIMode.DARK) ? TEXTURE[0] : TEXTURE[1]);
 			
 			if (this.flipTimerMulti < 2000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 127, 168, 0, 96, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 127, 168, 0, 96, 32, 32, FLAT_TEXTURES_0);
 			} else if (this.flipTimerMulti > 2000 && this.flipTimerMulti < 4000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 127, 168, 32, 96, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 127, 168, 32, 96, 32, 32, FLAT_TEXTURES_0);
 			} else if (this.flipTimerMulti > 4000 && this.flipTimerMulti < 6000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 127, 168, 64, 96, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 127, 168, 64, 96, 32, 32, FLAT_TEXTURES_0);
 			} else if (this.flipTimerMulti > 6000 && this.flipTimerMulti < 8000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 127, 168, 96, 96, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 127, 168, 96, 96, 32, 32, FLAT_TEXTURES_0);
 			}
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 2 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 2 ]"), false);
 		} 
 		
 		else if (this.currPage == 4) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.DARK_CYAN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_three_heading_two"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.DARK_CYAN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_three_heading_two"), false);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 6, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("You can also colour your<br>Pocket to any of the 16<br>vanilla Minecraft colours,<br>or any Mod colours.<br> <br>To apply a colour, right<br>click your Pocket Block,<br>or Connector with a Dye<br>Item.<br> <br>To reset the colour back<br>to purple, use a Dimensional<br>Shard instead of a Dye."));
-			//FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 35, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_three"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 6, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("You can also colour your<br>Pocket to any of the 16<br>vanilla Minecraft colours,<br>or any Mod colours.<br> <br>To apply a colour, right<br>click your Pocket Block,<br>or Connector with a Dye<br>Item.<br> <br>To reset the colour back<br>to purple, use a Dimensional<br>Shard instead of a Dye."));
+			//CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 35, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_three_body_three"));
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 92, 170, 236, 242, 20, 14, this.getUIMode().equals(EnumUIMode.DARK) ? TEXTURE[0] : TEXTURE[1]);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 92, 170, 236, 242, 20, 14, this.getUIMode().equals(EnumUIMode.DARK) ? TEXTURE[0] : TEXTURE[1]);
 			
 			if (this.flipTimerMulti < 2000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 127, 160, 0, 64, 32, 32, FLAT_TEXTURES_0);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 47, 160, 0, 128, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 127, 160, 0, 64, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 47, 160, 0, 128, 32, 32, FLAT_TEXTURES_0);
 			} else if (this.flipTimerMulti > 2000 && this.flipTimerMulti < 4000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 127, 160, 32, 64, 32, 32, FLAT_TEXTURES_0);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 47, 160, 32, 128, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 127, 160, 32, 64, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 47, 160, 32, 128, 32, 32, FLAT_TEXTURES_0);
 			} else if (this.flipTimerMulti > 4000 && this.flipTimerMulti < 6000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 127, 160, 64, 64, 32, 32, FLAT_TEXTURES_0);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 47, 160, 64, 128, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 127, 160, 64, 64, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 47, 160, 64, 128, 32, 32, FLAT_TEXTURES_0);
 			} else if (this.flipTimerMulti > 6000 && this.flipTimerMulti < 8000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 127, 160, 96, 64, 32, 32, FLAT_TEXTURES_0);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 47, 160, 96, 128, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 127, 160, 96, 64, 32, 32, FLAT_TEXTURES_0);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 47, 160, 96, 128, 32, 32, FLAT_TEXTURES_0);
 			}
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 3 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 3 ]"), false);
 		} 
 		
 		else if (this.currPage == 5) {
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 4 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_three", " 4 ]"), false);
 		} 
 		
 		//Modules
 		else if (this.currPage == 6) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading"), false);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 4, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 4, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 1 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 1 ]"), false);
 		} 
 		
 		else if (this.currPage == 7) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_one"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_one"), false);
 
 			
 			if (this.flipTimerMulti < 1000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 0, 32, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 0, 32, 32, 32, FLAT_TEXTURES);
 			} else if (this.flipTimerMulti < 2000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 32, 32, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 32, 32, 32, 32, FLAT_TEXTURES);
 			} else if (this.flipTimerMulti < 3000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 64, 32, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 64, 32, 32, 32, FLAT_TEXTURES);
 			} else if (this.flipTimerMulti < 4000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 96, 32, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 96, 32, 32, 32, FLAT_TEXTURES);
 			} else if (this.flipTimerMulti < 5000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 128, 32, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 128, 32, 32, 32, FLAT_TEXTURES);
 			} else if (this.flipTimerMulti < 6000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 160, 32, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 160, 32, 32, 32, FLAT_TEXTURES);
 			} else if (this.flipTimerMulti < 7000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 192, 32, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 192, 32, 32, 32, FLAT_TEXTURES);
 			} else if (this.flipTimerMulti < 8000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 224, 32, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 224, 32, 32, 32, FLAT_TEXTURES);
 			}
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_one"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_one"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 140, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_one_"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 140, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_one_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 2 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 2 ]"), false);
 		}
 		
 		else if (this.currPage == 8) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_two"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_two"), false);
 			
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 64, 0, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 64, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_two"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_two"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 155, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_two_"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 155, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_two_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 3 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 3 ]"), false);
 		}
 		
 		else if (this.currPage == 9) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_three"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_three"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 32, 0, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 32, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_three"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_three"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 115, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_three_"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 115, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_three_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 4 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 4 ]"), false);
 		}
 		
 		else if (this.currPage == 10) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_four"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_four"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 0, 0, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 0, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_four"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_four"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 115, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_four_"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 115, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_four_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 5 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 5 ]"), false);
 		}
 		
 		else if (this.currPage == 11) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_five"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_five"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 128, 0, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 128, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 60, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_five"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 60, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_five"));
 			
-			//FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 110, 0, CosmosColour.BLACK.dec(), CosmosCompHelper.locString("dimensionalpocketsii.tome_four_body_five_"));
+			//CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 110, 0, CosmosColour.BLACK.dec(), CosmosCompHelper.locString("dimensionalpocketsii.tome_four_body_five_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 6 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 6 ]"), false);
 		}
 		
 		else if (this.currPage == 12) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_six"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_six"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 160, 0, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 160, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 60, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_six"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 60, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_six"));
 			
-			//FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 110, 0, CosmosColour.BLACK.dec(), CosmosCompHelper.locString("dimensionalpocketsii.tome_four_body_six_"));
+			//CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 110, 0, CosmosColour.BLACK.dec(), CosmosCompHelper.locString("dimensionalpocketsii.tome_four_body_six_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 7 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 7 ]"), false);
 		}
 		
 		else if (this.currPage == 13) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_seven"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_seven"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 96, 0, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 96, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_seven"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_seven"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 125, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_seven_"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 125, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_seven_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 8 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 8 ]"), false);
 		}
 		
 		else if (this.currPage == 14) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_eight"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_eight"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 192, 0, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 192, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_eight"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_eight"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_eight_"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_eight_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 9 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 9 ]"), false);
 		}
 
 		else if (this.currPage == 15) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_nine"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_nine"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 224, 0, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 224, 0, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_nine"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_nine"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_nine_"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_nine_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 9 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 9 ]"), false);
 		}
 
 		else if (this.currPage == 16) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_ten"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_four_heading_ten"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 224, 64, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 224, 64, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_ten"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_ten"));
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_ten_"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 150, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_four_body_ten_"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 10 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_four", " 10 ]"), false);
 		}
 		
 		else if (this.currPage == 17) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading"), false);
 			
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 32 - 40, 40, 128, 192, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 32, 40, 192, 224, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4, 40, 192, 192, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 40, 40, 160, 192, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 32 - 40, 40, 128, 192, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 32, 40, 192, 224, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 4, 40, 192, 192, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 40, 40, 160, 192, 32, 32, FLAT_TEXTURES);
 			
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 50, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 1 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 1 ]"), false);
 		} 
 
 		else if (this.currPage == 18) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading_one"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading_one"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 128, 192, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 128, 192, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_one"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_one"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 2 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 2 ]"), false);
 		} 
 		
 		else if (this.currPage == 19) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading_two"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading_two"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 32, 40, 224, 224, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4, 40, 192, 224, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 32, 40, 224, 224, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 4, 40, 192, 224, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_two"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_two"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 3 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 3 ]"), false);
 		} 
 
 		else if (this.currPage == 20) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading_three"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading_three"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 32, 40, 224, 192, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4, 40, 192, 192, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 32, 40, 224, 192, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 4, 40, 192, 192, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_three"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_three"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 4 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 4 ]"), false);
 		} 
 
 		else if (this.currPage == 21) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading_four"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.LIGHT_BLUE.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_five_heading_four"), false);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 160, 192, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 160, 192, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_four"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 40, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_five_body_four"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 5 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_five", " 5 ]"), false);
 		} 
 		
 		else if (this.currPage == 21) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GREEN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_six_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GREEN.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_six_heading"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_six", " 1 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_six", " 1 ]"), false);
 		}
 		
 		else if (this.currPage == 22) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GRAY.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_seven_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GRAY.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_seven_heading"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 1 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 1 ]"), false);
 		} 
 		
 		else if (this.currPage == 23) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GRAY.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_seven_heading_one"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GRAY.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_seven_heading_one"), false);
 			
 			
 			if (this.flipTimer < 1000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 72,  40,  0,  160, 32, 32, FLAT_TEXTURES);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 32,  40, 32,  160, 32, 32, FLAT_TEXTURES);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4,   40, 64,  160, 32, 32, FLAT_TEXTURES);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 40,  40, 96,  160, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 72,  40,  0,  160, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 32,  40, 32,  160, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 4,   40, 64,  160, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 40,  40, 96,  160, 32, 32, FLAT_TEXTURES);
 			} else if (this.flipTimer < 2000) {
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 72,  40, 128, 160, 32, 32, FLAT_TEXTURES);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 32,  40, 160, 160, 32, 32, FLAT_TEXTURES);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4,   40, 192, 160, 32, 32, FLAT_TEXTURES);
-				CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 40,  40, 224, 160, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 72,  40, 128, 160, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 32,  40, 160, 160, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 4,   40, 192, 160, 32, 32, FLAT_TEXTURES);
+				CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 40,  40, 224, 160, 32, 32, FLAT_TEXTURES);
 			}
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 2 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 2 ]"), false);
 		} 
 
 		else if (this.currPage == 24) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GRAY.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_seven_heading_two"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GRAY.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_seven_heading_two"), false);
 			
-			//CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 54,  40, 32, 128, 32, 32);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14,  40, 0, 128, 32, 32, FLAT_TEXTURES);
-			//CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 26,  40, 64, 128, 32, 32);
+			//CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 54,  40, 32, 128, 32, 32);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14,  40, 0, 128, 32, 32, FLAT_TEXTURES);
+			//CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 26,  40, 64, 128, 32, 32);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 3 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 3 ]"), false);
 		} 
 
 		else if (this.currPage == 25) {
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 4 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 4 ]"), false);
 		} 
 
 		else if (this.currPage == 26) {
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 5 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_seven", " 5 ]"), false);
 		} 
 		
 		else if (this.currPage == 27) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GRAY.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_eight_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.GRAY.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_eight_heading"), false);
 			
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 72,  40,  0,  224, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 32,  40, 32,  224, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 4,   40, 64, 224, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 40,  40, 96, 224, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 72,  40,  0,  224, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 32,  40, 32,  224, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 4,   40, 64, 224, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 40,  40, 96, 224, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_eight_body"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_eight_body"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_eight", " 1 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_eight", " 1 ]"), false);
 		} 
 		
 		else if (this.currPage == 28) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading"), false);
 			
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 54, 40, 192, 64, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 - 14, 40, 192, 96, 32, 32, FLAT_TEXTURES);
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, (202) / 2 + 26, 40, 224, 0, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 54, 40, 192, 64, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 - 14, 40, 192, 96, 32, 32, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, (202) / 2 + 26, 40, 224, 0, 32, 32, FLAT_TEXTURES);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_nine_body"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 45, 0, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_nine_body"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " Intro ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " Intro ]"), false);
 		}
 		
 		else if (this.currPage >= 29 && this.currPage <= 39) {
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 202 / 2 - 30, 225 / 2 - 30, 0, 64, 64, 64, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 202 / 2 - 30, 225 / 2 - 30, 0, 64, 64, 64, FLAT_TEXTURES);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 35, 202, 0, 54, 74, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 125, 202, 0, 54, 74, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 35, 202, 0, 54, 74, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 125, 202, 0, 54, 74, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 30, 35, 202, 0, 54, 74, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 30, 125, 202, 0, 54, 74, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 123, 35, 202, 0, 54, 74, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 123, 125, 202, 0, 54, 74, this.getTexture());
 
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
 			
 			if (this.currPage == 29) {
-				FONT.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading_one"), false);
+				CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading_one"), false);
 				
 				graphics.drawString(this.font, Value.BOLD + "4", screen_coords[0] + 67, screen_coords[1] + 102, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec());
 				graphics.drawString(this.font, Value.BOLD + "2", screen_coords[0] + 160, screen_coords[1] + 102, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec());
@@ -566,84 +565,84 @@ public class ScreenItemTome extends Screen {
 		}
 		
 		else if (this.currPage >= 40 && this.currPage <= 43) {
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 202 / 2 - 30, 225 / 2 - 30, 128, 64, 64, 64, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 202 / 2 - 30, 225 / 2 - 30, 128, 64, 64, 64, FLAT_TEXTURES);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 35, 202, 116, 54, 74, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 125, 202, 116, 54, 74, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 35, 202, 116, 54, 74, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 125, 202, 116, 54, 74, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 30, 35, 202, 116, 54, 74, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 30, 125, 202, 116, 54, 74, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 123, 35, 202, 116, 54, 74, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 123, 125, 202, 116, 54, 74, this.getTexture());
 			
 			if (this.currPage == 39) {
-				FONT.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading_two"), false);
+				CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading_two"), false);
 			}
 
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
 		}
 		
 		else if (this.currPage >= 44 && this.currPage <= 45) {
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 202 / 2 - 30, 225 / 2 - 30, 64, 64, 64, 64, FLAT_TEXTURES);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 202 / 2 - 30, 225 / 2 - 30, 64, 64, 64, 64, FLAT_TEXTURES);
 
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 35, 202, 76, 54, 38, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 77, 202, 76, 54, 38, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 119, 202, 76, 54, 38, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 30, 161, 202, 76, 54, 38, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 30, 35, 202, 76, 54, 38, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 30, 77, 202, 76, 54, 38, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 30, 119, 202, 76, 54, 38, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 30, 161, 202, 76, 54, 38, this.getTexture());
 			
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 35, 202, 76, 54, 38, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 77, 202, 76, 54, 38, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 119, 202, 76, 54, 38, this.getTexture());
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 123, 161, 202, 76, 54, 38, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 123, 35, 202, 76, 54, 38, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 123, 77, 202, 76, 54, 38, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 123, 119, 202, 76, 54, 38, this.getTexture());
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 123, 161, 202, 76, 54, 38, this.getTexture());
 
 			if (this.currPage == 44) {
-				FONT.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading_three"), false);
+				CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -10, ComponentColour.DARK_GREEN.dec(),ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_nine_heading_three"), false);
 				
 			}
 
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_nine", " " + (this.currPage - 27) + " ]"), false);
 		}
 		
 		else if (this.currPage == 46) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.RED.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_ten_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.RED.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_ten_heading"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 5, ComponentColour.POCKET_PURPLE_LIGHT.dec(), "TheCosmicNebula", false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 15, ComponentColour.POCKET_PURPLE_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 5, ComponentColour.POCKET_PURPLE_LIGHT.dec(), "TheCosmicNebula", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 15, ComponentColour.POCKET_PURPLE_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 30, ComponentColour.DARK_GREEN.dec(), "Apolybrium", false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 40, ComponentColour.DARK_GREEN.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_one"), false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 50, ComponentColour.DARK_GREEN.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_one_"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 30, ComponentColour.DARK_GREEN.dec(), "Apolybrium", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 40, ComponentColour.DARK_GREEN.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_one"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 50, ComponentColour.DARK_GREEN.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_one_"), false);
 
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 65, ComponentColour.BLUE.dec(), "Scarlet Spark", false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 75, ComponentColour.BLUE.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_two"), false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 85, ComponentColour.BLUE.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_two_"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 65, ComponentColour.BLUE.dec(), "Scarlet Spark", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 75, ComponentColour.BLUE.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_two"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 85, ComponentColour.BLUE.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_two_"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 100, ComponentColour.PURPLE.dec(), "Rechalow", false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 110, ComponentColour.PURPLE.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_three"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 100, ComponentColour.PURPLE.dec(), "Rechalow", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 110, ComponentColour.PURPLE.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_three"), false);
 
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 125, ComponentColour.BLUE.dec(), "NPException + Team", false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 135, ComponentColour.BLUE.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_four"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 125, ComponentColour.BLUE.dec(), "NPException + Team", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 135, ComponentColour.BLUE.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_four"), false);
 
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 150, ComponentColour.RED.dec(), "VsnGamer", false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 160, ComponentColour.RED.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_five"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 150, ComponentColour.RED.dec(), "VsnGamer", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 160, ComponentColour.RED.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_ten_five"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_ten", " 1 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_ten", " 1 ]"), false);
 		}
 		
 		else if (this.currPage == 47) {
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLURPLE_LIGHT.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_eleven_heading"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, -8, ComponentColour.BLURPLE_LIGHT.dec(), ComponentHelper.locString(Value.UNDERLINE, "dimensionalpocketsii.tome_eleven_heading"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 10, ComponentColour.ORANGE.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_one"), false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 22, ComponentColour.ORANGE.dec(), "Azrael", false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 35, ComponentColour.ORANGE.dec(), "Jiale556276", false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 48, ComponentColour.ORANGE.dec(), "Imjustleo", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 10, ComponentColour.ORANGE.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_one"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 22, ComponentColour.ORANGE.dec(), "Azrael", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 35, ComponentColour.ORANGE.dec(), "Jiale556276", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 48, ComponentColour.ORANGE.dec(), "Imjustleo", false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 66, ComponentColour.LIGHT_RED.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_two"), false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 78, ComponentColour.LIGHT_RED.dec(), "Tahlavos17", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 66, ComponentColour.LIGHT_RED.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_two"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 78, ComponentColour.LIGHT_RED.dec(), "Tahlavos17", false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 98, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_three"), false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 111, ComponentColour.BLUE.dec(), "Pl�r1’", false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 98, ComponentColour.BLUE.dec(), ComponentHelper.locString(Value.BOLD, "dimensionalpocketsii.tome_eleven_body_three"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 111, ComponentColour.BLUE.dec(), "Pl�r1’", false);
 
-			FONT.drawWrappedStringBR(graphics, font, screen_coords, 104, 130, 0, ComponentColour.BLURPLE_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_eleven_body_four"));
+			CosmosUISystem.FontRenderer.drawWrappedStringBR(graphics, font, screen_coords, 104, 130, 0, ComponentColour.BLURPLE_LIGHT.dec(), ComponentHelper.locString("dimensionalpocketsii.tome_eleven_body_four"));
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_ten", " 2 ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "dimensionalpocketsii.tome_foot_ten", " 2 ]"), false);
 		}
 		
 		this.renderSecret(graphics, screen_coords);
@@ -653,7 +652,7 @@ public class ScreenItemTome extends Screen {
 	}
 	
 	public void renderComponentHoverEffect(GuiGraphics graphics, Style style, int mouseX, int mouseY) {
-		int[] screen_coords = CosmosUISystem.getScreenCoords(this, 202, 225);
+		int[] screen_coords = CosmosUISystem.Init.getScreenCoords(this, 202, 225);
 		
 		if (this.buttonExit.isMouseOver(mouseX, mouseY)) {
 			graphics.renderTooltip(this.font, ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.tome_button_one"), mouseX, mouseY);
@@ -908,7 +907,7 @@ public class ScreenItemTome extends Screen {
 	protected void addButtons() {
 		this.clearWidgets();
 		
-		this.uiModeButton = this.addRenderableWidget(new CosmosButtonUIMode(this.getUIMode(), this.width / 2 + 71, this.height / 2 - 90, true, true, ComponentHelper.empty(), (button) -> { this.changeUIMode(); } ));
+		this.uiModeButton = this.addRenderableWidget(new CosmosButtonUIMode(this.getUIMode(), this.width / 2 + 71, this.height / 2 - 90, false, true, true, ComponentHelper.empty(), (button) -> { this.changeUIMode(); } ));
 		
 		this.buttonNextPage = this.addRenderableWidget(new TomeChangeButton(this.width / 2 + 58, this.height / 2 + 92, true, this.pageTurnSounds, this.getTexture(), (button) -> { this.nextPage(); }, (button) -> { return button.get(); }));
 		this.buttonPreviousPage = this.addRenderableWidget(new TomeChangeButton(this.width / 2 - 79, this.height / 2 + 92, false, this.pageTurnSounds, this.getTexture(), (button) -> { this.previousPage(); }, (button) -> { return button.get(); }));
@@ -1025,25 +1024,25 @@ public class ScreenItemTome extends Screen {
 				ItemStack.EMPTY, // 0
 
 				new ItemStack(Items.IRON_INGOT), // 1
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_SHARD.get()), // 2
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_INGOT.get()), // 3
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHARD.get()), // 2
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()), // 3
 				new ItemStack(Items.DIAMOND), // 4
 				new ItemStack(Items.NETHER_STAR), // 5
-				new ItemStack(ModRegistrationManager.NETHER_STAR_SHARD.get()), // 6
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_WRENCH.get()), // 7
-				new ItemStack(ModRegistrationManager.MODULE_BASE.get()), // 8
+				new ItemStack(PocketsRegistrationManager.NETHER_STAR_SHARD.get()), // 6
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_WRENCH.get()), // 7
+				new ItemStack(PocketsRegistrationManager.MODULE_BASE.get()), // 8
 				new ItemStack(Items.REDSTONE), // 9
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_SHIFTER.get()), // 10
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIFTER.get()), // 10
 				new ItemStack(Items.NETHERITE_INGOT), // 11
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_SHIFTER_ENHANCED.get()), // 12
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIFTER_ENHANCED.get()), // 12
 				new ItemStack(Items.BLAZE_POWDER), // 13
 				new ItemStack(Items.PHANTOM_MEMBRANE), // 14
 				new ItemStack(Items.ELYTRA), // 15
-				new ItemStack(ModRegistrationManager.ELYTRA_WING.get()), // 16
-				new ItemStack(ModRegistrationManager.MODULE_CONNECTOR.get()), // 17
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_PEARL.get()), // 18
+				new ItemStack(PocketsRegistrationManager.ELYTRA_WING.get()), // 16
+				new ItemStack(PocketsRegistrationManager.MODULE_CONNECTOR.get()), // 17
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_PEARL.get()), // 18
 				new ItemStack(Items.BOW), // 19
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_THREAD.get()), // 20
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_THREAD.get()), // 20
 
 				new ItemStack(Items.NETHERITE_PICKAXE), // 21
 				new ItemStack(Items.NETHERITE_SWORD), // 22
@@ -1051,106 +1050,106 @@ public class ScreenItemTome extends Screen {
 				new ItemStack(Items.NETHERITE_SHOVEL), // 24
 				new ItemStack(Items.NETHERITE_HOE), // 25
 
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_PICKAXE.get()), // 26
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_SWORD.get()), // 27
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_AXE.get()), // 28
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_SHOVEL.get()), // 29
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_HOE.get()), // 30
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_PICKAXE.get()), // 26
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SWORD.get()), // 27
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_AXE.get()), // 28
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHOVEL.get()), // 29
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HOE.get()), // 30
 
 				new ItemStack(Items.NETHERITE_HELMET), // 31
 				new ItemStack(Items.NETHERITE_CHESTPLATE), // 32
 				new ItemStack(Items.NETHERITE_LEGGINGS), // 33
 				new ItemStack(Items.NETHERITE_BOOTS), // 34
 
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_HELMET.get()), // 35
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_CHESTPLATE.get()), // 36
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_LEGGINGS.get()), // 37
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_BOOTS.get()), // 38
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_ELYTRAPLATE.get()), // 39
-				new ItemStack(ModRegistrationManager.ARMOUR_MODULE_SCREEN.get()), // 40
-				new ItemStack(ModRegistrationManager.ARMOUR_MODULE_SHIFTER.get()), // 41
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HELMET.get()), // 35
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_CHESTPLATE.get()), // 36
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_LEGGINGS.get()), // 37
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOOTS.get()), // 38
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_ELYTRAPLATE.get()), // 39
+				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_SCREEN.get()), // 40
+				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_SHIFTER.get()), // 41
 
 				new ItemStack(Blocks.IRON_BLOCK), // 42
-				new ItemStack(ModRegistrationManager.BLOCK_DIMENSIONAL_METAL.get()), // 43
-				new ItemStack(ModRegistrationManager.BLOCK_DIMENSIONAL_CORE.get()), // 44
-				new ItemStack(ModRegistrationManager.BLOCK_DIMENSIONAL.get()), // 45
-				new ItemStack(ModRegistrationManager.BLOCK_POCKET.get()), // 46
+				new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL_METAL.get()), // 43
+				new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL_CORE.get()), // 44
+				new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL.get()), // 45
+				new ItemStack(PocketsRegistrationManager.BLOCK_POCKET.get()), // 46
 				new ItemStack(Blocks.DIAMOND_BLOCK), // 47
 				new ItemStack(Blocks.NETHERITE_BLOCK), // 48
 				new ItemStack(Blocks.CHEST), // 49
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_DUST.get()), // 50
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_BOW.get()), // 51
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_DUST.get()), // 50
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOW.get()), // 51
 				new ItemStack(Items.GLOWSTONE_DUST), // 52
 				new ItemStack(Items.STRING), // 53
 				new ItemStack(Items.ENDER_PEARL), // 54
 				new ItemStack(Items.EMERALD), // 55
 				new ItemStack(Blocks.REDSTONE_BLOCK), // 56
-				new ItemStack(ModRegistrationManager.MODULE_CHARGER.get()), // 57
+				new ItemStack(PocketsRegistrationManager.MODULE_CHARGER.get()), // 57
 				new ItemStack(Items.BOOK), // 58
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_TOME.get()), // 59
-				new ItemStack(ModRegistrationManager.MODULE_CRAFTER.get()), // 60
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_TOME.get()), // 59
+				new ItemStack(PocketsRegistrationManager.MODULE_CRAFTER.get()), // 60
 				new ItemStack(Blocks.CRAFTING_TABLE), // 61
 				new ItemStack(Items.TRIDENT), // 62
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_TRIDENT.get()), // 63
-				new ItemStack(ModRegistrationManager.MODULE_ENERGY_DISPLAY.get()), // 64
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_TRIDENT.get()), // 63
+				new ItemStack(PocketsRegistrationManager.MODULE_ENERGY_DISPLAY.get()), // 64
 				new ItemStack(Blocks.FURNACE), // 65
-				new ItemStack(ModRegistrationManager.MODULE_FURNACE.get()), // 66
+				new ItemStack(PocketsRegistrationManager.MODULE_FURNACE.get()), // 66
 				new ItemStack(Blocks.SMITHING_TABLE), // 67
-				new ItemStack(ModRegistrationManager.MODULE_ARMOUR_WORKBENCH.get()), // 68
+				new ItemStack(PocketsRegistrationManager.MODULE_ARMOUR_WORKBENCH.get()), // 68
 				new ItemStack(Blocks.GLOWSTONE), // 69
-				new ItemStack(ModRegistrationManager.MODULE_FLUID_DISPLAY.get()), // 70
+				new ItemStack(PocketsRegistrationManager.MODULE_FLUID_DISPLAY.get()), // 70
 				new ItemStack(Items.BUCKET), // 71
 
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_DEVICE_BASE.get()), // 72
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_EJECTOR.get()), // 73
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_ENERGY_CELL.get()), // 74
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_ENERGY_CELL_ENHANCED.get()), // 75
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_DEVICE_BASE.get()), // 72
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_EJECTOR.get()), // 73
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_ENERGY_CELL.get()), // 74
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_ENERGY_CELL_ENHANCED.get()), // 75
 
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_SWORD_ENHANCED.get()), // 76
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_PICKAXE_ENHANCED.get()), // 77
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_AXE_ENHANCED.get()), // 78
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_SHOVEL_ENHANCED.get()), // 79
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_HOE_ENHANCED.get()), // 80
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_TRIDENT_ENHANCED.get()), // 81
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SWORD_ENHANCED.get()), // 76
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_PICKAXE_ENHANCED.get()), // 77
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_AXE_ENHANCED.get()), // 78
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHOVEL_ENHANCED.get()), // 79
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HOE_ENHANCED.get()), // 80
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_TRIDENT_ENHANCED.get()), // 81
 
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_HELMET_ENHANCED.get()), // 82
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_CHESTPLATE_ENHANCED.get()), // 83
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_LEGGINGS_ENHANCED.get()), // 84
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_BOOTS_ENHANCED.get()), // 85
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_INGOT_ENHANCED.get()), // 86
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HELMET_ENHANCED.get()), // 82
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_CHESTPLATE_ENHANCED.get()), // 83
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_LEGGINGS_ENHANCED.get()), // 84
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOOTS_ENHANCED.get()), // 85
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_INGOT_ENHANCED.get()), // 86
 
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_GEM.get()), // 87
-				new ItemStack(ModRegistrationManager.BLOCK_DIMENSIONAL_GEM), // 88
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_GEM.get()), // 87
+				new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL_GEM), // 88
 
 				new ItemStack(Blocks.COPPER_BLOCK), // 89
 				new ItemStack(Items.COPPER_INGOT), // 90
 
-				new ItemStack(ModRegistrationManager.MODULE_GENERATOR.get()), // 91
-				new ItemStack(ModRegistrationManager.ARMOUR_MODULE_VISOR.get()), // 92
+				new ItemStack(PocketsRegistrationManager.MODULE_GENERATOR.get()), // 91
+				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_VISOR.get()), // 92
 				new ItemStack(Items.CLOCK), // 93
 				new ItemStack(Items.DAYLIGHT_DETECTOR), // 94
-				new ItemStack(ModRegistrationManager.ARMOUR_MODULE_SOLAR.get()), // 95
-				new ItemStack(ModRegistrationManager.ARMOUR_MODULE_BATTERY.get()), // 96
+				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_SOLAR.get()), // 95
+				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_BATTERY.get()), // 96
 
-				new ItemStack(ModRegistrationManager.MODULE_UPGRADE_STATION.get()), // 97
-				new ItemStack(ModRegistrationManager.BLOCK_FOCUS.get()), // 98
-				new ItemStack(ModRegistrationManager.MODULE_FOCUS.get()), // 99
+				new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get()), // 97
+				new ItemStack(PocketsRegistrationManager.BLOCK_FOCUS.get()), // 98
+				new ItemStack(PocketsRegistrationManager.MODULE_FOCUS.get()), // 99
 
-				new ItemStack(ModRegistrationManager.MODULE_BLAST_FURNACE.get()), // 100
+				new ItemStack(PocketsRegistrationManager.MODULE_BLAST_FURNACE.get()), // 100
 				new ItemStack(Blocks.BLAST_FURNACE), // 101
-				new ItemStack(ModRegistrationManager.MODULE_SMITHING_TABLE.get()), // 102
+				new ItemStack(PocketsRegistrationManager.MODULE_SMITHING_TABLE.get()), // 102
 				new ItemStack(Blocks.SMITHING_TABLE), // 103
 
 				new ItemStack(Items.SHIELD), // 104
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_SHIELD.get()), // 105
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_SHIELD_ENHANCED.get()), // 106
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIELD.get()), // 105
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIELD_ENHANCED.get()), // 106
 
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_BOW_ENHANCED.get()), // 107
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOW_ENHANCED.get()), // 107
 
 				new ItemStack(Blocks.ENDER_CHEST), // 108
-				new ItemStack(ModRegistrationManager.ARMOUR_MODULE_ENDER_CHEST.get()), // 109
-				new ItemStack(ModRegistrationManager.DIMENSIONAL_UPGRADE_TEMPLATE.get()), // 110
-				new ItemStack(ModRegistrationManager.ARMOUR_MODULE_FIREWORK.get()), // 111
+				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_ENDER_CHEST.get()), // 109
+				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_UPGRADE_TEMPLATE.get()), // 110
+				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_FIREWORK.get()), // 111
 
 				new ItemStack(Items.FIREWORK_ROCKET), // 112
 				new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), // 113
@@ -1160,173 +1159,173 @@ public class ScreenItemTome extends Screen {
 		if (grid_ref == 0) {
 			//Top Left
 			
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, LX[0], TY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, LX[1], TY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, LX[2], TY[0], mouseX, mouseY, true); }// 2
-			if (ref[3] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, LX[0], TY[1], mouseX, mouseY, true); }// 3
-			if (ref[4] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, LX[1], TY[1], mouseX, mouseY, true); }// 4
-			if (ref[5] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, LX[2], TY[1], mouseX, mouseY, true); }// 5
-			if (ref[6] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, LX[0], TY[2], mouseX, mouseY, true); }// 6
-			if (ref[7] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, LX[1], TY[2], mouseX, mouseY, true); }// 7
-			if (ref[8] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, LX[2], TY[2], mouseX, mouseY, true); }// 8
-			if (ref[9] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, LX[1], TY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, LX[0], TY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, LX[1], TY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, LX[2], TY[0], mouseX, mouseY, true); }// 2
+			if (ref[3] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, LX[0], TY[1], mouseX, mouseY, true); }// 3
+			if (ref[4] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, LX[1], TY[1], mouseX, mouseY, true); }// 4
+			if (ref[5] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, LX[2], TY[1], mouseX, mouseY, true); }// 5
+			if (ref[6] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, LX[0], TY[2], mouseX, mouseY, true); }// 6
+			if (ref[7] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, LX[1], TY[2], mouseX, mouseY, true); }// 7
+			if (ref[8] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, LX[2], TY[2], mouseX, mouseY, true); }// 8
+			if (ref[9] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, LX[1], TY[3], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 2) {
 			
 			//Bottom Left
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, LX[0], BY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, LX[1], BY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, LX[2], BY[0], mouseX, mouseY, true); }// 2
-			if (ref[3] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, LX[0], BY[1], mouseX, mouseY, true); }// 3
-			if (ref[4] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, LX[1], BY[1], mouseX, mouseY, true); }// 4
-			if (ref[5] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, LX[2], BY[1], mouseX, mouseY, true); }// 5
-			if (ref[6] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, LX[0], BY[2], mouseX, mouseY, true); }// 6
-			if (ref[7] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, LX[1], BY[2], mouseX, mouseY, true); }// 7
-			if (ref[8] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, LX[2], BY[2], mouseX, mouseY, true); }// 8
-			if (ref[9] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, LX[1], BY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, LX[0], BY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, LX[1], BY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, LX[2], BY[0], mouseX, mouseY, true); }// 2
+			if (ref[3] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, LX[0], BY[1], mouseX, mouseY, true); }// 3
+			if (ref[4] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, LX[1], BY[1], mouseX, mouseY, true); }// 4
+			if (ref[5] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, LX[2], BY[1], mouseX, mouseY, true); }// 5
+			if (ref[6] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, LX[0], BY[2], mouseX, mouseY, true); }// 6
+			if (ref[7] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, LX[1], BY[2], mouseX, mouseY, true); }// 7
+			if (ref[8] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, LX[2], BY[2], mouseX, mouseY, true); }// 8
+			if (ref[9] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, LX[1], BY[3], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 1) {
 			
 			//Top Right
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, RX[0], TY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, RX[1], TY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, RX[2], TY[0], mouseX, mouseY, true); }// 2
-			if (ref[3] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, RX[0], TY[1], mouseX, mouseY, true); }// 3
-			if (ref[4] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, RX[1], TY[1], mouseX, mouseY, true); }// 4
-			if (ref[5] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, RX[2], TY[1], mouseX, mouseY, true); }// 5
-			if (ref[6] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, RX[0], TY[2], mouseX, mouseY, true); }// 6
-			if (ref[7] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, RX[1], TY[2], mouseX, mouseY, true); }// 7
-			if (ref[8] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, RX[2], TY[2], mouseX, mouseY, true); }// 8
-			if (ref[9] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, RX[1], TY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, RX[0], TY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, RX[1], TY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, RX[2], TY[0], mouseX, mouseY, true); }// 2
+			if (ref[3] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, RX[0], TY[1], mouseX, mouseY, true); }// 3
+			if (ref[4] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, RX[1], TY[1], mouseX, mouseY, true); }// 4
+			if (ref[5] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, RX[2], TY[1], mouseX, mouseY, true); }// 5
+			if (ref[6] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, RX[0], TY[2], mouseX, mouseY, true); }// 6
+			if (ref[7] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, RX[1], TY[2], mouseX, mouseY, true); }// 7
+			if (ref[8] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, RX[2], TY[2], mouseX, mouseY, true); }// 8
+			if (ref[9] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, RX[1], TY[3], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 3) {
 			
 			//Bottom Right
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, RX[0], BY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, RX[1], BY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, RX[2], BY[0], mouseX, mouseY, true); }// 2
-			if (ref[3] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, RX[0], BY[1], mouseX, mouseY, true); }// 3
-			if (ref[4] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, RX[1], BY[1], mouseX, mouseY, true); }// 4
-			if (ref[5] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, RX[2], BY[1], mouseX, mouseY, true); }// 5
-			if (ref[6] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, RX[0], BY[2], mouseX, mouseY, true); }// 6
-			if (ref[7] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, RX[1], BY[2], mouseX, mouseY, true); }// 7
-			if (ref[8] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, RX[2], BY[2], mouseX, mouseY, true); }// 8
-			if (ref[9] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, RX[1], BY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, RX[0], BY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, RX[1], BY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, RX[2], BY[0], mouseX, mouseY, true); }// 2
+			if (ref[3] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, RX[0], BY[1], mouseX, mouseY, true); }// 3
+			if (ref[4] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, RX[1], BY[1], mouseX, mouseY, true); }// 4
+			if (ref[5] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, RX[2], BY[1], mouseX, mouseY, true); }// 5
+			if (ref[6] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, RX[0], BY[2], mouseX, mouseY, true); }// 6
+			if (ref[7] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, RX[1], BY[2], mouseX, mouseY, true); }// 7
+			if (ref[8] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, RX[2], BY[2], mouseX, mouseY, true); }// 8
+			if (ref[9] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, RX[1], BY[3], mouseX, mouseY, true); }// Out
 		} 
 		
 		//Smithing Table
 		else if (grid_ref == 10) {
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[0], STY[0], mouseX, mouseY, true); }// 0
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[1], STY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[2], STY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[3], STY[1], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[0], STY[0], mouseX, mouseY, true); }// 0
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[1], STY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[2], STY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[3], STY[1], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 11) {
 
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[0], STY[2], mouseX, mouseY, true); }// 0
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[1], STY[2], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[2], STY[2], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[3], STY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[0], STY[2], mouseX, mouseY, true); }// 0
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[1], STY[2], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[2], STY[2], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[3], STY[3], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 12) {
 
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[0], STY[4], mouseX, mouseY, true); }// 0
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[1], STY[4], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[2], STY[4], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[3], STY[5], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[0], STY[4], mouseX, mouseY, true); }// 0
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[1], STY[4], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[2], STY[4], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[3], STY[5], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 13) {
 
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[0], STY[6], mouseX, mouseY, true); }// 0
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[1], STY[6], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[2], STY[6], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[3], STY[7], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[0], STY[6], mouseX, mouseY, true); }// 0
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[1], STY[6], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[2], STY[6], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[3], STY[7], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 14) {
 
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[4], STY[0], mouseX, mouseY, true); }// 0
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[5], STY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[6], STY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[7], STY[1], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[4], STY[0], mouseX, mouseY, true); }// 0
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[5], STY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[6], STY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[7], STY[1], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 15) {
 
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[4], STY[2], mouseX, mouseY, true); }// 0
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[5], STY[2], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[6], STY[2], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[7], STY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[4], STY[2], mouseX, mouseY, true); }// 0
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[5], STY[2], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[6], STY[2], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[7], STY[3], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 16) {
 
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[4], STY[4], mouseX, mouseY, true); }// 0
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[5], STY[4], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[6], STY[4], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[7], STY[5], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, SLX[4], STY[4], mouseX, mouseY, true); }// 0
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[5], STY[4], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[6], STY[4], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[7], STY[5], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 17) {
 
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[4], STY[6], mouseX, mouseY, true); }// 0
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[5], STY[6], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[6], STY[6], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[7], STY[7], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[4], STY[6], mouseX, mouseY, true); }// 0
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, SLX[5], STY[6], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, SLX[6], STY[6], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, SLX[7], STY[7], mouseX, mouseY, true); }// Out
 		} 
 		
 		//Upgrade Station
 		else if (grid_ref == 20) {
 			//Top Left
 			
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, LX[0], TY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, LX[1], TY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, LX[2], TY[0], mouseX, mouseY, true); }// 2
-			if (ref[3] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, LX[0], TY[1], mouseX, mouseY, true); }// 3
-			if (ref[4] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, LX[1], TY[1], mouseX, mouseY, true); }// Focus
-			if (ref[5] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, LX[2], TY[1], mouseX, mouseY, true); }// 5
-			if (ref[6] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, LX[0], TY[2], mouseX, mouseY, true); }// 6
-			if (ref[7] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, LX[1], TY[2], mouseX, mouseY, true); }// 7
-			if (ref[8] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, LX[2], TY[2], mouseX, mouseY, true); }// 8
-			if (ref[9] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, LX[1], TY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, LX[0], TY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, LX[1], TY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, LX[2], TY[0], mouseX, mouseY, true); }// 2
+			if (ref[3] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, LX[0], TY[1], mouseX, mouseY, true); }// 3
+			if (ref[4] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, LX[1], TY[1], mouseX, mouseY, true); }// Focus
+			if (ref[5] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, LX[2], TY[1], mouseX, mouseY, true); }// 5
+			if (ref[6] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, LX[0], TY[2], mouseX, mouseY, true); }// 6
+			if (ref[7] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, LX[1], TY[2], mouseX, mouseY, true); }// 7
+			if (ref[8] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, LX[2], TY[2], mouseX, mouseY, true); }// 8
+			if (ref[9] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, LX[1], TY[3], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 21) {
 			
 			//Bottom Left
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, LX[0], BY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, LX[1], BY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, LX[2], BY[0], mouseX, mouseY, true); }// 2
-			if (ref[3] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, LX[0], BY[1], mouseX, mouseY, true); }// 3
-			if (ref[4] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, LX[1], BY[1], mouseX, mouseY, true); }// Focus
-			if (ref[5] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, LX[2], BY[1], mouseX, mouseY, true); }// 5
-			if (ref[6] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, LX[0], BY[2], mouseX, mouseY, true); }// 6
-			if (ref[7] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, LX[1], BY[2], mouseX, mouseY, true); }// 7
-			if (ref[8] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, LX[2], BY[2], mouseX, mouseY, true); }// 8
-			if (ref[9] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, LX[1], BY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, LX[0], BY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, LX[1], BY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, LX[2], BY[0], mouseX, mouseY, true); }// 2
+			if (ref[3] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, LX[0], BY[1], mouseX, mouseY, true); }// 3
+			if (ref[4] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, LX[1], BY[1], mouseX, mouseY, true); }// Focus
+			if (ref[5] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, LX[2], BY[1], mouseX, mouseY, true); }// 5
+			if (ref[6] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, LX[0], BY[2], mouseX, mouseY, true); }// 6
+			if (ref[7] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, LX[1], BY[2], mouseX, mouseY, true); }// 7
+			if (ref[8] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, LX[2], BY[2], mouseX, mouseY, true); }// 8
+			if (ref[9] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, LX[1], BY[3], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 22) {
 			
 			//Top Right
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, RX[0], TY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, RX[1], TY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, RX[2], TY[0], mouseX, mouseY, true); }// 2
-			if (ref[3] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, RX[0], TY[1], mouseX, mouseY, true); }// 3
-			if (ref[4] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, RX[1], TY[1], mouseX, mouseY, true); }// Focus
-			if (ref[5] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, RX[2], TY[1], mouseX, mouseY, true); }// 5
-			if (ref[6] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, RX[0], TY[2], mouseX, mouseY, true); }// 6
-			if (ref[7] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, RX[1], TY[2], mouseX, mouseY, true); }// 7
-			if (ref[8] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, RX[2], TY[2], mouseX, mouseY, true); }// 8
-			if (ref[9] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, RX[1], TY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, RX[0], TY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, RX[1], TY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, RX[2], TY[0], mouseX, mouseY, true); }// 2
+			if (ref[3] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, RX[0], TY[1], mouseX, mouseY, true); }// 3
+			if (ref[4] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, RX[1], TY[1], mouseX, mouseY, true); }// Focus
+			if (ref[5] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, RX[2], TY[1], mouseX, mouseY, true); }// 5
+			if (ref[6] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, RX[0], TY[2], mouseX, mouseY, true); }// 6
+			if (ref[7] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, RX[1], TY[2], mouseX, mouseY, true); }// 7
+			if (ref[8] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, RX[2], TY[2], mouseX, mouseY, true); }// 8
+			if (ref[9] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, RX[1], TY[3], mouseX, mouseY, true); }// Out
 		} else if (grid_ref == 23) {
 			
 			//Bottom Right
-			if (ref[0] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, RX[0], BY[0], mouseX, mouseY, true); }// 0
-			if (ref[1] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, RX[1], BY[0], mouseX, mouseY, true); }// 1
-			if (ref[2] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, RX[2], BY[0], mouseX, mouseY, true); }// 2
-			if (ref[3] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, RX[0], BY[1], mouseX, mouseY, true); }// 3
-			if (ref[4] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, RX[1], BY[1], mouseX, mouseY, true); }// Focus
-			if (ref[5] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, RX[2], BY[1], mouseX, mouseY, true); }// 5
-			if (ref[6] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, RX[0], BY[2], mouseX, mouseY, true); }// 6
-			if (ref[7] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, RX[1], BY[2], mouseX, mouseY, true); }// 7
-			if (ref[8] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, RX[2], BY[2], mouseX, mouseY, true); }// 8
-			if (ref[9] != -1) { CosmosUISystem.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, RX[1], BY[3], mouseX, mouseY, true); }// Out
+			if (ref[0] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[0]], screen_coords, RX[0], BY[0], mouseX, mouseY, true); }// 0
+			if (ref[1] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[1]], screen_coords, RX[1], BY[0], mouseX, mouseY, true); }// 1
+			if (ref[2] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[2]], screen_coords, RX[2], BY[0], mouseX, mouseY, true); }// 2
+			if (ref[3] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[3]], screen_coords, RX[0], BY[1], mouseX, mouseY, true); }// 3
+			if (ref[4] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[4]], screen_coords, RX[1], BY[1], mouseX, mouseY, true); }// Focus
+			if (ref[5] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[5]], screen_coords, RX[2], BY[1], mouseX, mouseY, true); }// 5
+			if (ref[6] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[6]], screen_coords, RX[0], BY[2], mouseX, mouseY, true); }// 6
+			if (ref[7] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[7]], screen_coords, RX[1], BY[2], mouseX, mouseY, true); }// 7
+			if (ref[8] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[8]], screen_coords, RX[2], BY[2], mouseX, mouseY, true); }// 8
+			if (ref[9] != -1) { CosmosUISystem.Render.renderItemStack(this, font, graphics, items[ref[9]], screen_coords, RX[1], BY[3], mouseX, mouseY, true); }// Out
 		} 
 	}
 	
 	public void renderSecret(GuiGraphics graphics, int[] screen_coords) {
 		if (this.currPage == 48) {
-			CosmosUISystem.renderStaticElement(this, graphics, screen_coords, 202 / 2 - 16, 225 / 2 - 26, 223, 223, 32, 32, FLAT_TEXTURES_0);
+			CosmosUISystem.Render.renderStaticElement(graphics, screen_coords, 202 / 2 - 16, 225 / 2 - 26, 223, 223, 32, 32, FLAT_TEXTURES_0);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 40, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "Adventuregell,"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 40, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "Adventuregell,"), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 90, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "I miss "), false);
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 100, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "who you used to be.."), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 90, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "I miss "), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 100, ComponentColour.RED.dec(), ComponentHelper.locString(Value.BOLD, "who you used to be.."), false);
 			
-			FONT.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "Tribute", " ]"), false);
+			CosmosUISystem.FontRenderer.drawCenteredString(graphics, font, screen_coords, 104, 174, this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), ComponentHelper.locString("[ ", "Tribute", " ]"), false);
 		}
 	}
 }

@@ -1,8 +1,8 @@
 package com.tcn.dimensionalpocketsii.pocket.core.block;
 
 import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleCrafter;
 
 import net.minecraft.core.BlockPos;
@@ -59,7 +59,7 @@ public class BlockWallCrafter extends BlockWallModule implements IBlankCreativeT
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return this.defaultBlockState();
 		}
 		return Blocks.AIR.defaultBlockState();
@@ -67,6 +67,6 @@ public class BlockWallCrafter extends BlockWallModule implements IBlankCreativeT
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-       return new ItemStack(ModRegistrationManager.MODULE_CRAFTER.get());
+       return new ItemStack(PocketsRegistrationManager.MODULE_CRAFTER.get());
     }
 }

@@ -6,7 +6,7 @@ import java.util.OptionalInt;
 import javax.annotation.Nullable;
 
 import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuBlockEntity;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -45,7 +45,7 @@ public class ContainerModuleSmithingTable extends CosmosContainerMenuBlockEntity
 	}
 
 	public ContainerModuleSmithingTable(int indexIn, Inventory playerInventoryIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_SMITHING_TABLE.get(), indexIn, playerInventoryIn, accessIn, posIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_SMITHING_TABLE.get(), indexIn, playerInventoryIn, accessIn, posIn);
         ItemCombinerMenuSlotDefinition itemcombinermenuslotdefinition = this.createInputSlotDefinitions();
         this.inputSlots = this.createContainer(itemcombinermenuslotdefinition.getNumOfInputSlots());
         this.inputSlotIndexes = itemcombinermenuslotdefinition.getInputSlotIndexes();
@@ -126,7 +126,7 @@ public class ContainerModuleSmithingTable extends CosmosContainerMenuBlockEntity
 
 	@Override
 	public boolean stillValid(Player playerIn) {
-		return stillValid(this.access, playerIn, ModRegistrationManager.BLOCK_WALL_SMITHING_TABLE.get());
+		return stillValid(this.access, playerIn, PocketsRegistrationManager.BLOCK_WALL_SMITHING_TABLE.get());
 	}
 
 	protected boolean mayPickup(Player p_40268_, boolean p_40269_) {

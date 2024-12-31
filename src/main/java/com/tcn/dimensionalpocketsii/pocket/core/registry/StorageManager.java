@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.system.primative.ObjectHolder2;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.gson.PocketChunkInfo;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.BackupManager.BackupType;
@@ -52,7 +52,7 @@ public class StorageManager {
 	}
 
 	public static ServerLevel getServerLevel() {
-		return ServerLifecycleHooks.getCurrentServer().getLevel(ModDimensionManager.POCKET_WORLD);
+		return ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD);
 	}
 	
 	public static LinkedHashMap<PocketChunkInfo, Pocket> getRegistry() {
@@ -229,7 +229,7 @@ public class StorageManager {
 	}
 	
 	public static void createBackup(BackupType backupTypeIn, HolderLookup.Provider provider) {
-		if (ModConfigManager.getInstance().getCreateBackups()) {
+		if (PocketsConfigManager.getInstance().getCreateBackups()) {
 			BackupManager.createFullBackup(registryMap, backupTypeIn, provider);
 		}
 	}

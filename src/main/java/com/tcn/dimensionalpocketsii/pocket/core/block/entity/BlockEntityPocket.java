@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.pocket.core.block.entity;
 
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerPocket;
 
 import net.minecraft.core.BlockPos;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class BlockEntityPocket extends AbstractBlockEntityPocket {
 
 	public BlockEntityPocket(BlockPos posIn, BlockState stateIn) {
-		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_POCKET.get(), posIn, stateIn, true);
+		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_POCKET.get(), posIn, stateIn, true);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuBlockEntity;
 import com.tcn.cosmoslibrary.client.container.slot.SlotBucket;
 import com.tcn.cosmoslibrary.client.container.slot.SlotRestrictedAccess;
 import com.tcn.dimensionalpocketsii.ModReferences;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,7 +29,7 @@ public class ContainerPocket extends CosmosContainerMenuBlockEntity {
 	}
 	
 	protected ContainerPocket(int id, Inventory playerInventoryIn, Container pocketIn, Container contentsIn, BlockPos posIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_POCKET.get(), id, playerInventoryIn, null, posIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_POCKET.get(), id, playerInventoryIn, null, posIn);
 
 		/** - Pocket Inventory - */
 		for (int y = 0; y < 10; y++) {

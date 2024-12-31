@@ -3,8 +3,8 @@ package com.tcn.dimensionalpocketsii.pocket.core.block;
 import javax.annotation.Nullable;
 
 import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityZModuleCreativeEnergy;
 
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,7 @@ public class BlockWallZCreativeEnergy extends BlockWallModule implements IBlankC
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModRegistrationManager.BLOCK_ENTITY_TYPE_CREATIVE_ENERGY.get());
+		return createTicker(levelIn, entityTypeIn, PocketsRegistrationManager.BLOCK_ENTITY_TYPE_CREATIVE_ENERGY.get());
 	}
 
 	@Nullable
@@ -73,7 +73,7 @@ public class BlockWallZCreativeEnergy extends BlockWallModule implements IBlankC
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return this.defaultBlockState();
 		}
 		return Blocks.AIR.defaultBlockState();
@@ -81,6 +81,6 @@ public class BlockWallZCreativeEnergy extends BlockWallModule implements IBlankC
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-       return new ItemStack(ModRegistrationManager.MODULE_CREATIVE_ENERGY.get());
+       return new ItemStack(PocketsRegistrationManager.MODULE_CREATIVE_ENERGY.get());
     }
 }

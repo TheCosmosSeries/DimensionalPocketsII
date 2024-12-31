@@ -2,7 +2,7 @@ package com.tcn.dimensionalpocketsii.pocket.core.block;
 
 import javax.annotation.Nullable;
 
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.AbstractBlockEntityPocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityPocketEnhanced;
 
@@ -26,7 +26,7 @@ public class BlockPocketEnhanced extends AbstractBlockPocket {
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModRegistrationManager.BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get());
+		return createTicker(levelIn, entityTypeIn, PocketsRegistrationManager.BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get());
 	}
 
 	@Nullable

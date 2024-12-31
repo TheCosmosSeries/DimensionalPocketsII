@@ -3,8 +3,7 @@ package com.tcn.dimensionalpocketsii.pocket.client.screen;
 import java.util.Arrays;
 
 import com.ibm.icu.text.DecimalFormat;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem.IS_HOVERING;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
@@ -68,9 +67,7 @@ public class ScreenModuleCharger extends CosmosScreenUIModeBE<ContainerModuleCha
 
 		BlockEntity entity = this.getBlockEntity();
 		
-		if (entity instanceof BlockEntityModuleCharger) {
-			BlockEntityModuleCharger blockEntity = (BlockEntityModuleCharger) entity;
-			
+		if (entity instanceof BlockEntityModuleCharger blockEntity) {
 			if (blockEntity.getPocket() != null) {
 				Pocket pocket = blockEntity.getPocket();
 				
@@ -84,10 +81,10 @@ public class ScreenModuleCharger extends CosmosScreenUIModeBE<ContainerModuleCha
 					rgb = ComponentColour.rgbFloatArray(decimal);
 				}
 				
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.CHARGER_BASE);
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, GUI.RESOURCE.CHARGER_OVERLAY);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.CHARGER_BASE);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, GUI.RESOURCE.CHARGER_OVERLAY);
 
-				CosmosUISystem.renderEnergyDisplay(graphics, ComponentColour.RED, pocket, this.getScreenCoords(), 84, 23, 16, 48, false);
+				CosmosUISystem.Render.renderEnergyDisplay(graphics, ComponentColour.RED, pocket, this.getScreenCoords(), 84, 23, 16, 48, false);
 			}
 		}
 	}
@@ -102,7 +99,7 @@ public class ScreenModuleCharger extends CosmosScreenUIModeBE<ContainerModuleCha
 				Pocket pocket = blockEntity.getPocket();
 				
 				if (pocket != null) {
-					if (IS_HOVERING.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + 84 - 1, this.getScreenCoords()[0] + 84 + 16, this.getScreenCoords()[1] + 24 - 1, this.getScreenCoords()[1] + 24 + 48 - 1)) {
+					if (CosmosUISystem.Hovering.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + 84 - 1, this.getScreenCoords()[0] + 84 + 16, this.getScreenCoords()[1] + 24 - 1, this.getScreenCoords()[1] + 24 + 48 - 1)) {
 						DecimalFormat formatter = new DecimalFormat("#,###,###,###");
 						String[] energyString = new String[] { formatter.format(pocket.getEnergyStored()), formatter.format(pocket.getMaxEnergyStored()) };
 						

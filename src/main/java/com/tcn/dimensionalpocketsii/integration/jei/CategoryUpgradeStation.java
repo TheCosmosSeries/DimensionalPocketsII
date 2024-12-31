@@ -3,7 +3,7 @@ package com.tcn.dimensionalpocketsii.integration.jei;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.dimensionalpocketsii.ModReferences.GUI.RESOURCE;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.core.recipe.UpgradeStationRecipe;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -39,7 +39,7 @@ public class CategoryUpgradeStation implements IRecipeCategory<UpgradeStationRec
 
 	@Override
 	public IDrawable getIcon() {
-		return this.helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModRegistrationManager.MODULE_UPGRADE_STATION.get()));
+		return this.helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get()));
 	}
 	
 	@Override

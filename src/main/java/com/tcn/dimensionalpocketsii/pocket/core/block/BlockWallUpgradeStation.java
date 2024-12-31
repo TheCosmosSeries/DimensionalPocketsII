@@ -1,8 +1,8 @@
 package com.tcn.dimensionalpocketsii.pocket.core.block;
 
 import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleUpgradeStation;
 
 import net.minecraft.core.BlockPos;
@@ -59,7 +59,7 @@ public class BlockWallUpgradeStation extends BlockWallModule implements IBlankCr
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return this.defaultBlockState();
 		}
 		
@@ -68,6 +68,6 @@ public class BlockWallUpgradeStation extends BlockWallModule implements IBlankCr
 	
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-       return new ItemStack(ModRegistrationManager.MODULE_UPGRADE_STATION.get());
+       return new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get());
     }
 }

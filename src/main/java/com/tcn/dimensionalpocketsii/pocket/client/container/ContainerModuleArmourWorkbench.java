@@ -5,7 +5,7 @@ import com.tcn.cosmoslibrary.client.container.slot.SlotArmourItem;
 import com.tcn.cosmoslibrary.client.container.slot.SlotColourableArmourItem;
 import com.tcn.cosmoslibrary.client.container.slot.SlotRestrictedAccess;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.IModuleItem;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -26,7 +26,7 @@ public class ContainerModuleArmourWorkbench extends CosmosContainerMenuBlockEnti
 	}
 
 	public ContainerModuleArmourWorkbench(int indexIn, Inventory playerInventoryIn, Container contentsIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_ARMOUR_WORKBENCH.get(), indexIn, playerInventoryIn, accessIn, posIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_ARMOUR_WORKBENCH.get(), indexIn, playerInventoryIn, accessIn, posIn);
 		
 		//Armour Slot
 		this.addSlot(new SlotColourableArmourItem(contentsIn, 0, 57, 44, 1));
@@ -97,7 +97,7 @@ public class ContainerModuleArmourWorkbench extends CosmosContainerMenuBlockEnti
 
 	@Override
 	public boolean stillValid(Player playerIn) {
-		return stillValid(this.access, playerIn, ModRegistrationManager.BLOCK_WALL_ARMOUR_WORKBENCH.get());
+		return stillValid(this.access, playerIn, PocketsRegistrationManager.BLOCK_WALL_ARMOUR_WORKBENCH.get());
 	}
 
 	@Override

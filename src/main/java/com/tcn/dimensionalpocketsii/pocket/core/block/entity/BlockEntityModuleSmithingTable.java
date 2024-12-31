@@ -5,11 +5,12 @@ import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
 import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
-import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleSmithingTable;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
@@ -40,7 +41,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockEntityModuleSmithingTable extends BlockEntity implements IBlockInteract, IBlockEntityUIMode, MenuProvider {
+public class BlockEntityModuleSmithingTable extends BlockEntity implements IBlockInteract, MenuProvider, IBEUIMode, IBEUILockable {
 	
 	private Pocket pocket;
 
@@ -49,7 +50,7 @@ public class BlockEntityModuleSmithingTable extends BlockEntity implements IBloc
 	private EnumUILock uiLock = EnumUILock.PRIVATE;
 
 	public BlockEntityModuleSmithingTable(BlockPos posIn, BlockState stateIn) {
-		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_SMITHING_TABLE.get(), posIn, stateIn);
+		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_SMITHING_TABLE.get(), posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -196,10 +197,10 @@ public class BlockEntityModuleSmithingTable extends BlockEntity implements IBloc
 				if(pocketIn.exists()) {
 					if (CosmosUtil.holdingWrench(playerIn)) {
 						if (pocketIn.checkIfOwner(playerIn)) {
-							ItemStack stack = new ItemStack(ModRegistrationManager.MODULE_SMITHING_TABLE.get());
+							ItemStack stack = new ItemStack(PocketsRegistrationManager.MODULE_SMITHING_TABLE.get());
 							this.saveToItemStack(stack);
 
-							levelIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+							levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 							levelIn.removeBlockEntity(pos);
 							
 							CosmosUtil.addStack(levelIn, playerIn, stack);

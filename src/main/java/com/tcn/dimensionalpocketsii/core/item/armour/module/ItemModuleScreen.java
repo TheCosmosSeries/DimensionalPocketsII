@@ -5,7 +5,7 @@ import java.util.List;
 import com.tcn.cosmoslibrary.common.item.CosmosItem;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -32,7 +32,7 @@ public class ItemModuleScreen extends CosmosItem implements IModuleItem {
 		} else {
 			tooltip.add(ComponentHelper.getTooltipOne("dimensionalpocketsii.item.info.armour_module.screen_one"));
 			tooltip.add(ComponentHelper.getTooltipTwo("dimensionalpocketsii.item.info.armour_module.screen_two_pre")
-				.append(ComponentHelper.style(ComponentColour.YELLOW, ModRegistrationManager.SUIT_SCREEN.getKey().getName()))
+				.append(ComponentHelper.style(ComponentColour.YELLOW, PocketsRegistrationManager.SUIT_SCREEN.getKey().getName()))
 				.append(ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.item.info.elytraplate_key"))
 			);
 			tooltip.add(ComponentHelper.getTooltipThree("dimensionalpocketsii.item.info.armour_module.screen_three"));

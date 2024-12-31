@@ -1,11 +1,11 @@
 package com.tcn.dimensionalpocketsii;
 
 import com.tcn.cosmoslibrary.common.runtime.CosmosConsoleManager;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRecipeManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
-import com.tcn.dimensionalpocketsii.core.management.ModSoundManager;
-import com.tcn.dimensionalpocketsii.core.management.ModWorldgenManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRecipeManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsSoundManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsWorldgenManager;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -23,28 +23,28 @@ public final class DimensionalPockets {
 	public static CosmosConsoleManager CONSOLE = new CosmosConsoleManager(DimensionalPockets.MOD_ID, true, true);
 	
 	public DimensionalPockets(ModContainer container, IEventBus bus) {
-		container.registerConfig(ModConfig.Type.COMMON, ModConfigManager.SPEC, "dimensionalpockets-common-rev-5.1.toml");
+		container.registerConfig(ModConfig.Type.COMMON, PocketsConfigManager.SPEC, "dimensionalpockets-common-rev-5.1.toml");
 		
-		ModRegistrationManager.register(bus);
-		ModWorldgenManager.register(bus);
-		ModRecipeManager.register(bus);
-		ModSoundManager.register(bus);
+		PocketsRegistrationManager.register(bus);
+		PocketsWorldgenManager.register(bus);
+		PocketsRecipeManager.register(bus);
+		PocketsSoundManager.register(bus);
 		
 		bus.addListener(this::onFMLCommonSetup);
 		bus.addListener(this::onFMLClientSetup);
 	}
 
 	public void onFMLCommonSetup(final FMLCommonSetupEvent event) {
-		CONSOLE = new CosmosConsoleManager(DimensionalPockets.MOD_ID, ModConfigManager.getInstance().getDebugMessage(), ModConfigManager.getInstance().getInfoMessage());
+		CONSOLE = new CosmosConsoleManager(DimensionalPockets.MOD_ID, PocketsConfigManager.getInstance().getDebugMessage(), PocketsConfigManager.getInstance().getInfoMessage());
 		
-		CONSOLE.updateDebugEnabled(ModConfigManager.getInstance().getDebugMessage());
-		CONSOLE.updateInfoEnabled(ModConfigManager.getInstance().getInfoMessage());
+		CONSOLE.updateDebugEnabled(PocketsConfigManager.getInstance().getDebugMessage());
+		CONSOLE.updateInfoEnabled(PocketsConfigManager.getInstance().getInfoMessage());
 		
 		CONSOLE.startup("DimensionalPocketsII Common Setup complete.");
 	}
 	
 	public void onFMLClientSetup(final FMLClientSetupEvent event) {		
-		ModRegistrationManager.onFMLClientSetup(event);
+		PocketsRegistrationManager.onFMLClientSetup(event);
 		
 		CONSOLE.startup("Dimensional PocketsII Client Setup complete.");
 	}

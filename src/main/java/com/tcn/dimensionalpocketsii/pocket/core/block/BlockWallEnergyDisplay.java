@@ -5,9 +5,9 @@ import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleConnector;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
@@ -66,9 +66,9 @@ public class BlockWallEnergyDisplay extends BlockWallModule implements IBlankCre
 				if (CosmosUtil.holdingWrench(playerIn)) {
 					if (pocketIn.checkIfOwner(playerIn)) {
 						if(!worldIn.isClientSide) {
-							worldIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+							worldIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 							
-							CosmosUtil.addItem(worldIn, playerIn, ModRegistrationManager.MODULE_ENERGY_DISPLAY.get(), 1);
+							CosmosUtil.addItem(worldIn, playerIn, PocketsRegistrationManager.MODULE_ENERGY_DISPLAY.get(), 1);
 							pocketIn.removeUpdateable(pos);
 						}
 						
@@ -132,7 +132,7 @@ public class BlockWallEnergyDisplay extends BlockWallModule implements IBlankCre
 	public BlockState updateState(BlockState state, BlockPos posIn, Level worldIn) {
 		CosmosChunkPos chunkPos = CosmosChunkPos.scaleToChunkPos(posIn);
 		
-		if (PocketUtil.isDimensionEqual(worldIn, ModDimensionManager.POCKET_WORLD)) {
+		if (PocketUtil.isDimensionEqual(worldIn, PocketsDimensionManager.POCKET_WORLD)) {
 			if (chunkPos != null) {
 				BlockPos scaled = CosmosChunkPos.scaleFromChunkPos(chunkPos);
 				
@@ -158,7 +158,7 @@ public class BlockWallEnergyDisplay extends BlockWallModule implements IBlankCre
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return this.defaultBlockState();
 		}
 		return Blocks.AIR.defaultBlockState();
@@ -166,6 +166,6 @@ public class BlockWallEnergyDisplay extends BlockWallModule implements IBlankCre
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-       return new ItemStack(ModRegistrationManager.MODULE_ENERGY_DISPLAY.get());
+       return new ItemStack(PocketsRegistrationManager.MODULE_ENERGY_DISPLAY.get());
     }
 }

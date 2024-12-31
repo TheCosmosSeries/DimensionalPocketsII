@@ -3,8 +3,7 @@ package com.tcn.dimensionalpocketsii.pocket.client.container;
 import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuBlockEntity;
 import com.tcn.cosmoslibrary.client.container.slot.SlotArmourItem;
 import com.tcn.cosmoslibrary.client.container.slot.SlotEnergyItem;
-import com.tcn.cosmoslibrary.energy.interfaces.ICosmosEnergyItem;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -19,6 +18,8 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class ContainerModuleCharger extends CosmosContainerMenuBlockEntity {
 	
@@ -27,7 +28,7 @@ public class ContainerModuleCharger extends CosmosContainerMenuBlockEntity {
 	}
 
 	public ContainerModuleCharger(int indexIn, Inventory playerInventoryIn, Container contentsIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_CHARGER.get(), indexIn, playerInventoryIn, accessIn, posIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_CHARGER.get(), indexIn, playerInventoryIn, accessIn, posIn);
 		
 		this.addSlot(new SlotEnergyItem(contentsIn, 0, 60, 21));
 		this.addSlot(new SlotEnergyItem(contentsIn, 1, 60, 39));
@@ -78,7 +79,7 @@ public class ContainerModuleCharger extends CosmosContainerMenuBlockEntity {
 
 	@Override
 	public boolean stillValid(Player playerIn) {
-		return stillValid(this.access, playerIn, ModRegistrationManager.BLOCK_WALL_CHARGER.get());
+		return stillValid(this.access, playerIn, PocketsRegistrationManager.BLOCK_WALL_CHARGER.get());
 	}
 
 	@Override
@@ -106,7 +107,7 @@ public class ContainerModuleCharger extends CosmosContainerMenuBlockEntity {
 					}
 				}
 			} else if (indexIn >= 6 && indexIn < this.slots.size()) {
-				if (itemstack.getItem() instanceof ICosmosEnergyItem) {
+				if (itemstack.getCapability(Capabilities.EnergyStorage.ITEM) instanceof IEnergyStorage) {
 					if (!this.moveItemStackTo(itemstack, 0, 6, false)) {
 						return ItemStack.EMPTY;
 					}

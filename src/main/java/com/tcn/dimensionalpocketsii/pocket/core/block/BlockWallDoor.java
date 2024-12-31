@@ -6,9 +6,9 @@ import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
@@ -45,7 +45,7 @@ public class BlockWallDoor extends CosmosBlockDoor implements IBlankCreativeTab 
 		}
 		
 		if (playerIn.isShiftKeyDown()) {
-			if (PocketUtil.isDimensionEqual(levelIn, ModDimensionManager.POCKET_WORLD)) {
+			if (PocketUtil.isDimensionEqual(levelIn, PocketsDimensionManager.POCKET_WORLD)) {
 				Pocket pocket = StorageManager.getPocketFromChunkPosition(levelIn, CosmosChunkPos.scaleToChunkPos(posIn));
 				
 				if (pocket.exists()) {
@@ -90,7 +90,7 @@ public class BlockWallDoor extends CosmosBlockDoor implements IBlankCreativeTab 
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return super.getStateForPlacement(context);
 		}
 		
@@ -99,8 +99,8 @@ public class BlockWallDoor extends CosmosBlockDoor implements IBlankCreativeTab 
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
-			return new ItemStack(ModRegistrationManager.BLOCK_WALL.get());
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
+			return new ItemStack(PocketsRegistrationManager.BLOCK_WALL.get());
 		} else {
 			return ItemStack.EMPTY;
 		}

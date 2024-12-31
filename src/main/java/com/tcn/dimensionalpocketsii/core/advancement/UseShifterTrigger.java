@@ -5,7 +5,7 @@ import java.util.Optional;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
@@ -38,7 +38,7 @@ public class UseShifterTrigger extends SimpleCriterionTrigger<UseShifterTrigger.
         );
 
         public static Criterion<UseShifterTrigger.TriggerInstance> lookingAt(EntityPredicate.Builder player, ItemPredicate.Builder item) {
-            return ModRegistrationManager.SHIFTER_TRIGGER.get().createCriterion(new UseShifterTrigger.TriggerInstance(Optional.of(EntityPredicate.wrap(player)), Optional.of(item.build())));
+            return PocketsRegistrationManager.SHIFTER_TRIGGER.get().createCriterion(new UseShifterTrigger.TriggerInstance(Optional.of(EntityPredicate.wrap(player)), Optional.of(item.build())));
         }
 
         public boolean matches(ItemStack item) {

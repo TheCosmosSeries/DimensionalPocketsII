@@ -6,13 +6,14 @@ import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
 import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
-import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.cosmoslibrary.energy.interfaces.ICosmosEnergyItem;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.cosmoslibrary.energy.CosmosEnergyUtil;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleCharger;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallCharger;
@@ -30,7 +31,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -43,15 +43,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
-public class BlockEntityModuleCharger extends BlockEntity implements IBlockInteract, Container, WorldlyContainer, MenuProvider, Nameable, IBlockEntityUIMode {
+public class BlockEntityModuleCharger extends BlockEntity implements IBlockInteract, WorldlyContainer, MenuProvider, Nameable, IBEUIMode, IBEUILockable {
 
 	private NonNullList<ItemStack> inventoryItems = NonNullList.<ItemStack>withSize(6, ItemStack.EMPTY);
 	
@@ -62,9 +63,11 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	private EnumUIMode uiMode = EnumUIMode.DARK;
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
 	private EnumUILock uiLock = EnumUILock.PRIVATE;
+	
+	private int chargeRate = 100000;
 
 	public BlockEntityModuleCharger(BlockPos posIn, BlockState stateIn) {
-		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_CHARGER.get(), posIn, stateIn);
+		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_CHARGER.get(), posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -236,7 +239,7 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 			return ItemInteractionResult.FAIL;
 		}
 		
-		if (PocketUtil.isDimensionEqual(levelIn, ModDimensionManager.POCKET_WORLD)) {
+		if (PocketUtil.isDimensionEqual(levelIn, PocketsDimensionManager.POCKET_WORLD)) {
 			Pocket pocket = this.getPocket();
 			
 			if (pocket != null) {
@@ -263,10 +266,10 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 						if(pocketIn.exists()) {
 							if (CosmosUtil.holdingWrench(playerIn)) {
 								if (pocketIn.checkIfOwner(playerIn)) {
-									ItemStack stack = new ItemStack(ModRegistrationManager.MODULE_CHARGER.get());
+									ItemStack stack = new ItemStack(PocketsRegistrationManager.MODULE_CHARGER.get());
 									this.saveToItemStack(stack, levelIn.registryAccess());
 									
-									levelIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+									levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 									levelIn.removeBlockEntity(pos);
 									
 									CosmosUtil.addStack(levelIn, playerIn, stack);
@@ -303,15 +306,12 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	
 	public void chargeItem(int indexIn) {
 		if (!this.getItem(indexIn).isEmpty()) {
-			ItemStack stackIn = this.getItem(indexIn);
-			Item item = stackIn.getItem();
-		
-			if (item instanceof ICosmosEnergyItem) {
-				ICosmosEnergyItem energyItem = (ICosmosEnergyItem) item;
-				
+			Object object = this.getItem(indexIn).getCapability(Capabilities.EnergyStorage.ITEM);
+			
+			if (object instanceof IEnergyStorage energyItem) {
 				if (this.getPocket().hasEnergyStored()) {
-					if (energyItem.canReceiveEnergy(stackIn)) {
-						energyItem.receiveEnergy(stackIn, this.getPocket().extractEnergy(Math.min(this.getPocket().getMaxExtract(), energyItem.getMaxReceive(stackIn)), false), false);
+					if (energyItem.canReceive()) {
+						energyItem.receiveEnergy(this.getPocket().extractEnergy(Math.min(this.getPocket().getMaxReceive(), this.chargeRate), false), false);
 					}
 				}
 			}
@@ -320,15 +320,12 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	
 	public void drainItem(int indexIn) {
 		if (!this.getItem(indexIn).isEmpty()) {
-			ItemStack stackIn = this.getItem(indexIn);
-			Item item = stackIn.getItem();
+			Object object = this.getItem(indexIn).getCapability(Capabilities.EnergyStorage.ITEM);
 		
-			if (item instanceof ICosmosEnergyItem) {
-				ICosmosEnergyItem energyItem = (ICosmosEnergyItem) item;
-				
-				if (energyItem.hasEnergy(stackIn)) {
-					if (energyItem.canExtractEnergy(stackIn)) {
-						energyItem.extractEnergy(stackIn, this.getPocket().receiveEnergy(Math.min(this.getPocket().getMaxReceive(), energyItem.getMaxExtract(stackIn)), false), false);
+			if (object instanceof IEnergyStorage energyItem) {
+				if (CosmosEnergyUtil.hasEnergy(energyItem)) {
+					if (energyItem.canExtract()) {
+						energyItem.extractEnergy(this.getPocket().receiveEnergy(Math.min(this.getPocket().getMaxReceive(), this.chargeRate), false), false);
 					}
 				}
 			}

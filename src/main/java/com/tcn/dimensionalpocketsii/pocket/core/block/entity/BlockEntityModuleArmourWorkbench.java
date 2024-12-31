@@ -6,8 +6,9 @@ import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
 import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
-import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
-import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUpdateable;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUpdateable;
 import com.tcn.cosmoslibrary.common.item.CosmosArmourItemColourable;
 import com.tcn.cosmoslibrary.common.item.CosmosArmourItemElytra;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -17,7 +18,7 @@ import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.BaseElytraModule;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.IModuleItem;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
@@ -45,7 +46,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, IBlockEntityUIMode, IBlockEntityUpdateable {
+public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, IBEUpdateable, IBEUIMode, IBEUILockable {
 
 	public NonNullList<ItemStack> inventoryItems = NonNullList.withSize(11, ItemStack.EMPTY);
 	
@@ -59,7 +60,7 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 	public ComponentColour customColourWings = ComponentColour.ELYTRA;
 	
 	public BlockEntityModuleArmourWorkbench(BlockPos posIn, BlockState stateIn) {
-		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_ARMOUR_WORKBENCH.get(), posIn, stateIn);
+		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_ARMOUR_WORKBENCH.get(), posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -89,8 +90,8 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 		compound.putInt("ui_help", this.uiHelp.getIndex());
 		compound.putInt("ui_lock", this.uiLock.getIndex());
 
-		compound.putInt("armourColour", customColourArmour.getIndex());
-		compound.putInt("wingColour", customColourWings.getIndex());
+		compound.putInt("armourColour", this.customColourArmour.getIndex());
+		compound.putInt("wingColour", this.customColourWings.getIndex());
 	}
 
 	public void saveToItemStack(ItemStack stackIn, HolderLookup.Provider provider) {
@@ -102,8 +103,8 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 		compound.putInt("ui_help", this.uiHelp.getIndex());
 		compound.putInt("ui_lock", this.uiLock.getIndex());
 		
-		compound.putInt("armourColour", customColourArmour.getIndex());
-		compound.putInt("wingColour", customColourWings.getIndex());
+		compound.putInt("armourColour", this.customColourArmour.getIndex());
+		compound.putInt("wingColour", this.customColourWings.getIndex());
 		
 		stackIn.set(DataComponents.CUSTOM_DATA, CustomData.of(compound));
 	}
@@ -223,10 +224,10 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 				if(pocketIn.exists()) {
 					if (CosmosUtil.holdingWrench(playerIn)) {
 						if (pocketIn.checkIfOwner(playerIn)) {
-							ItemStack stack = new ItemStack(ModRegistrationManager.MODULE_ARMOUR_WORKBENCH.get());
+							ItemStack stack = new ItemStack(PocketsRegistrationManager.MODULE_ARMOUR_WORKBENCH.get());
 							this.saveToItemStack(stack, levelIn.registryAccess());
 							
-							levelIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+							levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 							levelIn.removeBlockEntity(pos);
 							
 							CosmosUtil.addStack(levelIn, playerIn, stack);

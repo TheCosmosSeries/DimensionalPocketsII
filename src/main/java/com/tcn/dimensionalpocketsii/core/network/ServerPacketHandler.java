@@ -11,7 +11,7 @@ import com.tcn.dimensionalpocketsii.client.container.MenuProviderElytraplateEnde
 import com.tcn.dimensionalpocketsii.client.container.MenuProviderElytraplateSettings;
 import com.tcn.dimensionalpocketsii.core.item.DimensionalTome;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
 import com.tcn.dimensionalpocketsii.core.network.packet.PacketDimensionChange;
 import com.tcn.dimensionalpocketsii.core.network.packet.PacketTomeUpdate;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateOpenConnector;
@@ -58,7 +58,7 @@ public class ServerPacketHandler {
 				Pocket pocket = StorageManager.getPocketFromChunkPosition(null, packet.chunkPos());
 				
 				if (pocket.exists()) {
-					if (packet.dimension().equals(ModDimensionManager.POCKET_WORLD)) {
+					if (packet.dimension().equals(PocketsDimensionManager.POCKET_WORLD)) {
 						pocket.shift(player, EnumShiftDirection.LEAVE, null, null, null);
 					} else {
 						pocket.shift(player, EnumShiftDirection.ENTER, null, null, null);

@@ -10,7 +10,7 @@ import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.lib.MathHelper;
 import com.tcn.cosmoslibrary.core.teleport.EnumSafeTeleport;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyItem;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.AbstractBlockEntityPocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
@@ -173,7 +173,7 @@ public class AbstractDimensionalShifterItem extends CosmosEnergyItem {
 								
 								if (this.hasEnergy(stack)) {
 									if (pocket.exists()) {
-										if (PocketUtil.isDimensionEqual(worldIn, ModDimensionManager.POCKET_WORLD)) {
+										if (PocketUtil.isDimensionEqual(worldIn, PocketsDimensionManager.POCKET_WORLD)) {
 											CosmosChunkPos playerChunkPos = CosmosChunkPos.scaleToChunkPos(playerIn.blockPosition());
 											
 											if (savedChunkPos.equals(playerChunkPos)) {

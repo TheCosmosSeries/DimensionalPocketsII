@@ -3,8 +3,8 @@ package com.tcn.dimensionalpocketsii.pocket.core.block;
 import javax.annotation.Nullable;
 
 import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleArmourWorkbench;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleArmourWorkbench;
 
@@ -46,7 +46,7 @@ public class BlockWallArmourWorkbench extends BlockWallModule implements IBlankC
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModRegistrationManager.BLOCK_ENTITY_TYPE_ARMOUR_WORKBENCH.get());
+		return createTicker(levelIn, entityTypeIn, PocketsRegistrationManager.BLOCK_ENTITY_TYPE_ARMOUR_WORKBENCH.get());
 	}
 
 	@Nullable
@@ -92,7 +92,7 @@ public class BlockWallArmourWorkbench extends BlockWallModule implements IBlankC
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (ModConfigManager.getInstance().getCanDestroyWalls()) {
+		if (PocketsConfigManager.getInstance().getCanDestroyWalls()) {
 			return this.defaultBlockState();
 		}
 		
@@ -101,6 +101,6 @@ public class BlockWallArmourWorkbench extends BlockWallModule implements IBlankC
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult result, LevelReader reader, BlockPos posIn, Player playerIn) {
-       return new ItemStack(ModRegistrationManager.MODULE_ARMOUR_WORKBENCH.get());
+       return new ItemStack(PocketsRegistrationManager.MODULE_ARMOUR_WORKBENCH.get());
     }
 }

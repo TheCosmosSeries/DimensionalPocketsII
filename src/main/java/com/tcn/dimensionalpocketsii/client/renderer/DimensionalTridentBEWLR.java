@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.dimensionalpocketsii.client.renderer.model.DimensionalTridentModel;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -38,7 +38,7 @@ public class DimensionalTridentBEWLR extends BlockEntityWithoutLevelRenderer {
 		Minecraft mc = Minecraft.getInstance();
 		ItemRenderer renderer = mc.getItemRenderer();
 
-		if (item == ModRegistrationManager.DIMENSIONAL_TRIDENT.get()) {
+		if (item == PocketsRegistrationManager.DIMENSIONAL_TRIDENT.get()) {
 			boolean flag = transformIn == ItemDisplayContext.GUI || transformIn == ItemDisplayContext.GROUND || transformIn == ItemDisplayContext.FIXED;
 			
 			if (flag) {
@@ -54,7 +54,7 @@ public class DimensionalTridentBEWLR extends BlockEntityWithoutLevelRenderer {
 				this.tridentModel.renderToBuffer(poseStack, ivertexbuilder1, combinedLight, combinedOverlay, ComponentColour.WHITE.decOpaque());
 				poseStack.popPose();
 			}
-		} else if (item == ModRegistrationManager.DIMENSIONAL_TRIDENT_ENHANCED.get()) {
+		} else if (item == PocketsRegistrationManager.DIMENSIONAL_TRIDENT_ENHANCED.get()) {
 			boolean flag = transformIn == ItemDisplayContext.GUI || transformIn == ItemDisplayContext.GROUND || transformIn == ItemDisplayContext.FIXED;
 			
 			if (flag) {

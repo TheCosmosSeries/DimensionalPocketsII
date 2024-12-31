@@ -3,7 +3,7 @@ package com.tcn.dimensionalpocketsii.client.colour;
 import com.tcn.cosmoslibrary.common.item.CosmosArmourItemColourable;
 import com.tcn.cosmoslibrary.common.item.CosmosArmourItemElytra;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.component.DataComponents;
@@ -21,7 +21,7 @@ public class ColourItem implements ItemColor {
 	public int getColor(ItemStack stack, int itemLayerIn) {
 		Item item = stack.getItem();
 		
-		if (item.equals(ModRegistrationManager.BLOCK_POCKET.get().asItem()) || item.equals(ModRegistrationManager.BLOCK_POCKET_ENHANCED.get().asItem())) {
+		if (item.equals(PocketsRegistrationManager.BLOCK_POCKET.get().asItem()) || item.equals(PocketsRegistrationManager.BLOCK_POCKET_ENHANCED.get().asItem())) {
 			if (stack.has(DataComponents.CUSTOM_DATA)) {
 				CompoundTag stack_tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
 				
@@ -39,7 +39,7 @@ public class ColourItem implements ItemColor {
 					}
 				}
 			}
-		} else if (item.equals(ModRegistrationManager.DIMENSIONAL_SHIFTER.get()) || item.equals(ModRegistrationManager.DIMENSIONAL_SHIFTER_ENHANCED.get())) {
+		} else if (item.equals(PocketsRegistrationManager.DIMENSIONAL_SHIFTER.get()) || item.equals(PocketsRegistrationManager.DIMENSIONAL_SHIFTER_ENHANCED.get())) {
 			if (stack.has(DataComponents.CUSTOM_DATA)) {
 				CompoundTag stack_tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
 				

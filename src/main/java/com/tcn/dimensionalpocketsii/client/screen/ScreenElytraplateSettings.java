@@ -4,8 +4,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import com.ibm.icu.text.DecimalFormat;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem.IS_HOVERING;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonUIMode;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -65,7 +64,7 @@ public class ScreenElytraplateSettings extends AbstractContainerScreen<Container
 
 	@Override
 	protected void init() {
-		this.setScreenCoords(CosmosUISystem.getScreenCoords(this, this.imageWidth, this.imageHeight));
+		this.setScreenCoords(CosmosUISystem.Init.getScreenCoords(this, this.imageWidth, this.imageHeight));
 		
 		this.addButtons();
 		super.init();
@@ -90,10 +89,10 @@ public class ScreenElytraplateSettings extends AbstractContainerScreen<Container
 	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
 		DimensionalElytraplate item = (DimensionalElytraplate) this.stack.getItem();
 		
-		CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, this.getUIMode(), RESOURCE.ELYTRAPLATE_SETTINGS);
-		CosmosUISystem.renderStaticElementWithUIMode(this, graphics, getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, this.getUIMode(), RESOURCE.ELYTRAPLATE_SETTINGS_OVERLAY);
+		CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, this.getUIMode(), RESOURCE.ELYTRAPLATE_SETTINGS);
+		CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, this.getUIMode(), RESOURCE.ELYTRAPLATE_SETTINGS_OVERLAY);
 		
-		CosmosUISystem.renderEnergyDisplay(graphics, ComponentColour.RED, item.getEnergy(this.stack) / 1000, item.getMaxEnergyStored(this.stack) / 1000, 116, this.getScreenCoords(), 38, 43, 116, 7, true);
+		CosmosUISystem.Render.renderEnergyDisplay(graphics, ComponentColour.RED, item.getEnergy(this.stack) / 1000, item.getMaxEnergyStored(this.stack) / 1000, this.getScreenCoords(), 38, 43, 116, 7, true);
 	}
 
 	@Override
@@ -182,7 +181,7 @@ public class ScreenElytraplateSettings extends AbstractContainerScreen<Container
 			graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 		}
 
-		else if (IS_HOVERING.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + 38, this.getScreenCoords()[0] + 153, this.getScreenCoords()[1] + 43, this.getScreenCoords()[1] + 49)) {
+		else if (CosmosUISystem.Hovering.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + 38, this.getScreenCoords()[0] + 153, this.getScreenCoords()[1] + 43, this.getScreenCoords()[1] + 49)) {
 			DecimalFormat formatter = new DecimalFormat("#,###,###,###");
 			String amount_string = formatter.format(item.getEnergy(this.stack));
 			String capacity_string = formatter.format(item.getMaxEnergyStored(this.stack));
@@ -196,7 +195,7 @@ public class ScreenElytraplateSettings extends AbstractContainerScreen<Container
 	protected void addButtons() {
 		this.clearWidgets();
 		
-		this.uiModeButton = this.addRenderableWidget(new CosmosButtonUIMode(this.getUIMode(), this.getScreenCoords()[0] + 159, this.getScreenCoords()[1] + 5, true, true, ComponentHelper.empty(), (button) -> { this.changeUIMode(); } ));
+		this.uiModeButton = this.addRenderableWidget(new CosmosButtonUIMode(this.getUIMode(), this.getScreenCoords()[0] + 159, this.getScreenCoords()[1] + 5, false, true, true, ComponentHelper.empty(), (button) -> { this.changeUIMode(); } ));
 		
 		this.elytraFlyButton = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + indexE[0], this.getScreenCoords()[1] + indexE[1], indexE[2], true, true, DimensionalElytraplate.getElytraSetting(this.stack, ElytraSettings.ELYTRA_FLY)[1] ? 16 : 17, ComponentHelper.empty(), (button) -> { this.pushButton(button); }, (button) -> { return button.get(); }));
 		this.teleToBlockButton = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + indexB[0], this.getScreenCoords()[1] + indexB[1], indexB[2], DimensionalElytraplate.hasModuleInstalled(this.stack, BaseElytraModule.SHIFTER), true, DimensionalElytraplate.getElytraSetting(this.stack, ElytraSettings.TELEPORT_TO_BLOCK)[1] ? 18 : 19, ComponentHelper.empty(), (button) -> { this.pushButton(button); }, (button) -> { return button.get(); }));

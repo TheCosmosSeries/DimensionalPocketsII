@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuBlockEntity;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.minecraft.core.BlockPos;
@@ -71,7 +71,7 @@ public class ContainerModuleAnvil extends CosmosContainerMenuBlockEntity {
 	}
 
 	public ContainerModuleAnvil(int indexIn, Inventory playerInventoryIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModRegistrationManager.CONTAINER_TYPE_ANVIL.get(), indexIn, playerInventoryIn, accessIn, posIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_ANVIL.get(), indexIn, playerInventoryIn, accessIn, posIn);
 		
 		this.addSlot(new Slot(inputSlots, 0, 30, 51));
 		this.addSlot(new Slot(inputSlots, 1, 79, 51));
@@ -126,7 +126,7 @@ public class ContainerModuleAnvil extends CosmosContainerMenuBlockEntity {
 
 	@Override
 	public boolean stillValid(Player playerIn) {
-		return stillValid(this.access, playerIn, ModRegistrationManager.BLOCK_WALL_ANVIL.get());
+		return stillValid(this.access, playerIn, PocketsRegistrationManager.BLOCK_WALL_ANVIL.get());
 	}
 
 	protected void onTake(Player playerIn, ItemStack stackIn) {

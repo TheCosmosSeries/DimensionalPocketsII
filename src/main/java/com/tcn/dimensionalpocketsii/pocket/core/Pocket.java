@@ -29,9 +29,9 @@ import com.tcn.cosmoslibrary.registry.gson.object.ObjectPlayerInformation;
 import com.tcn.dimensionalpocketsii.ModReferences;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.core.advancement.CoreTriggers;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.AbstractBlockPocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallBase;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallEdge;
@@ -127,7 +127,7 @@ public class Pocket implements IEnergyHolder, Container {
 	private int display_colour = ComponentColour.POCKET_PURPLE.dec();
 	
 	@SerializedName(NBT_INTERNAL_HEIGHT_KEY)
-	private int internal_height = ModConfigManager.getInstance().getInternalHeight();
+	private int internal_height = PocketsConfigManager.getInstance().getInternalHeight();
 	
 	@SerializedName(NBT_ENERGY_STORED_KEY)
 	private int energy_stored = 0;
@@ -190,7 +190,7 @@ public class Pocket implements IEnergyHolder, Container {
 		this.chunk_info = new PocketChunkInfo(chunkPosIn, isSingleChunk);
 		this.chunk_pos = chunkPosIn;
 		
-		this.setInternalHeight(isSingleChunk ? ModConfigManager.getInstance().getInternalHeight() : ModConfigManager.getInstance().getInternalHeightEnhanced());
+		this.setInternalHeight(isSingleChunk ? PocketsConfigManager.getInstance().getInternalHeight() : PocketsConfigManager.getInstance().getInternalHeightEnhanced());
 	}
 	
 	public boolean exists() {
@@ -832,7 +832,6 @@ public class Pocket implements IEnergyHolder, Container {
 
 	public FluidStack drain(FluidStack resource, FluidAction doDrain) {
 		this.updateFluidFillLevel();
-		
 		return this.fluid_tank.getFluidTank().drain(resource.getAmount(), doDrain);
 	}
 
@@ -1076,7 +1075,7 @@ public class Pocket implements IEnergyHolder, Container {
 	public void updateWallBlocks(Player playerIn, Level levelIn) {
 		if (!levelIn.isClientSide) {
 			if (playerIn != null) {
-				if (playerIn.level().dimension().equals(ModDimensionManager.POCKET_WORLD)) {
+				if (playerIn.level().dimension().equals(PocketsDimensionManager.POCKET_WORLD)) {
 					int bottomYOffset = StorageManager.getPocketYOffset() + 2;
 					int[] spacing = { 1, 3 };
 					
@@ -1164,33 +1163,33 @@ public class Pocket implements IEnergyHolder, Container {
 	public void generatePocket(Player playerIn, Level levelIn) {
 		Level level = StorageManager.getServerLevel();
 		
-		if (this.getInternalHeight() == ModConfigManager.getInstance().getInternalHeightEnhanced()) {
+		if (this.getInternalHeight() == PocketsConfigManager.getInstance().getInternalHeightEnhanced()) {
 			if (this.chunk_info.isSingleChunk()) {
-				this.setInternalHeight(ModConfigManager.getInstance().getInternalHeight());
+				this.setInternalHeight(PocketsConfigManager.getInstance().getInternalHeight());
 				this.setGeneratedState(false);
 			}
 		}
 		
 		if (!this.getGeneratedStateValue() 
-			|| this.chunk_info.isSingleChunk() && (this.getInternalHeight() != ModConfigManager.getInstance().getInternalHeight())
-			|| !this.chunk_info.isSingleChunk() && (this.getInternalHeight() != ModConfigManager.getInstance().getInternalHeightEnhanced())) {
+			|| this.chunk_info.isSingleChunk() && (this.getInternalHeight() != PocketsConfigManager.getInstance().getInternalHeight())
+			|| !this.chunk_info.isSingleChunk() && (this.getInternalHeight() != PocketsConfigManager.getInstance().getInternalHeightEnhanced())) {
 			
 			if (this.chunk_info.isSingleChunk()) {
 				LevelChunk chunk = level.getChunk(this.getDominantChunkPos().getX(), this.getDominantChunkPos().getZ());
 				BlockPos worldPos = new BlockPos(CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getX(), 1, CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getZ());				
-				int height = ModConfigManager.getInstance().getInternalHeight();
+				int height = PocketsConfigManager.getInstance().getInternalHeight();
 				
 				if (height != this.getInternalHeight()) {
 					if (this.getInternalHeight() > height) {
-						if (ModConfigManager.getInstance().getInternalReplace()) {
+						if (PocketsConfigManager.getInstance().getInternalReplace()) {
 							int[] edge = new int[] { 0, 14 };
 							
 							for (int x = edge[0]; x < edge[1]; x++) {
 								for (int z = edge[0]; z < edge[1]; z++) {
 									BlockPos pos = new BlockPos(x, this.internal_height, z);
 									
-									if (chunk.getBlockState(pos).getBlock().equals(ModRegistrationManager.BLOCK_WALL.get())) {
-										chunk.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState(), false);
+									if (chunk.getBlockState(pos).getBlock().equals(PocketsRegistrationManager.BLOCK_WALL.get())) {
+										chunk.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState(), false);
 									}
 								}
 							}
@@ -1234,15 +1233,15 @@ public class Pocket implements IEnergyHolder, Container {
 						BlockPos upd7 = MathHelper.addBlockPos(worldPos, new BlockPos(upd[2], this.getInternalHeight() - 1, upd[0]));
 						BlockPos upd8 = MathHelper.addBlockPos(worldPos, new BlockPos(upd[3], this.getInternalHeight() - 1, upd[1]));
 						
-						level.setBlockAndUpdate(upd1, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd1), level, upd1, upd1.offset(Direction.UP.getNormal())));
-						level.setBlockAndUpdate(upd2, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd2), level, upd2, upd2.offset(Direction.UP.getNormal())));
-						level.setBlockAndUpdate(upd3, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd3), level, upd3, upd3.offset(Direction.UP.getNormal())));
-						level.setBlockAndUpdate(upd4, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd4), level, upd4, upd4.offset(Direction.UP.getNormal())));
+						level.setBlockAndUpdate(upd1, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd1), level, upd1, upd1.offset(Direction.UP.getNormal())));
+						level.setBlockAndUpdate(upd2, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd2), level, upd2, upd2.offset(Direction.UP.getNormal())));
+						level.setBlockAndUpdate(upd3, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd3), level, upd3, upd3.offset(Direction.UP.getNormal())));
+						level.setBlockAndUpdate(upd4, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd4), level, upd4, upd4.offset(Direction.UP.getNormal())));
 	
-						level.setBlockAndUpdate(upd5, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd5), level, upd5, upd5.offset(Direction.UP.getNormal())));
-						level.setBlockAndUpdate(upd6, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd6), level, upd6, upd6.offset(Direction.UP.getNormal())));
-						level.setBlockAndUpdate(upd7, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd7), level, upd7, upd7.offset(Direction.UP.getNormal())));
-						level.setBlockAndUpdate(upd8, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd8), level, upd8, upd8.offset(Direction.UP.getNormal())));
+						level.setBlockAndUpdate(upd5, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd5), level, upd5, upd5.offset(Direction.UP.getNormal())));
+						level.setBlockAndUpdate(upd6, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd6), level, upd6, upd6.offset(Direction.UP.getNormal())));
+						level.setBlockAndUpdate(upd7, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd7), level, upd7, upd7.offset(Direction.UP.getNormal())));
+						level.setBlockAndUpdate(upd8, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, level.getBlockState(upd8), level, upd8, upd8.offset(Direction.UP.getNormal())));
 						
 						this.setInternalHeight(height);
 					}
@@ -1260,13 +1259,13 @@ public class Pocket implements IEnergyHolder, Container {
 				DimensionalPockets.CONSOLE.debug(check_block_one + " || " + check_block_two + " || " + check_block_three + " || " + check_block_four);
 				
 				this.setOwner(playerIn);
-				this.setGeneratedState(check_block_one instanceof BlockWallEdge && check_block_two instanceof BlockWallBase && check_block_three.equals(ModRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && check_block_four.equals(Blocks.BEDROCK));
+				this.setGeneratedState(check_block_one instanceof BlockWallEdge && check_block_two instanceof BlockWallBase && check_block_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && check_block_four.equals(Blocks.BEDROCK));
 				
 				StorageManager.saveRegistry(levelIn.registryAccess());
 			}
 			
 			else if (!this.chunk_info.isSingleChunk()) {
-				int height = ModConfigManager.getInstance().getInternalHeightEnhanced();
+				int height = PocketsConfigManager.getInstance().getInternalHeightEnhanced();
 
 				//System.out.println("HERE " + height + " " + this.getInternalHeight() + " " + (height != this.getInternalHeight()));
 				
@@ -1280,7 +1279,7 @@ public class Pocket implements IEnergyHolder, Container {
 				if (height != this.getInternalHeight()) {
 					System.out.println("GENERATE");
 					
-					if (this.getInternalHeight() < ModConfigManager.getInstance().getInternalHeight()) {
+					if (this.getInternalHeight() < PocketsConfigManager.getInstance().getInternalHeight()) {
 						int[] rep = new int[] { 0, 16 };
 						
 						for (int i = 0; i < this.chunk_info.getChunks().size(); i++) {
@@ -1300,7 +1299,7 @@ public class Pocket implements IEnergyHolder, Container {
 					}
 					
 					if (this.getInternalHeight() > height) {
-						if (ModConfigManager.getInstance().getInternalReplace()) {
+						if (PocketsConfigManager.getInstance().getInternalReplace()) {
 							
 						}
 					} else {
@@ -1326,9 +1325,9 @@ public class Pocket implements IEnergyHolder, Container {
 				boolean checks = 
 					check_block_one instanceof BlockWallEdge && 
 					check_block_two instanceof BlockWallBase && 
-					check_block_three.equals(ModRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
-					check_block_second_three.equals(ModRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
-					check_block_third_three.equals(ModRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
+					check_block_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
+					check_block_second_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
+					check_block_third_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
 					check_block_four.equals(Blocks.BEDROCK) && 
 					check_block_second_one.equals(Blocks.BEDROCK);
 				
@@ -1342,7 +1341,7 @@ public class Pocket implements IEnergyHolder, Container {
 			BlockEntity entity = level.getBlockEntity(pos);
 			
 			if (entity == null) {
-				level.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
+				level.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 				level.setBlockAndUpdate(pos.offset(Direction.UP.getNormal()), Blocks.BEDROCK.defaultBlockState());
 			}
 		}
@@ -1359,7 +1358,7 @@ public class Pocket implements IEnergyHolder, Container {
 		
 		if (PocketEventFactory.onPocketGenerate(levelIn, this)) {
 			if (this.getChunkInfo().isSingleChunk()) {
-				int height = ModConfigManager.getInstance().getInternalHeight();
+				int height = PocketsConfigManager.getInstance().getInternalHeight();
 				BlockPos worldPos = new BlockPos(CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getX(), 1, CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getZ());
 				LevelChunk levelChunk = levelIn.getChunk(this.getDominantChunkPos().getX(), this.getDominantChunkPos().getZ());
 				
@@ -1383,7 +1382,7 @@ public class Pocket implements IEnergyHolder, Container {
 							}
 							
 							if (x == 0 && y == 1 && z == 0) {
-								levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), ModRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
+								levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 							}
 							
 							//Added those flags, so I could add these checks, almost halves the time.
@@ -1393,12 +1392,12 @@ public class Pocket implements IEnergyHolder, Container {
 							
 							//Creates the "edge" blocks first. Stylistic choice.
 							if (x == 1 || y == (1 + y_offset) || z == 1) {
-								levelChunk.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunk.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+								levelChunk.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunk.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 							} else if (x == (size - 2) || y == (height - (2 - y_offset)) || z == (size - 2)) {
-								levelChunk.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunk.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+								levelChunk.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunk.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 							} else {
 								if (!(levelChunk.getBlockState(pos).getBlock() instanceof BlockWallModule)) {
-									levelChunk.setBlockState(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunk.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+									levelChunk.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunk.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								}
 							}
 		
@@ -1414,7 +1413,7 @@ public class Pocket implements IEnergyHolder, Container {
 			} 
 			
 			else if (!(this.getChunkInfo().isSingleChunk())) {
-				int height = ModConfigManager.getInstance().getInternalHeightEnhanced();
+				int height = PocketsConfigManager.getInstance().getInternalHeightEnhanced();
 				{
 					/** - First Corner { 0, 0 } - **/
 					CosmosChunkPos chunkPosA = this.getDominantChunkPos();
@@ -1441,7 +1440,7 @@ public class Pocket implements IEnergyHolder, Container {
 								}
 								
 								if (x == 0 && y == 1 && z == 0) {
-									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), ModRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
+									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
 								//Added those flags, so I could add these checks, almost halves the time.
@@ -1451,12 +1450,12 @@ public class Pocket implements IEnergyHolder, Container {
 								
 								//Creates the "edge" blocks first. Stylistic choice.
 								if (x == 1 || y == (1 + y_offset) || z == 1) {
-									levelChunkA.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkA.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+									levelChunkA.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkA.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								} else if (/*x == (size - 2) ||*/ y == (height - (2 - y_offset)) /*|| z == (size - 2)*/) {
-									levelChunkA.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkA.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+									levelChunkA.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkA.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								}  else {
 									if (!(levelChunkA.getBlockState(pos).getBlock() instanceof BlockWallModule)) {
-										levelChunkA.setBlockState(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunkA.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+										levelChunkA.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunkA.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 									}
 								}
 			
@@ -1497,7 +1496,7 @@ public class Pocket implements IEnergyHolder, Container {
 								}
 	
 								if (x == 0 && y == 1 && z == 0) {
-									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), ModRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
+									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
 								//Added those flags, so I could add these checks, almost halves the time.
@@ -1507,12 +1506,12 @@ public class Pocket implements IEnergyHolder, Container {
 								
 								//Creates the "edge" blocks first. Stylistic choice.
 								if (/*x == 1 ||*/ y == (1 + y_offset) || z == 1) {
-									levelChunkB.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkB.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+									levelChunkB.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkB.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								} else if (x == (size - 2) || y == (height - (2 - y_offset)) /*|| z == (size - 2)*/) {
-									levelChunkB.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkB.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+									levelChunkB.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkB.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								} else {
 									if (!(levelChunkB.getBlockState(pos).getBlock() instanceof BlockWallModule)) {
-										levelChunkB.setBlockState(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunkB.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+										levelChunkB.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunkB.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 									}
 								}
 			
@@ -1553,7 +1552,7 @@ public class Pocket implements IEnergyHolder, Container {
 								}
 	
 								if (x == 0 && y == 1 && z == 0) {
-									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), ModRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
+									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
 								//Added those flags, so I could add these checks, almost halves the time.
@@ -1563,12 +1562,12 @@ public class Pocket implements IEnergyHolder, Container {
 								
 								//Creates the "edge" blocks first. Stylistic choice.
 								if (x == 1 || y == (1 + y_offset) /*|| z == 1*/) {
-									levelChunkC.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkC.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+									levelChunkC.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkC.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								} else if (/*x == (size - 2) ||*/ y == (height - (2 - y_offset)) || z == (size - 2)) {
-									levelChunkC.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkC.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+									levelChunkC.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkC.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								} else {
 									if (!(levelChunkC.getBlockState(pos).getBlock() instanceof BlockWallModule)) {
-										levelChunkC.setBlockState(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunkC.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+										levelChunkC.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunkC.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 									}
 								}
 			
@@ -1609,7 +1608,7 @@ public class Pocket implements IEnergyHolder, Container {
 								}
 	
 								if (x == 0 && y == 1 && z == 0) {
-									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), ModRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
+									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
 								//Added those flags, so I could add these checks, almost halves the time.
@@ -1619,12 +1618,12 @@ public class Pocket implements IEnergyHolder, Container {
 								
 								//Creates the "edge" blocks first. Stylistic choice.
 								if (/*x == 1 ||*/ y == (1 + y_offset) /*|| z == 1*/) {
-									levelChunkD.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkD.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+									levelChunkD.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkD.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								} else if (x == (size - 2) || y == (height - (2 - y_offset)) || z == (size - 2)) {
-									levelChunkD.setBlockState(pos, ModRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkD.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+									levelChunkD.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkD.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								} else {
 									if (!(levelChunkD.getBlockState(pos).getBlock() instanceof BlockWallModule)) {
-										levelChunkD.setBlockState(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunkD.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
+										levelChunkD.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState().updateShape(Direction.UP, levelChunkD.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 									}
 								}
 			
@@ -1669,7 +1668,7 @@ public class Pocket implements IEnergyHolder, Container {
 					BlockPos spawn = this.getSpawnPos();
 					BlockPos shiftPos = MathHelper.addBlockPos(chunk, spawn, test);
 					
-					Shifter shifter = Shifter.createTeleporter(ModDimensionManager.POCKET_WORLD, direction, shiftPos, this.spawn_pos.getYaw(), this.spawn_pos.getPitch(), false, true, false);
+					Shifter shifter = Shifter.createTeleporter(PocketsDimensionManager.POCKET_WORLD, direction, shiftPos, this.spawn_pos.getYaw(), this.spawn_pos.getPitch(), false, true, false);
 					
 					this.generatePocket(server_player, source_world);
 					ShifterCore.shiftPlayerToDimension(server_player, shifter, !safeLocation);
@@ -1935,7 +1934,7 @@ public class Pocket implements IEnergyHolder, Container {
 	}
 	
 	public ItemStack generateItemStackWithNBT() {
-		ItemStack item_stack = new ItemStack(ModRegistrationManager.BLOCK_POCKET.get());
+		ItemStack item_stack = new ItemStack(PocketsRegistrationManager.BLOCK_POCKET.get());
 		CompoundTag stackTag = new CompoundTag();
 
 		if (!item_stack.has(DataComponents.CUSTOM_DATA)) {

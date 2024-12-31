@@ -3,13 +3,10 @@ package com.tcn.dimensionalpocketsii.pocket.client.screen;
 import java.util.Arrays;
 
 import com.ibm.icu.text.DecimalFormat;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem.FONT;
-import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem.IS_HOVERING;
+import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeListBE;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
-import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.dimensionalpocketsii.ModReferences.GUI;
@@ -34,7 +31,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
@@ -105,37 +101,31 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 	@Override
 	public void removed() {
 		super.removed();
-	    //this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
 	}
 
 	@Override
 	public void containerTick() {
 		super.containerTick();
-		//this.textField.tick();
 	}
 
 	@Override
 	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		super.render(graphics, mouseX, mouseY, partialTicks);
 		
-		BlockEntity entity = this.getBlockEntity();
-		
-		if (entity instanceof BlockEntityPocketEnhanced) {
-			BlockEntityPocketEnhanced blockEntity = (BlockEntityPocketEnhanced) entity;
-			
+		if (this.getBlockEntity() instanceof BlockEntityPocketEnhanced blockEntity) {
 			if (blockEntity.getPocket() != null) {
 				Pocket pocket = blockEntity.getPocket();
 
 				ComponentColour colour = ComponentColour.col(pocket.getDisplayColour());
-				ComponentColour textColour = blockEntity.getUIMode().equals(EnumUIMode.LIGHT) ? ComponentColour.BLACK : ComponentColour.SCREEN_LIGHT;
+				ComponentColour textColour = blockEntity.getUIMode().getTextColour();
 				
-				FONT.drawString(graphics, font, this.getScreenCoords(), 93, 40, true, ComponentHelper.style(ComponentColour.getCompColourForScreen(colour), "dimensionalpocketsii.gui.header.allowed_players"));
+				CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 93, 40, false, ComponentHelper.style(ComponentColour.getCompColourForScreen(colour), "dimensionalpocketsii.gui.header.allowed_players"));
 
-				FONT.drawString(graphics, font, this.getScreenCoords(), 88, 4, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.pocket.header"));
-				FONT.drawString(graphics, font, this.getScreenCoords(), 8, 4, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.config"));
-				FONT.drawString(graphics,font, this.getScreenCoords(), 262, 4, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.pocket_inv"));
-				FONT.drawString(graphics, font, this.getScreenCoords(), 8, 169, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.storage"));
-				FONT.drawString(graphics, font, this.getScreenCoords(), 8, 110, true, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.settings"));
+				CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 88, 4, false, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.pocket.header"));
+				CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 8, 4, false, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.config"));
+				CosmosUISystem.FontRenderer.drawString(graphics,font, this.getScreenCoords(), 262, 4, false, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.pocket_inv"));
+				CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 8, 169, false, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.storage"));
+				CosmosUISystem.FontRenderer.drawString(graphics, font, this.getScreenCoords(), 8, 110, false, ComponentHelper.style(textColour, "dimensionalpocketsii.gui.header.settings"));
 			}
 		}
 		
@@ -146,26 +136,22 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
 		super.renderBg(graphics, partialTicks, mouseX, mouseY);
 
-		BlockEntity entity = this.getBlockEntity();
-		
-		if (entity instanceof BlockEntityPocketEnhanced) {
-			BlockEntityPocketEnhanced blockEntity = (BlockEntityPocketEnhanced) entity;
-	
+		if (this.getBlockEntity() instanceof BlockEntityPocketEnhanced blockEntity) {
 			if (blockEntity.getPocket() != null) {
 				Pocket pocket = blockEntity.getPocket();
 
 				ComponentColour colour = ComponentColour.col(pocket.getDisplayColour());
 				float[] rgb = colour.equals(ComponentColour.POCKET_PURPLE) ? ComponentColour.rgbFloatArray(ComponentColour.POCKET_PURPLE_LIGHT) : ComponentColour.rgbFloatArray(colour);
 				
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, 256, 256, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.POCKET_BASE_NORMAL);
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 256, 0, 0, 0, 92, 256, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.POCKET_BASE_SIDE);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, 256, 256, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.POCKET_BASE_NORMAL);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 256, 0, 0, 0, 92, 256, new float[] { rgb[0], rgb[1], rgb[2], 1.0F }, blockEntity, GUI.RESOURCE.POCKET_BASE_SIDE);
 				
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 0, 0, 0, 0, 256, 256, blockEntity, GUI.RESOURCE.POCKET_OVERLAY_NORMAL);
-				CosmosUISystem.renderStaticElementWithUIMode(this, graphics, this.getScreenCoords(), 256, 0, 0, 0, 92, 256, blockEntity, GUI.RESOURCE.POCKET_OVERLAY_SIDE);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 0, 0, 0, 0, 256, 256, blockEntity, GUI.RESOURCE.POCKET_OVERLAY_NORMAL);
+				CosmosUISystem.Render.renderStaticElementWithUIMode(graphics, this.getScreenCoords(), 256, 0, 0, 0, 92, 256, blockEntity, GUI.RESOURCE.POCKET_OVERLAY_SIDE);
 				
-				CosmosUISystem.renderFluidTank(this, graphics, this.getScreenCoords(), this.fluidBarData[0], this.fluidBarData[2], pocket.getFluidTank(), pocket.getFluidLevelScaled(57), 57);
+				CosmosUISystem.Render.renderFluidTank(graphics, this.getScreenCoords(), this.fluidBarData[0], this.fluidBarData[2], pocket.getFluidTank(), pocket.getFluidLevelScaled(57), 57);
 
-				CosmosUISystem.renderEnergyDisplay(graphics, ComponentColour.RED, pocket, this.getScreenCoords(), this.energyBarData[0], this.energyBarData[1], 16, 58, false);
+				CosmosUISystem.Render.renderEnergyDisplay(graphics, ComponentColour.RED, pocket, this.getScreenCoords(), this.energyBarData[0], this.energyBarData[1], 16, 58, false);
 			}
 		}
 
@@ -174,22 +160,14 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 
 	@Override
 	protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-		BlockEntity entity = this.getBlockEntity();
-		
-		if (entity instanceof BlockEntityPocketEnhanced) {
-			BlockEntityPocketEnhanced blockEntity = (BlockEntityPocketEnhanced) entity;
-			
-			graphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, blockEntity.getUIMode().equals(EnumUIMode.DARK) ? CosmosUISystem.DEFAULT_COLOUR_FONT_LIST : ComponentColour.BLACK.dec());
+		if (this.getBlockEntity() instanceof BlockEntityPocketEnhanced blockEntity) {
+			graphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, blockEntity.getUIMode().getTextColour().dec());
 		}
 	}
 	
 	@Override
 	protected void updateWidgetList() {
-		BlockEntity entity = this.getBlockEntity();
-		
-		if (entity instanceof BlockEntityPocketEnhanced) {
-			BlockEntityPocketEnhanced blockEntity = (BlockEntityPocketEnhanced) entity;
-			
+		if (this.getBlockEntity() instanceof BlockEntityPocketEnhanced blockEntity) {
 			if (blockEntity.getPocket() != null) {
 				Pocket pocket = blockEntity.getPocket();
 				this.updateFromList(pocket.getAllowedPlayersArray());
@@ -202,11 +180,7 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 	protected void addButtons() {
 		super.addButtons();
 		
-		BlockEntity entity = this.getBlockEntity();
-		
-		if (entity instanceof BlockEntityPocketEnhanced) {
-			BlockEntityPocketEnhanced blockEntity = (BlockEntityPocketEnhanced) entity;
-			
+		if (this.getBlockEntity() instanceof BlockEntityPocketEnhanced blockEntity) {
 			if (blockEntity.getPocket() != null) {
 				Pocket pocket = blockEntity.getPocket();
 		
@@ -241,11 +215,7 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 	
 	@Override
 	public void renderStandardHoverEffect(GuiGraphics graphics, Style style, int mouseX, int mouseY) {
-		BlockEntity entity = this.getBlockEntity();
-		
-		if (entity instanceof BlockEntityPocketEnhanced) {
-			BlockEntityPocketEnhanced blockEntity = (BlockEntityPocketEnhanced) entity;
-			
+		if (this.getBlockEntity() instanceof BlockEntityPocketEnhanced blockEntity) {
 			if (blockEntity.getPocket() != null) {
 				Pocket pocket = blockEntity.getPocket();
 				
@@ -292,43 +262,48 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 				
 				else if (this.buttonDown.isMouseOver(mouseX, mouseY)) {
 					Component[] comp = new Component[] {
-							ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.YELLOW, "bold", " [", "dimensionalpocketsii.gui.button.direction.down", "]")), 
-							ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.DOWN).getColouredComp()) };
+						ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.YELLOW, "bold", " [", "dimensionalpocketsii.gui.button.direction.down", "]")), 
+						ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.DOWN).getColouredComp()) 
+					};
 					
 					graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 				} else if (this.buttonUp.isMouseOver(mouseX, mouseY)) {
 					Component[] comp = new Component[] {
-							ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.ORANGE, "bold", " [", "dimensionalpocketsii.gui.button.direction.up", "]")),
-							ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.UP).getColouredComp()) };
+						ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.ORANGE, "bold", " [", "dimensionalpocketsii.gui.button.direction.up", "]")),
+						ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.UP).getColouredComp()) };
 					
 					graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 				} else if (this.buttonNorth.isMouseOver(mouseX, mouseY)) {
 					Component[] comp = new Component[] {
-							ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.BLUE, "bold", " [", "dimensionalpocketsii.gui.button.direction.north", "]")),
-							ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.NORTH).getColouredComp()) };
+						ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.BLUE, "bold", " [", "dimensionalpocketsii.gui.button.direction.north", "]")),
+						ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.NORTH).getColouredComp()) 
+					};
 					
 					graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 				} else if (this.buttonSouth.isMouseOver(mouseX, mouseY)) {
 					Component[] comp = new Component[] { 
-							ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.LIME, "bold", " [", "dimensionalpocketsii.gui.button.direction.south", "]")),
-							ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.SOUTH).getColouredComp()) };
+						ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.LIME, "bold", " [", "dimensionalpocketsii.gui.button.direction.south", "]")),
+						ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.SOUTH).getColouredComp()) 
+					};
 					
 					graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 				} else if (this.buttonWest.isMouseOver(mouseX, mouseY)) {
 					Component[] comp = new Component[] { 
-							ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.WHITE, "bold", " [", "dimensionalpocketsii.gui.button.direction.west", "]")),
-							ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.WEST).getColouredComp()) };
+						ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.WHITE, "bold", " [", "dimensionalpocketsii.gui.button.direction.west", "]")),
+						ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.WEST).getColouredComp()) 
+					};
 					
 					graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 				} else if (this.buttonEast.isMouseOver(mouseX, mouseY)) {
 					Component[] comp = new Component[] { 
-							ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.GRAY, "bold", " [", "dimensionalpocketsii.gui.button.direction.east", "]")),
-							ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.EAST).getColouredComp()) };
+						ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.direction.prefix").append(ComponentHelper.style3(ComponentColour.GRAY, "bold", " [", "dimensionalpocketsii.gui.button.direction.east", "]")),
+						ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.button.direction.suffix").append(pocket.getSide(Direction.EAST).getColouredComp()) 
+					};
 					
 					graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 				}
 				
-				else if (IS_HOVERING.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + this.fluidBarData[0] - 1, this.getScreenCoords()[0] + this.fluidBarData[0] + 16, this.getScreenCoords()[1] + this.fluidBarData[2] - 27, this.getScreenCoords()[1] + this.fluidBarData[2] + 39)) {
+				else if (CosmosUISystem.Hovering.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + this.fluidBarData[0] - 1, this.getScreenCoords()[0] + this.fluidBarData[0] + 16, this.getScreenCoords()[1] + this.fluidBarData[2] - 27, this.getScreenCoords()[1] + this.fluidBarData[2] + 39)) {
 					FluidTank tank = pocket.getFluidTank();
 					
 					DecimalFormat formatter = new DecimalFormat("#,###,###,###");
@@ -337,18 +312,20 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 					String fluid_name = tank.getFluid().getTranslationKey();
 					
 					Component[] comp = new Component[] { 
-							ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.fluid_bar.pre").append(ComponentHelper.style3(ComponentColour.CYAN, "bold", "[ ", fluid_name, " ]")), 
-							ComponentHelper.style2(ComponentColour.ORANGE, amount_string + " / " + capacity_string, "dimensionalpocketsii.gui.fluid_bar.suff") };
+						ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.fluid_bar.pre").append(ComponentHelper.style3(ComponentColour.CYAN, "bold", "[ ", fluid_name, " ]")), 
+						ComponentHelper.style2(ComponentColour.ORANGE, amount_string + " / " + capacity_string, "dimensionalpocketsii.gui.fluid_bar.suff") 
+					};
 					
 					graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
-				} else if (IS_HOVERING.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + this.energyBarData[0] - 1, this.getScreenCoords()[0] + this.energyBarData[0] + 16, this.getScreenCoords()[1] + this.energyBarData[1] - 1, this.getScreenCoords()[1] + this.energyBarData[1] + 64)) {
+				} else if (CosmosUISystem.Hovering.isHovering(mouseX, mouseY, this.getScreenCoords()[0] + this.energyBarData[0] - 1, this.getScreenCoords()[0] + this.energyBarData[0] + 16, this.getScreenCoords()[1] + this.energyBarData[1] - 1, this.getScreenCoords()[1] + this.energyBarData[1] + 64)) {
 					DecimalFormat formatter = new DecimalFormat("#,###,###,###");
 					String amount_string = formatter.format(pocket.getEnergyStored());
 					String capacity_string = formatter.format(pocket.getMaxEnergyStored());
 					
 					Component[] comp = new Component[] { 
-							ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.energy_bar.pre"),
-							ComponentHelper.style2(ComponentColour.RED, amount_string + " / " + capacity_string, "dimensionalpocketsii.gui.energy_bar.suff") };
+						ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.energy_bar.pre"),
+						ComponentHelper.style2(ComponentColour.RED, amount_string + " / " + capacity_string, "dimensionalpocketsii.gui.energy_bar.suff")
+					};
 					
 					graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 				}
@@ -360,8 +337,9 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 								graphics.renderTooltip(this.font, ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.tank_clear"), mouseX, mouseY);
 							} else {
 								Component[] comp = new Component[] { 
-										ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.tank_clear"),
-										ComponentHelper.style(ComponentColour.RED, "bold", "dimensionalpocketsii.gui.button.tank_clear_shift") };
+									ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.button.tank_clear"),
+									ComponentHelper.style(ComponentColour.RED, "bold", "dimensionalpocketsii.gui.button.tank_clear_shift")
+								};
 								
 								graphics.renderComponentTooltip(this.font, Arrays.asList(comp), mouseX, mouseY);
 							}
@@ -378,12 +356,9 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 		super.clickButton(button, isLeftClick);
 
 		if (isLeftClick) {
-			BlockEntity entity = this.getBlockEntity();
 			String value = this.textField.getValue();
 			
-			if (entity instanceof BlockEntityPocketEnhanced) {
-				BlockEntityPocketEnhanced blockEntity = (BlockEntityPocketEnhanced) entity;
-				
+			if (this.getBlockEntity() instanceof BlockEntityPocketEnhanced blockEntity) {
 				if (blockEntity.getPocket() != null) {
 					Pocket pocket = blockEntity.getPocket();
 	
@@ -569,7 +544,6 @@ public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPock
 	@Override
 	public void initEditBox() {
 		super.initEditBox();
-		//this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         this.textField = new EditBox(this.font, this.getScreenCoords()[0] + this.textFieldI[0], this.getScreenCoords()[1] + this.textFieldI[1], this.textFieldI[2], this.textFieldI[3], ComponentHelper.comp("Allowed Player Entry"));
 		this.textField.setMaxLength(16);
 		this.textField.setVisible(true);

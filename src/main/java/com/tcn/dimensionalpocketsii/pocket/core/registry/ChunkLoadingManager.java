@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectBlockPosDimension;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
-import com.tcn.dimensionalpocketsii.core.management.ModConfigManager;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.gson.PocketChunkInfo;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.InterfaceManager.RegistryFileType;
@@ -91,7 +91,7 @@ public class ChunkLoadingManager {
 		}
 		
 		if (!chunkLoadedRooms.contains(chunk)) {
-			if (PocketUtil.isDimensionEqual(serverLevel, ModDimensionManager.POCKET_WORLD)) {
+			if (PocketUtil.isDimensionEqual(serverLevel, PocketsDimensionManager.POCKET_WORLD)) {
 				serverLevel.setChunkForced(chunk.getX(), chunk.getZ(), true);
 				chunkLoadedRooms.add(chunk);
 				DimensionalPockets.CONSOLE.debug("[PocketChunkLoader] <add> Marked the following Pocket Room to the be loaded: { " + chunk + ", " + serverLevel.dimension().location().getNamespace() + ":" + serverLevel.dimension().location().getPath() + " }");
@@ -108,7 +108,7 @@ public class ChunkLoadingManager {
 		}
 		
 		if (chunkLoadedRooms.contains(chunk)) {
-			if (PocketUtil.isDimensionEqual(serverLevel, ModDimensionManager.POCKET_WORLD)) {
+			if (PocketUtil.isDimensionEqual(serverLevel, PocketsDimensionManager.POCKET_WORLD)) {
 				serverLevel.setChunkForced(chunk.getX(), chunk.getZ(), false);
 				chunkLoadedRooms.remove(chunk);
 				DimensionalPockets.CONSOLE.debug("[PocketChunkLoader] <remove> Removed the following pocket room from the list of loaded rooms: { " + chunk + ", " + serverLevel.dimension().location().getNamespace() + ":" + serverLevel.dimension().location().getPath() + " }");
@@ -128,7 +128,7 @@ public class ChunkLoadingManager {
 		int tickSpeed = serverLevel.getGameRules().getInt(GameRules.RULE_RANDOMTICKING);
 		
 		if (tickSpeed > 0) {
-			if (ModConfigManager.getInstance().getKeepChunksLoaded()) {
+			if (PocketsConfigManager.getInstance().getKeepChunksLoaded()) {
 				tickLoadedBlocks(serverLevel, chunkProvider, tickSpeed);
 				tickLoadedRooms(serverLevel, chunkProvider, tickSpeed);
 				

@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 
@@ -30,7 +30,7 @@ public class SetSpawnCommand {
 		if (entity instanceof ServerPlayer) {
 			ServerPlayer serverPlayer = (ServerPlayer) entity;
 			
-			if (serverPlayer.level().dimension().equals(ModDimensionManager.POCKET_WORLD)) {
+			if (serverPlayer.level().dimension().equals(PocketsDimensionManager.POCKET_WORLD)) {
 				BlockPos spawnPos = BlockPos.ZERO;
 				
 				BlockPos playerPos = serverPlayer.blockPosition();

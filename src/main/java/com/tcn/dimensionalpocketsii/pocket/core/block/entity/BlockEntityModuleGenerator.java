@@ -10,13 +10,14 @@ import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.IFluidStorage;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
-import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectFluidTankCustom;
-import com.tcn.dimensionalpocketsii.core.management.ModDimensionManager;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleGenerator;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
@@ -33,7 +34,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -47,9 +47,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -61,7 +59,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 @SuppressWarnings("removal")
-public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, WorldlyContainer, MenuProvider, Nameable, IFluidHandler, IFluidStorage, IBlockEntityUIMode {
+public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable implements IBlockInteract, WorldlyContainer, MenuProvider, Nameable, IFluidHandler, IFluidStorage, IBEUIMode, IBEUILockable {
 	
 	private NonNullList<ItemStack> inventoryItems = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
 	
@@ -84,6 +82,9 @@ public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable impl
 	private EnumUIMode uiMode = EnumUIMode.DARK;
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
 	private EnumUILock uiLock = EnumUILock.PRIVATE;
+
+	private final int BUCKET_IN_SLOT = 1;
+	private final int BUCKET_OUT_SLOT = 2;
 
 	public final ContainerData dataAccess = new ContainerData() {
 		@Override
@@ -133,7 +134,7 @@ public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable impl
 	};
 	
 	public BlockEntityModuleGenerator(BlockPos posIn, BlockState stateIn) {
-		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_GENERATOR.get(), posIn, stateIn);
+		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_GENERATOR.get(), posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -405,7 +406,7 @@ public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable impl
 			return ItemInteractionResult.FAIL;
 		}
 		
-		if (PocketUtil.isDimensionEqual(levelIn, ModDimensionManager.POCKET_WORLD)) {
+		if (PocketUtil.isDimensionEqual(levelIn, PocketsDimensionManager.POCKET_WORLD)) {
 			Pocket pocketIn = this.getPocket();
 			
 			if (pocketIn != null) {
@@ -434,10 +435,10 @@ public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable impl
 					
 					else if (CosmosUtil.holdingWrench(playerIn)) {
 						if (pocketIn.checkIfOwner(playerIn)) {
-							ItemStack stack = new ItemStack(ModRegistrationManager.MODULE_GENERATOR.get());
+							ItemStack stack = new ItemStack(PocketsRegistrationManager.MODULE_GENERATOR.get());
 							this.saveToItemStack(stack, levelIn.registryAccess());
 							
-							levelIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+							levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 							levelIn.removeBlockEntity(pos);
 							
 							CosmosUtil.addStack(levelIn, playerIn, stack);
@@ -672,53 +673,46 @@ public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable impl
 	}
 	
 	public void checkFluidSlots() {
-		int input = 1;
-		ItemStack inputStack = this.getItem(input);
-		int output = 2;
-		ItemStack outputStack = this.getItem(output);
-		
-		if (!this.level.isClientSide) {
-			if (!inputStack.isEmpty()) {
-				if (inputStack.getItem() instanceof BucketItem) {
-					Optional<FluidStack> fluidStack = FluidUtil.getFluidContained(inputStack);
-					
-					if (fluidStack.isPresent()) {
-						FluidStack fluid = fluidStack.get();
-						
-						if (fluid != null) {
-							int amount = this.fill(fluid, FluidAction.SIMULATE);
-							if (amount == fluid.getAmount()) {
-								if (outputStack.getItem().equals(Items.BUCKET) && outputStack.getCount() < 17) {
-									this.fill(fluid, FluidAction.EXECUTE);
-									inputStack.shrink(1);
-									outputStack.grow(1);
-								}
-								
-								if (outputStack.isEmpty()) {
-									this.fill(fluid, FluidAction.EXECUTE);
-									inputStack.shrink(1);
-									this.setItem(output, new ItemStack(Items.BUCKET));
-								}
-							}
-						}
-					} else {
-						if (this.getCurrentFluidAmount() > 0) {
-							if (outputStack.isEmpty()) {
-								ItemStack fillStack = FluidUtil.tryFillContainer(inputStack, this.getFluidTank(), 1000, null, true).result;
-								
-								if (fillStack.getItem() instanceof BucketItem) {
-									inputStack.shrink(1);
-									this.setItem(output, fillStack);
-								} else {
-									inputStack.shrink(1);
-									this.setItem(output, new ItemStack(Items.BUCKET));
-								}
-							}
-						}
-					
-					}
-				}
+		if (!this.getLevel().isClientSide()) {
+			if (!this.getItem(BUCKET_IN_SLOT).isEmpty()) {
+				Optional<FluidStack> fluidStack = FluidUtil.getFluidContained(this.getItem(BUCKET_IN_SLOT));
 				
+				if (fluidStack.isPresent()) {
+					FluidStack fluid = fluidStack.get();
+					
+					if (fluid != null) {
+						if (this.isFluidValid(0, fluid)) {
+							if (fluid.getAmount() > 0) {
+								int amount = this.fill(fluid, FluidAction.SIMULATE);
+								if (amount == fluid.getAmount()) {
+									if (this.getItem(BUCKET_OUT_SLOT).getItem().equals(FluidUtil.tryEmptyContainer(this.getItem(BUCKET_IN_SLOT), this.getTank(), amount, null, false).result.getItem()) && this.getItem(BUCKET_OUT_SLOT).getCount() < this.getItem(BUCKET_OUT_SLOT).getMaxStackSize()) {
+										this.fill(fluid, FluidAction.EXECUTE);
+										this.getItem(BUCKET_IN_SLOT).shrink(1);
+										this.getItem(BUCKET_OUT_SLOT).grow(1);
+									}
+									
+									if (this.getItem(BUCKET_OUT_SLOT).isEmpty()) {
+										this.setItem(BUCKET_OUT_SLOT, FluidUtil.tryEmptyContainer(this.getItem(BUCKET_IN_SLOT), this.getTank(), amount, null, true).result);
+										this.getItem(BUCKET_IN_SLOT).shrink(1);
+									}
+								}
+							}
+						}
+					}
+				} else {
+					if (this.getCurrentFluidAmount() > 0) {
+						if (this.getItem(BUCKET_OUT_SLOT).isEmpty()) {
+							ItemStack fillStack = FluidUtil.tryFillContainer(this.getItem(BUCKET_IN_SLOT), this.getTank(), this.getCurrentFluidAmount(), null, true).result;
+							
+							if (!fillStack.isEmpty()) {
+								this.setItem(BUCKET_OUT_SLOT, fillStack);
+								this.getItem(BUCKET_IN_SLOT).shrink(1);
+								this.getPocket().updateFluidFillLevel();
+							}
+						}
+					}
+				
+				}
 				this.sendUpdates(true);
 			}
 		}

@@ -5,11 +5,12 @@ import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
 import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
-import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.core.management.ModRegistrationManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleUpgradeStation;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallUpgradeStation;
@@ -44,7 +45,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockEntityModuleUpgradeStation extends BlockEntity implements IBlockInteract, Container, IBlockEntityUIMode, MenuProvider {
+public class BlockEntityModuleUpgradeStation extends BlockEntity implements IBlockInteract, Container, MenuProvider, IBEUIMode, IBEUILockable {
 	public NonNullList<ItemStack> inventoryItems = NonNullList.withSize(9, ItemStack.EMPTY);
 	
 	private Pocket pocket;
@@ -54,7 +55,7 @@ public class BlockEntityModuleUpgradeStation extends BlockEntity implements IBlo
 	private EnumUILock uiLock = EnumUILock.PRIVATE;
 	
 	public BlockEntityModuleUpgradeStation(BlockPos posIn, BlockState stateIn) {
-		super(ModRegistrationManager.BLOCK_ENTITY_TYPE_UPGRADE_STATION.get(), posIn, stateIn);
+		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_UPGRADE_STATION.get(), posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -221,10 +222,10 @@ public class BlockEntityModuleUpgradeStation extends BlockEntity implements IBlo
 				if(pocketIn.exists()) {
 					if (CosmosUtil.holdingWrench(playerIn)) {
 						if (pocketIn.checkIfOwner(playerIn)) {
-							ItemStack stack = new ItemStack(ModRegistrationManager.MODULE_UPGRADE_STATION.get());
+							ItemStack stack = new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get());
 							this.saveToItemStack(stack, levelIn.registryAccess());
 							
-							levelIn.setBlockAndUpdate(pos, ModRegistrationManager.BLOCK_WALL.get().defaultBlockState());
+							levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL.get().defaultBlockState());
 							levelIn.removeBlockEntity(pos);
 							
 							CosmosUtil.addStack(levelIn, playerIn, stack);
