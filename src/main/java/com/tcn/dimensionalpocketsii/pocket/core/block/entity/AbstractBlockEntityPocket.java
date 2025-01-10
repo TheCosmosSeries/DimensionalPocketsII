@@ -4,8 +4,9 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import com.tcn.cosmoslibrary.client.interfaces.IBEUpdated;
 import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
+import com.tcn.cosmoslibrary.common.capability.IEnergyCapBE;
+import com.tcn.cosmoslibrary.common.capability.IFluidCapBE;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumSideGuide;
 import com.tcn.cosmoslibrary.common.enums.EnumSideState;
@@ -18,6 +19,7 @@ import com.tcn.cosmoslibrary.common.interfaces.block.IBlockNotifier;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBESided;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUpdates;
 import com.tcn.cosmoslibrary.common.lib.CompatHelper;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
@@ -75,7 +77,7 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
-public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdateable implements IBlockNotifier, IBlockInteract, WorldlyContainer, IBESided, MenuProvider, Nameable, IFluidHandler, IFluidStorage, IBEUpdated.Fluid, IBEUIMode, IBEUILockable {
+public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdateable implements IBlockNotifier, IBlockInteract, WorldlyContainer, IBESided, MenuProvider, Nameable, IFluidHandler, IFluidStorage, IBEUpdates.FluidBE, IBEUIMode, IBEUILockable, IEnergyCapBE, IFluidCapBE {
 	
 	private NonNullList<ItemStack> inventoryItems = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
 	private EnumSideGuide SIDE_GUIDE = EnumSideGuide.HIDDEN;
@@ -1028,7 +1030,8 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 		}
 	}
 
-	public IFluidHandler createFluidProxy(@Nullable Direction directionIn) {
+	@Override
+	public IFluidHandler getFluidCapability(@Nullable Direction directionIn) {
 		return new IFluidHandler() {
 
 			@Override
@@ -1087,7 +1090,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 		};
 	}
 	
-	public IEnergyStorage createEnergyProxy(@Nullable Direction directionIn) {
+	public IEnergyStorage getEnergyCapability(@Nullable Direction directionIn) {
         return new IEnergyStorage() {
             @Override
             public int extractEnergy(int maxExtract, boolean simulate) {

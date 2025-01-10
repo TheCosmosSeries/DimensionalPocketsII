@@ -3,7 +3,7 @@ package com.tcn.dimensionalpocketsii.pocket.client.screen;
 import java.util.Arrays;
 
 import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityUI;
 import com.tcn.cosmoslibrary.common.enums.EnumGeneralEnableState;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
@@ -23,7 +23,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenFocus extends CosmosScreenUIModeBE<ContainerFocus> {
+public class ScreenFocus extends CosmosScreenBlockEntityUI<ContainerFocus> {
 	
 	private DimensionalButton jumpEnabledButton;
 	private DimensionalButton shiftEnabledButton;

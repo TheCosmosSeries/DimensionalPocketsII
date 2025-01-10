@@ -14,7 +14,6 @@ import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 
-@SuppressWarnings("deprecation")
 public class PocketsConfigManager {
 	
 	public static final PocketsConfigManager CONFIG;
@@ -58,40 +57,40 @@ public class PocketsConfigManager {
 	PocketsConfigManager(final ModConfigSpec.Builder builder) {
 		builder.push("general");
 		{
-			internal_height = builder.comment("Allows you to change the the internal height of Pockets").defineInRange("internal_height", 15, 15, 255);
-			internal_height_enhanced = builder.comment("Allows you to change the the internal height of Pockets").defineInRange("internal_height_enhanced", 31, 31, 255);
-			focus_jump_range = builder.comment("Allows you to change the the range of Dimensional Focus Jump Distance.").defineInRange("focus_jump_range", 12, 4, 32);
-			can_place_structures = builder.comment("Whether or not blocked Structures can be used inside of a Pocket").define("can_place_structures", false);
-			can_use_items = builder.comment("Whether or not blocked Items can be used inside of a Pocket").define("can_use_items", false);
-			can_use_commands = builder.comment("Whether or not blocked Commands can be used inside of a Pocket").define("can_use_commands", false);
-			keep_chunks_loaded = builder.comment("Whether to keep the Chunks inside the Pocket Dimension Loaded").define("keep_chunks_loaded", true);
-			can_destroy_walls = builder.comment("Whether the walls of Pockets can be destroyed in Creative Mode").define("can_destroy_walls", false);
-			internal_replace = builder.comment("Whether if reducing the Internal Height of Pocket that is larger will make it smaller").define("internal_replace", false);
-			stop_hostile_spawns = builder.comment("Whether or not Hostile Mobs should be stopped from spawning").define("stop_hostile_spawns", true);
-			create_backups = builder.comment("Whether or not the Mod will create backups on world load").define("create_backups", true);
+			this.internal_height = builder.comment("Allows you to change the the internal height of Pockets").defineInRange("internal_height", 15, 15, 255);
+			this.internal_height_enhanced = builder.comment("Allows you to change the the internal height of Pockets").defineInRange("internal_height_enhanced", 31, 31, 255);
+			this.focus_jump_range = builder.comment("Allows you to change the the range of Dimensional Focus Jump Distance.").defineInRange("focus_jump_range", 12, 4, 32);
+			this.can_place_structures = builder.comment("Whether or not blocked Structures can be used inside of a Pocket").define("can_place_structures", false);
+			this.can_use_items = builder.comment("Whether or not blocked Items can be used inside of a Pocket").define("can_use_items", false);
+			this.can_use_commands = builder.comment("Whether or not blocked Commands can be used inside of a Pocket").define("can_use_commands", false);
+			this.keep_chunks_loaded = builder.comment("Whether to keep the Chunks inside the Pocket Dimension Loaded").define("keep_chunks_loaded", true);
+			this.can_destroy_walls = builder.comment("Whether the walls of Pockets can be destroyed in Creative Mode").define("can_destroy_walls", false);
+			this.internal_replace = builder.comment("Whether if reducing the Internal Height of Pocket that is larger will make it smaller").define("internal_replace", false);
+			this.stop_hostile_spawns = builder.comment("Whether or not Hostile Mobs should be stopped from spawning").define("stop_hostile_spawns", true);
+			this.create_backups = builder.comment("Whether or not the Mod will create backups on world load").define("create_backups", true);
 		}
 		builder.pop();
 		
 		builder.push("console_messages");
 		{
-			info_message = builder.comment("Whether this mod will print [INFO] messages to the console/log").define("info", true);
-			debug_message = builder.comment("Whether this mod will print [DEBUG] messages to the console/log").define("debug", false);
+			this.info_message = builder.comment("Whether this mod will print [INFO] messages to the console/log").define("info", true);
+			this.debug_message = builder.comment("Whether this mod will print [DEBUG] messages to the console/log").define("debug", false);
 		}
 		builder.pop();
 		
 		builder.push("visual");
 		{
-			connected_textures_inside_pocket = builder.comment("Whether or not connected textures work inside Pockets").define("connected_textures_inside_pocket", true);
+			this.connected_textures_inside_pocket = builder.comment("Whether or not connected textures work inside Pockets").define("connected_textures_inside_pocket", true);
 		}
 		builder.pop();
 		
 		builder.push("blocked");
 		{
-			this.blocked_structures = builder.comment("List of Structures that are blocked when inside a Pocket").defineList("blocked_structures", BlockedObjects.BLOCKS, obj -> true);
-			this.blocked_items = builder.comment("List of Items that are blocked when inside a Pocket").defineList("blocked_items", BlockedObjects.ITEMS, obj -> true);
+			this.blocked_structures = builder.comment("List of Structures that are blocked when inside a Pocket").defineList("blocked_structures", BlockedObjects.BLOCKS, () -> null, obj -> true);
+			this.blocked_items = builder.comment("List of Items that are blocked when inside a Pocket").defineList("blocked_items", BlockedObjects.ITEMS, () -> null, obj -> true);
 			
 			this.op_level = builder.comment("The required OP level when on servers to bypass the below blocked commands").defineInRange("op_level", 4, 0, 4);
-			this.blocked_commands = builder.comment("List of Commands that are blocked when inside a Pocket").defineList("blocked_commands", BlockedObjects.COMMANDS, obj -> true);
+			this.blocked_commands = builder.comment("List of Commands that are blocked when inside a Pocket").defineList("blocked_commands", BlockedObjects.COMMANDS, () -> null, obj -> true);
 		}
 		builder.pop();
 		

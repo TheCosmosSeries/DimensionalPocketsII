@@ -49,13 +49,18 @@ public class ItemModuleShifter extends CosmosItem implements IModuleItem {
 	}
 
 	@Override
-	public BaseElytraModule getModule() {
-		return BaseElytraModule.SHIFTER;
+	public EnumElytraModule getModule() {
+		return EnumElytraModule.SHIFTER;
 	}
 	
 	@Override
 	public boolean doesInformationCarry() {
 		return false;
+	}
+
+	@Override
+	public Item asActualItem() {
+		return this;
 	}
 	
 	@Override

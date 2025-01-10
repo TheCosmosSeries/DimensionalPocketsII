@@ -71,7 +71,7 @@ public class BackupManager {
 				
 				filePath.append(CosmosIOHandler.getServerLevelId(server) + "/" + FOLDER.REGISTRY_BACKUP + "/" + FILE.REGISTRY_BACKUP + date + descriptor + ".zip");
 				
-				File tempFile = saveToFile(pocketRegistryIn, RegistryFileType.JSON, provider, true, true);
+				File tempFile = saveToFile(pocketRegistryIn, FOLDER.REGISTRY_BACKUP, FILE.REGISTRY_BACKUP, RegistryFileType.JSON, provider, true, true);
 				CosmosIOHandler.createFile(tempFile);
 				
 				try {
@@ -97,10 +97,6 @@ public class BackupManager {
 		}
 		
 		return false;
-	}
-	
-	public static File saveToFile(Map<PocketChunkInfo, Pocket> pocketRegistryIn, RegistryFileType fileType, HolderLookup.Provider provider, boolean includeSaveFolder, boolean backup) {
-		return saveToFile(pocketRegistryIn, FOLDER.REGISTRY_BACKUP, FILE.REGISTRY_BACKUP, fileType, provider, includeSaveFolder, backup);
 	}
 	
 	public static File saveToFile(Map<PocketChunkInfo, Pocket> pocketRegistryIn, String folderName, String fileName, RegistryFileType fileType, HolderLookup.Provider provider, boolean includeSaveFolder, boolean backup) {

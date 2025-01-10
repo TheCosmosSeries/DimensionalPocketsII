@@ -8,7 +8,7 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityUI;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosColourButton;
@@ -43,7 +43,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenModuleArmourWorkbench extends CosmosScreenUIModeBE<ContainerModuleArmourWorkbench> implements ContainerListener {
+public class ScreenModuleArmourWorkbench extends CosmosScreenBlockEntityUI<ContainerModuleArmourWorkbench> implements ContainerListener {
 
     private static final Vector3f ARMOR_STAND_TRANSLATION = new Vector3f();
     private static final Quaternionf ARMOR_STAND_ANGLE = new Quaternionf().rotationXYZ(0.43633232F, 0.0F, (float) Math.PI);
@@ -154,7 +154,7 @@ public class ScreenModuleArmourWorkbench extends CosmosScreenUIModeBE<ContainerM
 			} 
 			
 			if (this.colourButtonArmour.isMouseOver(mouseX, mouseY)) {
-				MutableComponent[] comp = new MutableComponent[] { ComponentHelper.style(ComponentColour.WHITE, "cosmoslibrary.gui.colour.info").append(ComponentHelper.style(ComponentColour.GREEN, "bold", " [Armour]")), 
+				MutableComponent[] comp = new MutableComponent[] { ComponentHelper.style(ComponentColour.WHITE, "cosmoslibrary.gui.colour.info").append(ComponentHelper.style(ComponentColour.LIME, "bold", " [Armour]")), 
 					(MutableComponent) ComponentHelper.style(ComponentColour.GRAY, "cosmoslibrary.gui.colour.value").append(blockEntity.getCustomColour(false).getColouredName())
 				};
 				
@@ -162,7 +162,7 @@ public class ScreenModuleArmourWorkbench extends CosmosScreenUIModeBE<ContainerM
 			}
 
 			if (this.colourButtonWings.isMouseOver(mouseX, mouseY)) {
-				MutableComponent[] comp = new MutableComponent[] { ComponentHelper.style(ComponentColour.WHITE, "cosmoslibrary.gui.colour.info").append(ComponentHelper.style(ComponentColour.GREEN, "bold", " [Wings]")), 
+				MutableComponent[] comp = new MutableComponent[] { ComponentHelper.style(ComponentColour.WHITE, "cosmoslibrary.gui.colour.info").append(ComponentHelper.style(ComponentColour.LIME, "bold", " [Wings]")), 
 					(MutableComponent) ComponentHelper.style(ComponentColour.GRAY, "cosmoslibrary.gui.colour.value").append(blockEntity.getCustomColour(true).getColouredName())
 				};
 				

@@ -45,8 +45,8 @@ public class ItemModuleFirework extends CosmosItem implements IModuleItem {
 	}
 
 	@Override
-	public BaseElytraModule getModule() {
-		return BaseElytraModule.FIREWORK;
+	public EnumElytraModule getModule() {
+		return EnumElytraModule.FIREWORK;
 	}
 
 	@Override
@@ -57,5 +57,10 @@ public class ItemModuleFirework extends CosmosItem implements IModuleItem {
 	@Override
 	public boolean transferInformation(ItemStack stackIn, ItemStack otherStack, boolean simulate) {
 		return false;
+	}
+
+	@Override
+	public Item asActualItem() {
+		return this;
 	}
 }

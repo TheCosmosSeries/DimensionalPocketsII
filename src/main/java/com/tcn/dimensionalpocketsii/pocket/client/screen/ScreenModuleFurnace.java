@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.pocket.client.screen;
 
 import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeRecipeBook;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityRecipeBookUI;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
@@ -23,7 +23,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenModuleFurnace extends CosmosScreenUIModeRecipeBook<SingleRecipeInput, AbstractCookingRecipe, ContainerModuleFurnace> {
+public class ScreenModuleFurnace extends CosmosScreenBlockEntityRecipeBookUI<SingleRecipeInput, AbstractCookingRecipe, ContainerModuleFurnace> {
 	
 	public ScreenModuleFurnace(ContainerModuleFurnace containerIn, Inventory playerInventoryIn, Component titleIn) {
 		super(containerIn, playerInventoryIn, titleIn);

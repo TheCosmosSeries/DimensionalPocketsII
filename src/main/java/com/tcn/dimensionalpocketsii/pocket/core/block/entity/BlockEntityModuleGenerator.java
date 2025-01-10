@@ -3,6 +3,7 @@ package com.tcn.dimensionalpocketsii.pocket.core.block.entity;
 import java.util.Optional;
 
 import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
+import com.tcn.cosmoslibrary.common.capability.IFluidCapBE;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumGenerationMode;
 import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
@@ -59,7 +60,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 @SuppressWarnings("removal")
-public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable implements IBlockInteract, WorldlyContainer, MenuProvider, Nameable, IFluidHandler, IFluidStorage, IBEUIMode, IBEUILockable {
+public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable implements IBlockInteract, WorldlyContainer, MenuProvider, Nameable, IFluidHandler, IFluidStorage, IBEUIMode, IBEUILockable, IFluidCapBE {
 	
 	private NonNullList<ItemStack> inventoryItems = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
 	
@@ -822,5 +823,10 @@ public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable impl
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public IFluidHandler getFluidCapability(Direction directionIn) {
+		return null;
 	}
 }

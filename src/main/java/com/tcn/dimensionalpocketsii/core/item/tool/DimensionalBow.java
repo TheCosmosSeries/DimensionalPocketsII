@@ -8,5 +8,4 @@ public class DimensionalBow extends CosmosEnergyBowItem {
 	public DimensionalBow(Properties builder, CosmosEnergyItem.Properties energyProperties, float damageIn) {
 		super(builder, energyProperties, damageIn);
 	}
-	
 }

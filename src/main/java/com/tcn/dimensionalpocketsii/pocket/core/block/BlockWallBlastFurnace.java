@@ -4,7 +4,6 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
 import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleBlastFurnace;
@@ -41,7 +40,7 @@ import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-public class BlockWallBlastFurnace extends BlockWallModule implements IBlankCreativeTab, EntityBlock {
+public class BlockWallBlastFurnace extends BlockWallModule implements EntityBlock {
 	private static final Component CONTAINER_NAME = Component.translatable("dimensionalpocketsii.gui.blast_furnace");
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 	

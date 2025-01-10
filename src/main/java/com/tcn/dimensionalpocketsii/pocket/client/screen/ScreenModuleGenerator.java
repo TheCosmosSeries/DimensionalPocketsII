@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import com.ibm.icu.text.DecimalFormat;
 import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityUI;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
 import com.tcn.cosmoslibrary.common.enums.EnumGenerationMode;
@@ -36,7 +36,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 @SuppressWarnings("removal")
 @OnlyIn(Dist.CLIENT)
-public class ScreenModuleGenerator extends CosmosScreenUIModeBE<ContainerModuleGenerator> {
+public class ScreenModuleGenerator extends CosmosScreenBlockEntityUI<ContainerModuleGenerator> {
 	
 	private CosmosButtonWithType modeChangeButton; private int[] MBI = new int[] { 41, 60,  18 };
 	private CosmosButtonWithType buttonTankClear;  private int[] TBI = new int[] { 125, 60, 18 };

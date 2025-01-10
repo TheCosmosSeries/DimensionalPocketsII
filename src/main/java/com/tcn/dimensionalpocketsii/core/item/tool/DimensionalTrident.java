@@ -1,21 +1,14 @@
 package com.tcn.dimensionalpocketsii.core.item.tool;
 
 import java.util.List;
-import java.util.function.Supplier;
 
-import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.cosmoslibrary.common.lib.ComponentHelper.Value;
-import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyItem;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyTridentItem;
 import com.tcn.dimensionalpocketsii.core.entity.DimensionalTridentEntity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -34,11 +27,10 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-@SuppressWarnings("unused")
 public class DimensionalTrident extends CosmosEnergyTridentItem {
 
-	public DimensionalTrident(Item.Properties properties, CosmosEnergyItem.Properties energyProperties, int useDuration, int enchantmentValue, Supplier<BlockEntityWithoutLevelRenderer> bewlrSupplierIn) {
-		super(properties, energyProperties, useDuration, enchantmentValue, bewlrSupplierIn);
+	public DimensionalTrident(Item.Properties properties, CosmosEnergyItem.Properties energyProperties, int useDuration, int enchantmentValue) {
+		super(properties, energyProperties, useDuration, enchantmentValue);
 	}
 	
 	@Override
@@ -71,7 +63,7 @@ public class DimensionalTrident extends CosmosEnergyTridentItem {
                 float j = EnchantmentHelper.getTridentSpinAttackStrength(stackIn, playerEntity);
 				if (!(j > 0.0F) || playerEntity.isInWaterOrRain()) {
 					Holder<SoundEvent> holder = EnchantmentHelper.pickHighestLevel(stackIn, EnchantmentEffectComponents.TRIDENT_SOUND).orElse(SoundEvents.TRIDENT_THROW);
-					if (!levelIn.isClientSide) {
+					if (!levelIn.isClientSide()) {
 						this.extractEnergy(stackIn, this.getMaxUse(stackIn), false);
 						
 						if (j == 0.0F) {
@@ -107,7 +99,7 @@ public class DimensionalTrident extends CosmosEnergyTridentItem {
 						playerEntity.push((double) f1, (double) f2, (double) f3);
 						playerEntity.startAutoSpinAttack(20, 8.0F, stackIn);
 						if (playerEntity.onGround()) {
-							float f6 = 1.1999999F;
+//							float f6 = 1.1999999F;
 							playerEntity.move(MoverType.SELF, new Vec3(0.0D, (double) 1.1999999F, 0.0D));
 						}
 

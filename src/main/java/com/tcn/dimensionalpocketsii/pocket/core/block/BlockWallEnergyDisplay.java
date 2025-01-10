@@ -1,7 +1,6 @@
 package com.tcn.dimensionalpocketsii.pocket.core.block;
 
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
-import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
@@ -36,7 +35,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class BlockWallEnergyDisplay extends BlockWallModule implements IBlankCreativeTab {
+public class BlockWallEnergyDisplay extends BlockWallModule {
 	public static final IntegerProperty ENERGY = IntegerProperty.create("energy", 0, 24);
 	
 	public BlockWallEnergyDisplay(Block.Properties prop) {

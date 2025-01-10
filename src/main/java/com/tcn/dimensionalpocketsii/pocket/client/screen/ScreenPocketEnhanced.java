@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.ibm.icu.text.DecimalFormat;
 import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeListBE;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityListUI;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -38,7 +38,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 @SuppressWarnings("removal")
 @OnlyIn(Dist.CLIENT)
-public class ScreenPocketEnhanced extends CosmosScreenUIModeListBE<ContainerPocketEnhanced> {
+public class ScreenPocketEnhanced extends CosmosScreenBlockEntityListUI<ContainerPocketEnhanced> {
 
 	private int[] energyBarData = new int[] { 14, 184 };
 	private int[] fluidBarData = new int[] { 37, 52, 185, 184, 18, 57 };

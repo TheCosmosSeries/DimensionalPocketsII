@@ -79,7 +79,7 @@ public class StorageManager {
 			
 			if (!found[0]) {
 				if (levelIn != null) {
-					if (!levelIn.isClientSide) {
+					if (!levelIn.isClientSide()) {
 						DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <getpocket> Unable to retrieve Pocket: { " + chunkPos + " }. Chunk Position not present in map. <ChunkPos>");
 					}
 				} else {
@@ -88,7 +88,7 @@ public class StorageManager {
 			}
 		} else {
 			if (levelIn != null) {
-				if (!levelIn.isClientSide) {
+				if (!levelIn.isClientSide()) {
 					DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <getpocket> Unable to retrieve Pocket: { " + chunkPos + " }. Chunk Position <null>!! <ChunkPos>");
 				}
 			} else {
@@ -112,7 +112,7 @@ public class StorageManager {
 			if (pocket[0].getChunkInfo() == null) {
 
 				if (levelIn != null) {
-					if (!levelIn.isClientSide) {
+					if (!levelIn.isClientSide()) {
 						DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <getpocket> Unable to retrieve Pocket: { " + pocketChunkInfoIn + " }. Chunk Position not present in map. <ChunkInfo>");
 					}
 				} else {
@@ -122,7 +122,7 @@ public class StorageManager {
 			
 		} else {
 			if (levelIn != null) {
-				if (!levelIn.isClientSide) {
+				if (!levelIn.isClientSide()) {
 					DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <getpocket> Unable to retrieve Pocket: { " + pocketChunkInfoIn + " }. Chunk Position <null>!! <ChunkInfo>");
 				}
 			} else {

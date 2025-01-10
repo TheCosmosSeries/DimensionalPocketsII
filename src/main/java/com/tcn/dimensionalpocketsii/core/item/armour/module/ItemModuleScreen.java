@@ -46,8 +46,8 @@ public class ItemModuleScreen extends CosmosItem implements IModuleItem {
 	}
 
 	@Override
-	public BaseElytraModule getModule() {
-		return BaseElytraModule.SCREEN;
+	public EnumElytraModule getModule() {
+		return EnumElytraModule.SCREEN;
 	}
 
 	@Override
@@ -58,5 +58,10 @@ public class ItemModuleScreen extends CosmosItem implements IModuleItem {
 	@Override
 	public boolean transferInformation(ItemStack stackIn, ItemStack otherStack, boolean simulate) {
 		return false;
+	}
+
+	@Override
+	public Item asActualItem() {
+		return this;
 	}
 }

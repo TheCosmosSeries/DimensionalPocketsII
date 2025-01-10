@@ -93,7 +93,6 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
  * #OPEN
  * This means that any code contained in this class can be copied as per the MIT Licence of the Original Author.
 */
-@SuppressWarnings({ "resource" })
 @EventBusSubscriber(modid = DimensionalPockets.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class PocketGameEventsManager {
 
@@ -144,6 +143,7 @@ public class PocketGameEventsManager {
 	}
 	
 	@SubscribeEvent
+	@SuppressWarnings("resource")
 	@OnlyIn(Dist.CLIENT)
 	public static void onInputEvent(InputEvent.Key event){
 		LocalPlayer player = Minecraft.getInstance().player;
@@ -260,7 +260,7 @@ public class PocketGameEventsManager {
 			if (entity instanceof ServerPlayer playerEntity) {
 				Pocket pocket = StorageManager.getPocketFromChunkPosition(level, chunkPos);
 				if (!pocket.checkIfPlayerCanShift(playerEntity, EnumShiftDirection.GENERIC)) {
-					if (!entity.level().isClientSide) {
+					if (!entity.level().isClientSide()) {
 						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <cosmosportals:portaltravel> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to use a Portal to Pocket: { " + pocket.getDominantChunkPos() + " } that has been locked by the Owner. This event has been cancelled.");
 					}
 					event.setCanceled(true);
@@ -283,7 +283,7 @@ public class PocketGameEventsManager {
 			
 			if (entity instanceof Player playerEntity) {
 				if (!pocket.checkIfOwner(playerEntity)) {
-					if (!entity.level().isClientSide) {
+					if (!entity.level().isClientSide()) {
 						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <cosmosportals:containerlink> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to create a Dimension Container inside Pocket: { " + pocket.getDominantChunkPos() + " } which they don't own. This event has been cancelled.");
 					}
 					event.setCanceled(true);
@@ -303,7 +303,7 @@ public class PocketGameEventsManager {
 			if (world != null) {
 				if (entity instanceof Player playerEntity) {
 					if (dimension.equals(PocketsDimensionManager.POCKET_WORLD)) {
-						if (!world.isClientSide) {
+						if (!world.isClientSide()) {
 							DimensionalPockets.CONSOLE.debug("[Event Cancellation] <enderteleport> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to ender teleport. This event has been cancelled.");
 						}
 						event.setCanceled(true);
@@ -325,7 +325,7 @@ public class PocketGameEventsManager {
 				if (entity instanceof Player playerEntity) {
 					if (!PocketsConfigManager.getInstance().getCanUseItems()) {
 						if (dimension.equals(PocketsDimensionManager.POCKET_WORLD)) {
-							if (!world.isClientSide) {
+							if (!world.isClientSide()) {
 								DimensionalPockets.CONSOLE.debug("[Event Cancellation] <enderpearlteleport> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to use an Ender Pearl. This event has been cancelled.");
 							}
 							event.setCanceled(true);
@@ -381,7 +381,7 @@ public class PocketGameEventsManager {
 						if (cancelled) {
 							event.setCanceled(true);
 							
-							if (!world.isClientSide) {
+							if (!world.isClientSide()) {
 								serverPlayer.sendSystemMessage(ComponentHelper.getErrorText("dimensionalpocketsii.error.command.usage").append(" " + Value.YELLOW + " /" + command));
 								DimensionalPockets.CONSOLE.debug("[Event Cancellation] <usecommand> { Player: '" + serverPlayer.getDisplayName().getString() + "', UUID: '" + serverPlayer.getUUID() + "' } tried to use command: { " + command  + " }. This event has been cancelled.");
 							}	
@@ -487,7 +487,7 @@ public class PocketGameEventsManager {
 		if (PocketsConfigManager.getInstance().getStopHostileSpawns()) {
 			if (!(entity instanceof Player)) {
 				if (dimension.equals(PocketsDimensionManager.POCKET_WORLD)) {
-					if (!world.isClientSide) {
+					if (!world.isClientSide()) {
 						Pocket pocket = StorageManager.getPocketFromChunkPosition(world, chunkPos);
 						
 						if (pocket != null) {
@@ -521,7 +521,7 @@ public class PocketGameEventsManager {
 		if (entity instanceof Player playerEntity) {
 			if (dimension.equals(PocketsDimensionManager.POCKET_WORLD)) {
 				if (mounted.getType().equals(EntityType.MINECART) || mounted.getType().equals(EntityType.BOAT)) {
-					if (!entity.level().isClientSide) {
+					if (!entity.level().isClientSide()) {
 						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <entitymount> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to mount entity: { " + mounted + " } This event has been cancelled.");
 					}
 					event.setCanceled(true);
@@ -554,7 +554,7 @@ public class PocketGameEventsManager {
 								ResourceLocation string_location = ResourceLocation.fromNamespaceAndPath(split[0], split[1]);
 								
 								if (registry_name.equals(string_location)) {									
-									if (!entity.level().isClientSide) {
+									if (!entity.level().isClientSide()) {
 										CosmosChatUtil.sendServerPlayerMessage(playerEntity, ComponentHelper.getErrorText("dimensionalpocketsii.error.item.usage"));
 										DimensionalPockets.CONSOLE.debug("[Event Cancellation] <rightclickitem> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to right click a blacklised Item. This event has been cancelled.");
 									}
@@ -592,7 +592,7 @@ public class PocketGameEventsManager {
 								ResourceLocation string_location = ResourceLocation.fromNamespaceAndPath(split[0], split[1]);
 								
 								if (registry_name.equals(string_location)) {
-									if (!entity.level().isClientSide) {
+									if (!entity.level().isClientSide()) {
 										CosmosChatUtil.sendServerPlayerMessage(playerEntity, ComponentHelper.getErrorText("dimensionalpocketsii.error.item.usage"));
 										DimensionalPockets.CONSOLE.debug("[Event Cancellation] <useitem> { Player: '" + playerEntity.getDisplayName().getString() + "', UUID: '" + playerEntity.getUUID() + "' } tried to use a blacklised Item. This event has been cancelled.");
 									}
@@ -629,7 +629,7 @@ public class PocketGameEventsManager {
 								ResourceLocation string_location = ResourceLocation.fromNamespaceAndPath(split[0], split[1]);
 								
 								if (registry_name.equals(string_location)) {
-									if (!entity.level().isClientSide) {
+									if (!entity.level().isClientSide()) {
 										CosmosChatUtil.sendServerPlayerMessage(playerEntity, ComponentHelper.getErrorText("dimensionalpocketsii.error.block.usage"));
 										DimensionalPockets.CONSOLE.debug("[Event Cancellation] <placeblock> Player: { " + playerEntity.getDisplayName().getContents() + " } tried to right click a blacklised Item. This event has been cancelled.");
 									}

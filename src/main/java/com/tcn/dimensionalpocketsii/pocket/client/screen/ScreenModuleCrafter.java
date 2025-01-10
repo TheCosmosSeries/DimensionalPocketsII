@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.pocket.client.screen;
 
 import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeRecipeBook;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityRecipeBookUI;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.dimensionalpocketsii.ModReferences.GUI.RESOURCE;
@@ -21,7 +21,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenModuleCrafter extends CosmosScreenUIModeRecipeBook<CraftingInput, CraftingRecipe, ContainerModuleCrafter> {
+public class ScreenModuleCrafter extends CosmosScreenBlockEntityRecipeBookUI<CraftingInput, CraftingRecipe, ContainerModuleCrafter> {
 
 	public ScreenModuleCrafter(ContainerModuleCrafter containerIn, Inventory playerInventoryIn, Component titleIn) {
 		super(containerIn, playerInventoryIn, titleIn);

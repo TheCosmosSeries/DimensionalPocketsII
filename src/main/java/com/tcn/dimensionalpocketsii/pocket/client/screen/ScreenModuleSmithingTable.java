@@ -9,7 +9,7 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityUI;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
@@ -38,7 +38,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenModuleSmithingTable extends CosmosScreenUIModeBE<ContainerModuleSmithingTable> implements ContainerListener {
+public class ScreenModuleSmithingTable extends CosmosScreenBlockEntityUI<ContainerModuleSmithingTable> implements ContainerListener {
 
     private static final Vector3f ARMOR_STAND_TRANSLATION = new Vector3f();
     private static final Quaternionf ARMOR_STAND_ANGLE = new Quaternionf().rotationXYZ(0.43633232F, 0.0F, (float) Math.PI);

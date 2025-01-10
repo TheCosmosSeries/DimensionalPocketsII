@@ -2,7 +2,6 @@ package com.tcn.dimensionalpocketsii.pocket.core.block;
 
 import javax.annotation.Nullable;
 
-import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
 import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleArmourWorkbench;
@@ -31,7 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class BlockWallArmourWorkbench extends BlockWallModule implements IBlankCreativeTab, EntityBlock {
+public class BlockWallArmourWorkbench extends BlockWallModule implements EntityBlock {
 
 	private static final Component CONTAINER_NAME = Component.translatable("dimensionalpocketsii.gui.armour_workbench");
 	

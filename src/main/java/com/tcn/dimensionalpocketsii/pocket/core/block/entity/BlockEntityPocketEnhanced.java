@@ -32,4 +32,3 @@ public class BlockEntityPocketEnhanced extends AbstractBlockEntityPocket {
 		return ComponentHelper.title("dimensionalpocketsii.gui.pocket.header");
 	}
 }
-

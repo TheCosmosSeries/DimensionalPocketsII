@@ -2,7 +2,6 @@ package com.tcn.dimensionalpocketsii.pocket.core.block;
 
 import com.tcn.cosmoslibrary.common.block.CosmosBlockDoor;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
-import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
@@ -32,7 +31,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class BlockWallDoor extends CosmosBlockDoor implements IBlankCreativeTab {
+public class BlockWallDoor extends CosmosBlockDoor {
 
 	public BlockWallDoor(Properties propertiesIn, BlockSetType typeIn) {
 		super(propertiesIn, typeIn);

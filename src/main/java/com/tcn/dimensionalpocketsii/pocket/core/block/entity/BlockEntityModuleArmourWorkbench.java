@@ -8,7 +8,7 @@ import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
-import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUpdateable;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUpdates;
 import com.tcn.cosmoslibrary.common.item.CosmosArmourItemColourable;
 import com.tcn.cosmoslibrary.common.item.CosmosArmourItemElytra;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -16,7 +16,7 @@ import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
-import com.tcn.dimensionalpocketsii.core.item.armour.module.BaseElytraModule;
+import com.tcn.dimensionalpocketsii.core.item.armour.module.EnumElytraModule;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.IModuleItem;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
@@ -46,7 +46,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, IBEUpdateable, IBEUIMode, IBEUILockable {
+public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, IBEUpdates.Base, IBEUIMode, IBEUILockable {
 
 	public NonNullList<ItemStack> inventoryItems = NonNullList.withSize(11, ItemStack.EMPTY);
 	
@@ -268,7 +268,7 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 					
 					if (!stackIn.isEmpty()) {
 						if (stackIn.getItem() instanceof IModuleItem item) {
-							BaseElytraModule module = item.getModule();
+							EnumElytraModule module = item.getModule();
 							
 							if (DimensionalElytraplate.addModule(inputStack, module, true)) {
 								DimensionalElytraplate.addModule(inputStack, module, false);
@@ -302,8 +302,8 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 				ItemStack stackIn = this.getItem(i);
 				
 				if (stackIn.isEmpty()) {
-					for (int j = 0; j < BaseElytraModule.LENGTH; j++) {
-						BaseElytraModule module = BaseElytraModule.getStateFromIndex(j);
+					for (int j = 0; j < EnumElytraModule.LENGTH; j++) {
+						EnumElytraModule module = EnumElytraModule.getStateFromIndex(j);
 						
 						if (!DimensionalElytraplate.removeModule(inputStack, module, true).isEmpty()) {
 							ItemStack moduleStack = DimensionalElytraplate.removeModule(inputStack, module, false);
@@ -330,7 +330,7 @@ public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateabl
 					
 					if (!stackIn.isEmpty()) {
 						if (stackIn.getItem() instanceof IModuleItem item) {
-							BaseElytraModule module = item.getModule();
+							EnumElytraModule module = item.getModule();
 							
 							if (useColour) {
 								if (DimensionalElytraplate.addModule(resultStack, module, true)) {

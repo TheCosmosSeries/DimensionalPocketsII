@@ -1,6 +1,6 @@
 package com.tcn.dimensionalpocketsii;
 
-import com.tcn.cosmoslibrary.common.runtime.CosmosConsoleManager;
+import com.tcn.cosmoslibrary.runtime.common.CosmosConsoleManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRecipeManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;

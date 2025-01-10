@@ -9,7 +9,7 @@ import com.tcn.cosmoslibrary.energy.interfaces.ICosmosEnergyItem;
 import com.tcn.dimensionalpocketsii.ModReferences;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
 import com.tcn.dimensionalpocketsii.core.item.armour.ElytraSettings;
-import com.tcn.dimensionalpocketsii.core.item.armour.module.BaseElytraModule;
+import com.tcn.dimensionalpocketsii.core.item.armour.module.EnumElytraModule;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.client.DeltaTracker;
@@ -53,7 +53,7 @@ public class ScreenElytraplateVisor implements LayeredDraw.Layer {
 			graphicsIn.pose().pushPose();
 			graphicsIn.pose().scale(scaleAll, scaleAll, 1.0F);
 			
-			if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.VISOR) && DimensionalElytraplate.getElytraSetting(chestStack, ElytraSettings.VISOR)[1]) {
+			if (DimensionalElytraplate.hasModuleInstalled(chestStack, EnumElytraModule.VISOR) && DimensionalElytraplate.getElytraSetting(chestStack, ElytraSettings.VISOR)[1]) {
 				CosmosUISystem.Render.renderStaticElement(graphicsIn, new int[] { 0, 0 }, 1, scaledHeight - 43, 0, 0, 242, 42, ModReferences.GUI.RESOURCE.ELYTRAPLATE_VISOR);
 				CosmosUISystem.Render.renderEnergyDisplay(graphicsIn, ComponentColour.RED, this.getSuitEnergy(minecraft)[0] / 1000, this.getSuitEnergy(minecraft)[1] / 1000, powerWidth, new int[] { 0, 0 }, 125, scaledHeight - powerOffset + 9, powerWidth, 7, true);
 				CosmosUISystem.Render.renderEnergyDisplay(graphicsIn, ComponentColour.GREEN, plate.getEnergy(chestStack) / 1000, plate.getMaxEnergyStored(chestStack) / 1000, powerWidth, new int[] { 0, 0 }, 125, scaledHeight - powerOffset + 19, powerWidth, 4, true);
@@ -86,42 +86,42 @@ public class ScreenElytraplateVisor implements LayeredDraw.Layer {
 				CosmosUISystem.Render.renderStaticElement(graphicsIn, new int[] { 0, 0 }, (int)(66 / scl1), (int) (scaledHeight / scl1) - (int) (39 / scl1), 56, 62, 28, 28, ModReferences.GUI.RESOURCE.ELYTRAPLATE_VISOR);
 				graphicsIn.pose().popPose();
 				
-				if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.SCREEN)) {
+				if (DimensionalElytraplate.hasModuleInstalled(chestStack, EnumElytraModule.SCREEN)) {
 					graphicsIn.pose().pushPose();
 					graphicsIn.pose().scale(scl1, scl1, 0.0F);
 					CosmosUISystem.Render.renderStaticElement(graphicsIn, new int[] { 0, 0 }, (int)(86 / scl1), (int) (scaledHeight / scl1) - (int) (39 / scl1), 28, 62, 28, 28, ModReferences.GUI.RESOURCE.ELYTRAPLATE_VISOR);
 					graphicsIn.pose().popPose();
 				}
 	
-				if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.SHIFTER)) {
+				if (DimensionalElytraplate.hasModuleInstalled(chestStack, EnumElytraModule.SHIFTER)) {
 					graphicsIn.pose().pushPose();
 					graphicsIn.pose().scale(scl1, scl1, 0.0F);
 					CosmosUISystem.Render.renderStaticElement(graphicsIn, new int[] { 0, 0 }, (int)(106 / scl1), (int) (scaledHeight / scl1) - (int) (39 / scl1), 0, 62, 28, 28, ModReferences.GUI.RESOURCE.ELYTRAPLATE_VISOR);
 					graphicsIn.pose().popPose();
 				}
 	
-				if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.SOLAR)) {
+				if (DimensionalElytraplate.hasModuleInstalled(chestStack, EnumElytraModule.SOLAR)) {
 					graphicsIn.pose().pushPose();
 					graphicsIn.pose().scale(scl1, scl1, 0.0F);
 					CosmosUISystem.Render.renderStaticElement(graphicsIn, new int[] { 0, 0 }, (int)(66 / scl1), (int) (scaledHeight / scl1) - (int) (19 / scl1), 84, 62, 28, 28, ModReferences.GUI.RESOURCE.ELYTRAPLATE_VISOR);
 					graphicsIn.pose().popPose();
 				}
 				
-				if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.BATTERY)) {
+				if (DimensionalElytraplate.hasModuleInstalled(chestStack, EnumElytraModule.BATTERY)) {
 					graphicsIn.pose().pushPose();
 					graphicsIn.pose().scale(scl1, scl1, 0.0F);
 					CosmosUISystem.Render.renderStaticElement(graphicsIn, new int[] { 0, 0 }, (int)(86 / scl1), (int) (scaledHeight / scl1) - (int) (19 / scl1), 112, 62, 28, 28, ModReferences.GUI.RESOURCE.ELYTRAPLATE_VISOR);
 					graphicsIn.pose().popPose();
 				}
 	
-				if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.ENDER_CHEST)) {
+				if (DimensionalElytraplate.hasModuleInstalled(chestStack, EnumElytraModule.ENDER_CHEST)) {
 					graphicsIn.pose().pushPose();
 					graphicsIn.pose().scale(scl1, scl1, 0.0F);
 					CosmosUISystem.Render.renderStaticElement(graphicsIn, new int[] { 0, 0 }, (int)(106 / scl1), (int) (scaledHeight / scl1) - (int) (19 / scl1), 140, 62, 28, 28, ModReferences.GUI.RESOURCE.ELYTRAPLATE_VISOR);
 					graphicsIn.pose().popPose();
 				}
 	
-				if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.SHIFTER)) {
+				if (DimensionalElytraplate.hasModuleInstalled(chestStack, EnumElytraModule.SHIFTER)) {
 					if (chestStack.has(DataComponents.CUSTOM_DATA)) {
 						CompoundTag stack_nbt = chestStack.get(DataComponents.CUSTOM_DATA).copyTag();
 	

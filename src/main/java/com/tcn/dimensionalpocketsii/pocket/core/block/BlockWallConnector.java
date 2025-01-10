@@ -2,7 +2,6 @@ package com.tcn.dimensionalpocketsii.pocket.core.block;
 
 import javax.annotation.Nullable;
 
-import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
 import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleConnector;
@@ -30,7 +29,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class BlockWallConnector extends BlockWallModule implements IBlankCreativeTab, EntityBlock {
+public class BlockWallConnector extends BlockWallModule implements EntityBlock {
 	
 	public static final IntegerProperty MODE = IntegerProperty.create("mode", 0, 3);
 	public static final IntegerProperty TYPE = IntegerProperty.create("type", 0, 3);

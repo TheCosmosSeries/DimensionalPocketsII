@@ -26,8 +26,8 @@ import com.tcn.cosmoslibrary.registry.gson.object.ObjectBlockPosDimension;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectDestinationInfo;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectFluidTankCustom;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectPlayerInformation;
-import com.tcn.dimensionalpocketsii.ModReferences;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
+import com.tcn.dimensionalpocketsii.ModReferences;
 import com.tcn.dimensionalpocketsii.core.advancement.CoreTriggers;
 import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
@@ -36,9 +36,8 @@ import com.tcn.dimensionalpocketsii.pocket.core.block.AbstractBlockPocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallBase;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallEdge;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallModule;
+import com.tcn.dimensionalpocketsii.pocket.core.block.entity.AbstractBlockEntityPocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleConnector;
-import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityPocket;
-import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityPocketEnhanced;
 import com.tcn.dimensionalpocketsii.pocket.core.gson.PocketChunkInfo;
 import com.tcn.dimensionalpocketsii.pocket.core.management.PocketEventFactory;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
@@ -151,13 +150,13 @@ public class Pocket implements IEnergyHolder, Container {
 	public PocketChunkInfo chunk_info = null;
 
 	@SerializedName(NBT_LAST_POS_KEY)
-	private ObjectBlockPosDimension last_pos = new ObjectBlockPosDimension(BlockPos.ZERO, ResourceLocation.parse(""));
+	private ObjectBlockPosDimension last_pos = ObjectBlockPosDimension.BLANK;
 
 	@SerializedName(NBT_SPAWN_POS_KEY)
-	private ObjectDestinationInfo spawn_pos = new ObjectDestinationInfo(BlockPos.ZERO, 0, 0);
+	private ObjectDestinationInfo spawn_pos = ObjectDestinationInfo.BLANK;
 	
 	@SerializedName(NBT_FLUID_TANK_KEY)
-	public ObjectFluidTankCustom fluid_tank = new ObjectFluidTankCustom(new FluidTank(ModReferences.CONSTANT.POCKET_FLUID_CAP), 0);
+	public ObjectFluidTankCustom fluid_tank = new ObjectFluidTankCustom(ModReferences.CONSTANT.POCKET_FLUID_CAP, 0);
 
 	@SerializedName(NBT_ALLOWED_PLAYERS_KEY)
 	private ArrayList<String> allowed_players_array = new ArrayList<String>();
@@ -202,15 +201,7 @@ public class Pocket implements IEnergyHolder, Container {
 	}
 	
 	public Block getSourceBlock() {
-		Level world = this.getSourceBlockLevel();
-		
-		if (world == null) {
-			DimensionalPockets.CONSOLE.debugWarn("[Pocket] <getsourceblock> Dimension: " + this.block_dimension + " returned <null>!! (Mystcraft or GalactiCraft world?). Will return <null>. This will cause a problem.");
-			return null;
-		}
-		
-		return world.getBlockState(this.getLastBlockPos()).getBlock();
-	
+		return this.getSourceBlockState().getBlock();
 	}
 	
 	public BlockState getSourceBlockState() {
@@ -288,8 +279,6 @@ public class Pocket implements IEnergyHolder, Container {
 	
 	public void setLockState(EnumLockState state) {
 		this.is_locked = state;
-		
-		//this.forceUpdateOutsidePocket();
 	}
 	
 	public void setLockState(boolean change) {
@@ -465,11 +454,11 @@ public class Pocket implements IEnergyHolder, Container {
 	}
 	
 	public String getOwnerName() {
-		return this.owner.getPlayerName();
+		return this.getOwner().getPlayerName();
 	}
 	
 	protected UUID getOwnerUUID() {
-		return this.owner.getPlayerUUID();
+		return this.getOwner().getPlayerUUID();
 	}
 	
 	/** - Block Array Things - */
@@ -555,13 +544,7 @@ public class Pocket implements IEnergyHolder, Container {
 		Level level = this.getSourceBlockLevel();
 		
 		if (level != null) {
-			BlockEntity entity = level.getBlockEntity(this.getLastBlockPos());
-			
-			if (entity instanceof BlockEntityPocket blockEntity) {
-				blockEntity.sendUpdates(true);
-			}
-			
-			if (entity instanceof BlockEntityPocketEnhanced blockEntity) {
+			if (level.getBlockEntity(this.getLastBlockPos()) instanceof AbstractBlockEntityPocket blockEntity) {
 				blockEntity.sendUpdates(true);
 			}
 		}
@@ -757,8 +740,8 @@ public class Pocket implements IEnergyHolder, Container {
 		return this.getEnergyStored() < this.getMaxEnergyStored();
 	}
 
-	/** - FluidHandler Start */
 	
+	/** - FluidHandler Start */
 	public int getTanks() {
 		return 1;
 	}
@@ -860,8 +843,8 @@ public class Pocket implements IEnergyHolder, Container {
 		this.fluid_tank.getFluidTank().setFluid(FluidStack.EMPTY);
 	}
 	
-	/** - Side State Things - */
 	
+	/** - Side State Things - */
 	public EnumSideState getSide(Direction facing) {
 		return this.pocket_side_array[facing.get3DDataValue()];
 	}
@@ -1064,7 +1047,7 @@ public class Pocket implements IEnergyHolder, Container {
 	public void clearContent() { }
 	
 	public void setSurroundingStacks(Level levelIn, BlockPos posIn) {
-		if (!levelIn.isClientSide) {
+		if (!levelIn.isClientSide()) {
 			for (Direction dir : Direction.values()) {
 				Block block_other = levelIn.getBlockState(posIn.offset(dir.getNormal())).getBlock();
 				this.setItem(dir.get3DDataValue() + ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE, new ItemStack(block_other));
@@ -1073,9 +1056,9 @@ public class Pocket implements IEnergyHolder, Container {
 	}
 	
 	public void updateWallBlocks(Player playerIn, Level levelIn) {
-		if (!levelIn.isClientSide) {
+		if (!levelIn.isClientSide()) {
 			if (playerIn != null) {
-				if (playerIn.level().dimension().equals(PocketsDimensionManager.POCKET_WORLD)) {
+				if (levelIn.dimension().equals(PocketsDimensionManager.POCKET_WORLD)) {
 					int bottomYOffset = StorageManager.getPocketYOffset() + 2;
 					int[] spacing = { 1, 3 };
 					
@@ -1141,7 +1124,7 @@ public class Pocket implements IEnergyHolder, Container {
 	}
 	
 	public boolean updateConnector(Level levelIn, CosmosChunkPos chunkPosIn) {
-		if (!levelIn.isClientSide) {
+		if (!levelIn.isClientSide()) {
 			Level pocketLevel = StorageManager.getServerLevel();
 			
 			if (pocketLevel != null) {
@@ -1264,10 +1247,10 @@ public class Pocket implements IEnergyHolder, Container {
 				StorageManager.saveRegistry(levelIn.registryAccess());
 			}
 			
-			else if (!this.chunk_info.isSingleChunk()) {
+			else if (!this.getChunkInfo().isSingleChunk()) {
 				int height = PocketsConfigManager.getInstance().getInternalHeightEnhanced();
 
-				//System.out.println("HERE " + height + " " + this.getInternalHeight() + " " + (height != this.getInternalHeight()));
+//				System.out.println("HERE " + height + " " + this.getInternalHeight() + " " + (height != this.getInternalHeight()));
 				
 				BlockPos[] worldPos = new BlockPos[] { 
 					new BlockPos(CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getX(), 1, CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getZ()),
@@ -1277,7 +1260,7 @@ public class Pocket implements IEnergyHolder, Container {
 				};				
 				
 				if (height != this.getInternalHeight()) {
-					System.out.println("GENERATE");
+//					System.out.println("GENERATE");
 					
 					if (this.getInternalHeight() < PocketsConfigManager.getInstance().getInternalHeight()) {
 						int[] rep = new int[] { 0, 16 };
@@ -1316,11 +1299,11 @@ public class Pocket implements IEnergyHolder, Container {
 				
 				Block check_block_second_one = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(14, 1, 0))).getBlock();
 				Block check_block_second_three = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(0, -1, 0))).getBlock();
-				//Block check_block_second_two = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(13, 1, 1))).getBlock();
+//				Block check_block_second_two = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(13, 1, 1))).getBlock();
 				
 				Block check_block_third_three = level.getBlockState(MathHelper.addBlockPos(worldPos[2], new BlockPos(0, -1, 0))).getBlock();
 				
-				//DimensionalPockets.CONSOLE.debug(check_block_second_one + " \\ " + check_block_second_two);
+//				DimensionalPockets.CONSOLE.debug(check_block_second_one + " \\ " + check_block_second_two);
 				
 				boolean checks = 
 					check_block_one instanceof BlockWallEdge && 
@@ -1385,7 +1368,7 @@ public class Pocket implements IEnergyHolder, Container {
 								levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 							}
 							
-							//Added those flags, so I could add these checks, almost halves the time.
+							//Added criteria flags, to add these checkes, to halve the time generation takes.
 							if (!(flagX || flagY || flagZ) || flagX && (flagY || flagZ) || flagY && flagZ) {
 								continue;
 							}
@@ -1499,7 +1482,7 @@ public class Pocket implements IEnergyHolder, Container {
 									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
-								//Added those flags, so I could add these checks, almost halves the time.
+								//Added criteria flags, to add these checkes, to halve the time generation takes.
 								if (!(flagX || flagY || flagZ) || flagX && (flagY || flagZ) || flagY && flagZ) {
 									continue;
 								}
@@ -1555,7 +1538,7 @@ public class Pocket implements IEnergyHolder, Container {
 									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
-								//Added those flags, so I could add these checks, almost halves the time.
+								//Added criteria flags, to add these checkes, to halve the time generation takes.
 								if (!(flagX || flagY || flagZ) || flagX && (flagY || flagZ) || flagY && flagZ) {
 									continue;
 								}
@@ -1611,7 +1594,7 @@ public class Pocket implements IEnergyHolder, Container {
 									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
-								//Added those flags, so I could add these checks, almost halves the time.
+								//Added criteria flags, to add these checkes, to halve the time generation takes.
 								if (!(flagX || flagY || flagZ) || flagX && (flagY || flagZ) || flagY && flagZ) {
 									continue;
 								}
@@ -1644,7 +1627,7 @@ public class Pocket implements IEnergyHolder, Container {
 	public void shift(Player playerIn, EnumShiftDirection direction, @Nullable BlockPos pocket_pos, @Nullable ResourceKey<Level> dimensionIn, @Nullable ItemStack stack) {
 		Level entity_world = playerIn.level();
 
-		if (entity_world.isClientSide || !(playerIn instanceof ServerPlayer)) {
+		if (entity_world.isClientSide() || !(playerIn instanceof ServerPlayer)) {
 			return;
 		}
 		
@@ -1960,5 +1943,4 @@ public class Pocket implements IEnergyHolder, Container {
 		
 		return item_stack;
 	}
-
 }

@@ -11,6 +11,6 @@ import net.neoforged.fml.common.asm.enumextension.EnumProxy;
 
 public class CoreRecipeCategories {
 	public static final EnumProxy<RecipeBookCategories> CUSTOM_RECIPE_CATEGORY_ENUM_PROXY = new EnumProxy<>(
-			RecipeBookCategories.class, (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get()))
+		RecipeBookCategories.class, (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get()))
 	);
 }

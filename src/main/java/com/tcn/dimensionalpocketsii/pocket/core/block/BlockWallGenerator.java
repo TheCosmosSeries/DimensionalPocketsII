@@ -2,7 +2,6 @@ package com.tcn.dimensionalpocketsii.pocket.core.block;
 
 import javax.annotation.Nullable;
 
-import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
 import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleGenerator;
@@ -26,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class BlockWallGenerator extends BlockWallModule implements IBlankCreativeTab, EntityBlock {
+public class BlockWallGenerator extends BlockWallModule implements EntityBlock {
 	
 	public BlockWallGenerator(Block.Properties prop) {
 		super(prop);

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tcn.cosmoslibrary.client.renderer.CosmosRendererHelper;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
-import com.tcn.dimensionalpocketsii.core.item.armour.module.BaseElytraModule;
+import com.tcn.dimensionalpocketsii.core.item.armour.module.EnumElytraModule;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.client.Minecraft;
@@ -52,7 +52,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 				boolean foil = true;
 				
 				poseStack.translate(0.5F, 0.5F, 0.0F);
-				if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.SCREEN)) {
+				if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.SCREEN)) {
 					BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_connect"), "standalone"));
 					
 					poseStack.pushPose();
@@ -63,7 +63,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 					foil = false;
 				}
 
-				if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.SHIFTER)) {
+				if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.SHIFTER)) {
 					BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_shifter"), "standalone"));
 					
 					poseStack.pushPose();
@@ -74,7 +74,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 					foil = false;
 				}
 
-				if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.VISOR)) {
+				if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.VISOR)) {
 					BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_visor"), "standalone"));
 					
 					poseStack.pushPose();
@@ -85,7 +85,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 					foil = false;
 				}
 				
-				if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.SOLAR)) {
+				if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.SOLAR)) {
 					BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_solar"), "standalone"));
 					
 					poseStack.pushPose();
@@ -96,7 +96,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 					foil = false;
 				}
 				
-				if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.BATTERY)) {
+				if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.BATTERY)) {
 					BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_battery"), "standalone"));
 					
 					poseStack.pushPose();
@@ -125,7 +125,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 			boolean foil = true;
 			ivertexbuilder = ItemRenderer.getFoilBufferDirect(typeBuffer, rendertype, true, stackIn.hasFoil());
 			
-			if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.SCREEN)) {
+			if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.SCREEN)) {
 				BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_connect"), "standalone"));
 
 				VertexConsumer consumer = transformIn.firstPerson() ? ItemRenderer.getFoilBuffer(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false) : ItemRenderer.getFoilBufferDirect(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false);
@@ -143,7 +143,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 				foil = false;
 			}
 
-			if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.SHIFTER)) {
+			if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.SHIFTER)) {
 				BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_shifter"), "standalone"));
 
 				VertexConsumer consumer = transformIn.firstPerson() ? ItemRenderer.getFoilBuffer(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false) : ItemRenderer.getFoilBufferDirect(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false);
@@ -161,7 +161,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 				foil = false;
 			}
 
-			if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.VISOR)) {
+			if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.VISOR)) {
 				BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_visor"), "standalone"));
 
 				VertexConsumer consumer = transformIn.firstPerson() ? ItemRenderer.getFoilBuffer(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false) : ItemRenderer.getFoilBufferDirect(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false);
@@ -179,7 +179,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 				foil = false;
 			}
 			
-			if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.SOLAR)) {
+			if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.SOLAR)) {
 				BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_solar"), "standalone"));
 
 				VertexConsumer consumer = transformIn.firstPerson() ? ItemRenderer.getFoilBuffer(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false) : ItemRenderer.getFoilBufferDirect(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false);
@@ -197,7 +197,7 @@ public class ElytraplateBEWLR extends BlockEntityWithoutLevelRenderer {
 				foil = false;
 			}
 			
-			if (DimensionalElytraplate.hasModuleInstalled(stackIn, BaseElytraModule.BATTERY)) {
+			if (DimensionalElytraplate.hasModuleInstalled(stackIn, EnumElytraModule.BATTERY)) {
 				BakedModel itemModel = manager.getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(itemLocation.getNamespace(), "item/" + itemLocation.getPath() + "_battery"), "standalone"));
 				
 				VertexConsumer consumer = transformIn.firstPerson() ? ItemRenderer.getFoilBuffer(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false) : ItemRenderer.getFoilBufferDirect(typeBuffer, rendertype, true, foil ? stackIn.hasFoil() : false);

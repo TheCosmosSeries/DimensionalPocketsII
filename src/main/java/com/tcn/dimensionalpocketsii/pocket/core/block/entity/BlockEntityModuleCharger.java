@@ -64,14 +64,12 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
 	private EnumUILock uiLock = EnumUILock.PRIVATE;
 	
-	private int chargeRate = 100000;
-
 	public BlockEntityModuleCharger(BlockPos posIn, BlockState stateIn) {
 		super(PocketsRegistrationManager.BLOCK_ENTITY_TYPE_CHARGER.get(), posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
-		if (level.isClientSide) {
+		if (this.getLevel().isClientSide()) {
 			return this.pocket;
 		}
 		
@@ -79,24 +77,24 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	}
 
 	public void sendUpdates(boolean update) {
-		if (level != null) {
+		if (this.getLevel() != null) {
 			this.setChanged();
 			BlockState state = this.getBlockState();
 			BlockWallCharger block = (BlockWallCharger) state.getBlock();
 			
-			level.sendBlockUpdated(this.getBlockPos(), state, state, 3);
+			this.getLevel().sendBlockUpdated(this.getBlockPos(), state, state, 3);
 			
 			if (update) {
-				if (!level.isClientSide) {
-					level.setBlockAndUpdate(this.getBlockPos(), block.defaultBlockState());
+				if (!this.getLevel().isClientSide()) {
+					this.getLevel().setBlockAndUpdate(this.getBlockPos(), block.defaultBlockState());
 					
 					if (this.getPocket() != null) {
 						this.getPocket().updateBaseConnectors(this.getLevel());
 					}
 				}
 			} else {
-				if (!level.isClientSide) {
-					level.setBlockAndUpdate(this.getBlockPos(), block.defaultBlockState());
+				if (!this.getLevel().isClientSide()) {
+					this.getLevel().setBlockAndUpdate(this.getBlockPos(), block.defaultBlockState());
 				}
 			}
 		}
@@ -306,12 +304,10 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	
 	public void chargeItem(int indexIn) {
 		if (!this.getItem(indexIn).isEmpty()) {
-			Object object = this.getItem(indexIn).getCapability(Capabilities.EnergyStorage.ITEM);
-			
-			if (object instanceof IEnergyStorage energyItem) {
+			if (this.getItem(indexIn).getCapability(Capabilities.EnergyStorage.ITEM) instanceof IEnergyStorage energyItem) {
 				if (this.getPocket().hasEnergyStored()) {
 					if (energyItem.canReceive()) {
-						energyItem.receiveEnergy(this.getPocket().extractEnergy(Math.min(this.getPocket().getMaxReceive(), this.chargeRate), false), false);
+						this.getPocket().extractEnergy(energyItem.receiveEnergy(this.getPocket().getMaxReceive(), false), false);
 					}
 				}
 			}
@@ -320,12 +316,12 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	
 	public void drainItem(int indexIn) {
 		if (!this.getItem(indexIn).isEmpty()) {
-			Object object = this.getItem(indexIn).getCapability(Capabilities.EnergyStorage.ITEM);
-		
-			if (object instanceof IEnergyStorage energyItem) {
-				if (CosmosEnergyUtil.hasEnergy(energyItem)) {
-					if (energyItem.canExtract()) {
-						energyItem.extractEnergy(this.getPocket().receiveEnergy(Math.min(this.getPocket().getMaxReceive(), this.chargeRate), false), false);
+			if (this.getItem(indexIn).getCapability(Capabilities.EnergyStorage.ITEM) instanceof IEnergyStorage energyItem) {
+				if (!CosmosEnergyUtil.isEnergyFull(this.getPocket())) {
+					if (CosmosEnergyUtil.hasEnergy(energyItem)) {
+						if (energyItem.canExtract()) {
+							this.getPocket().receiveEnergy(energyItem.extractEnergy(this.getPocket().getMaxExtract(), false), false);
+						}
 					}
 				}
 			}

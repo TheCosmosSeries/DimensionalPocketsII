@@ -1,6 +1,5 @@
 package com.tcn.dimensionalpocketsii.pocket.core.block;
 
-import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
 import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleCrafter;
@@ -22,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class BlockWallCrafter extends BlockWallModule implements IBlankCreativeTab, EntityBlock {
+public class BlockWallCrafter extends BlockWallModule implements EntityBlock {
 
 	public BlockWallCrafter(Block.Properties prop) {
 		super(prop);	

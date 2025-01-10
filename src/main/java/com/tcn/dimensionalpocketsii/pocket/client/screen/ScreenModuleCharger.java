@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.ibm.icu.text.DecimalFormat;
 import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityUI;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -29,7 +29,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenModuleCharger extends CosmosScreenUIModeBE<ContainerModuleCharger> {
+public class ScreenModuleCharger extends CosmosScreenBlockEntityUI<ContainerModuleCharger> {
 	
 	private CosmosButtonWithType energyStateButton; private int[] MBI = new int[] { 83, 80 };
 	

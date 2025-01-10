@@ -11,7 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
-public class ItemSmithingUpgrade extends CosmosItem implements IModuleItem {
+public class ItemSmithingUpgrade extends CosmosItem {
 	public ItemSmithingUpgrade(Properties properties) {
 		super(properties);
 	}
@@ -30,21 +30,6 @@ public class ItemSmithingUpgrade extends CosmosItem implements IModuleItem {
 
 	@Override
 	public boolean isDamageable(ItemStack stack) {
-		return false;
-	}
-
-	@Override
-	public BaseElytraModule getModule() {
-		return BaseElytraModule.VISOR;
-	}
-
-	@Override
-	public boolean doesInformationCarry() {
-		return false;
-	}
-
-	@Override
-	public boolean transferInformation(ItemStack stackIn, ItemStack otherStack, boolean simulate) {
 		return false;
 	}
 }

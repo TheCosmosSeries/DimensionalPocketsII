@@ -4,8 +4,9 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import com.tcn.cosmoslibrary.client.interfaces.IBEUpdated;
 import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
+import com.tcn.cosmoslibrary.common.capability.IEnergyCapBE;
+import com.tcn.cosmoslibrary.common.capability.IFluidCapBE;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumConnectionType;
 import com.tcn.cosmoslibrary.common.enums.EnumSideState;
@@ -18,6 +19,7 @@ import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEConnectionType;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBESided;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUILockable;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBEUpdates;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
@@ -67,7 +69,7 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
-public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable implements IBlockInteract, MenuProvider, Nameable, WorldlyContainer, IBESided, IFluidHandler, IFluidStorage, IBEUpdated.Fluid, IBEConnectionType, IBEUIMode, IBEUILockable {
+public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable implements IBlockInteract, MenuProvider, Nameable, WorldlyContainer, IBESided, IFluidHandler, IFluidStorage, IBEUpdates.FluidBE, IBEConnectionType, IBEUIMode, IBEUILockable, IEnergyCapBE, IFluidCapBE {
 
 	private EnumSideState[] SIDE_STATE_ARRAY = EnumSideState.getStandardArray();
 	private EnumConnectionType TYPE = EnumConnectionType.getStandardValue();
@@ -102,24 +104,24 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 
 	@Override
 	public void sendUpdates(boolean forceUpdate) {
-		if (level != null) {
+		if (this.getLevel() != null) {
 			this.setChanged();
 			BlockState state = this.getBlockState();
 			BlockWallConnector block = (BlockWallConnector) state.getBlock();
 			
-			level.sendBlockUpdated(this.getBlockPos(), state, state, 3);
+			this.getLevel().sendBlockUpdated(this.getBlockPos(), state, state, 3);
 			
 			if (forceUpdate) {
-				if (!level.isClientSide) {
-					level.setBlockAndUpdate(this.getBlockPos(), block.updateState(state, this.getBlockPos(), level));
+				if (!this.getLevel().isClientSide()) {
+					this.getLevel().setBlockAndUpdate(this.getBlockPos(), block.updateState(state, this.getBlockPos(), level));
 					
 					if (this.getPocket() != null) {
 						this.getPocket().updateBaseConnectors(this.getLevel());
 					}
 				}
 			} else {
-				if (!level.isClientSide) {
-					level.setBlockAndUpdate(this.getBlockPos(), block.updateState(state, this.getBlockPos(), level));
+				if (!this.getLevel().isClientSide()) {
+					this.getLevel().setBlockAndUpdate(this.getBlockPos(), block.updateState(state, this.getBlockPos(), level));
 				}
 			}
 		}
@@ -888,7 +890,8 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 		}
 	}
 
-	public IFluidHandler createFluidProxy(@Nullable Direction directionIn) {
+	@Override
+	public IFluidHandler getFluidCapability(@Nullable Direction directionIn) {
 		return new IFluidHandler() {
 
 			@Override
@@ -968,7 +971,7 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 	}
 
 
-	public IEnergyStorage createEnergyProxy(@Nullable Direction directionIn) {
+	public IEnergyStorage getEnergyCapability(@Nullable Direction directionIn) {
         return new IEnergyStorage() {
             @Override
             public int extractEnergy(int maxExtract, boolean simulate) {

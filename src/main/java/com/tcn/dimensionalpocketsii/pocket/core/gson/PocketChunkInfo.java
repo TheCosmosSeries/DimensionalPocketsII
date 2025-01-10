@@ -23,7 +23,6 @@ public class PocketChunkInfo {
 	
 	public PocketChunkInfo(CosmosChunkPos dominantChunkIn, boolean isSingleChunkIn) {
 		this.chunks.add(dominantChunkIn);
-		
 		this.isSingleChunk = isSingleChunkIn;
 		
 		if (!isSingleChunkIn) {
@@ -82,7 +81,7 @@ public class PocketChunkInfo {
 	
 	@Override
 	public String toString() {
-		if (!this.isSingleChunk) {
+		if (!this.isSingleChunk()) {
 			String array = this.chunks.get(1).toString() + ", " + this.chunks.get(2).toString() + ", " + this.chunks.get(3).toString();
 			
 			return "{ DominantChunk: " + this.chunks.get(0).toString() + " | SingleChunk: " + this.isSingleChunk + " | ChunkArray: [" + array + "] }";

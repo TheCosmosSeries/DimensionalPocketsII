@@ -40,8 +40,8 @@ public class ItemModuleSolar extends CosmosItem implements IModuleItem {
 	}
 
 	@Override
-	public BaseElytraModule getModule() {
-		return BaseElytraModule.SOLAR;
+	public EnumElytraModule getModule() {
+		return EnumElytraModule.SOLAR;
 	}
 
 	@Override
@@ -52,5 +52,10 @@ public class ItemModuleSolar extends CosmosItem implements IModuleItem {
 	@Override
 	public boolean transferInformation(ItemStack stackIn, ItemStack otherStack, boolean simulate) {
 		return false;
+	}
+
+	@Override
+	public Item asActualItem() {
+		return this;
 	}
 }

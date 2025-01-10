@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.pocket.client.screen;
 
 import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityUI;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.dimensionalpocketsii.ModReferences.GUI;
@@ -22,7 +22,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenModuleUpgradeStation extends CosmosScreenUIModeBE<ContainerModuleUpgradeStation> {
+public class ScreenModuleUpgradeStation extends CosmosScreenBlockEntityUI<ContainerModuleUpgradeStation> {
 
 	public ScreenModuleUpgradeStation(ContainerModuleUpgradeStation containerIn, Inventory playerInventoryIn, Component titleIn) {
 		super(containerIn, playerInventoryIn, titleIn);

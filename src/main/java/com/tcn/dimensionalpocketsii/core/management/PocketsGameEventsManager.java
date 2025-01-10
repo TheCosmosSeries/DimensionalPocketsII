@@ -7,7 +7,7 @@ import com.tcn.cosmoslibrary.energy.item.CosmosEnergyArmourItemColourable;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
 import com.tcn.dimensionalpocketsii.core.item.armour.ElytraSettings;
-import com.tcn.dimensionalpocketsii.core.item.armour.module.BaseElytraModule;
+import com.tcn.dimensionalpocketsii.core.item.armour.module.EnumElytraModule;
 import com.tcn.dimensionalpocketsii.core.network.packet.PacketDimensionChange;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateOpenConnector;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateOpenEnderChest;
@@ -87,7 +87,7 @@ public class PocketsGameEventsManager {
 					Item armour = armourStack.getItem();
 					
 					if (armour instanceof DimensionalElytraplate elytraplate) {						
-						if (DimensionalElytraplate.hasModuleInstalled(armourStack, BaseElytraModule.SCREEN)) {
+						if (DimensionalElytraplate.hasModuleInstalled(armourStack, EnumElytraModule.SCREEN)) {
 							if (elytraplate.hasEnergy(armourStack)) {
 								PacketDistributor.sendToServer(new PacketElytraplateOpenConnector(playerIn.getUUID(), 2));
 								PacketDistributor.sendToServer(new PacketElytraplateUseEnergy(playerIn.getUUID(), 2, elytraplate.getMaxUse(armourStack)));
@@ -107,7 +107,7 @@ public class PocketsGameEventsManager {
 					Item armour = armourStack.getItem();
 					
 					if (armour instanceof DimensionalElytraplate elytraplate) {						
-						if (DimensionalElytraplate.hasModuleInstalled(armourStack, BaseElytraModule.ENDER_CHEST)) {
+						if (DimensionalElytraplate.hasModuleInstalled(armourStack, EnumElytraModule.ENDER_CHEST)) {
 							if (elytraplate.hasEnergy(armourStack)) {
 								PacketDistributor.sendToServer(new PacketElytraplateOpenEnderChest(playerIn.getUUID(), 2));
 								PacketDistributor.sendToServer(new PacketElytraplateUseEnergy(playerIn.getUUID(), 2, elytraplate.getMaxUse(armourStack)));
@@ -142,7 +142,7 @@ public class PocketsGameEventsManager {
 					BlockPos player_pos_actual = playerIn.blockPosition();
 					
 					if (armour instanceof DimensionalElytraplate elytraplate) {
-						if (DimensionalElytraplate.hasModuleInstalled(armourStack, BaseElytraModule.SHIFTER)) {
+						if (DimensionalElytraplate.hasModuleInstalled(armourStack, EnumElytraModule.SHIFTER)) {
 							if (armourStack.has(DataComponents.CUSTOM_DATA)) {
 								CompoundTag stack_nbt = armourStack.get(DataComponents.CUSTOM_DATA).copyTag();
 								
@@ -234,7 +234,7 @@ public class PocketsGameEventsManager {
 					Item armour = armourStack.getItem();
 					
 					if (armour instanceof DimensionalElytraplate elytraplate) {						
-						if (DimensionalElytraplate.hasModuleInstalled(armourStack, BaseElytraModule.FIREWORK)) {
+						if (DimensionalElytraplate.hasModuleInstalled(armourStack, EnumElytraModule.FIREWORK)) {
 							if (DimensionalElytraplate.getElytraSetting(armourStack, ElytraSettings.FIREWORK)[1]) {
 								if (elytraplate.hasEnergy(armourStack)) {
 									PacketDistributor.sendToServer(new PacketElytraplateUseFirework(2));
