@@ -9,8 +9,8 @@ import java.util.zip.ZipOutputStream;
 import com.google.common.io.Files;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.cosmoslibrary.system.io.CosmosIOHandler;
-import com.tcn.dimensionalpocketsii.ModReferences.INTERFACE.FILE;
-import com.tcn.dimensionalpocketsii.ModReferences.INTERFACE.FOLDER;
+import com.tcn.dimensionalpocketsii.PocketReference.INTERFACE.FILE;
+import com.tcn.dimensionalpocketsii.PocketReference.INTERFACE.FOLDER;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.gson.PocketChunkInfo;
@@ -58,8 +58,6 @@ public class BackupManager {
 	}
 	
 	public static boolean createFullBackup(Map<PocketChunkInfo, Pocket> pocketRegistryIn, BackupType backupTypeIn, HolderLookup.Provider provider) {
-		String date = (backupTypeIn.getIncludeDate() ? " [" + CosmosUtil.getDateYMD(true, "-") + "] " : " ");
-		String descriptor = (backupTypeIn.getDescriptor() != "" ? "[" + backupTypeIn.getDescriptor() + "]" : "");
 		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 		StringBuilder filePath = new StringBuilder();
 		
@@ -69,7 +67,7 @@ public class BackupManager {
 					filePath.append("saves/");
 				}
 				
-				filePath.append(CosmosIOHandler.getServerLevelId(server) + "/" + FOLDER.REGISTRY_BACKUP + "/" + FILE.REGISTRY_BACKUP + date + descriptor + ".zip");
+				filePath.append(CosmosIOHandler.getServerLevelId(server) + "/" + FOLDER.REGISTRY_BACKUP + "/" + FILE.REGISTRY_BACKUP + (backupTypeIn.getIncludeDate() ? " [" + CosmosUtil.getDateYMD(true, "-") + "] " : " ") + (backupTypeIn.getDescriptor() != "" ? "[" + backupTypeIn.getDescriptor() + "]" : "") + ".zip");
 				
 				File tempFile = saveToFile(pocketRegistryIn, FOLDER.REGISTRY_BACKUP, FILE.REGISTRY_BACKUP, RegistryFileType.JSON, provider, true, true);
 				CosmosIOHandler.createFile(tempFile);
@@ -112,7 +110,6 @@ public class BackupManager {
 			if (deleteFile) {
 				fileToAdd.delete();
 			}
-			
 			return true;
 		} catch (Exception e) {
 			return false;

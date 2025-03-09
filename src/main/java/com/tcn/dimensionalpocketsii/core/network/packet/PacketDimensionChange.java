@@ -20,12 +20,12 @@ import net.minecraft.world.level.Level;
 
 public record PacketDimensionChange(
 		UUID playerUUID, 
-		ResourceKey<Level> dimension, 
+		ResourceKey<Level> dimension,
 		ResourceLocation toDimension, 
-		BlockPos pos, 
+		BlockPos pos,
 		EnumShiftDirection direction, 
-		float yaw, 
-		float pitch, 
+		float yaw,
+		float pitch,
 		boolean playVanillaSound, 
 		boolean sendMessage) implements CustomPacketPayload, DimensionalPacket {
 

@@ -1,7 +1,7 @@
 package com.tcn.dimensionalpocketsii.client.screen.button;
 
 import com.tcn.cosmoslibrary.CosmosReference;
-import com.tcn.dimensionalpocketsii.ModReferences;
+import com.tcn.dimensionalpocketsii.PocketReference;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -66,27 +66,27 @@ public class DimensionalButton extends Button {
 			if (this.identifier >= 0 && this.identifier <= 23) {
 				if (this.identifier >= 0 && this.identifier <= 5) {
 					if (this.width == 20 && this.height == 20) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i], this.width, this.height);
 					} else if (this.width == 18 && this.height == 18) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i], this.width, this.height);
 					}
 				} else if (this.identifier > 5 && this.identifier <= 11) {
 					if (this.width == 20 && this.height == 20) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 6], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 3], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 6], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 3], this.width, this.height);
 					} else if (this.width == 18 && this.height == 18) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 6], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 3], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 6], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 3], this.width, this.height);
 					}
 				} else if (this.identifier > 11 && this.identifier <= 17) {
 					if (this.width == 20 && this.height == 20) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 12], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 6], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 12], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 6], this.width, this.height);
 					} else if (this.width == 18 && this.height == 18) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 12], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 6], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 12], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 6], this.width, this.height);
 					}
 				} else if (this.identifier > 17 && this.identifier <= 23) {
 					if (this.width == 20 && this.height == 20) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 18], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 9], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 18], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 9], this.width, this.height);
 					} else if (this.width == 18 && this.height == 18) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 18], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 9], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 18], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 9], this.width, this.height);
 					}
 				} 
 			}
@@ -96,27 +96,27 @@ public class DimensionalButton extends Button {
 				
 				if (this.identifier > 23 && this.identifier <= 29) {
 					if (this.width == 20 && this.height == 20) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 24], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 24], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i], this.width, this.height);
 					} else if (this.width == 18 && this.height == 18) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 24], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 24], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i], this.width, this.height);
 					}
 				} else if (this.identifier > 29 && this.identifier <= 35) {
 					if (this.width == 20 && this.height == 20) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 30], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 3], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 30], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 3], this.width, this.height);
 					} else if (this.width == 18 && this.height == 18) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 30], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 3], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 30], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 3], this.width, this.height);
 					}
 				} else if (this.identifier > 35 && this.identifier <= 41) {
 					if (this.width == 20 && this.height == 20) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 36], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 6], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 36], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 6], this.width, this.height);
 					} else if (this.width == 18 && this.height == 18) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 36], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 6], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 36], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 6], this.width, this.height);
 					}
 				} else if (this.identifier > 41 && this.identifier <= 47) {
 					if (this.width == 20 && this.height == 20) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 42], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 9], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X[identifier - 42], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y[i + 9], this.width, this.height);
 					} else if (this.width == 18 && this.height == 18) {
-						graphics.blit(ModReferences.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 42], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 9], this.width, this.height);
+						graphics.blit(PocketReference.GUI.RESOURCE.GUI_DIMENSIONAL_BUTTON_0, this.x, this.y, CosmosReference.RESOURCE.INFO.BUTTON_STATE_X_SMALL[identifier - 42], CosmosReference.RESOURCE.INFO.BUTTON_STATE_Y_SMALL[i + 9], this.width, this.height);
 					}
 				}
 			}

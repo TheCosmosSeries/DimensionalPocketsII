@@ -27,7 +27,7 @@ import com.tcn.cosmoslibrary.registry.gson.object.ObjectDestinationInfo;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectFluidTankCustom;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectPlayerInformation;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
-import com.tcn.dimensionalpocketsii.ModReferences;
+import com.tcn.dimensionalpocketsii.PocketReference;
 import com.tcn.dimensionalpocketsii.core.advancement.CoreTriggers;
 import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
@@ -75,7 +75,6 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
-@SuppressWarnings("removal")
 public class Pocket implements IEnergyHolder, Container {
 	private static final String NBT_DIMENSIONAL_POCKET_KEY = "pocket_data";
 
@@ -132,13 +131,13 @@ public class Pocket implements IEnergyHolder, Container {
 	private int energy_stored = 0;
 	
 	@SerializedName(NBT_ENERGY_CAPACITY_KEY)
-	public int energy_capacity = ModReferences.CONSTANT.POCKET_FE_CAP;
+	public int energy_capacity = PocketReference.CONSTANT.POCKET_FE_CAP;
 	
 	@SerializedName(NBT_ENERGY_RECEIVE_KEY)
-	public int energy_max_receive = ModReferences.CONSTANT.POCKET_FE_REC;
+	public int energy_max_receive = PocketReference.CONSTANT.POCKET_FE_REC;
 	
 	@SerializedName(NBT_ENERGY_EXTRACT_KEY)
-	public int energy_max_extract = ModReferences.CONSTANT.POCKET_FE_EXT;
+	public int energy_max_extract = PocketReference.CONSTANT.POCKET_FE_EXT;
 	
 	@SerializedName(NBT_BLOCK_DIMENSION_KEY)
 	private ResourceLocation block_dimension = ResourceLocation.parse("");
@@ -156,7 +155,7 @@ public class Pocket implements IEnergyHolder, Container {
 	private ObjectDestinationInfo spawn_pos = ObjectDestinationInfo.BLANK;
 	
 	@SerializedName(NBT_FLUID_TANK_KEY)
-	public ObjectFluidTankCustom fluid_tank = new ObjectFluidTankCustom(ModReferences.CONSTANT.POCKET_FLUID_CAP, 0);
+	public ObjectFluidTankCustom fluid_tank = new ObjectFluidTankCustom(PocketReference.CONSTANT.POCKET_FLUID_CAP, 0);
 
 	@SerializedName(NBT_ALLOWED_PLAYERS_KEY)
 	private ArrayList<String> allowed_players_array = new ArrayList<String>();
@@ -171,7 +170,7 @@ public class Pocket implements IEnergyHolder, Container {
 	public EnumSideState[] pocket_side_array = EnumSideState.STANDARD.clone();
 	
 	@SerializedName(NBT_ITEMS_KEY)
-	public NonNullList<ItemStack> item_array = NonNullList.<ItemStack>withSize(ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE, ItemStack.EMPTY);
+	public NonNullList<ItemStack> item_array = NonNullList.<ItemStack>withSize(PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, ItemStack.EMPTY);
 	
 	@SerializedName(NBT_SURROUNDING_KEY)
 	public NonNullList<ItemStack> surrounding_array = NonNullList.<ItemStack>withSize(6, ItemStack.EMPTY);
@@ -238,7 +237,6 @@ public class Pocket implements IEnergyHolder, Container {
 	public void resetSourceBlock() {
 		for (int i = 0; i < this.block_array.size(); i++) {
 			ObjectBlockPosDimension object = this.block_array.get(i);
-			
 			Level level = this.getLevelFromResource(object.getDimension());
 			BlockPos pos = object.getPos();
 			
@@ -380,7 +378,6 @@ public class Pocket implements IEnergyHolder, Container {
 
 	public void updatePocketSpawnPos(BlockPos pos) {
 		this.spawn_pos.setPos(pos);
-
 		PacketDistributor.sendToServer(new PacketSystem(true));
 	}
 
@@ -398,9 +395,7 @@ public class Pocket implements IEnergyHolder, Container {
 	
 	public boolean updateOwner(@Nullable ServerPlayer oldPlayerIn, ServerPlayer newPlayerIn) {
 		if (oldPlayerIn != null) {
-			ObjectPlayerInformation oldInfo = new ObjectPlayerInformation(oldPlayerIn);
-
-			if (this.owner.equals(oldInfo)) {
+			if (this.owner.equals(new ObjectPlayerInformation(oldPlayerIn))) {
 				CosmosChatUtil.sendPlayerMessageServer(oldPlayerIn, ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.command.transfer.success.old").append(ComponentHelper.style(ComponentColour.CYAN, newPlayerIn.getDisplayName().getString())));
 				CosmosChatUtil.sendPlayerMessageServer(newPlayerIn, ComponentHelper.style(ComponentColour.CYAN, oldPlayerIn.getDisplayName().getString()).append(ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.command.transfer.success.new")));
 				
@@ -578,9 +573,7 @@ public class Pocket implements IEnergyHolder, Container {
 	
 	private boolean checkIfAllowedPlayerNBT(String playerNameIn) {
 		for (int i = 0; i < this.allowed_players_array.size(); i++) {
-			String test_player = this.allowed_players_array.get(i);
-			
-			if (test_player.equals(playerNameIn)) {
+			if (this.allowed_players_array.get(i).equals(playerNameIn)) {
 				return true;
 			}
 		}
@@ -588,13 +581,9 @@ public class Pocket implements IEnergyHolder, Container {
 	}
 	
 	public void removeAllowedPlayer(Player playerIn) {
-		String player_name = playerIn.getDisplayName().getString();
-		
 		for (int i = 0; i < this.allowed_players_array.size(); i++) {
-			String test_player = this.allowed_players_array.get(i);
-			
 			if (!this.checkIfOwner(playerIn)) {
-				if (test_player.equals(player_name)) {
+				if (this.allowed_players_array.get(i).equals(playerIn.getDisplayName().getString())) {
 					this.allowed_players_array.remove(i);
 				}
 			}
@@ -620,12 +609,8 @@ public class Pocket implements IEnergyHolder, Container {
 	}
 	
 	public boolean checkIfAllowedPlayer(Player playerIn) {
-		String player_name = playerIn.getDisplayName().getString();
-		
 		for (int i = 0; i < this.allowed_players_array.size(); i++) {
-			String test_player = this.allowed_players_array.get(i);
-			
-			if (test_player.equals(player_name)) {
+			if (this.allowed_players_array.get(i).equals(playerIn.getDisplayName().getString())) {
 				return true;
 			}
 		}
@@ -777,7 +762,7 @@ public class Pocket implements IEnergyHolder, Container {
 		if (this.isFluidTankEmpty()) {
 			return "Empty";
 		}
-		return this.fluid_tank.getFluidTank().getFluid().getTranslationKey();
+		return this.fluid_tank.getFluidTank().getFluid().getHoverName().getString();
 	}
 
 	public boolean isFluidTankEmpty() {
@@ -862,15 +847,11 @@ public class Pocket implements IEnergyHolder, Container {
 	}
 
 	public void cycleSide(Direction facing, boolean update) {
-		EnumSideState state = this.pocket_side_array[facing.get3DDataValue()];
-		
-		this.setSide(facing, state.getNextState(), update);
+		this.setSide(facing, this.pocket_side_array[facing.get3DDataValue()].getNextState(), update);
 	}
 
 	public boolean canConnect(Direction direction) {
-		EnumSideState state = this.pocket_side_array[direction.get3DDataValue()];
-		
-		if (state.equals(EnumSideState.DISABLED)) {
+		if (this.pocket_side_array[direction.get3DDataValue()].equals(EnumSideState.DISABLED)) {
 			return false;
 		}
 		
@@ -995,37 +976,37 @@ public class Pocket implements IEnergyHolder, Container {
 
 	@Override
 	public ItemStack getItem(int index) {
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
 			return this.item_array.get(index);
 		} else {
-			return this.surrounding_array.get(index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE);
+			return this.surrounding_array.get(index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE);
 		}
 	}
 
 	@Override
 	public ItemStack removeItem(int index, int count) {
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
 			return ContainerHelper.removeItem(this.item_array, index, count);
 		} else {
-			return ContainerHelper.removeItem(this.surrounding_array, index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE, count);
+			return ContainerHelper.removeItem(this.surrounding_array, index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, count);
 		}
 	}
 	
 	@Override
 	public ItemStack removeItemNoUpdate(int index) {
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
 			return ContainerHelper.takeItem(this.item_array, index);
 		} else {
-			return ContainerHelper.takeItem(this.surrounding_array, index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE);
+			return ContainerHelper.takeItem(this.surrounding_array, index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE);
 		}
 	}
 	
 	@Override
 	public void setItem(int index, ItemStack stack) {
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
 			this.item_array.set(index, stack);
 		} else {
-			this.surrounding_array.set(index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE, stack);
+			this.surrounding_array.set(index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, stack);
 		}
 		
 		if (stack.getCount() > this.getMaxStackSize()) {
@@ -1049,8 +1030,7 @@ public class Pocket implements IEnergyHolder, Container {
 	public void setSurroundingStacks(Level levelIn, BlockPos posIn) {
 		if (!levelIn.isClientSide()) {
 			for (Direction dir : Direction.values()) {
-				Block block_other = levelIn.getBlockState(posIn.offset(dir.getNormal())).getBlock();
-				this.setItem(dir.get3DDataValue() + ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE, new ItemStack(block_other));
+				this.setItem(dir.get3DDataValue() + PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, new ItemStack(levelIn.getBlockState(posIn.offset(dir.getNormal())).getBlock()));
 			}
 		}
 	}
@@ -1089,13 +1069,11 @@ public class Pocket implements IEnergyHolder, Container {
 				BlockState newState = Blocks.AIR.defaultBlockState();
 				
 				levelIn.setBlockAndUpdate(actualPos, oldState);
-				
 				levelIn.setBlocksDirty(actualPos, oldState, newState);
 				levelIn.markAndNotifyBlock(actualPos, chunkIn, oldState, newState, 3, 3);
 				levelIn.updateNeighborsAt(actualPos, newState.getBlock());
 				chunkIn.setBlockState(actualPos, newState, true);
 				levelIn.sendBlockUpdated(actualPos, oldState, newState, 3);
-				
 				levelIn.setBlockAndUpdate(actualPos, newState);
 			}
 		}
@@ -1110,16 +1088,11 @@ public class Pocket implements IEnergyHolder, Container {
 			ArrayList<CosmosChunkPos> chunks = this.getChunkInfo().getChunks();
 			
 			for (int i = 1; i < chunks.size(); i++) {
-				CosmosChunkPos posToUpdate = chunks.get(i);
-				
-				checks[i] = this.updateConnector(levelIn, posToUpdate);
+				checks[i] = this.updateConnector(levelIn, chunks.get(i));
 			}
-
-			//System.out.println("Multichunk [ " + checks[0] + ", " + checks[1] + ", " + checks[2] + ", " + checks[3] + " ]");
+			
 			return checks[0] && checks[1] && checks[2] && checks[3];
 		}
-		
-		//System.out.println("Singlechunk [ " + checks[0] + " ]");
 		return checks[0];
 	}
 	
@@ -1134,7 +1107,6 @@ public class Pocket implements IEnergyHolder, Container {
 				if (pocketLevel.getBlockEntity(pos) instanceof BlockEntityModuleConnector blockEntity) {					
 					blockEntity.sendUpdates(false);
 					pocketLevel.sendBlockUpdated(pos, state, state, 3);
-					
 					return true;
 				}
 			}
@@ -1153,8 +1125,7 @@ public class Pocket implements IEnergyHolder, Container {
 			}
 		}
 		
-		if (!this.getGeneratedStateValue() 
-			|| this.chunk_info.isSingleChunk() && (this.getInternalHeight() != PocketsConfigManager.getInstance().getInternalHeight())
+		if (!this.getGeneratedStateValue() || this.chunk_info.isSingleChunk() && (this.getInternalHeight() != PocketsConfigManager.getInstance().getInternalHeight())
 			|| !this.chunk_info.isSingleChunk() && (this.getInternalHeight() != PocketsConfigManager.getInstance().getInternalHeightEnhanced())) {
 			
 			if (this.chunk_info.isSingleChunk()) {
@@ -1239,7 +1210,7 @@ public class Pocket implements IEnergyHolder, Container {
 				Block check_block_three = level.getBlockState(MathHelper.addBlockPos(worldPos, new BlockPos(0, -1, 0))).getBlock();
 				Block check_block_four = level.getBlockState(MathHelper.addBlockPos(worldPos, new BlockPos(0, this.getInternalHeight() - 1, 0))).getBlock();
 				
-				DimensionalPockets.CONSOLE.debug(check_block_one + " || " + check_block_two + " || " + check_block_three + " || " + check_block_four);
+//				DimensionalPockets.CONSOLE.debug(check_block_one + " || " + check_block_two + " || " + check_block_three + " || " + check_block_four);
 				
 				this.setOwner(playerIn);
 				this.setGeneratedState(check_block_one instanceof BlockWallEdge && check_block_two instanceof BlockWallBase && check_block_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && check_block_four.equals(Blocks.BEDROCK));
@@ -1250,8 +1221,6 @@ public class Pocket implements IEnergyHolder, Container {
 			else if (!this.getChunkInfo().isSingleChunk()) {
 				int height = PocketsConfigManager.getInstance().getInternalHeightEnhanced();
 
-//				System.out.println("HERE " + height + " " + this.getInternalHeight() + " " + (height != this.getInternalHeight()));
-				
 				BlockPos[] worldPos = new BlockPos[] { 
 					new BlockPos(CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getX(), 1, CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getZ()),
 					new BlockPos(CosmosChunkPos.scaleFromChunkPos(this.getChunkInfo().getChunks().get(1)).getX(), 1, CosmosChunkPos.scaleFromChunkPos(this.getChunkInfo().getChunks().get(1)).getZ()),
@@ -1260,19 +1229,15 @@ public class Pocket implements IEnergyHolder, Container {
 				};				
 				
 				if (height != this.getInternalHeight()) {
-//					System.out.println("GENERATE");
-					
 					if (this.getInternalHeight() < PocketsConfigManager.getInstance().getInternalHeight()) {
 						int[] rep = new int[] { 0, 16 };
 						
 						for (int i = 0; i < this.chunk_info.getChunks().size(); i++) {
-							LevelChunk chunk = level.getChunk(this.chunk_info.getChunks().get(i).getX(), this.chunk_info.getChunks().get(i).getZ());
-							
 							for (int x = rep[0]; x < rep[1]; x++) {
 								for (int z = rep[0]; z < rep[1]; z++) {
 									BlockPos pos = new BlockPos(x, this.getInternalHeight(), z);
 									
-									chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), false);
+									level.getChunk(this.chunk_info.getChunks().get(i).getX(), this.chunk_info.getChunks().get(i).getZ()).setBlockState(pos, Blocks.AIR.defaultBlockState(), false);
 								}
 							}
 						}
@@ -1292,27 +1257,25 @@ public class Pocket implements IEnergyHolder, Container {
 					this.generateStructureAndUpdate(level);
 				}
 				
-				Block check_block_one = level.getBlockState(MathHelper.addBlockPos(worldPos[0], new BlockPos(1, 0, 1))).getBlock();
-				Block check_block_two = level.getBlockState(MathHelper.addBlockPos(worldPos[0], new BlockPos(2, 0, 2))).getBlock();
-				Block check_block_three = level.getBlockState(MathHelper.addBlockPos(worldPos[0], new BlockPos(0, -1, 0))).getBlock();
-				Block check_block_four = level.getBlockState(MathHelper.addBlockPos(worldPos[0], new BlockPos(0, this.getInternalHeight() - 1, 0))).getBlock();
+				Block check_one_one = level.getBlockState(MathHelper.addBlockPos(worldPos[0], new BlockPos(1, 0, 1))).getBlock();
+				Block check_one_two = level.getBlockState(MathHelper.addBlockPos(worldPos[0], new BlockPos(2, 0, 2))).getBlock();
+				Block check_one_three = level.getBlockState(MathHelper.addBlockPos(worldPos[0], new BlockPos(0, -1, 0))).getBlock();
+				Block check_one_four = level.getBlockState(MathHelper.addBlockPos(worldPos[0], new BlockPos(0, this.getInternalHeight() - 1, 0))).getBlock();
 				
-				Block check_block_second_one = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(14, 1, 0))).getBlock();
-				Block check_block_second_three = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(0, -1, 0))).getBlock();
-//				Block check_block_second_two = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(13, 1, 1))).getBlock();
+				Block check_two_one = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(14, 1, 0))).getBlock();
+				Block check_two_two = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(0, -1, 0))).getBlock();
+//				Block check_two_three = level.getBlockState(MathHelper.addBlockPos(worldPos[1], new BlockPos(13, 1, 1))).getBlock();
 				
-				Block check_block_third_three = level.getBlockState(MathHelper.addBlockPos(worldPos[2], new BlockPos(0, -1, 0))).getBlock();
-				
-//				DimensionalPockets.CONSOLE.debug(check_block_second_one + " \\ " + check_block_second_two);
+				Block check_three = level.getBlockState(MathHelper.addBlockPos(worldPos[2], new BlockPos(0, -1, 0))).getBlock();
 				
 				boolean checks = 
-					check_block_one instanceof BlockWallEdge && 
-					check_block_two instanceof BlockWallBase && 
-					check_block_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
-					check_block_second_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
-					check_block_third_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
-					check_block_four.equals(Blocks.BEDROCK) && 
-					check_block_second_one.equals(Blocks.BEDROCK);
+					check_one_one instanceof BlockWallEdge && 
+					check_one_two instanceof BlockWallBase && 
+					check_one_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
+					check_one_four.equals(Blocks.BEDROCK) && 
+					check_two_one.equals(Blocks.BEDROCK) && 
+					check_two_two.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get()) && 
+					check_three.equals(PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get());
 				
 				this.setOwner(playerIn);
 				this.setGeneratedState(checks);
@@ -1321,9 +1284,8 @@ public class Pocket implements IEnergyHolder, Container {
 			}			
 		} else {
 			BlockPos pos = new BlockPos(CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getX(), 0, CosmosChunkPos.scaleFromChunkPos(this.getDominantChunkPos()).getZ());
-			BlockEntity entity = level.getBlockEntity(pos);
-			
-			if (entity == null) {
+
+			if (level.getBlockEntity(pos) == null) {
 				level.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 				level.setBlockAndUpdate(pos.offset(Direction.UP.getNormal()), Blocks.BEDROCK.defaultBlockState());
 			}
@@ -1368,7 +1330,7 @@ public class Pocket implements IEnergyHolder, Container {
 								levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 							}
 							
-							//Added criteria flags, to add these checkes, to halve the time generation takes.
+							//Added criteria flags, to add these checks, to halve the time generation takes.
 							if (!(flagX || flagY || flagZ) || flagX && (flagY || flagZ) || flagY && flagZ) {
 								continue;
 							}
@@ -1406,9 +1368,9 @@ public class Pocket implements IEnergyHolder, Container {
 					for (int x = 0; x < size + 1; x++) {
 						for (int y = y_offset; y < height + y_offset; y++) {
 							for (int z = 0; z < size + 1; z++) {
-								boolean flagX = x == 0; //|| x == (size - 1);
+								boolean flagX = x == 0;
 								boolean flagY = y == y_offset || y == (height);
-								boolean flagZ = z == 0; //|| z == (size - 1);
+								boolean flagZ = z == 0;
 								
 								BlockPos pos = new BlockPos(x, y, z);
 								BlockPos world_pos = new BlockPos(worldPosA.getX() + x, y, worldPosA.getZ() + z);
@@ -1417,9 +1379,7 @@ public class Pocket implements IEnergyHolder, Container {
 								if (!(levelChunkA.getBlockState(pos).getBlock() instanceof BlockWallModule)) {
 									if (x == 0 || y == 1 || z == 0) {
 										levelChunkA.setBlockState(pos, Blocks.BEDROCK.defaultBlockState(), false);
-									} /*else if (x == (size - 1) || y == (height - (1 - y_offset)) || z == (size - 1)) {
-										chunkIn.setBlockState(pos, Blocks.BEDROCK.defaultBlockState(), false);
-									} */
+									}
 								}
 								
 								if (x == 0 && y == 1 && z == 0) {
@@ -1462,9 +1422,9 @@ public class Pocket implements IEnergyHolder, Container {
 					for (int x = 0; x < size; x++) {
 						for (int y = y_offset; y < height + y_offset; y++) {
 							for (int z = 0; z < size + 1; z++) {
-								boolean flagX = /*x == 0 ||*/ x == (size - 1);
+								boolean flagX = x == (size - 1);
 								boolean flagY = y == y_offset || y == (height);
-								boolean flagZ = z == 0 /*|| z == (size - 1)*/;
+								boolean flagZ = z == 0;
 								
 								BlockPos pos = new BlockPos(x, y, z);
 								BlockPos world_pos = new BlockPos(worldPosB.getX() + x, y, worldPosB.getZ() + z);
@@ -1482,7 +1442,7 @@ public class Pocket implements IEnergyHolder, Container {
 									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
-								//Added criteria flags, to add these checkes, to halve the time generation takes.
+								//Added criteria flags, to add these checks, to halve the time generation takes.
 								if (!(flagX || flagY || flagZ) || flagX && (flagY || flagZ) || flagY && flagZ) {
 									continue;
 								}
@@ -1518,9 +1478,9 @@ public class Pocket implements IEnergyHolder, Container {
 					for (int x = 0; x < size + 1; x++) {
 						for (int y = y_offset; y < height + y_offset; y++) {
 							for (int z = 0; z < size; z++) {
-								boolean flagX = x == 0; // || x == (size - 1);
+								boolean flagX = x == 0;
 								boolean flagY = y == y_offset || y == (height);
-								boolean flagZ = /*z == 0 ||*/ z == (size - 1);
+								boolean flagZ = z == (size - 1);
 								
 								BlockPos pos = new BlockPos(x, y, z);
 								BlockPos world_pos = new BlockPos(worldPosC.getX() + x, y, worldPosC.getZ() + z);
@@ -1538,7 +1498,7 @@ public class Pocket implements IEnergyHolder, Container {
 									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
-								//Added criteria flags, to add these checkes, to halve the time generation takes.
+								//Added criteria flags, to add these checks, to halve the time generation takes.
 								if (!(flagX || flagY || flagZ) || flagX && (flagY || flagZ) || flagY && flagZ) {
 									continue;
 								}
@@ -1574,18 +1534,16 @@ public class Pocket implements IEnergyHolder, Container {
 					for (int x = 0; x < size; x++) {
 						for (int y = y_offset; y < height + y_offset; y++) {
 							for (int z = 0; z < size; z++) {
-								boolean flagX = /*x == 0 ||*/ x == (size - 1);
+								boolean flagX = x == (size - 1);
 								boolean flagY = y == y_offset || y == (height);
-								boolean flagZ = /*z == 0 ||*/ z == (size - 1);
+								boolean flagZ = z == (size - 1);
 								
 								BlockPos pos = new BlockPos(x, y, z);
 								BlockPos world_pos = new BlockPos(worldPosD.getX() + x, y, worldPosD.getZ() + z);
 								
 								//Creates a Bedrock frame around the Pocket to prevent glitching outside
 								if (!(levelChunkD.getBlockState(pos).getBlock() instanceof BlockWallModule)) {
-									/*if (x == 0 || y == 1 || z == 0) {
-										levelChunkD.setBlockState(pos, Blocks.BEDROCK.defaultBlockState(), false);
-									} else*/ if (x == (size - 1) || y == (height - (1 - y_offset)) || z == (size - 1)) {
+									if (x == (size - 1) || y == (height - (1 - y_offset)) || z == (size - 1)) {
 										levelChunkD.setBlockState(pos, Blocks.BEDROCK.defaultBlockState(), false);
 									} 
 								}
@@ -1594,13 +1552,13 @@ public class Pocket implements IEnergyHolder, Container {
 									levelIn.setBlockAndUpdate(world_pos.offset(Direction.DOWN.getNormal()), PocketsRegistrationManager.BLOCK_WALL_CONNECTOR.get().defaultBlockState());
 								}
 								
-								//Added criteria flags, to add these checkes, to halve the time generation takes.
+								//Added criteria flags, to add these checks, to halve the time generation takes.
 								if (!(flagX || flagY || flagZ) || flagX && (flagY || flagZ) || flagY && flagZ) {
 									continue;
 								}
 								
 								//Creates the "edge" blocks first. Stylistic choice.
-								if (/*x == 1 ||*/ y == (1 + y_offset) /*|| z == 1*/) {
+								if (y == (1 + y_offset)) {
 									levelChunkD.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkD.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
 								} else if (x == (size - 2) || y == (height - (2 - y_offset)) || z == (size - 2)) {
 									levelChunkD.setBlockState(pos, PocketsRegistrationManager.BLOCK_WALL_EDGE.get().defaultBlockState().updateShape(Direction.UP, levelChunkD.getBlockState(pos), levelIn, pos, pos.offset(Direction.UP.getNormal())), false);
@@ -1625,9 +1583,7 @@ public class Pocket implements IEnergyHolder, Container {
 	}
 	
 	public void shift(Player playerIn, EnumShiftDirection direction, @Nullable BlockPos pocket_pos, @Nullable ResourceKey<Level> dimensionIn, @Nullable ItemStack stack) {
-		Level entity_world = playerIn.level();
-
-		if (entity_world.isClientSide() || !(playerIn instanceof ServerPlayer)) {
+		if (playerIn.level().isClientSide() || !(playerIn instanceof ServerPlayer)) {
 			return;
 		}
 		
@@ -1744,15 +1700,12 @@ public class Pocket implements IEnergyHolder, Container {
 		//LastPos
 		CompoundTag last = new CompoundTag();
 		this.last_pos.save(last);
-		
 		compound_nbt.put(NBT_LAST_POS_KEY, last);
 		
 		//SpawnPos
 		if (this.getSpawnPos() != null) {
 			CompoundTag spawn = new CompoundTag();
-			
 			this.spawn_pos.writeToNBT(spawn);
-			
 			compound_nbt.put(NBT_SPAWN_POS_KEY, spawn);
 		}
 		
@@ -1764,9 +1717,7 @@ public class Pocket implements IEnergyHolder, Container {
 		//Player Map
 		CompoundTag players = new CompoundTag();
 		for (int i = 0; i < this.allowed_players_array.size(); i++){
-			String player = this.allowed_players_array.get(i);
-			
-			players.putString(Integer.toString(i), player);
+			players.putString(Integer.toString(i), this.allowed_players_array.get(i));
 		}
 		players.putInt("length", this.allowed_players_array.size());
 		compound_nbt.put(NBT_ALLOWED_PLAYERS_KEY, players);
@@ -1816,9 +1767,7 @@ public class Pocket implements IEnergyHolder, Container {
 		//Pocket Side Array
 		CompoundTag side_array = new CompoundTag();
 		for (int i = 0; i < this.pocket_side_array.length; i++) {
-			Integer value = this.pocket_side_array[i].getIndex();
-			
-			side_array.putInt(Integer.toString(i), value);
+			side_array.putInt(Integer.toString(i), this.pocket_side_array[i].getIndex());
 		}
 		side_array.putInt("length", this.pocket_side_array.length);
 		compound_nbt.put(NBT_POCKET_SIDE_KEY, side_array);
@@ -1876,41 +1825,31 @@ public class Pocket implements IEnergyHolder, Container {
 		//Player Map
 		CompoundTag playersTag = pocketTag.getCompound(NBT_ALLOWED_PLAYERS_KEY);
 		for (int i = 0; i < playersTag.getInt("length"); i++) {
-			String player_name = playersTag.getString(Integer.toString(i));
-			
-			pocket.addAllowedPlayerNBT(player_name);
+			pocket.addAllowedPlayerNBT(playersTag.getString(Integer.toString(i)));
 		}
 		
 		//Side Map
 		CompoundTag sideMapTag = pocketTag.getCompound(NBT_BLOCK_ARRAY_KEY);
 		for (int i = 0; i < sideMapTag.getInt("length"); i++) {
-			CompoundTag sideTag = sideMapTag.getCompound(Integer.toString(i));
-			
-			pocket.addPosToBlockArray(ObjectBlockPosDimension.load(sideTag), false);
+			pocket.addPosToBlockArray(ObjectBlockPosDimension.load(sideMapTag.getCompound(Integer.toString(i))), false);
 		}
 		
 		//Items
 		CompoundTag itemsTag = pocketTag.getCompound(NBT_ITEMS_KEY);
-		for (int i = 0; i < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE; i++) {
-			CompoundTag item = itemsTag.getCompound(Integer.toString(i));
-						
-			pocket.item_array.set(i, ItemStack.parseOptional(provider, item));
+		for (int i = 0; i < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE; i++) {
+			pocket.item_array.set(i, ItemStack.parseOptional(provider, itemsTag.getCompound(Integer.toString(i))));
 		}
 
 		//Items
 		CompoundTag surroundingTag = pocketTag.getCompound(NBT_SURROUNDING_KEY);
 		for (int i = 0; i < 6; i++) {
-			CompoundTag item = surroundingTag.getCompound(Integer.toString(i));
-			
-			pocket.surrounding_array.set(i, ItemStack.parseOptional(provider, item));
+			pocket.surrounding_array.set(i, ItemStack.parseOptional(provider, surroundingTag.getCompound(Integer.toString(i))));
 		}
 		
 		//Pocket Side Array
 		CompoundTag sideArrayTag = pocketTag.getCompound(NBT_POCKET_SIDE_KEY);
 		for (int i = 0; i < sideArrayTag.getInt("length"); i++) {
-			int side = sideArrayTag.getInt(Integer.toString(i));
-			
-			pocket.pocket_side_array[i] = EnumSideState.getStateFromIndex(side);
+			pocket.pocket_side_array[i] = EnumSideState.getStateFromIndex(sideArrayTag.getInt(Integer.toString(i)));
 		}
 		
 		return pocket;
@@ -1934,9 +1873,7 @@ public class Pocket implements IEnergyHolder, Container {
 		chunk_tag.putInt("Z", z);
 
 		compound.put("chunk_set", chunk_tag);
-		
 		compound.putInt("colour", this.getDisplayColour());
-		
 		stackTag.put("nbt_data", compound);
 		
 		item_stack.set(DataComponents.CUSTOM_DATA, CustomData.of(stackTag));

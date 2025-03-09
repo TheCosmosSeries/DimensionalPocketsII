@@ -61,7 +61,6 @@ public class StorageManager {
 	
 	public static void clearRegistry() {
 		registryMap.clear();
-		
 		DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry] <clearmap> Pocket Map Cleared");
 	}
 	
@@ -161,9 +160,7 @@ public class StorageManager {
 	
 	public static ObjectHolder2<PocketChunkInfo, Pocket> getChunkInfoForPocket(ResourceKey<Level> dimension, BlockPos pos) {
 		for(Pocket pocket : registryMap.values()) {
-			ResourceKey<Level> pocket_dimension = pocket.getSourceBlockDimension();
-			
-			if (pocket_dimension.equals(dimension) && pocket.doesBlockArrayContain(pos, dimension.location())) {
+			if (pocket.getSourceBlockDimension().equals(dimension) && pocket.doesBlockArrayContain(pos, dimension.location())) {
 				return new ObjectHolder2<>(pocket.getChunkInfo(), pocket);
 			} 
 		}
@@ -250,7 +247,7 @@ public class StorageManager {
 			DimensionalPockets.CONSOLE.debug("[Pocket Registry] {server} <loadData> Pocket data loaded from File System.");
 			DimensionalPockets.CONSOLE.debug("[Pocket Registry] {server} <loadData> Backup of Pocket data created.");
 		} else {
-			DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry] {server} <loadData> Pocket File System returned an empty Map. This must be a new world. Creating a fresh Map.");
+			DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry] {server} <loadData> Pocket File System returned an empty Map. This must be a new world. Creating a fresh Map...");
 		}
 	}
 	

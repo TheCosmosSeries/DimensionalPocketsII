@@ -24,7 +24,7 @@ import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
-import com.tcn.dimensionalpocketsii.ModReferences;
+import com.tcn.dimensionalpocketsii.PocketReference;
 import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleConnector;
@@ -768,15 +768,15 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 		if (this.level != null) {
 			return this.getPocket().getContainerSize();
 		}
-		return ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH;
+		return PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH;
 	}
 
 	@Override
 	public ItemStack getItem(int index) {
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			return this.getPocket().getItem(index);
 		} else {
-			return this.inventoryItems.get(index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
+			return this.inventoryItems.get(index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
 		}
 	}
 
@@ -784,10 +784,10 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 	public ItemStack removeItem(int index, int count) {
 		this.setChanged();
 		
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			return this.getPocket().removeItem(index, count);
 		} else {
-			return ContainerHelper.removeItem(inventoryItems, index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, count);
+			return ContainerHelper.removeItem(inventoryItems, index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, count);
 		}
 	}
 
@@ -795,19 +795,19 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 	public ItemStack removeItemNoUpdate(int index) {
 		this.setChanged();
 		
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			return this.getPocket().removeItemNoUpdate(index);
 		} else {
-			return ContainerHelper.takeItem(this.inventoryItems, index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
+			return ContainerHelper.takeItem(this.inventoryItems, index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
 		}
 	}
 	
 	@Override
 	public void setItem(int index, ItemStack stack) {
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			this.getPocket().setItem(index, stack);
 		} else {
-			this.inventoryItems.set(index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, stack);
+			this.inventoryItems.set(index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, stack);
 		}
 		
 		this.setChanged();

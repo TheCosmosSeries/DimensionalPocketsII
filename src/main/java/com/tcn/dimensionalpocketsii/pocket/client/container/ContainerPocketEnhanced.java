@@ -3,7 +3,7 @@ package com.tcn.dimensionalpocketsii.pocket.client.container;
 import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuBlockEntity;
 import com.tcn.cosmoslibrary.client.container.slot.SlotBucket;
 import com.tcn.cosmoslibrary.client.container.slot.SlotRestrictedAccess;
-import com.tcn.dimensionalpocketsii.ModReferences;
+import com.tcn.dimensionalpocketsii.PocketReference;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.core.BlockPos;
@@ -25,7 +25,7 @@ public class ContainerPocketEnhanced extends CosmosContainerMenuBlockEntity {
 	public static ContainerPocketEnhanced createContainerClientSide(int windowID, Inventory playerInventory, FriendlyByteBuf extraData) {
 		BlockPos pos = extraData.readBlockPos();
 		
-		return new ContainerPocketEnhanced(windowID, playerInventory, new SimpleContainer(ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH), new SimpleContainer(ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH + 2), pos);
+		return new ContainerPocketEnhanced(windowID, playerInventory, new SimpleContainer(PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH), new SimpleContainer(PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH + 2), pos);
 	}
 	
 	protected ContainerPocketEnhanced(int id, Inventory playerInventoryIn, Container pocketIn, Container contentsIn, BlockPos posIn) {
@@ -93,7 +93,7 @@ public class ContainerPocketEnhanced extends CosmosContainerMenuBlockEntity {
 							return ItemStack.EMPTY;
 						}
 					} else if (index == 54) {
-						if (!this.moveItemStackTo(itemstack1, ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH - 2, this.slots.size() - 9, false)) {
+						if (!this.moveItemStackTo(itemstack1, PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH - 2, this.slots.size() - 9, false)) {
 							return ItemStack.EMPTY;
 						}
 					}
@@ -106,17 +106,17 @@ public class ContainerPocketEnhanced extends CosmosContainerMenuBlockEntity {
 				}
 			} 
 
-			if (index >= 0 && index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
-				if (!this.moveItemStackTo(itemstack1, ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, this.slots.size(), false)) {
+			if (index >= 0 && index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
+				if (!this.moveItemStackTo(itemstack1, PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, this.slots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (index >= ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH && index < this.slots.size() - 9) {
-				if (!this.moveItemStackTo(itemstack1, 0, ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, false)) {
+			} else if (index >= PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH && index < this.slots.size() - 9) {
+				if (!this.moveItemStackTo(itemstack1, 0, PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, false)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index >= this.slots.size() - 9 && index < this.slots.size()) {
-				if (!this.moveItemStackTo(itemstack1, ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE, this.slots.size() - 9, false)) {
-					if (!this.moveItemStackTo(itemstack1, 0, ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE, false)) {
+				if (!this.moveItemStackTo(itemstack1, PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, this.slots.size() - 9, false)) {
+					if (!this.moveItemStackTo(itemstack1, 0, PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, false)) {
 						return ItemStack.EMPTY;
 					}
 				}

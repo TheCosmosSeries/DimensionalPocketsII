@@ -14,7 +14,7 @@ import com.tcn.cosmoslibrary.common.block.CosmosBlock;
 import com.tcn.cosmoslibrary.common.block.CosmosBlockModelUnplaceable;
 import com.tcn.cosmoslibrary.common.item.CosmosItem;
 import com.tcn.cosmoslibrary.common.item.CosmosItemEffect;
-import com.tcn.cosmoslibrary.common.item.CosmosItemTool;
+import com.tcn.cosmoslibrary.common.item.CosmosItemToolBasic;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyArmourItemColourable;
@@ -22,7 +22,7 @@ import com.tcn.cosmoslibrary.energy.item.CosmosEnergyItem;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyShieldItem;
 import com.tcn.cosmoslibrary.runtime.common.CosmosRuntime;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
-import com.tcn.dimensionalpocketsii.ModReferences;
+import com.tcn.dimensionalpocketsii.PocketReference;
 import com.tcn.dimensionalpocketsii.client.colour.ColourBlockPocket;
 import com.tcn.dimensionalpocketsii.client.colour.ColourBlockWall;
 import com.tcn.dimensionalpocketsii.client.colour.ColourItem;
@@ -34,7 +34,6 @@ import com.tcn.dimensionalpocketsii.client.renderer.RendererDimensionalTridentEn
 import com.tcn.dimensionalpocketsii.client.screen.ScreenElytraplateConnector;
 import com.tcn.dimensionalpocketsii.client.screen.ScreenElytraplateEnderChest;
 import com.tcn.dimensionalpocketsii.client.screen.ScreenElytraplateSettings;
-import com.tcn.dimensionalpocketsii.client.screen.ScreenElytraplateVisor;
 import com.tcn.dimensionalpocketsii.core.advancement.UseShifterTrigger;
 import com.tcn.dimensionalpocketsii.core.entity.DimensionalTridentEnhancedEntity;
 import com.tcn.dimensionalpocketsii.core.entity.DimensionalTridentEntity;
@@ -159,7 +158,6 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -210,7 +208,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
@@ -262,8 +259,7 @@ public class PocketsRegistrationManager {
 			map.put(ArmorItem.Type.CHESTPLATE, 10);
 			map.put(ArmorItem.Type.HELMET, 5);
 			map.put(ArmorItem.Type.BODY, 14);
-		}), 30, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()),
-		List.of(
+		}), 30, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()), List.of(
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "base/tex"), "", false),
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "base/tex_overlay"), "", false),
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "base/tex_alpha"), "", false)
@@ -277,8 +273,7 @@ public class PocketsRegistrationManager {
 			enumMap.put(ArmorItem.Type.CHESTPLATE, 12); 
 			enumMap.put(ArmorItem.Type.HELMET, 7); 
 			enumMap.put(ArmorItem.Type.BODY, 16);
-		}), 40, SoundEvents.ARMOR_EQUIP_GENERIC,() -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()),
-		List.of(
+		}), 40, SoundEvents.ARMOR_EQUIP_GENERIC,() -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()), List.of(
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "enhanced/tex"), "", false),
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "enhanced/tex_overlay"), "", false),
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "enhanced/tex_alpha"), "", false)
@@ -292,8 +287,7 @@ public class PocketsRegistrationManager {
 			enumMap.put(ArmorItem.Type.CHESTPLATE, 12); 
 			enumMap.put(ArmorItem.Type.HELMET, 7);
 			enumMap.put(ArmorItem.Type.BODY, 16);
-		}), 50, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()),
-		List.of(
+		}), 50, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()), List.of(
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "special/tex"), "", false),
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "special/tex_overlay"), "", false),
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "special/tex_alpha"), "", false)
@@ -322,8 +316,7 @@ public class PocketsRegistrationManager {
 			enumMap.put(ArmorItem.Type.CHESTPLATE, 12); 
 			enumMap.put(ArmorItem.Type.HELMET, 7);
 			enumMap.put(ArmorItem.Type.BODY, 16);
-		}), 50, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()),
-		List.of(
+		}), 50, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()), List.of(
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "visor/tex"), "", false),
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "visor/tex_overlay"), "", false),
 			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "visor/tex_alpha"), "", false)
@@ -349,7 +342,7 @@ public class PocketsRegistrationManager {
 	public static final DeferredItem<Item> NETHER_STAR_SHARD = addToItemTab(ITEMS.register("nether_star_shard", () -> new CosmosItemEffect(new Item.Properties().stacksTo(16).rarity(Rarity.RARE).fireResistant())));
 	public static final DeferredItem<Item> ELYTRA_WING = addToItemTab(ITEMS.register("elytra_wing", () -> new CosmosItem(new Item.Properties().stacksTo(2).rarity(Rarity.RARE))));
 	
-	public static final DeferredItem<Item> DIMENSIONAL_WRENCH = addToToolsTab(ITEMS.register("dimensional_wrench", () -> new CosmosItemTool(new Item.Properties().stacksTo(1))));
+	public static final DeferredItem<Item> DIMENSIONAL_WRENCH = addToToolsTab(ITEMS.register("dimensional_wrench", () -> new CosmosItemToolBasic(new Item.Properties().stacksTo(1))));
 	
 	public static final DeferredItem<Item> DIMENSIONAL_DEVICE_BASE = addToToolsTab(ITEMS.register("dimensional_device_base", () -> new CosmosItem(new Item.Properties().fireResistant().stacksTo(16))));
 	public static final DeferredItem<Item> DIMENSIONAL_EJECTOR = addToToolsTab(ITEMS.register("dimensional_ejector", () -> new DimensionalEjector(new Item.Properties().stacksTo(4))));
@@ -363,31 +356,31 @@ public class PocketsRegistrationManager {
 	public static final DeferredItem<DimensionalSword> DIMENSIONAL_SWORD = addToToolsTab(ITEMS.register("dimensional_sword", () -> 
 		new DimensionalSword(CoreItemTier.DIMENSIONAL, false, 
 			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(SwordItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY)))
 	);
 	
 	public static final DeferredItem<DimensionalPickaxe> DIMENSIONAL_PICKAXE = addToToolsTab(ITEMS.register("dimensional_pickaxe", () -> 
 		new DimensionalPickaxe(CoreItemTier.DIMENSIONAL, false, 
 			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(PickaxeItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY)))
 	);
 	
 	public static final DeferredItem<DimensionalAxe> DIMENSIONAL_AXE = addToToolsTab(ITEMS.register("dimensional_axe", () -> 
 		new DimensionalAxe(CoreItemTier.DIMENSIONAL, false, 
 			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(AxeItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY)))
 	);
 	
 	public static final DeferredItem<DimensionalShovel> DIMENSIONAL_SHOVEL = addToToolsTab(ITEMS.register("dimensional_shovel", () -> 
 		new DimensionalShovel(CoreItemTier.DIMENSIONAL, false, 
 			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(ShovelItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)),  
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY)))
 	);
 	
 	public static final DeferredItem<DimensionalHoe> DIMENSIONAL_HOE = addToToolsTab(ITEMS.register("dimensional_hoe", () -> 
 		new DimensionalHoe(CoreItemTier.DIMENSIONAL, false, 
 			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(HoeItem.createAttributes(CoreItemTier.DIMENSIONAL, 3, -2.4F)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY)))
 	);
 	
 	public static final DeferredItem<DimensionalBow> DIMENSIONAL_BOW = addToToolsTab(ITEMS.register("dimensional_bow", () -> 
@@ -399,14 +392,14 @@ public class PocketsRegistrationManager {
 	public static final DeferredItem<DimensionalTrident> DIMENSIONAL_TRIDENT = addToToolsTab(ITEMS.register("dimensional_trident", () -> 
 		new DimensionalTrident(
 			new Item.Properties().fireResistant().rarity(RARITY_POCKET).attributes(DimensionalTridentEnhanced.createAttributes(16.0F, 0.6F)).component(DataComponents.TOOL, DimensionalTridentEnhanced.createToolProperties(1.0F, 2)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY), 50000, 2))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY), 50000, 2))
 	);
 	
 	public static final DeferredItem<CosmosEnergyShieldItem> DIMENSIONAL_SHIELD = addToToolsTab(ITEMS.register("dimensional_shield", () -> 
 		new CosmosEnergyShieldItem(
 			new Item.Properties().fireResistant().stacksTo(1).rarity(RARITY_POCKET).component(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY), 
-			ModReferences.RESOURCE.SHIELD, ModReferences.RESOURCE.SHIELD_NO_PATTERN))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY), 
+			PocketReference.RESOURCE.SHIELD, PocketReference.RESOURCE.SHIELD_NO_PATTERN))
 	);
 	
 	public static final DeferredItem<CosmosEnergyArmourItemColourable> DIMENSIONAL_HELMET = addToToolsTab(ITEMS.register(
@@ -438,31 +431,31 @@ public class PocketsRegistrationManager {
 	public static final DeferredItem<DimensionalSword> DIMENSIONAL_SWORD_ENHANCED = addToToolsTab(ITEMS.register("dimensional_sword_enhanced", () -> 
 		new DimensionalSword(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
 			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(SwordItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY_ENHANCED)))
 	);
 	public static final DeferredItem<DimensionalPickaxe> DIMENSIONAL_PICKAXE_ENHANCED = addToToolsTab(ITEMS.register(
 		"dimensional_pickaxe_enhanced", () -> 
 		new DimensionalPickaxe(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
 			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(PickaxeItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY_ENHANCED)))
 	);
 	public static final DeferredItem<DimensionalAxe> DIMENSIONAL_AXE_ENHANCED = addToToolsTab(ITEMS.register(
 		"dimensional_axe_enhanced", () -> 
 		new DimensionalAxe(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
 			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(AxeItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY_ENHANCED)))
 	);
 	public static final DeferredItem<DimensionalShovel> DIMENSIONAL_SHOVEL_ENHANCED = addToToolsTab(ITEMS.register(
 		"dimensional_shovel_enhanced", () -> 
 		new DimensionalShovel(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
 			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(ShovelItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY_ENHANCED)))
 	);
 	public static final DeferredItem<DimensionalHoe> DIMENSIONAL_HOE_ENHANCED = addToToolsTab(ITEMS.register(
 		"dimensional_hoe_enhanced", () -> 
 		new DimensionalHoe(CoreItemTier.DIMENSIONAL_ENHANCED, true, 
 			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(HoeItem.createAttributes(CoreItemTier.DIMENSIONAL_ENHANCED, 3, -2.4F)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED)))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY_ENHANCED)))
 	);
 	public static final DeferredItem<DimensionalBow> DIMENSIONAL_BOW_ENHANCED = addToToolsTab(ITEMS.register(
 		"dimensional_bow_enhanced", () -> 
@@ -474,14 +467,14 @@ public class PocketsRegistrationManager {
 		"dimensional_trident_enhanced", () -> 
 		new DimensionalTridentEnhanced(
 			new Item.Properties().fireResistant().rarity(Rarity.RARE).attributes(DimensionalTridentEnhanced.createAttributes(12.0F, -1.0F)).component(DataComponents.TOOL, DimensionalTridentEnhanced.createToolProperties(1.0F, 2)), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED), 40000, 3))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY_ENHANCED), 40000, 3))
 	);
 	public static final DeferredItem<CosmosEnergyShieldItem> DIMENSIONAL_SHIELD_ENHANCED = addToToolsTab(ITEMS.register(
 		"dimensional_shield_enhanced", () -> 
 		new CosmosEnergyShieldItem(
 			new Item.Properties().fireResistant().stacksTo(1).rarity(Rarity.RARE).component(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY), 
-			new CosmosEnergyItem.Properties().setStatsFromArray(ModReferences.CONSTANT.ENERGY_ENHANCED), 
-			ModReferences.RESOURCE.SHIELD_ENHANCED, ModReferences.RESOURCE.SHIELD_ENHANCED_NO_PATTERN))
+			new CosmosEnergyItem.Properties().setStatsFromArray(PocketReference.CONSTANT.ENERGY_ENHANCED), 
+			PocketReference.RESOURCE.SHIELD_ENHANCED, PocketReference.RESOURCE.SHIELD_ENHANCED_NO_PATTERN))
 	);
 	
 	public static final DeferredItem<CosmosEnergyArmourItemColourable> DIMENSIONAL_HELMET_ENHANCED = addToToolsTab(ITEMS.register(
@@ -702,7 +695,7 @@ public class PocketsRegistrationManager {
 		CosmosRuntime.Client.registerBERenderer(event, RendererBlockEntityModuleFluidDisplay::new, BLOCK_ENTITY_TYPE_FLUID_DISPLAY.get());
 		CosmosRuntime.Client.registerBERenderer(event, RendererBlockEntityModuleCreativeFluid::new, BLOCK_ENTITY_TYPE_CREATIVE_FLUID.get());
 		
-		DimensionalPockets.CONSOLE.startup("BlockEntityRenderer registration complete.");
+		DimensionalPockets.CONSOLE.startup("BlockEntityRenderer registration complete...");
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -713,20 +706,16 @@ public class PocketsRegistrationManager {
 		Minecraft mc = Minecraft.getInstance();
 		
 		event.getEntityTypes().forEach((entityType) -> {
-			EntityRenderer<?> renderer = event.getRenderer(entityType);
-			
-			if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer && entityType != EntityType.VEX) {
-				ResourceLocation type = ResourceLocation.parse(entityType.getDescriptionId());
-				
+			if (event.getRenderer(entityType) instanceof LivingEntityRenderer<?, ?> livingRenderer && entityType != EntityType.VEX) {
 				if (livingRenderer.getModel() instanceof HumanoidModel<?>) {
-					LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>> humanRenderer = (LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>>) renderer;
+					LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>> humanRenderer = (LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>>) livingRenderer;
 					ModelLayerLocation[] layers = new ModelLayerLocation[] { ModelLayers.PLAYER_INNER_ARMOR, ModelLayers.PLAYER_OUTER_ARMOR };
 					List<ModelLayerLocation> locations = ModelLayers.getKnownLocations().toList();
 					
 					for (int i = 0; i < locations.size(); i++) {
 						ModelLayerLocation location = locations.get(i);
 						
-						if (location.getModel().equals(type)) {
+						if (location.getModel().equals(ResourceLocation.parse(entityType.getDescriptionId()))) {
 							if (location.getLayer().equals("inner_armor")) {
 								layers[0] = location;
 							}
@@ -767,7 +756,7 @@ public class PocketsRegistrationManager {
 			DimensionalPockets.CONSOLE.fatal("Player Renderer {slim} NULL!! Report this issue to the Mod Author");
 		}
 		
-		DimensionalPockets.CONSOLE.startup("EntityRenderer Layer registration complete.");
+		DimensionalPockets.CONSOLE.startup("EntityRenderer Layer registration complete...");
 	}
 	
 	@SubscribeEvent
@@ -778,7 +767,7 @@ public class PocketsRegistrationManager {
 			"dimensional_elytraplate_visor", "dimensional_elytraplate_solar", "dimensional_elytraplate_battery"
 		);
 		
-		DimensionalPockets.CONSOLE.startup("Additional Model registration complete..");
+		DimensionalPockets.CONSOLE.startup("Additional Model registration complete...");
 	}
 	
 	@SubscribeEvent
@@ -790,13 +779,11 @@ public class PocketsRegistrationManager {
 		SUIT_SETTINGS = new KeyMapping("dimensionalpocketsii.keybind.suit_mode_change", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_APOSTROPHE, "dimensionalpocketsii.keybind.category");
 		SUIT_FIREWORK = new KeyMapping("dimensionalpocketsii.keybind.suit_firework", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_BRACKET, "dimensionalpocketsii.keybind.category");
 		
-		event.register(SUIT_SCREEN);
-		event.register(SUIT_SCREEN_ENDER_CHEST);
-		event.register(SUIT_SHIFT);
-		event.register(SUIT_SETTINGS);
-		event.register(SUIT_FIREWORK);
+		CosmosRuntime.Client.registerKeyMappings(event, 
+			SUIT_SCREEN, SUIT_SCREEN_ENDER_CHEST, SUIT_SHIFT, SUIT_SETTINGS, SUIT_FIREWORK
+		);
 		
-		DimensionalPockets.CONSOLE.startup("Keybindings registration complete..");
+		DimensionalPockets.CONSOLE.startup("Keybindings registration complete...");
 	}
 	
 	@SubscribeEvent
@@ -812,7 +799,7 @@ public class PocketsRegistrationManager {
 			BLOCK_WALL_ARMOUR_WORKBENCH.get(), BLOCK_WALL_UPGRADE_STATION.get(), BLOCK_WALL_GENERATOR.get(), BLOCK_WALL_ANVIL.get()
 		);
 		
-		DimensionalPockets.CONSOLE.startup("Block Colour registration complete..");
+		DimensionalPockets.CONSOLE.startup("Block Colour registration complete...");
 	}
 
 	@SubscribeEvent
@@ -836,17 +823,9 @@ public class PocketsRegistrationManager {
 			BLOCK_WALL_ARMOUR_WORKBENCH.get(), BLOCK_WALL_UPGRADE_STATION.get(), BLOCK_WALL_GENERATOR.get(), BLOCK_WALL_ANVIL.get()		
 		);
 
-		DimensionalPockets.CONSOLE.startup("Item Colour registration complete..");
+		DimensionalPockets.CONSOLE.startup("Item Colour registration complete...");
 	}
 	
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-    public static void onRegisterOverlays(RegisterGuiLayersEvent event) {
-		CosmosRuntime.Client.regiserCameraOverlay(event, "elytraplate_screen", new ScreenElytraplateVisor());
-		
-		DimensionalPockets.CONSOLE.startup("GUI Layer registration complete..");
-	}
-
 	@SubscribeEvent
 	public static void registerMenuScreensEvent(RegisterMenuScreensEvent event) {
 		event.register(CONTAINER_TYPE_POCKET.get(), ScreenPocket::new);
@@ -868,7 +847,7 @@ public class PocketsRegistrationManager {
 		event.register(CONTAINER_TYPE_ELYTRAPLATE_SETTINGS.get(), ScreenElytraplateSettings::new);
 		event.register(CONTAINER_TYPE_ELYTRAPLATE_ENDER_CHEST.get(), ScreenElytraplateEnderChest::new);
 		
-		DimensionalPockets.CONSOLE.startup("Menu Screen registration complete..");
+		DimensionalPockets.CONSOLE.startup("Menu Screen registration complete...");
 	}
 
 	@SubscribeEvent
@@ -896,7 +875,7 @@ public class PocketsRegistrationManager {
 			DIMENSIONAL_ELYTRAPLATE.get()
 		);
 		
-		DimensionalPockets.CONSOLE.startup("Capability registration complete..");
+		DimensionalPockets.CONSOLE.startup("Capability registration complete...");
 	}
 
 	@SuppressWarnings("deprecation")
@@ -939,7 +918,7 @@ public class PocketsRegistrationManager {
 		EntityRenderers.register(ENTITY_TYPE_TRIDENT.get(), RendererDimensionalTrident::new);
 		EntityRenderers.register(ENTITY_TYPE_TRIDENT_ENHANCED.get(), RendererDimensionalTridentEnhanced::new);
 		
-		DimensionalPockets.CONSOLE.startup("FMLClientSetup complete..");
+		DimensionalPockets.CONSOLE.startup("FMLClientSetup complete...");
 	}
 
     public static <T extends Item> DeferredItem<T> addToBlockTab(DeferredItem<T> itemLike) {

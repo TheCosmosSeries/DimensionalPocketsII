@@ -3,6 +3,7 @@ package com.tcn.dimensionalpocketsii.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
+import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.client.renderer.model.DimensionalTridentModel;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
@@ -38,38 +39,25 @@ public class DimensionalTridentBEWLR extends BlockEntityWithoutLevelRenderer {
 		Minecraft mc = Minecraft.getInstance();
 		ItemRenderer renderer = mc.getItemRenderer();
 
-		if (item == PocketsRegistrationManager.DIMENSIONAL_TRIDENT.get()) {
-			boolean flag = transformIn == ItemDisplayContext.GUI || transformIn == ItemDisplayContext.GROUND || transformIn == ItemDisplayContext.FIXED;
-			
-			if (flag) {
-				model = Minecraft.getInstance().getModelManager().getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath("dimensionalpocketsii", "dimensional_trident"), "inventory"));
+		boolean normal = item.equals(PocketsRegistrationManager.DIMENSIONAL_TRIDENT.get());
+		
+		String modelLocation = normal ? "dimensional_trident" : "dimensional_trident_enhanced";
+		ResourceLocation texture = normal ? DimensionalTridentModel.TEXTURE : DimensionalTridentModel.TEXTURE_ENHANCED;
+		
+		boolean flag = transformIn == ItemDisplayContext.GUI || transformIn == ItemDisplayContext.GROUND || transformIn == ItemDisplayContext.FIXED;
+		
+		if (flag) {
+			model = Minecraft.getInstance().getModelManager().getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, modelLocation), "inventory"));
 
-				poseStack.pushPose();
-				renderer.render(stackIn, transformIn, true, poseStack, typeBuffer, combinedLight, combinedOverlay, model);
-				poseStack.popPose();
-			} else {
-				poseStack.pushPose();
-				poseStack.scale(1.0F, -1.0F, -1.0F);
-				VertexConsumer ivertexbuilder1 = ItemRenderer.getFoilBufferDirect(typeBuffer, this.tridentModel.renderType(DimensionalTridentModel.TEXTURE), false, stackIn.hasFoil());
-				this.tridentModel.renderToBuffer(poseStack, ivertexbuilder1, combinedLight, combinedOverlay, ComponentColour.WHITE.decOpaque());
-				poseStack.popPose();
-			}
-		} else if (item == PocketsRegistrationManager.DIMENSIONAL_TRIDENT_ENHANCED.get()) {
-			boolean flag = transformIn == ItemDisplayContext.GUI || transformIn == ItemDisplayContext.GROUND || transformIn == ItemDisplayContext.FIXED;
-			
-			if (flag) {
-				model = Minecraft.getInstance().getModelManager().getModel(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath("dimensionalpocketsii", "dimensional_trident_enhanced"), "inventory"));
-
-				poseStack.pushPose();
-				renderer.render(stackIn, transformIn, true, poseStack, typeBuffer, combinedLight, combinedOverlay, model);
-				poseStack.popPose();
-			} else {
-				poseStack.pushPose();
-				poseStack.scale(1.0F, -1.0F, -1.0F);
-				VertexConsumer ivertexbuilder1 = ItemRenderer.getFoilBufferDirect(typeBuffer, this.tridentModel.renderType(DimensionalTridentModel.TEXTURE_ENHANCED), false, stackIn.hasFoil());
-				this.tridentModel.renderToBuffer(poseStack, ivertexbuilder1, combinedLight, combinedOverlay, ComponentColour.WHITE.decOpaque());
-				poseStack.popPose();
-			}
+			poseStack.pushPose();
+			renderer.render(stackIn, transformIn, true, poseStack, typeBuffer, combinedLight, combinedOverlay, model);
+			poseStack.popPose();
+		} else {
+			poseStack.pushPose();
+			poseStack.scale(1.0F, -1.0F, -1.0F);
+			VertexConsumer ivertexbuilder1 = ItemRenderer.getFoilBufferDirect(typeBuffer, this.tridentModel.renderType(texture), false, stackIn.hasFoil());
+			this.tridentModel.renderToBuffer(poseStack, ivertexbuilder1, combinedLight, combinedOverlay, ComponentColour.WHITE.decOpaque());
+			poseStack.popPose();
 		}
 	}
 }

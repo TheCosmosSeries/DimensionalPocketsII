@@ -1,10 +1,14 @@
 package com.tcn.dimensionalpocketsii.client.container;
 
+import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuItemStack;
 import com.tcn.cosmoslibrary.client.container.slot.SlotArmourItem;
+import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -12,15 +16,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
-public class ContainerElytraplateEnderChest extends AbstractContainerMenu {
+public class ContainerElytraplateEnderChest extends CosmosContainerMenuItemStack {
 	private final Container container;
 	private final int containerRows;
-
-	private ItemStack stack;
-	protected final Player player;
-	private final Level world;
 
 	public static ContainerElytraplateEnderChest createContainerServerSide(int windowID, Inventory playerInventoryIn, Container containerIn, ItemStack stackIn) {
 		return new ContainerElytraplateEnderChest(windowID, playerInventoryIn, containerIn, stackIn);
@@ -31,11 +30,8 @@ public class ContainerElytraplateEnderChest extends AbstractContainerMenu {
 	}
 	
 	public ContainerElytraplateEnderChest(int indexIn, Inventory playerInventoryIn, Container containerIn, ItemStack stackIn) {
-		super(PocketsRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_ENDER_CHEST.get(), indexIn);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_ENDER_CHEST.get(), indexIn, playerInventoryIn, stackIn);
 		
-		this.stack = stackIn;
-		this.player = playerInventoryIn.player;
-		this.world = playerInventoryIn.player.level();
 		
 		checkContainerSize(containerIn, 3 * 9);
 		this.container = containerIn;
@@ -61,10 +57,10 @@ public class ContainerElytraplateEnderChest extends AbstractContainerMenu {
 		}
 
 		//Armour Slots
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 39, 11, 80, this.player, 0));
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 38, 11, 99, this.player, 1));
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 37, 11, 118, this.player, 2));
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 36, 11, 137, this.player, 3));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 39, 11, 80, this.getPlayer(), 0));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 38, 11, 99, this.getPlayer(), 1));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 37, 11, 118, this.getPlayer(), 2));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 36, 11, 137, this.getPlayer(), 3));
 	}
 
 	@Override
@@ -121,16 +117,18 @@ public class ContainerElytraplateEnderChest extends AbstractContainerMenu {
 	public int getRowCount() {
 		return this.containerRows;
 	}
-
-	public ItemStack getStack() {
-		return this.stack;
-	}
-
-	public Level getLevel() {
-		return this.world;
-	}
 	
-	public Player getPlayer() {
-		return this.player;
+	public static class Provider implements MenuProvider {
+
+		@Override
+		public AbstractContainerMenu createMenu(int indexIn, Inventory playerInventoryIn, Player playerIn) {
+			return ContainerElytraplateEnderChest.createContainerServerSide(indexIn, playerInventoryIn, playerIn.getEnderChestInventory(), playerInventoryIn.getArmor(2));
+		}
+
+		@Override
+		public Component getDisplayName() {
+			return ComponentHelper.title("dimensionalpocketsii.gui.elytraplate.ender_chest.title");
+		}
 	}
+
 }

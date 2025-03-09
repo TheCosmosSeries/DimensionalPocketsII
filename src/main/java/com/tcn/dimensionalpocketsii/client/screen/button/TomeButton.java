@@ -25,8 +25,8 @@ public class TomeButton extends Button {
 	protected long nextNarration = Long.MAX_VALUE;
 	private int identifier;
 
-	public TomeButton(int x, int y, int size, int identifier, int colour, ResourceLocation location, Button.OnPress pressedAction, Button.CreateNarration createNarr) {
-		super(x, y, size, size, ComponentHelper.empty(), pressedAction, createNarr);
+	public TomeButton(int x, int y, int size, int identifier, int colour, ResourceLocation location, Button.OnPress pressedAction) {
+		super(x, y, size, size, ComponentHelper.empty(), pressedAction, (component) -> { return ComponentHelper.empty(); });
 		this.x = x;
 		this.y = y;
 		this.width = size;
@@ -37,8 +37,8 @@ public class TomeButton extends Button {
 		this.identifier = identifier;
 	}
 	
-	public TomeButton(int x, int y, int colour, ResourceLocation location, Button.OnPress pressedAction, Button.CreateNarration createNarr) {
-		super(x, y, 15, 25, ComponentHelper.empty(), pressedAction, createNarr);
+	public TomeButton(int x, int y, int colour, ResourceLocation location, Button.OnPress pressedAction) {
+		super(x, y, 15, 25, ComponentHelper.empty(), pressedAction, (component) -> { return ComponentHelper.empty(); });
 		this.x = x;
 		this.y = y;
 		this.width = 15;

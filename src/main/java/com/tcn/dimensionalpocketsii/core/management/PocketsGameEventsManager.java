@@ -6,7 +6,7 @@ import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyArmourItemColourable;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
-import com.tcn.dimensionalpocketsii.core.item.armour.ElytraSettings;
+import com.tcn.dimensionalpocketsii.core.item.armour.EnumElytraSetting;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.EnumElytraModule;
 import com.tcn.dimensionalpocketsii.core.network.packet.PacketDimensionChange;
 import com.tcn.dimensionalpocketsii.core.network.packet.elytraplate.PacketElytraplateOpenConnector;
@@ -161,7 +161,7 @@ public class PocketsGameEventsManager {
 											float player_pitch = player_pos.getFloat("pitch");
 											float player_yaw = player_pos.getFloat("yaw");
 											
-											boolean tele_to_block = DimensionalElytraplate.getElytraSetting(armourStack, ElytraSettings.TELEPORT_TO_BLOCK)[1];
+											boolean tele_to_block = DimensionalElytraplate.getElytraSetting(armourStack, EnumElytraSetting.TELEPORT_TO_BLOCK);
 											
 											CompoundTag dim = nbt_data.getCompound("dimension");
 											String namespace = dim.getString("namespace");
@@ -235,7 +235,7 @@ public class PocketsGameEventsManager {
 					
 					if (armour instanceof DimensionalElytraplate elytraplate) {						
 						if (DimensionalElytraplate.hasModuleInstalled(armourStack, EnumElytraModule.FIREWORK)) {
-							if (DimensionalElytraplate.getElytraSetting(armourStack, ElytraSettings.FIREWORK)[1]) {
+							if (DimensionalElytraplate.getElytraSetting(armourStack, EnumElytraSetting.FIREWORK)) {
 								if (elytraplate.hasEnergy(armourStack)) {
 									PacketDistributor.sendToServer(new PacketElytraplateUseFirework(2));
 									PacketDistributor.sendToServer(new PacketElytraplateUseEnergy(playerIn.getUUID(), 2, elytraplate.getMaxUse(armourStack)));

@@ -2,31 +2,31 @@ package com.tcn.dimensionalpocketsii.core.item.armour.module;
 
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.core.item.armour.ElytraSettings;
+import com.tcn.dimensionalpocketsii.core.item.armour.EnumElytraSetting;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.network.chat.MutableComponent;
 
 public enum EnumElytraModule {
 
-	SHIFTER(0, "shifter", "dimensionalpocketsii.armour_module.shifter", ComponentColour.GREEN, PocketsRegistrationManager.ARMOUR_MODULE_SHIFTER.get(), ElytraSettings.TELEPORT_TO_BLOCK),
+	SHIFTER(0, "shifter", "dimensionalpocketsii.armour_module.shifter", ComponentColour.GREEN, PocketsRegistrationManager.ARMOUR_MODULE_SHIFTER.get(), EnumElytraSetting.TELEPORT_TO_BLOCK),
 	SCREEN(1, "screen", "dimensionalpocketsii.armour_module.screen", ComponentColour.CYAN, PocketsRegistrationManager.ARMOUR_MODULE_SCREEN.get(), null),
-	VISOR(2, "visor", "dimensionalpocketsii.armour_module.visor", ComponentColour.LIGHT_BLUE, PocketsRegistrationManager.ARMOUR_MODULE_VISOR.get(), ElytraSettings.VISOR),
-	SOLAR(3, "solar", "dimensionalpocketsii.armour_module.solar", ComponentColour.TURQUOISE, PocketsRegistrationManager.ARMOUR_MODULE_SOLAR.get(), ElytraSettings.SOLAR),
-	BATTERY(4, "battery", "dimensionalpocketsii.armour_module.battery", ComponentColour.RED, PocketsRegistrationManager.ARMOUR_MODULE_BATTERY.get(), ElytraSettings.CHARGER),
+	VISOR(2, "visor", "dimensionalpocketsii.armour_module.visor", ComponentColour.LIGHT_BLUE, PocketsRegistrationManager.ARMOUR_MODULE_VISOR.get(), EnumElytraSetting.VISOR),
+	SOLAR(3, "solar", "dimensionalpocketsii.armour_module.solar", ComponentColour.TURQUOISE, PocketsRegistrationManager.ARMOUR_MODULE_SOLAR.get(), EnumElytraSetting.SOLAR),
+	BATTERY(4, "battery", "dimensionalpocketsii.armour_module.battery", ComponentColour.RED, PocketsRegistrationManager.ARMOUR_MODULE_BATTERY.get(), EnumElytraSetting.CHARGER),
 	ENDER_CHEST(5, "screen_ender_chest", "dimensionalpocketsii.armour_module.ender_chest", ComponentColour.DARK_CYAN, PocketsRegistrationManager.ARMOUR_MODULE_ENDER_CHEST.get(), null),
-	FIREWORK(6, "firework", "dimensionalpocketsii.armour_module.firework", ComponentColour.YELLOW, PocketsRegistrationManager.ARMOUR_MODULE_FIREWORK.get(), ElytraSettings.FIREWORK);
+	FIREWORK(6, "firework", "dimensionalpocketsii.armour_module.firework", ComponentColour.YELLOW, PocketsRegistrationManager.ARMOUR_MODULE_FIREWORK.get(), EnumElytraSetting.FIREWORK);
 	
 	private int index;
 	private String name;
 	private final String localizedName;
 	private final ComponentColour displayColour;
 	private IModuleItem moduleItem;
-	private ElytraSettings setting;
+	private EnumElytraSetting setting;
 	
 	public static final int LENGTH = 7;
 	
-	EnumElytraModule(int indexIn, String nameIn, String localizedName, ComponentColour displayColour, IModuleItem moduleItemIn, ElytraSettings settingIn) {
+	EnumElytraModule(int indexIn, String nameIn, String localizedName, ComponentColour displayColour, IModuleItem moduleItemIn, EnumElytraSetting settingIn) {
 		this.index = indexIn;
 		this.name = nameIn;
 		this.localizedName = localizedName;
@@ -51,7 +51,7 @@ public enum EnumElytraModule {
 		return this.moduleItem;
 	}
 	
-	public ElytraSettings getSetting() {
+	public EnumElytraSetting getSetting() {
 		return this.setting;
 	}
 

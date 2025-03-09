@@ -35,7 +35,11 @@ import net.neoforged.neoforge.network.PacketDistributor;
 public class ScreenItemTome extends Screen {
 	public ItemStack stack;
 	
-	public final ResourceLocation[] TEXTURE = new ResourceLocation[] { ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "textures/gui/tome/tome.png"), ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "textures/gui/tome/tome_dark.png") };
+	public final ResourceLocation[] TEXTURE = new ResourceLocation[] { 
+		ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "textures/gui/tome/tome.png"), 
+		ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "textures/gui/tome/tome_dark.png") 
+	};
+	
 	public static final ResourceLocation FLAT_TEXTURES = ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "textures/gui/tome/textures_flat.png");
 	public static final ResourceLocation FLAT_TEXTURES_0 = ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "textures/gui/tome/textures_flat_0.png");
 	public static final ResourceLocation BLOCK_TEXTURES = ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "textures/gui/tome/blocks.png");
@@ -69,6 +73,141 @@ public class ScreenItemTome extends Screen {
 	
 	private final boolean pageTurnSounds;
 
+	final ItemStack[] items = new ItemStack[] {
+			ItemStack.EMPTY, // 0
+
+			new ItemStack(Items.IRON_INGOT), // 1
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHARD.get()), // 2
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()), // 3
+			new ItemStack(Items.DIAMOND), // 4
+			new ItemStack(Items.NETHER_STAR), // 5
+			new ItemStack(PocketsRegistrationManager.NETHER_STAR_SHARD.get()), // 6
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_WRENCH.get()), // 7
+			new ItemStack(PocketsRegistrationManager.MODULE_BASE.get()), // 8
+			new ItemStack(Items.REDSTONE), // 9
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIFTER.get()), // 10
+			new ItemStack(Items.NETHERITE_INGOT), // 11
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIFTER_ENHANCED.get()), // 12
+			new ItemStack(Items.BLAZE_POWDER), // 13
+			new ItemStack(Items.PHANTOM_MEMBRANE), // 14
+			new ItemStack(Items.ELYTRA), // 15
+			new ItemStack(PocketsRegistrationManager.ELYTRA_WING.get()), // 16
+			new ItemStack(PocketsRegistrationManager.MODULE_CONNECTOR.get()), // 17
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_PEARL.get()), // 18
+			new ItemStack(Items.BOW), // 19
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_THREAD.get()), // 20
+
+			new ItemStack(Items.NETHERITE_PICKAXE), // 21
+			new ItemStack(Items.NETHERITE_SWORD), // 22
+			new ItemStack(Items.NETHERITE_AXE), // 23
+			new ItemStack(Items.NETHERITE_SHOVEL), // 24
+			new ItemStack(Items.NETHERITE_HOE), // 25
+
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_PICKAXE.get()), // 26
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SWORD.get()), // 27
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_AXE.get()), // 28
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHOVEL.get()), // 29
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HOE.get()), // 30
+
+			new ItemStack(Items.NETHERITE_HELMET), // 31
+			new ItemStack(Items.NETHERITE_CHESTPLATE), // 32
+			new ItemStack(Items.NETHERITE_LEGGINGS), // 33
+			new ItemStack(Items.NETHERITE_BOOTS), // 34
+
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HELMET.get()), // 35
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_CHESTPLATE.get()), // 36
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_LEGGINGS.get()), // 37
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOOTS.get()), // 38
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_ELYTRAPLATE.get()), // 39
+			new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_SCREEN.get()), // 40
+			new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_SHIFTER.get()), // 41
+
+			new ItemStack(Blocks.IRON_BLOCK), // 42
+			new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL_METAL.get()), // 43
+			new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL_CORE.get()), // 44
+			new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL.get()), // 45
+			new ItemStack(PocketsRegistrationManager.BLOCK_POCKET.get()), // 46
+			new ItemStack(Blocks.DIAMOND_BLOCK), // 47
+			new ItemStack(Blocks.NETHERITE_BLOCK), // 48
+			new ItemStack(Blocks.CHEST), // 49
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_DUST.get()), // 50
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOW.get()), // 51
+			new ItemStack(Items.GLOWSTONE_DUST), // 52
+			new ItemStack(Items.STRING), // 53
+			new ItemStack(Items.ENDER_PEARL), // 54
+			new ItemStack(Items.EMERALD), // 55
+			new ItemStack(Blocks.REDSTONE_BLOCK), // 56
+			new ItemStack(PocketsRegistrationManager.MODULE_CHARGER.get()), // 57
+			new ItemStack(Items.BOOK), // 58
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_TOME.get()), // 59
+			new ItemStack(PocketsRegistrationManager.MODULE_CRAFTER.get()), // 60
+			new ItemStack(Blocks.CRAFTING_TABLE), // 61
+			new ItemStack(Items.TRIDENT), // 62
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_TRIDENT.get()), // 63
+			new ItemStack(PocketsRegistrationManager.MODULE_ENERGY_DISPLAY.get()), // 64
+			new ItemStack(Blocks.FURNACE), // 65
+			new ItemStack(PocketsRegistrationManager.MODULE_FURNACE.get()), // 66
+			new ItemStack(Blocks.SMITHING_TABLE), // 67
+			new ItemStack(PocketsRegistrationManager.MODULE_ARMOUR_WORKBENCH.get()), // 68
+			new ItemStack(Blocks.GLOWSTONE), // 69
+			new ItemStack(PocketsRegistrationManager.MODULE_FLUID_DISPLAY.get()), // 70
+			new ItemStack(Items.BUCKET), // 71
+
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_DEVICE_BASE.get()), // 72
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_EJECTOR.get()), // 73
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_ENERGY_CELL.get()), // 74
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_ENERGY_CELL_ENHANCED.get()), // 75
+
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SWORD_ENHANCED.get()), // 76
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_PICKAXE_ENHANCED.get()), // 77
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_AXE_ENHANCED.get()), // 78
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHOVEL_ENHANCED.get()), // 79
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HOE_ENHANCED.get()), // 80
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_TRIDENT_ENHANCED.get()), // 81
+
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HELMET_ENHANCED.get()), // 82
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_CHESTPLATE_ENHANCED.get()), // 83
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_LEGGINGS_ENHANCED.get()), // 84
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOOTS_ENHANCED.get()), // 85
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_INGOT_ENHANCED.get()), // 86
+
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_GEM.get()), // 87
+			new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL_GEM), // 88
+
+			new ItemStack(Blocks.COPPER_BLOCK), // 89
+			new ItemStack(Items.COPPER_INGOT), // 90
+
+			new ItemStack(PocketsRegistrationManager.MODULE_GENERATOR.get()), // 91
+			new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_VISOR.get()), // 92
+			new ItemStack(Items.CLOCK), // 93
+			new ItemStack(Items.DAYLIGHT_DETECTOR), // 94
+			new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_SOLAR.get()), // 95
+			new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_BATTERY.get()), // 96
+
+			new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get()), // 97
+			new ItemStack(PocketsRegistrationManager.BLOCK_FOCUS.get()), // 98
+			new ItemStack(PocketsRegistrationManager.MODULE_FOCUS.get()), // 99
+
+			new ItemStack(PocketsRegistrationManager.MODULE_BLAST_FURNACE.get()), // 100
+			new ItemStack(Blocks.BLAST_FURNACE), // 101
+			new ItemStack(PocketsRegistrationManager.MODULE_SMITHING_TABLE.get()), // 102
+			new ItemStack(Blocks.SMITHING_TABLE), // 103
+
+			new ItemStack(Items.SHIELD), // 104
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIELD.get()), // 105
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIELD_ENHANCED.get()), // 106
+
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOW_ENHANCED.get()), // 107
+
+			new ItemStack(Blocks.ENDER_CHEST), // 108
+			new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_ENDER_CHEST.get()), // 109
+			new ItemStack(PocketsRegistrationManager.DIMENSIONAL_UPGRADE_TEMPLATE.get()), // 110
+			new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_FIREWORK.get()), // 111
+
+			new ItemStack(Items.FIREWORK_ROCKET), // 112
+			new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), // 113
+	};
+	
 	public ScreenItemTome(boolean pageTurnSoundsIn, UUID playerUUIDIn, ItemStack stackIn) {
 		super(ComponentHelper.title("dimensionalpocketsii.tome_heading"));
 		
@@ -87,12 +226,12 @@ public class ScreenItemTome extends Screen {
 		this.addButtons();
 		super.init();
 		
-		int loadedPage = DimensionalTome.getPage(this.stack);
+		int loadedPage = DimensionalTome.getPage(this.getStack());
 		
 		if (loadedPage == 48) {
 			this.currPage = 0;
 		} else {
-			this.currPage = DimensionalTome.getPage(this.stack);
+			this.currPage = DimensionalTome.getPage(this.getStack());
 		}
 	}
 	
@@ -912,20 +1051,20 @@ public class ScreenItemTome extends Screen {
 		this.buttonNextPage = this.addRenderableWidget(new TomeChangeButton(this.width / 2 + 58, this.height / 2 + 92, true, this.pageTurnSounds, this.getTexture(), (button) -> { this.nextPage(); }, (button) -> { return button.get(); }));
 		this.buttonPreviousPage = this.addRenderableWidget(new TomeChangeButton(this.width / 2 - 79, this.height / 2 + 92, false, this.pageTurnSounds, this.getTexture(), (button) -> { this.previousPage(); }, (button) -> { return button.get(); }));
 		
-		this.buttonExit = this.addRenderableWidget(new TomeButton(this.width / 2 + 70, this.height / 2 - 105, 13, 1, ComponentColour.WHITE.dec(), this.getTexture(), (button) -> { this.onClose(); }, (button) -> { return button.get(); }));
-		this.buttonHome = this.addRenderableWidget(new TomeButton(this.width / 2 + 54, this.height / 2 - 105, 13, 0, ComponentColour.WHITE.dec(), this.getTexture(), (button) -> { this.showPage(0); }, (button) -> { return button.get(); }));
+		this.buttonExit = this.addRenderableWidget(new TomeButton(this.width / 2 + 70, this.height / 2 - 105, 13, 1, ComponentColour.WHITE.dec(), this.getTexture(), (button) -> { this.onClose(); }));
+		this.buttonHome = this.addRenderableWidget(new TomeButton(this.width / 2 + 54, this.height / 2 - 105, 13, 0, ComponentColour.WHITE.dec(), this.getTexture(), (button) -> { this.showPage(0); }));
 		
-		this.tabIntroduction = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 106, ComponentColour.POCKET_PURPLE_LIGHT.dec(), this.getTexture(), (button) -> { this.showPage(1); }, (button) -> { return button.get(); }));
-		this.tabPockets = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 80, ComponentColour.CYAN.dec(), this.getTexture(), (button) -> { this.showPage(2); }, (button) -> { return button.get(); }));
-		this.tabModules = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 54, ComponentColour.BLUE.dec(), this.getTexture(), (button) -> { this.showPage(6); }, (button) -> { return button.get(); }));
-		this.tabItems = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 28, ComponentColour.LIGHT_BLUE.dec(), this.getTexture(), (button) -> { this.showPage(17); }, (button) -> { return button.get(); }));
-		this.tabArmourWeapons = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 2, ComponentColour.GRAY.dec(), this.getTexture(), (button) -> { this.showPage(22); }, (button) -> { return button.get(); }));
-		this.tabRecipes = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 + 24, ComponentColour.DARK_GREEN.dec(), this.getTexture(), (button) -> { this.showPage(28); }, (button) -> { return button.get(); }));
-		this.tabCredits = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 + 50, ComponentColour.RED.dec(), this.getTexture(), (button) -> { this.showPage(45); }, (button) -> { return button.get(); }));
+		this.tabIntroduction = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 106, ComponentColour.POCKET_PURPLE_LIGHT.dec(), this.getTexture(), (button) -> { this.showPage(1); }));
+		this.tabPockets = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 80, ComponentColour.CYAN.dec(), this.getTexture(), (button) -> { this.showPage(2); }));
+		this.tabModules = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 54, ComponentColour.BLUE.dec(), this.getTexture(), (button) -> { this.showPage(6); }));
+		this.tabItems = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 28, ComponentColour.LIGHT_BLUE.dec(), this.getTexture(), (button) -> { this.showPage(17); }));
+		this.tabArmourWeapons = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 - 2, ComponentColour.GRAY.dec(), this.getTexture(), (button) -> { this.showPage(22); }));
+		this.tabRecipes = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 + 24, ComponentColour.DARK_GREEN.dec(), this.getTexture(), (button) -> { this.showPage(28); }));
+		this.tabCredits = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 + 50, ComponentColour.RED.dec(), this.getTexture(), (button) -> { this.showPage(45); }));
 		
-		this.tabConfiguration = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 +76,  this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), this.getTexture(), (button) -> {  }, (button) -> { return button.get(); }));
+		this.tabConfiguration = this.addRenderableWidget(new TomeButton(this.width / 2 + 85, this.height / 2 + 76,  this.getUIMode().equals(EnumUIMode.DARK) ? ComponentColour.SCREEN_LIGHT.dec() : ComponentColour.SCREEN_DARK.dec(), this.getTexture(), (button) -> { }));
 		
-		this.buttonMiss = this.addRenderableWidget(new TomeButton(0, 0, 10, 10, ComponentColour.WHITE.dec(), this.getTexture(), (button) -> { this.currPage = this.pageCount - 1; }, (button) -> { return button.get(); }));
+		this.buttonMiss = this.addRenderableWidget(new TomeButton(0, 0, 10, 10, ComponentColour.WHITE.dec(), this.getTexture(), (button) -> { this.currPage = this.pageCount - 1; }));
 		
 		this.updateButtons();
 	}
@@ -1009,6 +1148,10 @@ public class ScreenItemTome extends Screen {
 		return type;
 	}
 	
+	protected ItemStack getStack() {
+		return this.stack;
+	}
+	
 	//TODO
 	public void renderCraftingGrid(GuiGraphics graphics, int[] screen_coords, int mouseX, int mouseY, int[] ref, int grid_ref) {
 		int[] LX = new int[] { 31, 49, 67 }; //left to right [L]
@@ -1019,141 +1162,6 @@ public class ScreenItemTome extends Screen {
 		int[] SLX = new int[] { 31, 49, 67, 49,  124, 142, 160, 142 };
 		
 		int[] STY = new int[] { 36, 56, 78, 98,  120, 140, 162, 182 };
-		
-		final ItemStack[] items = new ItemStack[] {
-				ItemStack.EMPTY, // 0
-
-				new ItemStack(Items.IRON_INGOT), // 1
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHARD.get()), // 2
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_INGOT.get()), // 3
-				new ItemStack(Items.DIAMOND), // 4
-				new ItemStack(Items.NETHER_STAR), // 5
-				new ItemStack(PocketsRegistrationManager.NETHER_STAR_SHARD.get()), // 6
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_WRENCH.get()), // 7
-				new ItemStack(PocketsRegistrationManager.MODULE_BASE.get()), // 8
-				new ItemStack(Items.REDSTONE), // 9
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIFTER.get()), // 10
-				new ItemStack(Items.NETHERITE_INGOT), // 11
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIFTER_ENHANCED.get()), // 12
-				new ItemStack(Items.BLAZE_POWDER), // 13
-				new ItemStack(Items.PHANTOM_MEMBRANE), // 14
-				new ItemStack(Items.ELYTRA), // 15
-				new ItemStack(PocketsRegistrationManager.ELYTRA_WING.get()), // 16
-				new ItemStack(PocketsRegistrationManager.MODULE_CONNECTOR.get()), // 17
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_PEARL.get()), // 18
-				new ItemStack(Items.BOW), // 19
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_THREAD.get()), // 20
-
-				new ItemStack(Items.NETHERITE_PICKAXE), // 21
-				new ItemStack(Items.NETHERITE_SWORD), // 22
-				new ItemStack(Items.NETHERITE_AXE), // 23
-				new ItemStack(Items.NETHERITE_SHOVEL), // 24
-				new ItemStack(Items.NETHERITE_HOE), // 25
-
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_PICKAXE.get()), // 26
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SWORD.get()), // 27
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_AXE.get()), // 28
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHOVEL.get()), // 29
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HOE.get()), // 30
-
-				new ItemStack(Items.NETHERITE_HELMET), // 31
-				new ItemStack(Items.NETHERITE_CHESTPLATE), // 32
-				new ItemStack(Items.NETHERITE_LEGGINGS), // 33
-				new ItemStack(Items.NETHERITE_BOOTS), // 34
-
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HELMET.get()), // 35
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_CHESTPLATE.get()), // 36
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_LEGGINGS.get()), // 37
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOOTS.get()), // 38
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_ELYTRAPLATE.get()), // 39
-				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_SCREEN.get()), // 40
-				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_SHIFTER.get()), // 41
-
-				new ItemStack(Blocks.IRON_BLOCK), // 42
-				new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL_METAL.get()), // 43
-				new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL_CORE.get()), // 44
-				new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL.get()), // 45
-				new ItemStack(PocketsRegistrationManager.BLOCK_POCKET.get()), // 46
-				new ItemStack(Blocks.DIAMOND_BLOCK), // 47
-				new ItemStack(Blocks.NETHERITE_BLOCK), // 48
-				new ItemStack(Blocks.CHEST), // 49
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_DUST.get()), // 50
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOW.get()), // 51
-				new ItemStack(Items.GLOWSTONE_DUST), // 52
-				new ItemStack(Items.STRING), // 53
-				new ItemStack(Items.ENDER_PEARL), // 54
-				new ItemStack(Items.EMERALD), // 55
-				new ItemStack(Blocks.REDSTONE_BLOCK), // 56
-				new ItemStack(PocketsRegistrationManager.MODULE_CHARGER.get()), // 57
-				new ItemStack(Items.BOOK), // 58
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_TOME.get()), // 59
-				new ItemStack(PocketsRegistrationManager.MODULE_CRAFTER.get()), // 60
-				new ItemStack(Blocks.CRAFTING_TABLE), // 61
-				new ItemStack(Items.TRIDENT), // 62
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_TRIDENT.get()), // 63
-				new ItemStack(PocketsRegistrationManager.MODULE_ENERGY_DISPLAY.get()), // 64
-				new ItemStack(Blocks.FURNACE), // 65
-				new ItemStack(PocketsRegistrationManager.MODULE_FURNACE.get()), // 66
-				new ItemStack(Blocks.SMITHING_TABLE), // 67
-				new ItemStack(PocketsRegistrationManager.MODULE_ARMOUR_WORKBENCH.get()), // 68
-				new ItemStack(Blocks.GLOWSTONE), // 69
-				new ItemStack(PocketsRegistrationManager.MODULE_FLUID_DISPLAY.get()), // 70
-				new ItemStack(Items.BUCKET), // 71
-
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_DEVICE_BASE.get()), // 72
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_EJECTOR.get()), // 73
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_ENERGY_CELL.get()), // 74
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_ENERGY_CELL_ENHANCED.get()), // 75
-
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SWORD_ENHANCED.get()), // 76
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_PICKAXE_ENHANCED.get()), // 77
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_AXE_ENHANCED.get()), // 78
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHOVEL_ENHANCED.get()), // 79
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HOE_ENHANCED.get()), // 80
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_TRIDENT_ENHANCED.get()), // 81
-
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_HELMET_ENHANCED.get()), // 82
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_CHESTPLATE_ENHANCED.get()), // 83
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_LEGGINGS_ENHANCED.get()), // 84
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOOTS_ENHANCED.get()), // 85
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_INGOT_ENHANCED.get()), // 86
-
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_GEM.get()), // 87
-				new ItemStack(PocketsRegistrationManager.BLOCK_DIMENSIONAL_GEM), // 88
-
-				new ItemStack(Blocks.COPPER_BLOCK), // 89
-				new ItemStack(Items.COPPER_INGOT), // 90
-
-				new ItemStack(PocketsRegistrationManager.MODULE_GENERATOR.get()), // 91
-				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_VISOR.get()), // 92
-				new ItemStack(Items.CLOCK), // 93
-				new ItemStack(Items.DAYLIGHT_DETECTOR), // 94
-				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_SOLAR.get()), // 95
-				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_BATTERY.get()), // 96
-
-				new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get()), // 97
-				new ItemStack(PocketsRegistrationManager.BLOCK_FOCUS.get()), // 98
-				new ItemStack(PocketsRegistrationManager.MODULE_FOCUS.get()), // 99
-
-				new ItemStack(PocketsRegistrationManager.MODULE_BLAST_FURNACE.get()), // 100
-				new ItemStack(Blocks.BLAST_FURNACE), // 101
-				new ItemStack(PocketsRegistrationManager.MODULE_SMITHING_TABLE.get()), // 102
-				new ItemStack(Blocks.SMITHING_TABLE), // 103
-
-				new ItemStack(Items.SHIELD), // 104
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIELD.get()), // 105
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_SHIELD_ENHANCED.get()), // 106
-
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_BOW_ENHANCED.get()), // 107
-
-				new ItemStack(Blocks.ENDER_CHEST), // 108
-				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_ENDER_CHEST.get()), // 109
-				new ItemStack(PocketsRegistrationManager.DIMENSIONAL_UPGRADE_TEMPLATE.get()), // 110
-				new ItemStack(PocketsRegistrationManager.ARMOUR_MODULE_FIREWORK.get()), // 111
-
-				new ItemStack(Items.FIREWORK_ROCKET), // 112
-				new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), // 113
-		};
 		
 		//Vanilla Crafting
 		if (grid_ref == 0) {

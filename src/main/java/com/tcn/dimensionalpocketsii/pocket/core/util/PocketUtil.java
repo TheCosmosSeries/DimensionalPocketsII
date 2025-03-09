@@ -19,6 +19,7 @@ public class PocketUtil {
 		return compoundIn.contains(NBT_DIMENSIONAL_POCKET_KEY);
 	}
 	
+	@Deprecated
 	public static CompoundTag getPlayerPersistTag(Player playerIn) {
 		CompoundTag tag = playerIn.getPersistentData();
 		

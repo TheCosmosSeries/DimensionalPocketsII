@@ -26,7 +26,7 @@ import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
-import com.tcn.dimensionalpocketsii.ModReferences;
+import com.tcn.dimensionalpocketsii.PocketReference;
 import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
@@ -93,18 +93,18 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 	private final int BUCKET_IN_SLOT = 54;
 	private final int BUCKET_OUT_SLOT = 55;
 
+	public AbstractBlockEntityPocket(BlockEntityType<?> typeIn, BlockPos posIn, boolean isSingleChunkIn) {
+		this(typeIn, posIn, null, isSingleChunkIn);
+	}
+	
 	public AbstractBlockEntityPocket(BlockEntityType<?> typeIn, BlockPos posIn, BlockState stateIn, boolean isSingleChunkIn) {
 		super(typeIn, posIn, stateIn);
 		
 		this.isSingleChunk = isSingleChunkIn;
 	}
 	
-	public AbstractBlockEntityPocket(BlockEntityType<?> typeIn, BlockPos posIn, boolean isSingleChunkIn) {
-		this(typeIn, posIn, null, isSingleChunkIn);
-	}
-	
 	public Pocket getPocket() {
-		if (level.isClientSide) {
+		if (this.getLevel().isClientSide()) {
 			return this.pocket;
 		}
 		
@@ -113,8 +113,6 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 	
 	@Override
 	public void sendUpdates(boolean forceUpdate) {
-		//super.sendUpdates(forceUpdate);
-		
 		if (this.getLevel() != null) {
 			this.setChanged();
 			this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2 | 4);
@@ -312,18 +310,14 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 		if (entity != null && !entity.isRemoved()) {
 			if (!(entity instanceof BlockEntityModuleConnector) && !(entity instanceof BlockEntityModuleFurnace) && !(entity instanceof BlockEntityModuleArmourWorkbench) && !(entity instanceof BlockEntityModuleCrafter) && !(entity instanceof BlockEntityModuleCharger)) {
 				if (this.getSide(directionIn).equals(EnumSideState.INTERFACE_OUTPUT)) {
-					Object object = this.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, otherPos, directionIn.getOpposite());
-					
-					if (object != null) {
-						if (object instanceof IEnergyStorage storage) {
-							if (storage.canReceive() && this.canExtract(directionIn)) {
-								int extract = this.getPocket().extractEnergy(this.getPocket().getMaxExtract(), true);
-								int actualExtract = storage.receiveEnergy(extract, true);
-								
-								if (actualExtract > 0) {
-									this.getPocket().extractEnergy(storage.receiveEnergy(actualExtract, false), false);
-									this.sendUpdates(true);
-								}
+					if (this.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, otherPos, directionIn.getOpposite()) instanceof IEnergyStorage storage) {
+						if (storage.canReceive() && this.canExtract(directionIn)) {
+							int extract = this.getPocket().extractEnergy(this.getPocket().getMaxExtract(), true);
+							int actualExtract = storage.receiveEnergy(extract, true);
+							
+							if (actualExtract > 0) {
+								this.getPocket().extractEnergy(storage.receiveEnergy(actualExtract, false), false);
+								this.sendUpdates(true);
 							}
 						}
 					}
@@ -344,20 +338,14 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 			if (!(entity instanceof BlockEntityModuleConnector) && !(entity instanceof BlockEntityModuleFurnace) && !(entity instanceof BlockEntityModuleArmourWorkbench) && !(entity instanceof BlockEntityModuleCrafter) && !(entity instanceof BlockEntityModuleCharger)) {
 				if (this.getSide(directionIn).equals(EnumSideState.INTERFACE_INPUT)) {
 					if (this.getPocket().hasEnergyStored() && this.canExtract(directionIn)) {
-						Object object = this.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, otherPos, directionIn.getOpposite());
-						
-						if (object != null) {
-							if (object instanceof IEnergyStorage storage) {
-		
-		
-								if (storage.canExtract() && this.canReceive(directionIn)) {
-									int extract = storage.extractEnergy(this.getPocket().getMaxReceive(), true);
-									int actualExtract = this.getPocket().receiveEnergy(extract, true);
-									
-									if (actualExtract > 0) {
-										this.getPocket().receiveEnergy(storage.extractEnergy(actualExtract, false), false);
-										this.sendUpdates(true);
-									}
+						if (this.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, otherPos, directionIn.getOpposite()) instanceof IEnergyStorage storage) {
+							if (storage.canExtract() && this.canReceive(directionIn)) {
+								int extract = storage.extractEnergy(this.getPocket().getMaxReceive(), true);
+								int actualExtract = this.getPocket().receiveEnergy(extract, true);
+								
+								if (actualExtract > 0) {
+									this.getPocket().receiveEnergy(storage.extractEnergy(actualExtract, false), false);
+									this.sendUpdates(true);
 								}
 							}
 						}
@@ -378,19 +366,15 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 		if (entity != null && !entity.isRemoved()) {
 			if (!(entity instanceof BlockEntityModuleConnector) && !(entity instanceof BlockEntityModuleFurnace) && !(entity instanceof BlockEntityModuleArmourWorkbench) && !(entity instanceof BlockEntityModuleCrafter) && !(entity instanceof BlockEntityModuleCharger)) {
 				if (this.getSide(directionIn).equals(EnumSideState.INTERFACE_OUTPUT)) {
-					Object object = this.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, otherPos, directionIn);
-				
-					if (object != null) {
-						if (object instanceof IFluidHandler storage) {
-							if (storage.isFluidValid(0, this.getFluidInTank(0))) {
-								FluidStack stack = this.drain(1000, FluidAction.SIMULATE);
-								int lost = storage.fill(stack, FluidAction.SIMULATE);
-								
-								if (!stack.isEmpty()) {
-									if (lost > 0) {
-										storage.fill(stack, FluidAction.EXECUTE);
-										this.drain(lost, FluidAction.EXECUTE);
-									}
+					if (this.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, otherPos, directionIn) instanceof IFluidHandler storage) {
+						if (storage.isFluidValid(0, this.getFluidInTank(0))) {
+							FluidStack stack = this.drain(1000, FluidAction.SIMULATE);
+							int lost = storage.fill(stack, FluidAction.SIMULATE);
+							
+							if (!stack.isEmpty()) {
+								if (lost > 0) {
+									storage.fill(stack, FluidAction.EXECUTE);
+									this.drain(lost, FluidAction.EXECUTE);
 								}
 							}
 						}
@@ -411,18 +395,14 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 		if (entity != null && !entity.isRemoved()) {
 			if (!(entity instanceof BlockEntityModuleConnector) && !(entity instanceof BlockEntityModuleFurnace) && !(entity instanceof BlockEntityModuleArmourWorkbench) && !(entity instanceof BlockEntityModuleCrafter) && !(entity instanceof BlockEntityModuleCharger)) {
 				if (this.getSide(directionIn).equals(EnumSideState.INTERFACE_INPUT)) {
-					Object object = this.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, otherPos, directionIn);
-					
-					if (object != null) {
-						if (object instanceof IFluidHandler storage) {
-							FluidStack stack = storage.drain(1000, FluidAction.SIMULATE);
-							int lost = this.fill(stack, FluidAction.SIMULATE);
-							
-							if (!stack.isEmpty()) {
-								if (lost > 0) {
-									this.fill(stack, FluidAction.EXECUTE);
-									storage.drain(lost, FluidAction.EXECUTE);
-								}
+					if (this.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, otherPos, directionIn) instanceof IFluidHandler storage) {
+						FluidStack stack = storage.drain(1000, FluidAction.SIMULATE);
+						int lost = this.fill(stack, FluidAction.SIMULATE);
+						
+						if (!stack.isEmpty()) {
+							if (lost > 0) {
+								this.fill(stack, FluidAction.EXECUTE);
+								storage.drain(lost, FluidAction.EXECUTE);
 							}
 						}
 					}
@@ -542,7 +522,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 		//DimensionalPockets.CONSOLE.debug("[Pocket Generation] <> Pocket has been placed");
 		
 		if (PocketEventFactory.onPocketBlockPlaced(levelIn, placer, this, posIn)) {
-			if (!levelIn.isClientSide) {
+			if (!levelIn.isClientSide()) {
 				if (stack.has(DataComponents.CUSTOM_DATA)) {
 					CompoundTag compound = stack.get(DataComponents.CUSTOM_DATA).copyTag();
 					
@@ -924,15 +904,15 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 		if (this.level != null) {
 			return this.getPocket().getContainerSize();
 		}
-		return ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH;
+		return PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH;
 	}
 
 	@Override
 	public ItemStack getItem(int index) {
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			return this.getPocket().getItem(index);
 		} else {
-			return this.inventoryItems.get(index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
+			return this.inventoryItems.get(index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
 		}
 	}
 
@@ -940,10 +920,10 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 	public ItemStack removeItem(int index, int count) {
 		this.setChanged();
 		
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			return this.getPocket().removeItem(index, count);
 		} else {
-			return ContainerHelper.removeItem(inventoryItems, index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, count);
+			return ContainerHelper.removeItem(inventoryItems, index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, count);
 		}
 	}
 
@@ -951,19 +931,19 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 	public ItemStack removeItemNoUpdate(int index) {
 		this.setChanged();
 		
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			return this.getPocket().removeItemNoUpdate(index);
 		} else {
-			return ContainerHelper.takeItem(this.inventoryItems, index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
+			return ContainerHelper.takeItem(this.inventoryItems, index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
 		}
 	}
 	
 	@Override
 	public void setItem(int index, ItemStack stack) {
-		if (index < ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
+		if (index < PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			this.getPocket().setItem(index, stack);
 		} else {
-			this.inventoryItems.set(index - ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, stack);
+			this.inventoryItems.set(index - PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, stack);
 		}
 		
 		this.setChanged();
@@ -971,7 +951,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 	
 	@Override
 	public boolean stillValid(Player player) {
-		if (this.level != null) {
+		if (this.getLevel() != null) {
 			return this.getPocket().stillValid(player);
 		}
 		
@@ -980,7 +960,7 @@ public abstract class AbstractBlockEntityPocket extends CosmosBlockEntityUpdatea
 
 	@Override
 	public void clearContent() {
-		if (this.level != null) {
+		if (this.getLevel() != null) {
 			this.getPocket().clearContent();
 		}
 	}

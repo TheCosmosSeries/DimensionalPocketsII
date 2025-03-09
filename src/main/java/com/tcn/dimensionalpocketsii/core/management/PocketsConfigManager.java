@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.tcn.dimensionalpocketsii.ModReferences;
-import com.tcn.dimensionalpocketsii.ModReferences.BlockedObjects;
+import com.tcn.dimensionalpocketsii.PocketReference;
+import com.tcn.dimensionalpocketsii.PocketReference.BlockedObjects;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -20,11 +20,9 @@ public class PocketsConfigManager {
 	public static final ModConfigSpec SPEC;
 	
 	static {
-		{
-			final Pair<PocketsConfigManager, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(PocketsConfigManager::new);
-			CONFIG = specPair.getLeft();
-			SPEC = specPair.getRight();
-		}
+		final Pair<PocketsConfigManager, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(PocketsConfigManager::new);
+		CONFIG = specPair.getLeft();
+		SPEC = specPair.getRight();
 	}
 	
 	public static void save() {
@@ -235,7 +233,7 @@ public class PocketsConfigManager {
 	}
 	
 	public void addBlockedStructure(String value) {
-		ArrayList<String> list = ModReferences.BlockedObjects.BLOCKS;
+		ArrayList<String> list = PocketReference.BlockedObjects.BLOCKS;
 		list.add(value);
 		
 		this.blocked_structures.set(list);
@@ -264,7 +262,7 @@ public class PocketsConfigManager {
 	}
 
 	public void addBlockedItem(String value) {
-		ArrayList<String> list = ModReferences.BlockedObjects.ITEMS;
+		ArrayList<String> list = PocketReference.BlockedObjects.ITEMS;
 		list.add(value);
 		
 		this.blocked_items.set(list);
@@ -303,7 +301,7 @@ public class PocketsConfigManager {
 	}
 
 	public void addBlockedCommand(String value) {
-		ArrayList<String> list = ModReferences.BlockedObjects.COMMANDS;
+		ArrayList<String> list = PocketReference.BlockedObjects.COMMANDS;
 		list.add(value);
 		
 		this.blocked_commands.set(list);

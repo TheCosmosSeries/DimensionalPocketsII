@@ -5,8 +5,8 @@ import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityRecipeBookU
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.ModReferences.GUI;
-import com.tcn.dimensionalpocketsii.ModReferences.GUI.RESOURCE;
+import com.tcn.dimensionalpocketsii.PocketReference.GUI;
+import com.tcn.dimensionalpocketsii.PocketReference.GUI.RESOURCE;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleFurnace;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleFurnace;

@@ -1,8 +1,8 @@
 package com.tcn.dimensionalpocketsii.integration.jei;
 
-import javax.annotation.Nullable;
-
+import com.tcn.cosmoslibrary.integration.jei.CosmosJEIHelper;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRecipeManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.core.recipe.UpgradeStationRecipe;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleBlastFurnace;
@@ -22,29 +22,20 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IJeiHelpers;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.registration.IAdvancedRegistration;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
-import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
-import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 @JeiPlugin
 public class DimensionalJEIPlugin implements IModPlugin {
 	
-	@Nullable
-	private IRecipeCategory<UpgradeStationRecipe> upgradeStationCategory;
-	public static RecipeType<UpgradeStationRecipe> UPGRADING = RecipeType.create("dimensionalpocketsii", "upgrade_category", UpgradeStationRecipe.class);
-	
-	public DimensionalJEIPlugin() { }
+	private IRecipeCategory<UpgradeStationRecipe> UPGRADE_STATION_CATEGORY;	
 
 	@Override
 	public ResourceLocation getPluginUid() {
@@ -52,16 +43,10 @@ public class DimensionalJEIPlugin implements IModPlugin {
 	}
 	
 	@Override
-	public void registerItemSubtypes(ISubtypeRegistration registration) { }
-
-	@Override
-	public void registerIngredients(IModIngredientRegistration registration) { }
-
-	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
 		IJeiHelpers jeiHelpers = registration.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
-		registration.addRecipeCategories(upgradeStationCategory = new CategoryUpgradeStation(guiHelper));
+		registration.addRecipeCategories(UPGRADE_STATION_CATEGORY = new CategoryUpgradeStation(guiHelper));
 	}
 
 	@Override
@@ -69,14 +54,12 @@ public class DimensionalJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
-		DimensionalRecipes dimensionalRecipes = new DimensionalRecipes();
-		
-		registration.addRecipes(UPGRADING, dimensionalRecipes.getSmithingRecipes(upgradeStationCategory));
+		registration.addRecipes(PocketsRecipeTypes.UPGRADING, CosmosJEIHelper.getInstance().getRecipes(UPGRADE_STATION_CATEGORY, PocketsRecipeManager.RECIPE_TYPE_UPGRADE_STATION.get()));
 	}
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-		registration.addRecipeTransferHandler(ContainerModuleUpgradeStation.class, PocketsRegistrationManager.CONTAINER_TYPE_UPGRADE_STATION.get(), UPGRADING, 0, 9, 10, 36);
+		registration.addRecipeTransferHandler(ContainerModuleUpgradeStation.class, PocketsRegistrationManager.CONTAINER_TYPE_UPGRADE_STATION.get(), PocketsRecipeTypes.UPGRADING, 0, 9, 10, 36);
 		
 		registration.addRecipeTransferHandler(ContainerModuleCrafter.class, PocketsRegistrationManager.CONTAINER_TYPE_CRAFTER.get(), RecipeTypes.CRAFTING, 1, 9, 10, 36);
 		registration.addRecipeTransferHandler(ContainerModuleSmithingTable.class, PocketsRegistrationManager.CONTAINER_TYPE_SMITHING_TABLE.get(), RecipeTypes.SMITHING, 0, 3, 3, 36);
@@ -89,7 +72,7 @@ public class DimensionalJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) { 
-		registration.addRecipeCatalyst(new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get()), UPGRADING);
+		registration.addRecipeCatalyst(new ItemStack(PocketsRegistrationManager.MODULE_UPGRADE_STATION.get()), PocketsRecipeTypes.UPGRADING);
 		
 		registration.addRecipeCatalyst(new ItemStack(PocketsRegistrationManager.MODULE_CRAFTER.get()), RecipeTypes.CRAFTING);
 		registration.addRecipeCatalyst(new ItemStack(PocketsRegistrationManager.MODULE_FURNACE.get()), RecipeTypes.SMELTING);
@@ -99,7 +82,7 @@ public class DimensionalJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-		registration.addRecipeClickArea(ScreenModuleUpgradeStation.class, 116, 38, 20, 24, UPGRADING);
+		registration.addRecipeClickArea(ScreenModuleUpgradeStation.class, 116, 38, 20, 24, PocketsRecipeTypes.UPGRADING);
 		
 		registration.addRecipeClickArea(ScreenModuleFurnace.class, 76, 35, 22, 15, RecipeTypes.SMELTING);
 		registration.addRecipeClickArea(ScreenModuleBlastFurnace.class, 76, 35, 22, 15, RecipeTypes.BLASTING);
@@ -107,10 +90,4 @@ public class DimensionalJEIPlugin implements IModPlugin {
 		registration.addRecipeClickArea(ScreenModuleSmithingTable.class, 72, 52, 22, 14, RecipeTypes.SMITHING);
 		registration.addRecipeClickArea(ScreenModuleAnvil.class, 105, 56, 22, 15, RecipeTypes.ANVIL);
 	}
-
-	@Override
-	public void registerAdvanced(IAdvancedRegistration registration) { }
-
-	@Override
-	public void onRuntimeAvailable(IJeiRuntime jeiRuntime) { }
 }

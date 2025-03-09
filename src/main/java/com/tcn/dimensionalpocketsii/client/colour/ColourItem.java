@@ -18,12 +18,12 @@ import net.neoforged.api.distmarker.OnlyIn;
 public class ColourItem implements ItemColor {
 
 	@Override
-	public int getColor(ItemStack stack, int itemLayerIn) {
-		Item item = stack.getItem();
+	public int getColor(ItemStack stackIn, int tintIndex) {
+		Item item = stackIn.getItem();
 		
 		if (item.equals(PocketsRegistrationManager.BLOCK_POCKET.get().asItem()) || item.equals(PocketsRegistrationManager.BLOCK_POCKET_ENHANCED.get().asItem())) {
-			if (stack.has(DataComponents.CUSTOM_DATA)) {
-				CompoundTag stack_tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
+			if (stackIn.has(DataComponents.CUSTOM_DATA)) {
+				CompoundTag stack_tag = stackIn.get(DataComponents.CUSTOM_DATA).copyTag();
 				
 				if (stack_tag.contains("nbt_data")) {
 					CompoundTag nbt_data = stack_tag.getCompound("nbt_data");
@@ -40,8 +40,8 @@ public class ColourItem implements ItemColor {
 				}
 			}
 		} else if (item.equals(PocketsRegistrationManager.DIMENSIONAL_SHIFTER.get()) || item.equals(PocketsRegistrationManager.DIMENSIONAL_SHIFTER_ENHANCED.get())) {
-			if (stack.has(DataComponents.CUSTOM_DATA)) {
-				CompoundTag stack_tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
+			if (stackIn.has(DataComponents.CUSTOM_DATA)) {
+				CompoundTag stack_tag = stackIn.get(DataComponents.CUSTOM_DATA).copyTag();
 				
 				if (stack_tag.contains("nbt_data")) {
 					CompoundTag compound_tag = stack_tag.getCompound("nbt_data");
@@ -49,7 +49,7 @@ public class ColourItem implements ItemColor {
 					if (compound_tag.contains("colour")) {
 						int decimal = compound_tag.getInt("colour");
 						
-						if (itemLayerIn == 0) {
+						if (tintIndex == 0) {
 							if (decimal == ComponentColour.POCKET_PURPLE.decOpaque()) {
 								return ComponentColour.POCKET_PURPLE_LIGHT.decOpaque();
 							} else {
@@ -62,8 +62,8 @@ public class ColourItem implements ItemColor {
 				}
 			}
 		} else if (item instanceof CosmosArmourItemElytra itemElytra) {
-			if (stack.has(DataComponents.CUSTOM_DATA)) {
-				CompoundTag stack_tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
+			if (stackIn.has(DataComponents.CUSTOM_DATA)) {
+				CompoundTag stack_tag = stackIn.get(DataComponents.CUSTOM_DATA).copyTag();
 				
 				if (stack_tag.contains("nbt_data")) {
 					CompoundTag compound_tag = stack_tag.getCompound("nbt_data");
@@ -79,9 +79,9 @@ public class ColourItem implements ItemColor {
 						wing_colour = FastColor.ARGB32.opaque(compound_tag.getInt("wing_colour"));
 					}
 					
-					if (itemLayerIn == 0) {
+					if (tintIndex == 0) {
 						return colour;
-					} else if (itemLayerIn == 1) {
+					} else if (tintIndex == 1) {
 						return wing_colour;
 					} else {
 						return ComponentColour.WHITE.decOpaque();
@@ -89,14 +89,14 @@ public class ColourItem implements ItemColor {
 				}
 			} 
 
-			if (itemLayerIn == 1) {
+			if (tintIndex == 1) {
 				return ComponentColour.LIGHT_GRAY.decOpaque();
 			}
 		}
 		
 		else if (item instanceof CosmosArmourItemColourable itemArmourColourable) {
-			if (stack.has(DataComponents.CUSTOM_DATA)) {
-				CompoundTag stack_tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
+			if (stackIn.has(DataComponents.CUSTOM_DATA)) {
+				CompoundTag stack_tag = stackIn.get(DataComponents.CUSTOM_DATA).copyTag();
 				
 				if (stack_tag.contains("nbt_data")) {
 					CompoundTag compound_tag = stack_tag.getCompound("nbt_data");
@@ -107,7 +107,7 @@ public class ColourItem implements ItemColor {
 						colour = compound_tag.getInt("colour");
 					}
 					
-					if (itemLayerIn == 0) {
+					if (tintIndex == 0) {
 						return FastColor.ARGB32.opaque(colour);
 					}else {
 						return ComponentColour.WHITE.decOpaque();
@@ -116,7 +116,7 @@ public class ColourItem implements ItemColor {
 			} 
 		}
 		
-		if (itemLayerIn == 0) {
+		if (tintIndex == 0) {
 			return ComponentColour.POCKET_PURPLE_LIGHT.decOpaque();
 		} else {
 			return ComponentColour.WHITE.decOpaque();

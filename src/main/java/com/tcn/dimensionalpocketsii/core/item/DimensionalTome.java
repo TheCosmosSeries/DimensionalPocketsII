@@ -3,6 +3,7 @@ package com.tcn.dimensionalpocketsii.core.item;
 import java.util.List;
 
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
+import com.tcn.cosmoslibrary.common.item.CosmosItem;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.dimensionalpocketsii.client.screen.ScreenItemTome;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-public class DimensionalTome extends Item {
+public class DimensionalTome extends CosmosItem {
 
 	public DimensionalTome(Item.Properties properties) {
 		super(properties);
@@ -30,7 +31,7 @@ public class DimensionalTome extends Item {
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-		if (worldIn.isClientSide) {
+		if (worldIn.isClientSide()) {
 			this.openScreen(playerIn);
 		}
 		

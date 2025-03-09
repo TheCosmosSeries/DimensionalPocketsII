@@ -10,7 +10,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
-import com.tcn.dimensionalpocketsii.ModReferences;
+import com.tcn.dimensionalpocketsii.PocketReference;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -49,7 +49,7 @@ public class GsonAdapterPocketItemsList implements JsonSerializer<NonNullList<It
 			return list;
 		} else {
 			DimensionalPockets.CONSOLE.info("Item list returned NULL. Implementing new ItemList.");
-			NonNullList<ItemStack> newList = NonNullList.<ItemStack>withSize(ModReferences.CONSTANT.POCKET_HELD_ITEMS_SIZE, ItemStack.EMPTY);
+			NonNullList<ItemStack> newList = NonNullList.<ItemStack>withSize(PocketReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, ItemStack.EMPTY);
 			
 			return newList;
 		}

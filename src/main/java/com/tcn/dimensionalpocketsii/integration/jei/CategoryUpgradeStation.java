@@ -2,7 +2,7 @@ package com.tcn.dimensionalpocketsii.integration.jei;
 
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.ModReferences.GUI.RESOURCE;
+import com.tcn.dimensionalpocketsii.PocketReference.GUI.RESOURCE;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.core.recipe.UpgradeStationRecipe;
 
@@ -62,6 +62,6 @@ public class CategoryUpgradeStation implements IRecipeCategory<UpgradeStationRec
 
 	@Override
 	public RecipeType<UpgradeStationRecipe> getRecipeType() {
-		return DimensionalJEIPlugin.UPGRADING;
+		return PocketsRecipeTypes.UPGRADING;
 	}
 }

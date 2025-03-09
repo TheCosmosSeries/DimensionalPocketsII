@@ -33,9 +33,9 @@ import com.tcn.cosmoslibrary.registry.gson.object.ObjectBlockPosDimension;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectConnectionType;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectFluidTankCustom;
 import com.tcn.cosmoslibrary.system.io.CosmosIOHandler;
-import com.tcn.dimensionalpocketsii.ModReferences;
-import com.tcn.dimensionalpocketsii.ModReferences.INTERFACE.FILE;
-import com.tcn.dimensionalpocketsii.ModReferences.INTERFACE.FOLDER;
+import com.tcn.dimensionalpocketsii.PocketReference;
+import com.tcn.dimensionalpocketsii.PocketReference.INTERFACE.FILE;
+import com.tcn.dimensionalpocketsii.PocketReference.INTERFACE.FOLDER;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.gson.GsonAdapterPocketChunkInfo;
@@ -53,7 +53,7 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 public class InterfaceManager {
 
-	public enum RegistryFileType {
+	protected enum RegistryFileType {
 		JSON(0, "json", ".json", true),
 		DAT(1, "dat", ".dat", false);
 		
@@ -112,7 +112,7 @@ public class InterfaceManager {
 		}
 	
 		private static Optional<File> saveRaw(File fileIn, Map<PocketChunkInfo, Pocket> pocketRegistryIn, RegistryFileType fileTypeIn, HolderLookup.Provider provider) {
-			if (fileTypeIn.isPlainText) {
+			if (fileTypeIn.isPlainText()) {
 				Collection<Pocket> values = pocketRegistryIn.values();
 				Pocket[] tempArray = values.toArray(new Pocket[values.size()]);
 				
@@ -199,20 +199,20 @@ public class InterfaceManager {
 					}
 					
 					for (Pocket pocket : pocketArray) {
-						if (pocket.energy_capacity != ModReferences.CONSTANT.POCKET_FE_CAP) {
-							pocket.energy_capacity = ModReferences.CONSTANT.POCKET_FE_CAP;
+						if (pocket.energy_capacity != PocketReference.CONSTANT.POCKET_FE_CAP) {
+							pocket.energy_capacity = PocketReference.CONSTANT.POCKET_FE_CAP;
 						}
 						
-						if (pocket.energy_max_receive != ModReferences.CONSTANT.POCKET_FE_REC) {
-							pocket.energy_max_receive = ModReferences.CONSTANT.POCKET_FE_REC;
+						if (pocket.energy_max_receive != PocketReference.CONSTANT.POCKET_FE_REC) {
+							pocket.energy_max_receive = PocketReference.CONSTANT.POCKET_FE_REC;
 						}
 						
-						if (pocket.energy_max_extract != ModReferences.CONSTANT.POCKET_FE_EXT) {
-							pocket.energy_max_extract = ModReferences.CONSTANT.POCKET_FE_EXT;
+						if (pocket.energy_max_extract != PocketReference.CONSTANT.POCKET_FE_EXT) {
+							pocket.energy_max_extract = PocketReference.CONSTANT.POCKET_FE_EXT;
 						}
 	
-						if (pocket.fluid_tank.getFluidTank().getCapacity() != (ModReferences.CONSTANT.POCKET_FLUID_CAP)) {
-							pocket.fluid_tank.getFluidTank().setCapacity((ModReferences.CONSTANT.POCKET_FLUID_CAP));
+						if (pocket.fluid_tank.getFluidTank().getCapacity() != (PocketReference.CONSTANT.POCKET_FLUID_CAP)) {
+							pocket.fluid_tank.getFluidTank().setCapacity((PocketReference.CONSTANT.POCKET_FLUID_CAP));
 						}
 	
 						if (pocket.getChunkInfo() == null && pocket.chunk_pos != null) {
@@ -391,16 +391,12 @@ public class InterfaceManager {
 			ArrayList<CosmosChunkPos> loadedRooms = new ArrayList<>();
 			
 			try {
-				try {
-					CompoundTag readTag = CosmosNBTIOHandler.read(fileIn);
+				CompoundTag readTag = CosmosNBTIOHandler.read(fileIn);
+				
+				for (int i = 0; i < readTag.getInt("size"); i++) {
+					CompoundTag chunkTag = readTag.getCompound(Integer.toString(i));
 					
-					for (int i = 0; i < readTag.getInt("size"); i++) {
-						CompoundTag chunkTag = readTag.getCompound(Integer.toString(i));
-						
-						loadedRooms.add(new CosmosChunkPos(chunkTag.getInt(Const.NBT_POS_X_KEY), chunkTag.getInt(Const.NBT_POS_Z_KEY)));
-					}
-				} catch (Exception e) {
-					
+					loadedRooms.add(new CosmosChunkPos(chunkTag.getInt(Const.NBT_POS_X_KEY), chunkTag.getInt(Const.NBT_POS_Z_KEY)));
 				}
 			} catch (Exception e) {
 				DimensionalPockets.CONSOLE.fatal("[File System Error] <loadPocketRegistry> Could not load LoadedRooms {DAT}. See stacktrace for more info:", e);

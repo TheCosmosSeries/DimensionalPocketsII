@@ -5,7 +5,7 @@ import com.tcn.cosmoslibrary.client.ui.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenBlockEntityUI;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.ModReferences.GUI.RESOURCE;
+import com.tcn.dimensionalpocketsii.PocketReference.GUI.RESOURCE;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleAnvil;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleAnvil;

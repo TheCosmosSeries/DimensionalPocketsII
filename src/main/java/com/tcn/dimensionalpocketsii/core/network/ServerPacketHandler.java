@@ -6,9 +6,9 @@ import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.lib.MathHelper;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.cosmoslibrary.core.teleport.EnumSafeTeleport;
-import com.tcn.dimensionalpocketsii.client.container.MenuProviderElytraplateConnector;
-import com.tcn.dimensionalpocketsii.client.container.MenuProviderElytraplateEnderChest;
-import com.tcn.dimensionalpocketsii.client.container.MenuProviderElytraplateSettings;
+import com.tcn.dimensionalpocketsii.client.container.ContainerElytraplateConnector;
+import com.tcn.dimensionalpocketsii.client.container.ContainerElytraplateEnderChest;
+import com.tcn.dimensionalpocketsii.client.container.ContainerElytraplateSettings;
 import com.tcn.dimensionalpocketsii.core.item.DimensionalTome;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
 import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
@@ -186,7 +186,7 @@ public class ServerPacketHandler {
 								
 								if (pocket_ != null) {
 									if (stack.getItem() instanceof DimensionalElytraplate item) {
-										serverPlayer.openMenu(new MenuProviderElytraplateConnector(), (packetBuffer) -> {
+										serverPlayer.openMenu(new ContainerElytraplateConnector.Provider(), (packetBuffer) -> {
 											packetBuffer.writeNbt(compoundA);
 											ItemStack.STREAM_CODEC.encode(packetBuffer, stack);
 										});
@@ -212,7 +212,7 @@ public class ServerPacketHandler {
 				if (player instanceof ServerPlayer serverPlayer) {
 					ItemStack stack = player.getInventory().getArmor(packet.index());
 					
-					serverPlayer.openMenu(new MenuProviderElytraplateEnderChest(), (packetBuffer) -> {
+					serverPlayer.openMenu(new ContainerElytraplateEnderChest.Provider(), (packetBuffer) -> {
 						ItemStack.STREAM_CODEC.encode(packetBuffer, stack);
 					});
 				}
@@ -225,7 +225,7 @@ public class ServerPacketHandler {
 				
 				if (player instanceof ServerPlayer serverPlayer) {
 					ItemStack stack = player.getInventory().getArmor(packet.index());
-					serverPlayer.openMenu(new MenuProviderElytraplateSettings(), (packetBuffer) -> {
+					serverPlayer.openMenu(new ContainerElytraplateSettings.Provider(), (packetBuffer) -> {
 						ItemStack.STREAM_CODEC.encode(packetBuffer, stack);
 					});
 				}

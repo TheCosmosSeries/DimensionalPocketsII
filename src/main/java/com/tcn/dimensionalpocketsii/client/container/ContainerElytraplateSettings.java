@@ -1,22 +1,21 @@
 package com.tcn.dimensionalpocketsii.client.container;
 
+import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuItemStack;
 import com.tcn.cosmoslibrary.client.container.slot.SlotArmourItem;
+import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
-public class ContainerElytraplateSettings extends AbstractContainerMenu {
-
-	private ItemStack stack;
-	protected final Player player;
-	private final Level world;
+public class ContainerElytraplateSettings extends CosmosContainerMenuItemStack {
 	
 	public static ContainerElytraplateSettings createContainerServerSide(int windowID, Inventory playerInventory, ItemStack stackIn) {
 		return new ContainerElytraplateSettings(windowID, playerInventory, stackIn);
@@ -27,12 +26,8 @@ public class ContainerElytraplateSettings extends AbstractContainerMenu {
 	}
 	
 	protected ContainerElytraplateSettings(int id, Inventory playerInventoryIn, ItemStack stackIn) {
-		super(PocketsRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_SETTINGS.get(), id);
+		super(PocketsRegistrationManager.CONTAINER_TYPE_ELYTRAPLATE_SETTINGS.get(), id, playerInventoryIn, stackIn);
 		
-		this.stack = stackIn;
-		this.player = playerInventoryIn.player;
-		this.world = playerInventoryIn.player.level();
-
 		//Player Inventory
 		for (int k = 0; k < 3; ++k) {
 			for (int i1 = 0; i1 < 9; ++i1) {
@@ -46,10 +41,10 @@ public class ContainerElytraplateSettings extends AbstractContainerMenu {
 		}
 		
 		//Armour Slots
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 39, 6, 65, this.player, 0));
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 38, 6, 84, this.player, 1));
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 37, 6, 103, this.player, 2));
-		this.addSlot(new SlotArmourItem(playerInventoryIn, 36, 6, 122, this.player, 3));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 39, 6, 65, this.getPlayer(), 0));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 38, 6, 84, this.getPlayer(), 1));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 37, 6, 103, this.getPlayer(), 2));
+		this.addSlot(new SlotArmourItem(playerInventoryIn, 36, 6, 122, this.getPlayer(), 3));
 	}
 
 	@Override
@@ -104,16 +99,17 @@ public class ContainerElytraplateSettings extends AbstractContainerMenu {
 		}
 		return ItemStack.EMPTY;
 	}
-
-	public ItemStack getStack() {
-		return this.stack;
-	}
-
-	public Level getLevel() {
-		return this.world;
-	}
 	
-	public Player getPlayer() {
-		return this.player;
+	public static class Provider implements MenuProvider {
+
+		@Override
+		public AbstractContainerMenu createMenu(int indexIn, Inventory playerInventoryIn, Player playerIn) {
+			return ContainerElytraplateSettings.createContainerServerSide(indexIn, playerInventoryIn, playerInventoryIn.getArmor(2));
+		}
+
+		@Override
+		public Component getDisplayName() {
+			return ComponentHelper.comp("dimensionalpocketsii.gui.elytraplate.settings.title");
+		}
 	}
 }

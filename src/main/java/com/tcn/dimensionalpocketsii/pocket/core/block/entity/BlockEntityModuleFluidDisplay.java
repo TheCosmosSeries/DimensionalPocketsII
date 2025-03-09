@@ -37,7 +37,7 @@ public class BlockEntityModuleFluidDisplay extends CosmosBlockEntityUpdateable i
 	}
 	
 	public Pocket getPocket() {
-		if (level.isClientSide) {
+		if (this.getLevel().isClientSide()) {
 			return this.pocket;
 		}
 		

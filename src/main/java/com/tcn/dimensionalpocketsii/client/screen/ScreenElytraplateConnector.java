@@ -20,8 +20,8 @@ import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.dimensionalpocketsii.ModReferences.GUI;
-import com.tcn.dimensionalpocketsii.ModReferences.GUI.RESOURCE;
+import com.tcn.dimensionalpocketsii.PocketReference.GUI;
+import com.tcn.dimensionalpocketsii.PocketReference.GUI.RESOURCE;
 import com.tcn.dimensionalpocketsii.client.container.ContainerElytraplateConnector;
 import com.tcn.dimensionalpocketsii.client.screen.button.DimensionalButton;
 import com.tcn.dimensionalpocketsii.core.item.armour.DimensionalElytraplate;
@@ -861,7 +861,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 			this.textField.setFocused(true);
 		}
 
-		if (buttonLock.isMouseOver(mouseX, mouseY) && buttonLock.isActive() && buttonLock.visible) {
+		if (buttonLock.isMouseOver(mouseX, mouseY) && buttonLock.isActive() && buttonLock.isVisible()) {
 			if (mouseButton == 1) {
 				buttonLock.onClick(false);
 			} else if (mouseButton == 0) {
@@ -869,7 +869,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 			}
 		}
 
-		if (buttonAllowedPlayers.isMouseOver(mouseX, mouseY) && buttonAllowedPlayers.isActive() && buttonAllowedPlayers.visible) {
+		if (buttonAllowedPlayers.isMouseOver(mouseX, mouseY) && buttonAllowedPlayers.isActive() && buttonAllowedPlayers.isVisible()) {
 			if (mouseButton == 1) {
 				buttonAllowedPlayers.onClick(false);
 			} else if (mouseButton == 0) {
@@ -877,7 +877,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 			}
 		}
 
-		if (buttonHostileSpawn.isMouseOver(mouseX, mouseY) && buttonHostileSpawn.isActive() && buttonHostileSpawn.visible) {
+		if (buttonHostileSpawn.isMouseOver(mouseX, mouseY) && buttonHostileSpawn.isActive() && buttonHostileSpawn.isVisible()) {
 			if (mouseButton == 1) {
 				buttonHostileSpawn.onClick(false);
 			} else if (mouseButton == 0) {
@@ -885,7 +885,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 			}
 		}
 
-		if (buttonTextClear.isMouseOver(mouseX, mouseY) && buttonTextClear.isActive() && buttonTextClear.visible) {
+		if (buttonTextClear.isMouseOver(mouseX, mouseY) && buttonTextClear.isActive() && buttonTextClear.isVisible()) {
 			if (mouseButton == 1) {
 				buttonTextClear.onClick(false);
 			} else if (mouseButton == 0) {
@@ -893,7 +893,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 			}
 		}
 
-		if (buttonTextMinus.isMouseOver(mouseX, mouseY) && buttonTextMinus.isActive() && buttonTextMinus.visible) {
+		if (buttonTextMinus.isMouseOver(mouseX, mouseY) && buttonTextMinus.isActive() && buttonTextMinus.isVisible()) {
 			if (mouseButton == 1) {
 				buttonTextMinus.onClick(false);
 			} else if (mouseButton == 0) {
@@ -901,7 +901,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 			}
 		}
 
-		if (buttonTextPlus.isMouseOver(mouseX, mouseY) && buttonTextPlus.isActive() && buttonTextPlus.visible) {
+		if (buttonTextPlus.isMouseOver(mouseX, mouseY) && buttonTextPlus.isActive() && buttonTextPlus.isVisible()) {
 			if (mouseButton == 1) {
 				buttonTextPlus.onClick(false);
 			} else if (mouseButton == 0) {
@@ -909,7 +909,7 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 			}
 		}
 
-		if (buttonTankClear.isMouseOver(mouseX, mouseY) && buttonTankClear.isActive() && buttonTankClear.visible) {
+		if (buttonTankClear.isMouseOver(mouseX, mouseY) && buttonTankClear.isActive() && buttonTankClear.isVisible()) {
 			if (mouseButton == 1) {
 				buttonTankClear.onClick(false);
 			} else if (mouseButton == 0) {

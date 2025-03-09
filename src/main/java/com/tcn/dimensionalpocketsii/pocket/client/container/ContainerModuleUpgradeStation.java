@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 
 import com.tcn.cosmoslibrary.client.container.CosmosContainerMenuBlockEntity;
 import com.tcn.cosmoslibrary.client.container.slot.SlotArmourItem;
-import com.tcn.cosmoslibrary.client.container.slot.SlotBooleanItem;
 import com.tcn.cosmoslibrary.client.container.slot.SlotRestrictedAccess;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRecipeManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
@@ -59,19 +58,19 @@ public class ContainerModuleUpgradeStation extends CosmosContainerMenuBlockEntit
 //        this.recipes = this.getLevel().getRecipeManager().getAllRecipesFor(ModRecipeManager.RECIPE_TYPE_UPGRADE_STATION.get());
 
 		//Focus Slot
-		this.addSlot(new SlotBooleanItem(inputSlots, 0, 76, 42, true, 1));
+		this.addSlot(new SlotRestrictedAccess(inputSlots, 0, 76, 42, 1, true, true));
 
 		//Input Slots
-		this.addSlot(new SlotBooleanItem(inputSlots, 1, 55, 21, true, 1));
-		this.addSlot(new SlotBooleanItem(inputSlots, 2, 76, 21, true, 1));
-		this.addSlot(new SlotBooleanItem(inputSlots, 3, 97, 21, true, 1));
+		this.addSlot(new SlotRestrictedAccess(inputSlots, 1, 55, 21, 1, true, true));
+		this.addSlot(new SlotRestrictedAccess(inputSlots, 2, 76, 21, 1, true, true));
+		this.addSlot(new SlotRestrictedAccess(inputSlots, 3, 97, 21, 1, true, true));
 
-		this.addSlot(new SlotBooleanItem(inputSlots, 4, 55, 42, true, 1));
-		this.addSlot(new SlotBooleanItem(inputSlots, 5, 97, 42, true, 1));
+		this.addSlot(new SlotRestrictedAccess(inputSlots, 4, 55, 42, 1, true, true));
+		this.addSlot(new SlotRestrictedAccess(inputSlots, 5, 97, 42, 1, true, true));
 		
-		this.addSlot(new SlotBooleanItem(inputSlots, 6, 55, 63, true, 1));
-		this.addSlot(new SlotBooleanItem(inputSlots, 7, 76, 63, true, 1));
-		this.addSlot(new SlotBooleanItem(inputSlots, 8, 97, 63, true, 1));
+		this.addSlot(new SlotRestrictedAccess(inputSlots, 6, 55, 63, 1, true, true));
+		this.addSlot(new SlotRestrictedAccess(inputSlots, 7, 76, 63, 1, true, true));
+		this.addSlot(new SlotRestrictedAccess(inputSlots, 8, 97, 63, 1, true, true));
 
 		//Output Slot
 		this.addSlot(new SlotRestrictedAccess(resultSlots, 9, 139, 42, false, true) {

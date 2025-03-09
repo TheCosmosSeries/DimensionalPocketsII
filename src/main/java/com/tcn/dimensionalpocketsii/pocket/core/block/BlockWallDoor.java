@@ -43,23 +43,23 @@ public class BlockWallDoor extends CosmosBlockDoor {
 			return ItemInteractionResult.FAIL;
 		}
 		
-		if (playerIn.isShiftKeyDown()) {
-			if (PocketUtil.isDimensionEqual(levelIn, PocketsDimensionManager.POCKET_WORLD)) {
-				Pocket pocket = StorageManager.getPocketFromChunkPosition(levelIn, CosmosChunkPos.scaleToChunkPos(posIn));
-				
-				if (pocket.exists()) {
+		if (PocketUtil.isDimensionEqual(levelIn, PocketsDimensionManager.POCKET_WORLD)) {
+			Pocket pocket = StorageManager.getPocketFromChunkPosition(levelIn, CosmosChunkPos.scaleToChunkPos(posIn));
+
+			if (pocket.exists()) {
+				if (playerIn.isShiftKeyDown()) {
 					if (CosmosUtil.handEmpty(playerIn)) {
 						pocket.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
 						return ItemInteractionResult.SUCCESS;
 					}
 				} else {
-					CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.action.null"));
-					return ItemInteractionResult.FAIL;
+					if (pocket.checkIfOwner(playerIn)) {
+						return super.useItemOn(stackIn, stateIn, levelIn, posIn, playerIn, handIn, resultIn);
+					}
 				}
-			}
-		} else {
-			if (playerIn.getDisplayName().getString().equals("TheCosmicNebula_")) {
-				return super.useItemOn(stackIn, stateIn, levelIn, posIn, playerIn, handIn, resultIn);
+			} else {
+				CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.action.null"));
+				return ItemInteractionResult.FAIL;
 			}
 		}
 		return ItemInteractionResult.FAIL;
