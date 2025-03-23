@@ -185,7 +185,7 @@ public class ServerPacketHandler {
 								pocket_.writeToNBT(compoundA, provider);
 								
 								if (pocket_ != null) {
-									if (stack.getItem() instanceof DimensionalElytraplate item) {
+									if (stack.getItem() instanceof DimensionalElytraplate) {
 										serverPlayer.openMenu(new ContainerElytraplateConnector.Provider(), (packetBuffer) -> {
 											packetBuffer.writeNbt(compoundA);
 											ItemStack.STREAM_CODEC.encode(packetBuffer, stack);
@@ -232,7 +232,7 @@ public class ServerPacketHandler {
 			});
 		}
 
-		if (data instanceof PacketElytraplateUseFirework packet) {
+		if (data instanceof PacketElytraplateUseFirework) {
 			context.enqueueWork(() -> {
 				Player player = context.player();
 				

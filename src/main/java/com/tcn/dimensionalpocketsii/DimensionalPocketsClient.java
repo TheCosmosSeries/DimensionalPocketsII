@@ -4,8 +4,8 @@ package com.tcn.dimensionalpocketsii;
 import com.tcn.cosmoslibrary.runtime.common.CosmosRuntime;
 import com.tcn.dimensionalpocketsii.client.renderer.DimensionalTridentBEWLR;
 import com.tcn.dimensionalpocketsii.client.renderer.ElytraplateBEWLR;
-import com.tcn.dimensionalpocketsii.client.screen.ScreenConfiguration;
 import com.tcn.dimensionalpocketsii.client.screen.LayerElytraplateVisor;
+import com.tcn.dimensionalpocketsii.client.screen.PocketsConfigScreen;
 import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 
 import net.neoforged.api.distmarker.Dist;
@@ -23,7 +23,7 @@ public class DimensionalPocketsClient {
 
 	@OnlyIn(Dist.CLIENT)
 	public DimensionalPocketsClient(ModContainer container) {
-		CosmosRuntime.Client.regiserConfigScreen(container, ScreenConfiguration::new);
+		CosmosRuntime.Client.regiserConfigScreen(container, PocketsConfigScreen::new);
 	}
 	
 	@SubscribeEvent

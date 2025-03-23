@@ -386,7 +386,7 @@
 	"dimensionalpocketsii.gui.energy_bar.pre": "Energy Stored: ",
 	"dimensionalpocketsii.gui.energy_bar.suff": " FE.",
 	
-	"dimensionalpocketsii.gui.config.name": "Dimensional Pockets II Config",
+	"dimensionalpocketsii.gui.config.name": "Dimensional Pockets II Configuration",
 	"dimensionalpocketsii.gui.config.general_title": "General",
 	"dimensionalpocketsii.gui.config.messages_title": "Console Messages",
 	"dimensionalpocketsii.gui.config.visual_title": "Visual",

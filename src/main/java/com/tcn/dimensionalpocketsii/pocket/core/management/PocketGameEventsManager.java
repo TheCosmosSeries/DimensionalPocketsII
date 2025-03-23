@@ -484,28 +484,24 @@ public class PocketGameEventsManager {
 		BlockPos pos = entity.blockPosition();
 		CosmosChunkPos chunkPos = CosmosChunkPos.scaleToChunkPos(pos);
 		
-		if (PocketsConfigManager.getInstance().getStopHostileSpawns()) {
-			if (!(entity instanceof Player)) {
-				if (dimension.equals(PocketsDimensionManager.POCKET_WORLD)) {
-					if (!world.isClientSide()) {
-						Pocket pocket = StorageManager.getPocketFromChunkPosition(world, chunkPos);
-						
-						if (pocket != null) {
-							boolean spawns = pocket.getHostileSpawnStateValue();
-							
-							if (!spawns) {
-								if (clazz.equals(MobCategory.MONSTER)) {
-									event.setCanceled(true);
-								}
+		if (!(entity instanceof Player)) {
+			if (dimension.equals(PocketsDimensionManager.POCKET_WORLD)) {
+				if (!world.isClientSide()) {
+					Pocket pocket = StorageManager.getPocketFromChunkPosition(world, chunkPos);
+					
+					DimensionalPockets.CONSOLE.debug("HERE");
+					
+					if (pocket != null) {
+						if (clazz.equals(MobCategory.MONSTER)) {
+							if (!pocket.getHostileSpawnStateValue() || PocketsConfigManager.getInstance().getStopHostileSpawns()) {
+								event.setCanceled(true);
 							}
 						}
-						
-						if (entity_type.equals(EntityType.ELDER_GUARDIAN)) {
-							if (!world.isClientSide) {
-								DimensionalPockets.CONSOLE.debug("[Event Cancellation] <entityjoin> An Elder Guardian was attempted to spawn. This event has been cancelled.");
-							}
-							event.setCanceled(true);
-						}
+					}
+					
+					if (entity_type.equals(EntityType.ELDER_GUARDIAN)) {
+						event.setCanceled(true);
+						DimensionalPockets.CONSOLE.debug("[Event Cancellation] <entityjoin> An Elder Guardian was attempted to spawn. This event has been cancelled.");
 					}
 				}
 			}

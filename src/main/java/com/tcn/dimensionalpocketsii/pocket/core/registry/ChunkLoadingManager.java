@@ -2,7 +2,7 @@ package com.tcn.dimensionalpocketsii.pocket.core.registry;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map.Entry;
+import java.util.Map;
 
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.registry.gson.object.ObjectBlockPosDimension;
@@ -139,7 +139,7 @@ public class ChunkLoadingManager {
 	}
 	
 	public static void tickLoadedBlocks(ServerLevel levelIn, ServerChunkCache chunkProviderIn, int tickSpeedIn) {
-		for (Entry<CosmosChunkPos, ObjectBlockPosDimension> object : chunkLoadedBlocks.entrySet()) {
+		for (Map.Entry<CosmosChunkPos, ObjectBlockPosDimension> object : chunkLoadedBlocks.entrySet()) {
 			CosmosChunkPos pos = object.getKey();
 			ResourceLocation dimension = object.getValue().getDimension();
 			

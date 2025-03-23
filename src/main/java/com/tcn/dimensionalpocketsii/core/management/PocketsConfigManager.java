@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.PocketReference;
 import com.tcn.dimensionalpocketsii.PocketReference.BlockedObjects;
-import com.tcn.dimensionalpocketsii.DimensionalPockets;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
@@ -233,26 +233,28 @@ public class PocketsConfigManager {
 	}
 	
 	public void addBlockedStructure(String value) {
-		ArrayList<String> list = PocketReference.BlockedObjects.BLOCKS;
-		list.add(value);
-		
-		this.blocked_structures.set(list);
+		if (!value.isBlank()) {
+			ArrayList<String> list = new ArrayList<String>(this.blocked_structures.get());
+			list.add(value);
+			this.blocked_structures.set(list);
+		}
 	}
 
 	public void removeBlockedStructure(String value) {
 		List<? extends String> list = this.blocked_structures.get();
-		
-		for (int i = 0; i < list.size(); i++) {
-			String object = list.get(i);
-			
-			if (object == value) {
-				list.remove(i);
-			}
-		}
-		
+		list.remove(value);
 		this.blocked_structures.set(list);
 	}
 
+	public void resetBlockedStructures() {
+		this.blocked_structures.get().clear();
+		
+		PocketReference.BlockedObjects.BLOCKS.forEach((item) -> {
+			addBlockedStructure(item);
+		});
+	}
+	
+	
 	public List<? extends String> getBlockedItems() {
 		return this.blocked_items.get();
 	}
@@ -262,28 +264,28 @@ public class PocketsConfigManager {
 	}
 
 	public void addBlockedItem(String value) {
-		ArrayList<String> list = PocketReference.BlockedObjects.ITEMS;
-		list.add(value);
-		
-		this.blocked_items.set(list);
+		if (!value.isBlank()) {
+			ArrayList<String> list = new ArrayList<String>(this.blocked_items.get());
+			list.add(value);
+			this.blocked_items.set(list);
+		}
 	}
 
 	public void removeBlockedItem(String value) {
 		List<? extends String> list = this.blocked_items.get();
-		
-		for (int i = 0; i < list.size(); i++) {
-			String object = list.get(i);
-			
-			if (object == value) {
-				list.remove(i);
-			}
-		}
-		
+		list.remove(value);
 		this.blocked_items.set(list);
 	}
 
+	public void resetBlockedItems() {
+		this.blocked_items.get().clear();
+		
+		PocketReference.BlockedObjects.ITEMS.forEach((item) -> {
+			addBlockedItem(item);
+		});
+	}
 	
-
+	
 	public int getOPLevel() {
 		return this.op_level.get();
 	}
@@ -292,33 +294,34 @@ public class PocketsConfigManager {
 		this.op_level.set(value);
 	}
 	
+	
 	public List<? extends String> getBlockedCommands() {
 		return this.blocked_commands.get();
 	}
 	
-	public void setBlockedCommands(List<? extends String> value) {
+	public void setBlockedCommands(ArrayList<String> value) {
 		this.blocked_commands.set(value);
 	}
 
 	public void addBlockedCommand(String value) {
-		ArrayList<String> list = PocketReference.BlockedObjects.COMMANDS;
-		list.add(value);
-		
-		this.blocked_commands.set(list);
+		if (!value.isBlank()) {
+			ArrayList<String> list = new ArrayList<String>(this.blocked_commands.get());
+			list.add(value);
+			this.blocked_commands.set(list);
+		}
 	}
 
 	public void removeBlockedCommand(String value) {
 		List<? extends String> list = this.blocked_commands.get();
-		
-		for (int i = 0; i < list.size(); i++) {
-			String object = list.get(i);
-			
-			if (object == value) {
-				list.remove(i);
-			}
-		}
-		
+		list.remove(value);
 		this.blocked_commands.set(list);
 	}
 
+	public void resetBlockedCommands() {
+		this.blocked_commands.get().clear();
+		
+		PocketReference.BlockedObjects.COMMANDS.forEach((item) -> {
+			addBlockedCommand(item);
+		});
+	}
 }

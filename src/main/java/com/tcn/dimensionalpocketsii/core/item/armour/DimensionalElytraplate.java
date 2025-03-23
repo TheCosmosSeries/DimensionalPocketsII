@@ -312,7 +312,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 	}
 	
 	public static CompoundTag getModuleList(ItemStack stackIn) {
-		if (stackIn.getItem() instanceof DimensionalElytraplate elytraplate) {
+		if (stackIn.getItem() instanceof DimensionalElytraplate) {
 			CompoundTag compound = stackIn.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
 			if (compound.contains("moduleList")) {
 				return compound.getCompound("moduleList");
