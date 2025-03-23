@@ -3,6 +3,7 @@ package com.tcn.dimensionalpocketsii.pocket.core.blockentity;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumGeneralEnableState;
 import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
+import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
@@ -33,6 +34,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -49,9 +51,10 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 
 	private EnumUIMode uiMode = EnumUIMode.DARK;
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
+	private EnumUILock uiLock = EnumUILock.PRIVATE;
 
 	public BlockEntityFocus(BlockPos posIn, BlockState stateIn) {
-		super(ModBusManager.FOCUS_TILE_TYPE, posIn, stateIn);
+		super(ModBusManager.BLOCK_ENTITY_TYPE_FOCUS, posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -99,6 +102,7 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 		
 		compound.putInt("ui_mode", this.uiMode.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
+		compound.putInt("ui_lock", this.uiLock.getIndex());
 	}
 
 	@Override
@@ -114,6 +118,7 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 		
 		this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 		this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
+		this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 	}
 	
 	/**
@@ -162,6 +167,10 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 	@Override
 	public InteractionResult use(BlockState state, Level levelIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult hit) {
 		this.setChanged();
+
+		if (CosmosUtil.getStackItem(playerIn) instanceof BlockItem) {
+			return InteractionResult.FAIL;
+		}
 		
 		if (PocketUtil.isDimensionEqual(levelIn, DimensionManager.POCKET_WORLD)) {
 			Pocket pocket = this.getPocket();
@@ -172,8 +181,10 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 						return InteractionResult.SUCCESS;
 					} else {
 						if (playerIn instanceof ServerPlayer) {
-							NetworkHooks.openGui((ServerPlayer)playerIn, this, (packetBuffer)->{ packetBuffer.writeBlockPos(pos); });
-							return InteractionResult.SUCCESS;
+							if (this.canPlayerAccess(playerIn)) {
+								NetworkHooks.openGui((ServerPlayer)playerIn, this, (packetBuffer)->{ packetBuffer.writeBlockPos(pos); });
+								return InteractionResult.SUCCESS;
+							}
 						}
 					}
 				} else {
@@ -221,17 +232,17 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 			} 
 		}
 		
-		return InteractionResult.SUCCESS;
+		return InteractionResult.FAIL;
 	}
 
 	@Override
 	public Component getDisplayName() {
-		return ComponentHelper.locComp("dimensionalpocketsii.gui.focus");
+		return ComponentHelper.title("dimensionalpocketsii.gui.focus");
 	}
 
 	@Override
 	public Component getName() {
-		return ComponentHelper.locComp("dimensionalpocketsii.gui.focus");
+		return ComponentHelper.title("dimensionalpocketsii.gui.focus");
 	}
 	
 	@Override
@@ -303,5 +314,44 @@ public class BlockEntityFocus extends BlockEntity implements IBlockInteract, Men
 	@Override
 	public void cycleUIHelp() {
 		this.uiHelp = EnumUIHelp.getNextStateFromState(this.uiHelp);
+	}
+
+	@Override
+	public EnumUILock getUILock() {
+		return this.uiLock;
+	}
+
+	@Override
+	public void setUILock(EnumUILock modeIn) {
+		this.uiLock = modeIn;
+	}
+
+	@Override
+	public void cycleUILock() {
+		this.uiLock = EnumUILock.getNextStateFromState(this.uiLock);
+	}
+
+	@Override
+	public void setOwner(Player playerIn) { }
+
+	@Override
+	public boolean canPlayerAccess(Player playerIn) {
+		if (this.getUILock().equals(EnumUILock.PUBLIC)) {
+			return true;
+		} else {
+			if (this.getPocket().checkIfOwner(playerIn)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean checkIfOwner(Player playerIn) {
+		if (this.getPocket().checkIfOwner(playerIn)) {
+			return true;
+		}
+		return false;
 	}
 }

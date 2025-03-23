@@ -34,8 +34,8 @@ public class ItemModuleScreen extends CosmosItem implements IModuleItem {
 		} else {
 			tooltip.add(ComponentHelper.getTooltipOne("dimensionalpocketsii.item.info.armour_module.screen_one"));
 			tooltip.add(ComponentHelper.getTooltipTwo("dimensionalpocketsii.item.info.armour_module.screen_two_pre")
-				.append(ComponentHelper.locComp(ComponentColour.YELLOW, false, ModBusManager.SUIT_SCREEN.getKey().getName()))
-				.append(ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.item.info.elytraplate_key"))
+				.append(ComponentHelper.style(ComponentColour.YELLOW, ModBusManager.SUIT_SCREEN.getKey().getName()))
+				.append(ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.item.info.elytraplate_key"))
 			);
 			tooltip.add(ComponentHelper.getTooltipThree("dimensionalpocketsii.item.info.armour_module.screen_three"));
 			tooltip.add(ComponentHelper.shiftForLessDetails());

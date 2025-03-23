@@ -35,7 +35,7 @@ public class ContainerModuleGenerator extends CosmosContainerMenuBlockEntity {
 	}
 
 	public ContainerModuleGenerator(int indexIn, Inventory playerInventoryIn, Container contentsIn, ContainerData containerDataIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModBusManager.GENERATOR_CONTAINER_TYPE, indexIn, playerInventoryIn, accessIn, posIn);
+		super(ModBusManager.CONTAINER_TYPE_GENERATOR, indexIn, playerInventoryIn, accessIn, posIn);
 		
 		this.data = containerDataIn;
 		
@@ -97,7 +97,7 @@ public class ContainerModuleGenerator extends CosmosContainerMenuBlockEntity {
 					return ItemStack.EMPTY;
 				}
 				
-			} else if (indexIn > 3 && indexIn < this.slots.size()) {
+			} else if (indexIn >= 3 && indexIn < this.slots.size()) {
 				if (itemstack.getItem() instanceof BucketItem) {
 					if (!this.moveItemStackTo(itemstack1, 1, indexIn, false)) {
 						return ItemStack.EMPTY;
@@ -110,13 +110,13 @@ public class ContainerModuleGenerator extends CosmosContainerMenuBlockEntity {
 					}
 				}
 				
-				else if (indexIn > this.slots.size() - 9 && indexIn < this.slots.size()) {
+				else if (indexIn >= this.slots.size() - 9 && indexIn < this.slots.size()) {
 					if (!this.moveItemStackTo(itemstack1, 0, this.slots.size() - 9, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
 				
-				else if (indexIn > 3 && indexIn < this.slots.size() - 9) {
+				else if (indexIn >= 3 && indexIn < this.slots.size() - 9) {
 					if (!this.moveItemStackTo(itemstack1, this.slots.size() - 9, this.slots.size(), false)) {
 						return ItemStack.EMPTY;
 					}

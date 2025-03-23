@@ -1,14 +1,26 @@
-{ 
-	"portal_in": { 
-	   "category" : "block", 
-	   "sounds": [ "dimensionalpocketsii:portal_in" ]
-    },
-    "portal_out": { 
-       "category" : "block", 
-       "sounds": [ "dimensionalpocketsii:portal_out" ]
-    },
-    "woosh": { 
-       "category" : "block", 
-       "sounds": [ "dimensionalpocketsii:woosh" ]
-    }
+{
+	"portal_in": {
+		"category": "block",
+		"sounds": [
+			"dimensionalpocketsii:portal_in"
+		]
+	},
+	"portal_out": {
+		"category": "block",
+		"sounds": [
+			"dimensionalpocketsii:portal_out"
+		]
+	},
+	"woosh": {
+		"category": "block",
+		"sounds": [
+			"dimensionalpocketsii:woosh"
+		]
+	},
+	"tink": {
+		"category": "block",
+		"sounds": [
+			"dimensionalpocketsii:tink"
+		]
+	}
 }

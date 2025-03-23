@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: dimpockets [39.0.55]
+Implementation-Version: 1.18.1-5.1.1.60-universal
+Specification-Vendor: examplemodsareus
+Specification-Title: examplemod
+Implementation-Timestamp: 2022-01-23T01:00:52+0000
+Specification-Version: 1
+Implementation-Vendor: examplemodsareus
+

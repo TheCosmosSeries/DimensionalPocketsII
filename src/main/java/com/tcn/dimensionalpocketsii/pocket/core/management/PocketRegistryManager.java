@@ -11,15 +11,14 @@ import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 /**
  * @author TheCosmicNebula_
  */
-@SuppressWarnings("unused")
 public class PocketRegistryManager {
-	
 	private static Map<CosmosChunkPos, Pocket> pocketMap = new LinkedHashMap<>();
 
 	//How far the pockets are apart (This value - 1 is how many chunks between each pocket in the X or Z axis. [NOT DYNAMIC]
@@ -47,7 +46,7 @@ public class PocketRegistryManager {
 		return pocketSize;
 	}
 
-	public static Level getLevelForPockets() {
+	public static ServerLevel getLevelForPockets() {
 		return ServerLifecycleHooks.getCurrentServer().getLevel(DimensionManager.POCKET_WORLD);
 	}
 	
@@ -68,10 +67,10 @@ public class PocketRegistryManager {
 			if (pocketMap.containsKey(chunkPos)) {
 				pocket = pocketMap.get(chunkPos);
 			} else {
-				DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <getpocket> Unable to retrieve Pocket: { " + chunkPos + " } Chunk Position not present in map.");
+				DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <getpocket> Unable to retrieve Pocket: { " + chunkPos + " }. Chunk Position not present in map.");
 			}
 		} else {
-			DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <getpocket> Unable to retrieve Pocket: { " + chunkPos + " } Chunk Position <null>.");
+			DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <getpocket> Unable to retrieve Pocket: { " + chunkPos + " }. Chunk Position <null>!!");
 		}
 		
 		return pocket;
@@ -139,7 +138,7 @@ public class PocketRegistryManager {
 		Pocket link = pocketMap.get(chunkPos);
 		
 		if (link == null) {
-			DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <updatepocket> Unable to update Pocket: { " + chunkPos + " } No Pocket exists with this Chunk Posision.");
+			DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry Error] <updatepocket> Unable to update Pocket: { " + chunkPos + " }. No Pocket exists with this Chunk Posision.");
 			return;
 		}
 
@@ -163,13 +162,8 @@ public class PocketRegistryManager {
 		if (!pocketMap.isEmpty()) {
 			DimensionalPockets.CONSOLE.debug("[Pocket Registry] {server} <load> Pocket data loaded from File System.");
 		} else {
-			DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry] {server} <load> Pocket File System returned an empty map. This must be a new world. Creating a fresh map.");
+			DimensionalPockets.CONSOLE.debugWarn("[Pocket Registry] {server} <load> Pocket File System returned an empty Map. This must be a new world. Creating a fresh Map.");
 		}
 	}
-
-	public static void beginChunkLoading() {
-		for (Pocket pocket : pocketMap.values()) {
-			//ChunkLoaderManagerRoom.addPocketToChunkLoader(pocket);
-		}
-	}
+	
 }

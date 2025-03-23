@@ -42,7 +42,7 @@ public class DimensionalTridentEnhancedEntity extends AbstractArrow {
 	}
 
 	public DimensionalTridentEnhancedEntity(Level worldIn, LivingEntity livingEntityIn, ItemStack stackIn) {
-		super(ModBusManager.TRIDENT_TYPE_ENHANCED, livingEntityIn, worldIn);
+		super(ModBusManager.ENTITY_TYPE_TRIDENT_ENHANCED, livingEntityIn, worldIn);
 		this.tridentItem = stackIn.copy();
 		this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(stackIn));
 		this.entityData.set(ID_FOIL, stackIn.hasFoil());
@@ -50,7 +50,7 @@ public class DimensionalTridentEnhancedEntity extends AbstractArrow {
 
 	@OnlyIn(Dist.CLIENT)
 	public DimensionalTridentEnhancedEntity(Level worldIn, double x, double y, double z) {
-		super(ModBusManager.TRIDENT_TYPE_ENHANCED, x, y, z, worldIn);
+		super(ModBusManager.ENTITY_TYPE_TRIDENT_ENHANCED, x, y, z, worldIn);
 	}
 
 	@Override

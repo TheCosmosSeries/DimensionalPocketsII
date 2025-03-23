@@ -1,0 +1,39 @@
+{
+	"type": "dimensionalpocketsii:upgrading",
+	"focus": {
+		"item": "dimensionalpocketsii:dimensional_chestplate_enhanced"
+	},
+	"topRow": {
+		"left": {
+			"item": "minecraft:netherite_block"
+		},
+		"middle": {
+			"item": "dimensionalpocketsii:block_dimensional_gem"
+		},
+		"right": {
+			"item": "minecraft:netherite_block"
+		}
+	},
+	"middleRow": {
+		"left": {
+			"item": "dimensionalpocketsii:elytra_wing"
+		},
+		"right": {
+			"item": "dimensionalpocketsii:elytra_wing"
+		}
+	},
+	"bottomRow": {
+		"left": {
+			"item": "minecraft:blaze_powder"
+		},
+		"middle": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"right": {
+			"item": "minecraft:blaze_powder"
+		}
+	},
+	"result": {
+		"item": "dimensionalpocketsii:dimensional_elytraplate"
+	}
+}

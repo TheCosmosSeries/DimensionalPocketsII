@@ -57,7 +57,7 @@ public class BlockPocket extends CosmosBlockRemovableNBT implements EntityBlock 
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModBusManager.POCKET_TILE_TYPE);
+		return createTicker(levelIn, entityTypeIn, ModBusManager.BLOCK_ENTITY_TYPE_POCKET);
 	}
 
 	@Nullable
@@ -190,6 +190,6 @@ public class BlockPocket extends CosmosBlockRemovableNBT implements EntityBlock 
 
 	@Override
 	public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-        return true;
+        return false;
     }
 }

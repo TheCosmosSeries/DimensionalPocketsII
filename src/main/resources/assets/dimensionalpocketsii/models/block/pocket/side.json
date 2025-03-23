@@ -21,27 +21,27 @@
     },
     "elements": [
         {
-            "from": [1, 1, 1],
-            "to": [15, 15, 2.95],
+            "from": [2, 2, 2],
+            "to": [14, 14, 3.95],
             "faces": {
                 "north": {
-                    "uv": [1,1,15,15],
+                    "uv": [2, 2, 14, 14],
                     "texture": "#outside",
                     "tintindex": 0
                 },
                 "south": {
-                    "uv": [1,1,15,15],
+                    "uv": [2, 2, 14, 14],
                     "texture": "#inside",
                     "tintindex": 0
                 }
             }
         },
         {
-            "from": [1, 1, 1],
-            "to": [15, 15, 2.95],
+            "from": [2, 2, 2],
+            "to": [14, 14, 3.95],
             "faces": {
                 "north": {
-                    "uv": [1,1,15,15],
+                    "uv": [2, 2, 14, 14],
                     "texture": "#ring",
                     "tintindex": 0
                 }

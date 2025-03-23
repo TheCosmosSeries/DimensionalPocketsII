@@ -1,10 +1,13 @@
 package com.tcn.dimensionalpocketsii.pocket.core.blockentity;
 
+import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
+import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
+import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUpdateable;
 import com.tcn.cosmoslibrary.common.item.CosmosArmourItemColourable;
 import com.tcn.cosmoslibrary.common.item.CosmosArmourItemElytra;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -37,12 +40,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
-public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBlockInteract, Container, IBlockEntityUIMode {
+public class BlockEntityModuleArmourWorkbench extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, IBlockEntityUIMode, IBlockEntityUpdateable {
 
 	public NonNullList<ItemStack> inventoryItems = NonNullList.withSize(11, ItemStack.EMPTY);
 	
@@ -50,9 +52,10 @@ public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBl
 
 	private EnumUIMode uiMode = EnumUIMode.DARK;
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
+	private EnumUILock uiLock = EnumUILock.PRIVATE;
 
 	public BlockEntityModuleArmourWorkbench(BlockPos posIn, BlockState stateIn) {
-		super(ModBusManager.ARMOUR_WORKBENCH_TILE_TYPE, posIn, stateIn);
+		super(ModBusManager.BLOCK_ENTITY_TYPE_ARMOUR_WORKBENCH, posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -63,15 +66,9 @@ public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBl
 		return PocketRegistryManager.getPocketFromChunkPosition(CosmosChunkPos.scaleToChunkPos(this.getBlockPos()));
 	}
 	
-	public void sendUpdates(boolean update) {
-		this.setChanged();
-		
-		if (update) {
-			if (!level.isClientSide) {
-				
-				level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState());
-			}
-		}
+	@Override
+	public void sendUpdates(boolean forceUpdate) {
+		super.sendUpdates(forceUpdate);
 	}
 
 	@Override
@@ -86,6 +83,7 @@ public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBl
 		
 		compound.putInt("ui_mode", this.uiMode.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
+		compound.putInt("ui_lock", this.uiLock.getIndex());
 	}
 
 	public void saveToItemStack(ItemStack stackIn) {
@@ -95,6 +93,7 @@ public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBl
 		
 		compound.putInt("ui_mode", this.uiMode.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
+		compound.putInt("ui_lock", this.uiLock.getIndex());
 	}
 	
 	@Override
@@ -110,6 +109,7 @@ public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBl
 		
 		this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 		this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
+		this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 	}
 
 	public void loadFromItemStack(ItemStack stackIn) {
@@ -121,6 +121,7 @@ public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBl
 			
 			this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 			this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
+			this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 		}
 	}
 	
@@ -186,9 +187,15 @@ public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBl
 				return InteractionResult.SUCCESS;
 			} else {
 				if (playerIn instanceof ServerPlayer) {
-					NetworkHooks.openGui((ServerPlayer)playerIn, state.getMenuProvider(worldIn, pos), (packetBuffer)->{ packetBuffer.writeBlockPos(pos); });
-					return InteractionResult.SUCCESS;
+					if (this.canPlayerAccess(playerIn)) {
+						NetworkHooks.openGui((ServerPlayer)playerIn, state.getMenuProvider(worldIn, pos), (packetBuffer) -> { packetBuffer.writeBlockPos(pos); });
+					} else {
+						CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
+						return InteractionResult.FAIL;
+					}
 				}
+				
+				return InteractionResult.SUCCESS;
 			}
 		} else {
 			if(!worldIn.isClientSide) {
@@ -230,33 +237,35 @@ public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBl
 	public void applyToArmourItem(boolean colourIn, boolean moduleIn) {
 		ItemStack inputStack = this.getItem(0);
 		
-		if (inputStack != ItemStack.EMPTY) {
-			for (int i = 5; i < 11; i++) {
-				ItemStack stackIn = this.getItem(i);
-				
-				if (!stackIn.isEmpty()) {
-					if (stackIn.getItem() instanceof IModuleItem) {
-						IModuleItem item = (IModuleItem) stackIn.getItem();
-						BaseElytraModule module = item.getModule();
-						
-						if (DimensionalElytraplate.addModule(inputStack, module, true)) {
-							DimensionalElytraplate.addModule(inputStack, module, false);
+		if (moduleIn) {
+			if (inputStack != ItemStack.EMPTY) {
+				for (int i = 5; i < 11; i++) {
+					ItemStack stackIn = this.getItem(i);
+					
+					if (!stackIn.isEmpty()) {
+						if (stackIn.getItem() instanceof IModuleItem) {
+							IModuleItem item = (IModuleItem) stackIn.getItem();
+							BaseElytraModule module = item.getModule();
 							
-							if (item.doesInformationCarry()) {
-								if (item.transferInformation(stackIn, inputStack, true)) {
-									item.transferInformation(stackIn, inputStack, false);
+							if (DimensionalElytraplate.addModule(inputStack, module, true)) {
+								DimensionalElytraplate.addModule(inputStack, module, false);
+								
+								if (item.doesInformationCarry()) {
+									if (item.transferInformation(stackIn, inputStack, true)) {
+										item.transferInformation(stackIn, inputStack, false);
+									}
 								}
+								
+								this.getItem(i).shrink(1);
 							}
-							
-							this.getItem(i).shrink(1);
 						}
 					}
 				}
 			}
-			
-			if (inputStack != this.getResultStack(true, colourIn, moduleIn)) {
-				this.setItem(0, this.getResultStack(true, colourIn, moduleIn));
-			}
+		}
+		
+		if (inputStack != this.getResultStack(true, colourIn, moduleIn)) {
+			this.setItem(0, this.getResultStack(true, colourIn, moduleIn));
 		}
 		
 		this.setChanged();
@@ -503,5 +512,44 @@ public class BlockEntityModuleArmourWorkbench extends BlockEntity implements IBl
 	@Override
 	public void cycleUIHelp() {
 		this.uiHelp = EnumUIHelp.getNextStateFromState(this.uiHelp);
+	}
+
+	@Override
+	public EnumUILock getUILock() {
+		return this.uiLock;
+	}
+
+	@Override
+	public void setUILock(EnumUILock modeIn) {
+		this.uiLock = modeIn;
+	}
+
+	@Override
+	public void cycleUILock() {
+		this.uiLock = EnumUILock.getNextStateFromState(this.uiLock);
+	}
+
+	@Override
+	public void setOwner(Player playerIn) { }
+
+	@Override
+	public boolean canPlayerAccess(Player playerIn) {
+		if (this.getUILock().equals(EnumUILock.PUBLIC)) {
+			return true;
+		} else {
+			if (this.getPocket().checkIfOwner(playerIn)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean checkIfOwner(Player playerIn) {
+		if (this.getPocket().checkIfOwner(playerIn)) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -6,7 +6,7 @@ import com.ibm.icu.text.DecimalFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
 import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem.IS_HOVERING;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIMode;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -30,7 +30,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenModuleCharger extends CosmosScreenUIMode<ContainerModuleCharger> {
+public class ScreenModuleCharger extends CosmosScreenUIModeBE<ContainerModuleCharger> {
 	
 	private CosmosButtonWithType energyStateButton; private int[] MBI = new int[] { 83, 80 };
 	
@@ -43,10 +43,12 @@ public class ScreenModuleCharger extends CosmosScreenUIMode<ContainerModuleCharg
 		this.setDark(RESOURCE.CHARGER[1]);
 
 		this.setUIModeButtonIndex(167, 5);
-		this.setUIHelpButtonIndex(167, 19);
+		this.setUIHelpButtonIndex(167, 33);
+		this.setUILockButtonIndex(167, 19);
 		this.setUIHelpElementDeadzone(28, 13, 155, 104);
 		
-		this.setTitleLabelDims(52, 4);
+		
+		this.setTitleLabelDims(53, 4);
 		this.setInventoryLabelDims(8, 107);
 	}
 
@@ -86,7 +88,6 @@ public class ScreenModuleCharger extends CosmosScreenUIMode<ContainerModuleCharg
 				CosmosUISystem.renderStaticElementWithUIMode(this, poseStack, this.getScreenCoords(), 0, 0, 0, 0, this.imageWidth, this.imageHeight, blockEntity, GUI.RESOURCE.CHARGER_OVERLAY);
 
 				CosmosUISystem.renderEnergyDisplay(this, poseStack, ComponentColour.RED, pocket, this.getScreenCoords(), 84, 23, 16, 48, false);
-				//CosmosUISystem.renderPowerBar(this, poseStack, this.getScreenCoords(), 84, 23, pocket.getStoredLevelScaled(48), new int[] { 16, 255, 48, 16 }, pocket.hasStored());
 			}
 		}
 	}
@@ -106,8 +107,8 @@ public class ScreenModuleCharger extends CosmosScreenUIMode<ContainerModuleCharg
 						String[] energyString = new String[] { formatter.format(pocket.getEnergyStored()), formatter.format(pocket.getMaxEnergyStored()) };
 						
 						Component[] comp = new Component[] {
-							ComponentHelper.locComp(ComponentColour.WHITE, false, "dimensionalpocketsii.gui.energy_bar.pre"),
-							ComponentHelper.locComp(ComponentColour.RED, false, energyString[0] + " / " + energyString[1], "dimensionalpocketsii.gui.energy_bar.suff")
+							ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.energy_bar.pre"),
+							ComponentHelper.style2(ComponentColour.RED, energyString[0] + " / " + energyString[1], "dimensionalpocketsii.gui.energy_bar.suff")
 						};
 						
 						this.renderComponentTooltip(poseStack, Arrays.asList(comp), mouseX, mouseY);
@@ -116,8 +117,8 @@ public class ScreenModuleCharger extends CosmosScreenUIMode<ContainerModuleCharg
 				
 				if (this.energyStateButton.isMouseOver(mouseX, mouseY)) {
 					Component[] comp = new Component[] { 
-						ComponentHelper.locComp(ComponentColour.WHITE, false, "dimensionalpocketsii.gui.charger.mode_info"), 
-						ComponentHelper.locComp(ComponentColour.GRAY, false, "dimensionalpocketsii.gui.charger.mode_value").append(blockEntity.getEnergyState().getColouredComp())
+						ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.charger.mode_info"), 
+						ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.charger.mode_value").append(blockEntity.getEnergyState().getColouredComp())
 					};
 					
 					this.renderComponentTooltip(poseStack, Arrays.asList(comp), mouseX, mouseY);
@@ -136,7 +137,7 @@ public class ScreenModuleCharger extends CosmosScreenUIMode<ContainerModuleCharg
 		if (entity instanceof BlockEntityModuleCharger) {
 			BlockEntityModuleCharger blockEntity = (BlockEntityModuleCharger) entity;
 			
-			this.energyStateButton = this.addRenderableWidget(new CosmosButtonWithType(TYPE.ENERGY, this.getScreenCoords()[0] + MBI[0], this.getScreenCoords()[1] + MBI[1], 18, true, true, blockEntity.getEnergyState().getIndex() + 16, ComponentHelper.locComp(""), (button) -> { this.pushButton(this.energyStateButton); }));
+			this.energyStateButton = this.addRenderableWidget(new CosmosButtonWithType(TYPE.ENERGY, this.getScreenCoords()[0] + MBI[0], this.getScreenCoords()[1] + MBI[1], 18, true, true, blockEntity.getEnergyState().getIndex() + 16, ComponentHelper.empty(), (button) -> { this.pushButton(this.energyStateButton); }));
 		}
 	}
 
@@ -159,46 +160,46 @@ public class ScreenModuleCharger extends CosmosScreenUIMode<ContainerModuleCharg
 	protected void addUIHelpElements() {
 		super.addUIHelpElements();
 		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 82, 21, 20, 52, ComponentHelper.locComp(ComponentColour.RED, false, "dimensionalpocketsii.gui.help.power_display"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.power_display_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.power_display_two")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 82, 21, 20, 52, ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.help.power_display"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.power_display_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.power_display_two")
 		);
 		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 82, 79, 20, 20, ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.gui.help.charger.mode_button"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.mode_button_one"),
-			ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.gui.help.charger.mode_button_two_pre").append(ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.mode_button_two")),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.mode_button_two_"),
-			ComponentHelper.locComp(ComponentColour.WHITE, false, "dimensionalpocketsii.gui.help.charger.mode_button_two__"),
-			ComponentHelper.locComp(ComponentColour.RED, false, "dimensionalpocketsii.gui.help.charger.mode_button_three_pre").append(ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.mode_button_three")),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.mode_button_three_")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 82, 79, 20, 20, ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.gui.help.charger.mode_button"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.mode_button_one"),
+			ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.gui.help.charger.mode_button_two_pre").append(ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.mode_button_two")),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.mode_button_two_"),
+			ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.help.charger.mode_button_two__"),
+			ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.help.charger.mode_button_three_pre").append(ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.mode_button_three")),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.mode_button_three_")
 		);
 		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 58, 19, 20, 56, ComponentHelper.locComp(ComponentColour.LIGHT_RED, false, "dimensionalpocketsii.gui.help.charger.charge_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.charge_slot_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.charge_slot_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.charge_slot_three")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 58, 19, 20, 56, ComponentHelper.style(ComponentColour.LIGHT_RED, "dimensionalpocketsii.gui.help.charger.charge_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.charge_slot_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.charge_slot_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.charge_slot_three")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 106, 19, 20, 56, ComponentHelper.locComp(ComponentColour.LIGHT_RED, false, "dimensionalpocketsii.gui.help.charger.charge_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.charge_slot_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.charge_slot_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.charger.charge_slot_three")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 106, 19, 20, 56, ComponentHelper.style(ComponentColour.LIGHT_RED, "dimensionalpocketsii.gui.help.charger.charge_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.charge_slot_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.charge_slot_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.charger.charge_slot_three")
 		);
 		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 34, 79, 20, 20, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.slot.helmet"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_slot"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_slot.helmet")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 34, 79, 20, 20, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.slot.helmet"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_slot"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_slot.helmet")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 58, 79, 20, 20, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.slot.chestplate"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_slot"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_slot.chestplate")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 58, 79, 20, 20, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.slot.chestplate"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_slot"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_slot.chestplate")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 106, 79, 20, 20, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.slot.leggings"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_slot"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_slot.leggings")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 106, 79, 20, 20, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.slot.leggings"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_slot"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_slot.leggings")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 130, 79, 20, 20, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.slot.boots"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_slot"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_slot.boots")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 130, 79, 20, 20, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.slot.boots"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_slot"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_slot.boots")
 		);
 	}
 	

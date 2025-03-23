@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "dimensionalpocketsii:items/module/pocket/base",
+        "layer1": "dimensionalpocketsii:blocks/wall/module/blast_furnace_on"
+    }
+}

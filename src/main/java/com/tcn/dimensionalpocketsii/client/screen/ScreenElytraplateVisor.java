@@ -23,8 +23,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @SuppressWarnings({ "deprecation", "unused" })
+@OnlyIn(Dist.CLIENT)
 public class ScreenElytraplateVisor extends Gui {
 
 	public ScreenElytraplateVisor() {
@@ -58,7 +61,7 @@ public class ScreenElytraplateVisor extends Gui {
 			CosmosUISystem.renderEnergyDisplay(this, poseStackIn, ComponentColour.GREEN, plate.getEnergy(chestStack) / 1000, plate.getMaxEnergyStored(chestStack) / 1000, powerWidth, new int[] { 0, 0 }, 125, scaledHeight - powerOffset + 19, powerWidth, 4, true);
 			
 			if (DimensionalElytraplate.getInstalledModules(chestStack).size() == 1) {
-				this.getFont().draw(poseStackIn, ComponentHelper.locComp(ComponentColour.RED, false, "dimensionalpocketsii.gui.elytraplate.visor.empty"), 80, scaledHeight - 36, ComponentColour.WHITE.dec());
+				this.getFont().draw(poseStackIn, ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.elytraplate.visor.empty"), 80, scaledHeight - 36, ComponentColour.WHITE.dec());
 			}
 			
 			boolean elytra = DimensionalElytraplate.getElytraSetting(chestStack, ElytraSettings.ELYTRA_FLY)[1];
@@ -73,7 +76,6 @@ public class ScreenElytraplateVisor extends Gui {
 			CosmosUISystem.renderStaticElementToggled(this, poseStackIn, new int[] { 0, 0 }, 22, scaledHeight - 42, 0, 42, 20, 20, telepo);
 			CosmosUISystem.renderStaticElementToggled(this, poseStackIn, new int[] { 0, 0 }, 42, scaledHeight - 42, 0, 42, 20, 20, solarp);
 			CosmosUISystem.renderStaticElementToggled(this, poseStackIn, new int[] { 0, 0 }, 02, scaledHeight - 22, 0, 42, 20, 20, charge);
-			
 			
 			CosmosUISystem.renderStaticElement(this, poseStackIn, new int[] { 0, 0 }, 04, scaledHeight - 39, 0,  90, 16, 14);
 			CosmosUISystem.renderStaticElement(this, poseStackIn, new int[] { 0, 0 }, 25, scaledHeight - 39, 16, 90, 14, 14);
@@ -115,6 +117,13 @@ public class ScreenElytraplateVisor extends Gui {
 				poseStackIn.popPose();
 			}
 
+			if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.ENDER_CHEST)) {
+				poseStackIn.pushPose();
+				poseStackIn.scale(scl1, scl1, 0.0F);
+				CosmosUISystem.renderStaticElement(this, poseStackIn, new int[] { 0, 0 }, (int)(106 / scl1), (int) (scaledHeight / scl1) - (int) (19 / scl1), 140, 62, 28, 28);
+				poseStackIn.popPose();
+			}
+
 			if (DimensionalElytraplate.hasModuleInstalled(chestStack, BaseElytraModule.SHIFTER)) {
 				if (chestStack.hasTag()) {
 					CompoundTag stack_nbt = chestStack.getTag();
@@ -132,7 +141,7 @@ public class ScreenElytraplateVisor extends Gui {
 								int[] pos = new int[] { player_pos.getInt("x"), player_pos.getInt("y"), player_pos.getInt("z") };
 
 								float sclA = 1.0F;
-								Component comp = ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.gui.elytraplate.visor.dimension").append(ComponentHelper.locComp(ComponentColour.LIME, false, WordUtils.capitalizeFully(path.replace("_", " "))));
+								Component comp = ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.gui.elytraplate.visor.dimension").append(ComponentHelper.style(ComponentColour.LIME, WordUtils.capitalizeFully(path.replace("_", " "))));
 
 								if (this.getFont().width(comp) > 114) {
 									sclA = 114.0F / this.getFont().width(comp);
@@ -153,7 +162,7 @@ public class ScreenElytraplateVisor extends Gui {
 								
 								poseStackIn.pushPose();
 								poseStackIn.scale(sclB, sclB, sclB);
-								this.getFont().draw(poseStackIn, ComponentHelper.locComp(ComponentColour.CYAN, false, position), 126 / sclB, (int) (scaledHeight / sclB) - (28 / sclB), ComponentColour.WHITE.dec());
+								this.getFont().draw(poseStackIn, ComponentHelper.style(ComponentColour.CYAN, position), 126 / sclB, (int) (scaledHeight / sclB) - (28 / sclB), ComponentColour.WHITE.dec());
 								poseStackIn.popPose();
 							}
 						}

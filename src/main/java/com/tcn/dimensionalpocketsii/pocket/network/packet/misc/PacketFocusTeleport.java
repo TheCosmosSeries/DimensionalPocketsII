@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.tcn.dimensionalpocketsii.core.management.SoundManager;
 import com.tcn.dimensionalpocketsii.pocket.core.management.FocusJumpHandler;
+import com.tcn.dimensionalpocketsii.pocket.network.packet.PacketPocketNet;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketFocusTeleport {
+public class PacketFocusTeleport implements PacketPocketNet {
 	private final BlockPos from, to;
 
 	public PacketFocusTeleport(FriendlyByteBuf buf) {

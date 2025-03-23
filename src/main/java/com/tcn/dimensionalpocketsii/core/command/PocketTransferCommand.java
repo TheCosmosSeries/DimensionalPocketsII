@@ -36,13 +36,13 @@ public class PocketTransferCommand {
 					if (pocket.checkIfOwner(oldPlayer)) {
 						pocket.updateOwner(oldPlayer, newPlayer);
 					} else {
-						commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.command.transfer.error.not_owner"));
+						commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.command.transfer.error.not_owner"));
 					}
 				} else {
-					commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.command.recoverpocket.error.exists"));
+					commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.command.recoverpocket.error.exists"));
 				}
 			} else {
-				commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.command.transfer.error.owner_same"));
+				commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.command.transfer.error.owner_same"));
 			}
 		}
 		

@@ -22,7 +22,7 @@ public class ContainerFocus extends CosmosContainerMenuBlockEntity {
 	}
 	
 	public ContainerFocus(int indexIn, Inventory playerInventoryIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModBusManager.FOCUS_CONTAINER_TYPE, indexIn, playerInventoryIn, accessIn, posIn);
+		super(ModBusManager.CONTAINER_TYPE_FOCUS, indexIn, playerInventoryIn, accessIn, posIn);
 		
 		//Player Inventory
 		for (int k = 0; k < 3; ++k) {

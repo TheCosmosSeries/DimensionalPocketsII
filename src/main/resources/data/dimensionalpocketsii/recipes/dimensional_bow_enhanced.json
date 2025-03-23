@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:smithing",
+	"base": {
+		"item": "dimensionalpocketsii:dimensional_bow"
+	},
+	"addition": {
+		"item": "dimensionalpocketsii:dimensional_ingot_enhanced"
+	},
+	"result": {
+		"item": "dimensionalpocketsii:dimensional_bow_enhanced"
+	}
+}

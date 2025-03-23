@@ -46,7 +46,7 @@ public class BlockWallArmourWorkbench extends BlockWallModule implements IBlankC
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModBusManager.ARMOUR_WORKBENCH_TILE_TYPE);
+		return createTicker(levelIn, entityTypeIn, ModBusManager.BLOCK_ENTITY_TYPE_ARMOUR_WORKBENCH);
 	}
 
 	@Nullable

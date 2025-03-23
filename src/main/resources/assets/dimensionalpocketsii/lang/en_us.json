@@ -81,6 +81,24 @@
 	"item.dimensionalpocketsii.dimensional_bow": "Dimensional Bow",
 	"item.dimensionalpocketsii.dimensional_trident": "Dimensional Trident",
 	
+	"item.dimensionalpocketsii.dimensional_shield": "Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.white": "White Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.orange": "Orange Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.magenta": "Magenta Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.light_blue": "Light Blue Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.yellow": "Yellow Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.lime": "Lime Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.pink": "Pink Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.gray": "Gray Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.light_gray": "Light Gray Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.cyan": "Cyan Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.purple": "Purple Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.blue": "Blue Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.brown": "Brown Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.green": "Green Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.red": "Red Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield.black": "Black Dimensional Shield",
+	
 	"item.dimensionalpocketsii.dimensional_sword_enhanced": "Enhanced Dimensional Sword",
 	"item.dimensionalpocketsii.dimensional_pickaxe_enhanced": "Enhanced Dimensional Pickaxe",
 	"item.dimensionalpocketsii.dimensional_axe_enhanced": "Enhanced Dimensional Axe",
@@ -88,6 +106,24 @@
 	"item.dimensionalpocketsii.dimensional_hoe_enhanced": "Enhanced Dimensional Hoe",
 	"item.dimensionalpocketsii.dimensional_bow_enhanced": "Enhanced Dimensional Bow",
 	"item.dimensionalpocketsii.dimensional_trident_enhanced": "Enhanced Dimensional Trident",
+	
+	"item.dimensionalpocketsii.dimensional_shield_enhanced": "Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.white": "White Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.orange": "Orange Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.magenta": "Magenta Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.light_blue": "Light Blue Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.yellow": "Yellow Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.lime": "Lime Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.pink": "Pink Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.gray": "Gray Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.light_gray": "Light Gray Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.cyan": "Cyan Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.purple": "Purple Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.blue": "Blue Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.brown": "Brown Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.green": "Green Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.red": "Red Enhanced Dimensional Shield",
+	"item.dimensionalpocketsii.dimensional_shield_enhanced.black": "Black Enhanced Dimensional Shield",
 	
 	"item.dimensionalpocketsii.dimensional_helmet": "Dimensional Helmet",
 	"item.dimensionalpocketsii.dimensional_chestplate": "Dimensional Chestplate",
@@ -104,6 +140,7 @@
 	"item.dimensionalpocketsii.armour_module_visor": "Armour Module Visor",
 	"item.dimensionalpocketsii.armour_module_solar": "Armour Module Solar Panel",
 	"item.dimensionalpocketsii.armour_module_battery": "Armour Module Battery",
+	"item.dimensionalpocketsii.armour_module_ender_chest": "Armour Module Ender Chest",
 	
 	"item.dimensionalpocketsii.dimensional_helmet_enhanced": "Enhanced Dimensional Helmet",
 	"item.dimensionalpocketsii.dimensional_chestplate_enhanced": "Enhanced Dimensional Chestplate",
@@ -118,7 +155,9 @@
 	"item.dimensionalpocketsii.module_connector": "Pocket Connector Module",
 	"item.dimensionalpocketsii.module_charger": "Pocket Charger Module",
 	"item.dimensionalpocketsii.module_crafter": "Pocket Crafter Module",
+	"item.dimensionalpocketsii.module_smithing_table": "Pocket Smithing Module",
 	"item.dimensionalpocketsii.module_furnace": "Pocket Furnace Module",
+	"item.dimensionalpocketsii.module_blast_furnace": "Pocket Blast Furnace Module",
 	"item.dimensionalpocketsii.module_energy_display": "Energy Display Module",
 	"item.dimensionalpocketsii.module_fluid_display": "Fluid Display Module",
 	"item.dimensionalpocketsii.module_armour_workbench": "Armour Workbench Module",
@@ -126,6 +165,9 @@
 	"item.dimensionalpocketsii.module_generator": "Pocket Generator Module",
 	
 	"item.dimensionalpocketsii.module_focus": "Pocket Focus Module",
+	
+	"item.dimensionalpocketsii.module_creative_energy": "Creative Energy Module",
+	"item.dimensionalpocketsii.module_creative_fluid": "Creative Fluid Module",
 	
 	"block.dimensionalpocketsii.block_dimensional_ore": "Dimensional Ore",
 	"block.dimensionalpocketsii.block_deepslate_dimensional_ore": "Deepslate Dimensional Ore",
@@ -142,19 +184,25 @@
 	
 	"block.dimensionalpocketsii.block_wall": "Dimensional Wall",
 	"block.dimensionalpocketsii.block_wall_edge": "Dimensional Wall Edge",
+	"block.dimensionalpocketsii.block_wall_door": "Dimensional Wall",
 	
 	"block.dimensionalpocketsii.block_wall_connector": "Connector Module",
 	"block.dimensionalpocketsii.block_wall_charger": "Charger Module",
 	"block.dimensionalpocketsii.block_wall_crafter": "Crafter Module",
+	"block.dimensionalpocketsii.block_wall_smithing_table": "Smithing Module",
 	"block.dimensionalpocketsii.block_wall_furnace": "Furnace Module",
-	"block.dimensionalpocketsii.block_wall_energy_display": "Dimensional Energy Display",
-	"block.dimensionalpocketsii.block_wall_fluid_display": "Dimensional Fluid Display",
-	"block.dimensionalpocketsii.block_wall_armour_workbench": "Dimensional Armour Workbench",
-	"block.dimensionalpocketsii.block_wall_upgrade_station": "Dimensional Upgrade Station",
+	"block.dimensionalpocketsii.block_wall_generator": "Generator Module",
+	"block.dimensionalpocketsii.block_wall_blast_furnace": "Blast Furnace Module",
+	"block.dimensionalpocketsii.block_wall_energy_display": "Energy Display Module",
+	"block.dimensionalpocketsii.block_wall_fluid_display": "Fluid Display Module",
+	"block.dimensionalpocketsii.block_wall_armour_workbench": "Armour Workbench Module",
+	"block.dimensionalpocketsii.block_wall_upgrade_station": "Upgrade Station Module",
 	
-	
+	"block.dimensionalpocketsii.block_wall_creative_energy": "Creative Energy Module",
+	"block.dimensionalpocketsii.block_wall_creative_fluid": "Creative Fluid Module",
+		
 	"dimensionalpocketsii.modid": "Dimensional Pockets II",
-	"dimensionalpocketsii.version": "[1.18.1-5.1.0.0]",
+	"dimensionalpocketsii.version": "[5.1.3.0]",
 	
 	"dimensionalpocketsii.command.dimshift.usage": "/dimshift <destination dimension>(As a word, eg: overworld)",
 	"dimensionalpocketsii.command.dimshift.error.exists": "Dimension specified does not exist.",
@@ -208,6 +256,8 @@
 	"dimensionalpocketsii.gui.header.legend": "Legend:",
 	"dimensionalpocketsii.gui.header.layout": "Layout:",
 	"dimensionalpocketsii.gui.header.internal": "Internals:",
+	"dimensionalpocketsii.gui.header.storage": "Storage:",
+	"dimensionalpocketsii.gui.header.settings": "Settings:",
 	"dimensionalpocketsii.gui.comp.null_creator": "Null Creator!",
 	"dimensionalpocketsii.gui.header.surrounding": "Surrounding:",
 	"dimensionalpocketsii.gui.header.pocket_inv": "Pocket Items:",
@@ -242,7 +292,9 @@
 	"dimensionalpocketsii.gui.charger.mode_value": "Current Energy State: ",
 	
 	"dimensionalpocketsii.gui.crafter": "Crafting Module",
+	"dimensionalpocketsii.gui.smithing_table": "Smithing Module",
 	"dimensionalpocketsii.gui.furnace": "Furnace Module",
+	"dimensionalpocketsii.gui.blast_furnace": "Blast Furnace Module",
 	
 	"dimensionalpocketsii.gui.armour_workbench": "Armour Workbench Module",
 	"dimensionalpocketsii.gui.armour_workbench.colour_apply_info": "Apply the current Colours.",
@@ -279,6 +331,8 @@
 	"dimensionalpocketsii.gui.elytraplate.settings.charger_value": "Item Charger is currently: ",
 	
 	"dimensionalpocketsii.gui.elytraplate.screen.title": "Elytraplate Pocket Connection",
+	
+	"dimensionalpocketsii.gui.elytraplate.ender_chest.title": "Elytraplate Ender Chest Link",
 	
 	"dimensionalpocketsii.gui.button.tank_clear": "Shift-Click to Empty the Fluid Tank.",
 	"dimensionalpocketsii.gui.button.tank_clear_shift": "Warning! This cannot be undone.",
@@ -400,7 +454,6 @@
 	"dimensionalpocketsii.gui.help.charger.charge_slot_two": "any Dimensional Items that use FE",
 	"dimensionalpocketsii.gui.help.charger.charge_slot_three": "that you place in them.",
 	
-	
 	"dimensionalpocketsii.gui.help.generator.mode_button": "Mode Change Button",
 	"dimensionalpocketsii.gui.help.generator.mode_button_one": "This button toggles between two modes:",
 	"dimensionalpocketsii.gui.help.generator.mode_button_two_pre": "Burnable Item Mode",
@@ -473,21 +526,21 @@
 	"dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_two": "the piece of Armour in the Focused",
 	"dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_three": "Armour Slot to the Module Slots.",
 	
-	"dimensionalpocketsii.gui.help.upgrade_station.craft_button": "Craft Button",
-	"dimensionalpocketsii.gui.help.upgrade_station.craft_button_one": "This button Crafts the current recipe",
-	"dimensionalpocketsii.gui.help.upgrade_station.craft_button_two": "based on the Items in the Input Slots",
-	"dimensionalpocketsii.gui.help.upgrade_station.craft_button_three": "and Focused Slot.",
-	"dimensionalpocketsii.gui.help.upgrade_station.craft_button_four": "Will only appear if there is a valid",
-	"dimensionalpocketsii.gui.help.upgrade_station.craft_button_five": "recipe.",
-	
 	"dimensionalpocketsii.gui.help.upgrade_station.result_slot": "Result Slot",
 	"dimensionalpocketsii.gui.help.upgrade_station.result_slot_one": "This is where an Upgraded Item appears",
-	"dimensionalpocketsii.gui.help.upgrade_station.result_slot_two": "when you have a valid Upgrading Recipe",
-	"dimensionalpocketsii.gui.help.upgrade_station.result_slot_three": "and you press the Craft Button.",
+	"dimensionalpocketsii.gui.help.upgrade_station.result_slot_two": "when you have a valid Upgrading Recipe.",
 	
-	"dimensionalpocketsii.gui.help.upgrade_station.preview_slot": "Preview Slot",
-	"dimensionalpocketsii.gui.help.upgrade_station.preview_slot_one": "This Slot will show the Recipe Result",
-	"dimensionalpocketsii.gui.help.upgrade_station.preview_slot_two": "when you have a valid Upgrading Recipe.",
+	"dimensionalpocketsii.gui.help.smithing_table.input_slot_a": "Input Slot Item",
+	"dimensionalpocketsii.gui.help.smithing_table.input_slot_a_one": "This Slot is the input Item you",
+	"dimensionalpocketsii.gui.help.smithing_table.input_slot_a_two": "are going to upgrade.",
+	
+	"dimensionalpocketsii.gui.help.smithing_table.input_slot_b": "Input Slot Ingot",
+	"dimensionalpocketsii.gui.help.smithing_table.input_slot_b_one": "This Slot is where you place the Ingot",
+	"dimensionalpocketsii.gui.help.smithing_table.input_slot_b_two": "you will use for the upgrade.",
+	
+	"dimensionalpocketsii.gui.help.smithing_table.output_slot": "Output Slot",
+	"dimensionalpocketsii.gui.help.smithing_table.output_slot_one": "This Slot is where your upgraded Item",
+	"dimensionalpocketsii.gui.help.smithing_table.output_slot_two": "appears if you have a valid recipe.",
 	
 	"dimensionalpocketsii.gui.help.upgrade_station.input_slots": "Input Slots",
 	"dimensionalpocketsii.gui.help.upgrade_station.input_slots_one": "These Slots are the inputs to whatever",
@@ -581,6 +634,7 @@
 	"dimensionalpocketsii.keybind.suit_screen": "Elytraplate Screen Key",
 	"dimensionalpocketsii.keybind.suit_shift": "Elytraplate Shift Key",
 	"dimensionalpocketsii.keybind.suit_mode_change": "Elytraplate Settings Key",
+	"dimensionalpocketsii.keybind.suit_ender_chest": "Elytraplate Ender Chest Key",
 	
 	"dimensionalpocketsii.item.message.shifter.linked": "Dimensional Shifter linked to Pocket:",
 	"dimensionalpocketsii.item.message.shifter.not_linked": "You haven't linked your Shifter to a Pocket yet!",
@@ -651,11 +705,16 @@
 	"dimensionalpocketsii.item.info.armour_module.battery_one": "Gives your Elytraplate extra FE storage.",
 	"dimensionalpocketsii.item.info.armour_module.battery_two": "Allows you to charge items in your inventory",
 	
+	"dimensionalpocketsii.item.info.armour_module.ender_chest": "Ender Chest Module for Elytraplates",
+	"dimensionalpocketsii.item.info.armour_module.ender_chest_one": "Gives your Elytraplate access to your Ender Chest.",
+	"dimensionalpocketsii.item.info.armour_module.ender_chest_two": "To open your Ender Chest: press the ",
+	
 	"dimensionalpocketsii.item.message.elytraplate.linked": "Elytraplate linked to Pocket:",
 	"dimensionalpocketsii.item.message.elytraplate.not_linked": "You haven't linked your Elytraplate to a Pocket yet!",
-	"dimensionalpocketsii.item.message.elytraplate.no_energy": "Youre Elytraplate is out of energy!",
+	"dimensionalpocketsii.item.message.elytraplate.no_energy": "You're Elytraplate is out of energy!",
 	"dimensionalpocketsii.item.message.elytraplate.no_shifter": "You have not installed a Shifter Module!",
 	"dimensionalpocketsii.item.message.elytraplate.no_screen": "You have not installed a Screen Module!",
+	"dimensionalpocketsii.item.message.elytraplate.no_ender_chest": "You have not installed a Ender Chest Module!",
 	
 	"dimensionalpocketsii.item.info.elytraplate_key": " key. ",
 	"dimensionalpocketsii.item.info.elytraplate_usage": "Unlimted Elytra Flight which uses 3,000 FE/t.",
@@ -668,6 +727,7 @@
 	"dimensionalpocketsii.armour_module.visor": "Visor Module",
 	"dimensionalpocketsii.armour_module.solar": "Solar Module",
 	"dimensionalpocketsii.armour_module.battery": "Battery Module",
+	"dimensionalpocketsii.armour_module.ender_chest": "Ender Chest Module",
 	
 	"dimensionalpocketsii.item.info.elytraplate_settings": "Settings:",
 	"dimensionalpocketsii.item.info.elytraplate.setting.teleport": "Teleport to Block: ",
@@ -754,15 +814,23 @@
 	"dimensionalpocketsii.info.block.focus_shift_one": "Also acts like an Elevator when placed above each other.",
 	"dimensionalpocketsii.info.block.focus_shift_two": "Right click to access a UI for configuration.",
 	"dimensionalpocketsii.info.block.focus_shift_three": "To pick up: shift-right-click with a Dimensional Wrench.",
+	"dimensionalpocketsii.info.block.focus_shift_limit": "Can only be placed inside of a Pocket.",
 	
 	"dimensionalpocketsii.info.module.crafter": "A Crafting Table built into the wall of your Pocket.",
 	"dimensionalpocketsii.info.module.crafter_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
 	"dimensionalpocketsii.info.module.crafter_shift_two": "To remove: shift-right click on the Crafter with a Wrench.",
 	
+	"dimensionalpocketsii.info.module.smithing_table": "A Smithing Table built into the wall of your Pocket.",
+	"dimensionalpocketsii.info.module.smithing_table_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
+	"dimensionalpocketsii.info.module.smithing_table_shift_two": "To remove: shift-right click on the Smithing Table with a Wrench.",
+	
 	"dimensionalpocketsii.info.module.furnace": "A Furnace built into the wall of your Pocket.",
 	"dimensionalpocketsii.info.module.furnace_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
 	"dimensionalpocketsii.info.module.furnace_shift_two": "To remove: shift-right click on the Furnace with a Wrench.",
-	"dimensionalpocketsii.info.module.furnace_nbt_header": "Held Items: ",
+	
+	"dimensionalpocketsii.info.module.blast_furnace": "A Blast Furnace built into the wall of your Pocket.",
+	"dimensionalpocketsii.info.module.blast_furnace_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
+	"dimensionalpocketsii.info.module.blast_furnace_shift_two": "To remove: shift-right click on the Furnace with a Wrench.",
 	
 	"dimensionalpocketsii.info.module.energy_display": "Real-time display of the Energy level stored in your Pocket.",
 	"dimensionalpocketsii.info.module.energy_display_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
@@ -779,6 +847,14 @@
 	"dimensionalpocketsii.info.module.upgrade_station": "Use this to upgrade your Dimensional Equipment!",
 	"dimensionalpocketsii.info.module.upgrade_station_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
 	"dimensionalpocketsii.info.module.upgrade_station_shift_two": "To remove: shift-right click on the Upgrade Station with a Wrench.",
+	
+	"dimensionalpocketsii.info.module.creative_energy": "Provides your Pocket with unlimited Forge Energy (FE)!",
+	"dimensionalpocketsii.info.module.creative_energy_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
+	"dimensionalpocketsii.info.module.creative_energy_shift_two": "To remove: shift-right click on the Creative Energy Module with a Wrench.",
+	
+	"dimensionalpocketsii.info.module.creative_fluid": "Provides your Pocket with unlimited Fluid! Provided you have a Fluid stored.",
+	"dimensionalpocketsii.info.module.creative_fluid_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
+	"dimensionalpocketsii.info.module.creative_fluid_shift_two": "To remove: shift-right click on the Creative Fluid Module with a Wrench.",
 	
 	"dimensionalpocketsii.info.module.contained": "Items and/or Settings have been saved to this Module.",
 	
@@ -809,8 +885,18 @@
 	"dimensionalpocketsii.tome_foot_two": "Introduction",
 	
 	"dimensionalpocketsii.tome_three_heading": "[2]: Pockets",
+	"dimensionalpocketsii.tome_three_heading_one": "[2a]: Sidedness",
+	"dimensionalpocketsii.tome_three_heading_two": "[2b]: Colouring",
 	"dimensionalpocketsii.tome_three_body_one": "This is a Pocket Block.<br>It is the heart of the Mod.<br>To use it: Shift-right click.<br>Thats it! It really is that simple.<br>This will send you to the<br>Pocket Dimension, into your<br>own personal Pocket!<br>A Pocket is a private space<br>away from everything else.",
-	"dimensionalpocketsii.tome_three_body_one_": "Pockets are highly<br>configurable.<br>They can store items, power<br> and fluids.",
+	"dimensionalpocketsii.tome_three_body_two": "Pockets are highly<br>configurable. They can<br> store items, power and fluids",
+	"dimensionalpocketsii.tome_three_body_three": "For instance, you can<br>configure each side for:",
+	"dimensionalpocketsii.tome_three_body_four": "Simply right click the face<br>you wish to change with<br>a wrench:",
+	
+	"dimensionalpocketsii.tome_three_sub_one": "Input",
+	"dimensionalpocketsii.tome_three_sub_two": "Output",
+	"dimensionalpocketsii.tome_three_sub_three": "Disabled",
+	
+	
 	"dimensionalpocketsii.tome_foot_three": "Pockets: ",
 	
 	"dimensionalpocketsii.tome_four_heading": "[3]: Modules",

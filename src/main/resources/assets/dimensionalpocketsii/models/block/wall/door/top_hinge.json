@@ -1,0 +1,7 @@
+{
+	"parent": "cosmoslibrary:block/tinted_door_top_rh",
+	"textures": {
+		"top": "dimensionalpocketsii:blocks/wall/wall",
+		"bottom": "dimensionalpocketsii:blocks/wall/wall"
+	}
+}

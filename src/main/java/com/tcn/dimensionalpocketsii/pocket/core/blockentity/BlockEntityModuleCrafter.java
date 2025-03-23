@@ -2,6 +2,7 @@ package com.tcn.dimensionalpocketsii.pocket.core.blockentity;
 
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
+import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
@@ -9,6 +10,7 @@ import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
 import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.dimensionalpocketsii.core.management.ModBusManager;
+import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleCrafter;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.management.PocketRegistryManager;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
@@ -17,11 +19,17 @@ import com.tcn.dimensionalpocketsii.pocket.core.util.PocketUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,15 +37,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
-public class BlockEntityModuleCrafter extends BlockEntity implements IBlockInteract, IBlockEntityUIMode {
-
+public class BlockEntityModuleCrafter extends BlockEntity implements IBlockInteract, IBlockEntityUIMode, MenuProvider, Nameable {
+	
 	private Pocket pocket;
 
 	private EnumUIMode uiMode = EnumUIMode.DARK;
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
+	private EnumUILock uiLock = EnumUILock.PRIVATE;
 
 	public BlockEntityModuleCrafter(BlockPos posIn, BlockState stateIn) {
-		super(ModBusManager.CRAFTER_TILE_TYPE, posIn, stateIn);
+		super(ModBusManager.BLOCK_ENTITY_TYPE_CRAFTER, posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -69,6 +78,7 @@ public class BlockEntityModuleCrafter extends BlockEntity implements IBlockInter
 
 		compound.putInt("ui_mode", this.uiMode.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
+		compound.putInt("ui_lock", this.uiLock.getIndex());
 	}
 	
 	@Override
@@ -81,6 +91,7 @@ public class BlockEntityModuleCrafter extends BlockEntity implements IBlockInter
 
 		this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 		this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
+		this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 	}
 	
 	/**
@@ -143,9 +154,16 @@ public class BlockEntityModuleCrafter extends BlockEntity implements IBlockInter
 				return InteractionResult.SUCCESS;
 			} else {
 				if (playerIn instanceof ServerPlayer) {
-					NetworkHooks.openGui((ServerPlayer)playerIn, state.getMenuProvider(worldIn, pos), (packetBuffer)->{ packetBuffer.writeBlockPos(pos); });
-					return InteractionResult.SUCCESS;
+					if (this.canPlayerAccess(playerIn)) {
+						NetworkHooks.openGui((ServerPlayer)playerIn, this, (packetBuffer) -> { packetBuffer.writeBlockPos(pos); });
+						return InteractionResult.SUCCESS;
+					} else {
+						CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
+						return InteractionResult.FAIL;
+					}
 				}
+				
+				return InteractionResult.SUCCESS;
 			}
 		} else {
 			if(!worldIn.isClientSide) {
@@ -157,9 +175,7 @@ public class BlockEntityModuleCrafter extends BlockEntity implements IBlockInter
 						if (pocketIn.checkIfOwner(playerIn)) {
 							worldIn.setBlockAndUpdate(pos, ModBusManager.BLOCK_WALL.defaultBlockState());
 							
-							if (!playerIn.isCreative()) {
-								CosmosUtil.addItem(worldIn, playerIn, ModBusManager.MODULE_CRAFTER, 1);
-							}
+							CosmosUtil.addItem(worldIn, playerIn, ModBusManager.MODULE_CRAFTER, 1);
 							
 							return InteractionResult.SUCCESS;
 						} else {
@@ -179,7 +195,22 @@ public class BlockEntityModuleCrafter extends BlockEntity implements IBlockInter
 			}
 		}
 		
-		return InteractionResult.SUCCESS;
+		return InteractionResult.FAIL;
+	}
+
+	@Override
+	public AbstractContainerMenu createMenu(int indexIn, Inventory playerInventoryIn, Player playerInBlockState) {
+		return new ContainerModuleCrafter(indexIn, playerInventoryIn, ContainerLevelAccess.create(this.getLevel(), this.getBlockPos()), this.getBlockPos());
+	}
+
+	@Override
+	public Component getDisplayName() {
+		return ComponentHelper.title("dimensionalpocketsii.gui.crafter");
+	}
+
+	@Override
+	public Component getName() {
+		return ComponentHelper.title("dimensionalpocketsii.gui.crafter");
 	}
 
 	@Override
@@ -210,5 +241,44 @@ public class BlockEntityModuleCrafter extends BlockEntity implements IBlockInter
 	@Override
 	public void cycleUIHelp() {
 		this.uiHelp = EnumUIHelp.getNextStateFromState(this.uiHelp);
+	}
+
+	@Override
+	public EnumUILock getUILock() {
+		return this.uiLock;
+	}
+
+	@Override
+	public void setUILock(EnumUILock modeIn) {
+		this.uiLock = modeIn;
+	}
+
+	@Override
+	public void cycleUILock() {
+		this.uiLock = EnumUILock.getNextStateFromState(this.uiLock);
+	}
+
+	@Override
+	public void setOwner(Player playerIn) { }
+
+	@Override
+	public boolean canPlayerAccess(Player playerIn) {
+		if (this.getUILock().equals(EnumUILock.PUBLIC)) {
+			return true;
+		} else {
+			if (this.getPocket().checkIfOwner(playerIn)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean checkIfOwner(Player playerIn) {
+		if (this.getPocket().checkIfOwner(playerIn)) {
+			return true;
+		}
+		return false;
 	}
 }

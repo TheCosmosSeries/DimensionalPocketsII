@@ -32,7 +32,7 @@ public class ShifterCore {
 	public static void sendPlayerToBedWithMessage(Player playerIn, @Nullable EnumShiftDirection directionIn, String messageIn) {
 		if (playerIn instanceof ServerPlayer) {
 			ServerPlayer server_player = (ServerPlayer) playerIn;
-			CosmosChatUtil.sendServerPlayerMessage(server_player, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.target_unknown_custom").append(ComponentHelper.locComp(ComponentColour.ORANGE, true, messageIn)));
+			CosmosChatUtil.sendServerPlayerMessage(server_player, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.shifter_core.target_unknown_custom").append(ComponentHelper.style(ComponentColour.ORANGE, "bold", messageIn)));
 			
 			BlockPos pos = new BlockPos(0, 0, 0);
 			if (((ServerPlayer) playerIn).getRespawnPosition() != null) {

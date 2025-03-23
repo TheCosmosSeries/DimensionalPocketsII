@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IEI",
+		"GBG",
+		"ICI"
+	],
+	"key": {
+		"I": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"B" :{
+			"item": "dimensionalpocketsii:module_base"
+		},
+		"E" :{
+			"item": "minecraft:netherite_ingot"
+		},
+		"G" :{
+			"item": "dimensionalpocketsii:dimensional_pearl"
+		},
+		"C" :{
+			"item": "minecraft:ender_chest"
+		}
+	},
+	"result": {
+		"item": "dimensionalpocketsii:armour_module_ender_chest"
+	}
+}

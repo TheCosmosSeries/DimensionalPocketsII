@@ -12,11 +12,11 @@ public class MenuProviderElytraplateSettings implements MenuProvider {
 
 	@Override
 	public AbstractContainerMenu createMenu(int indexIn, Inventory playerInventoryIn, Player playerIn) {
-		return ContainerElytraplate.createContainerServerSide(indexIn, playerInventoryIn, playerInventoryIn.getArmor(2), false);
+		return ContainerElytraplateSettings.createContainerServerSide(indexIn, playerInventoryIn, playerInventoryIn.getArmor(2));
 	}
 
 	@Override
 	public Component getDisplayName() {
-		return ComponentHelper.locComp("dimensionalpocketsii.gui.elytraplate.settings.title");
+		return ComponentHelper.title("dimensionalpocketsii.gui.elytraplate.settings.title");
 	}
 }

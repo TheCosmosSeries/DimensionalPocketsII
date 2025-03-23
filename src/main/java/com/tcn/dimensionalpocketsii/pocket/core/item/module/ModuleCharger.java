@@ -51,7 +51,7 @@ public class ModuleCharger extends Item {
 		}
 
 		if (stackIn.hasTag()) {
-			tooltip.add(ComponentHelper.locComp(ComponentColour.GRAY, false, "dimensionalpocketsii.info.module.contained"));
+			tooltip.add(ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.info.module.contained"));
 		}
 	}
 	

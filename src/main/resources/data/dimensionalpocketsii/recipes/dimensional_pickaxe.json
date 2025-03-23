@@ -1,0 +1,39 @@
+{
+	"type": "dimensionalpocketsii:upgrading",
+	"focus": {
+		"item": "minecraft:netherite_pickaxe"
+	},
+	"topRow": {
+		"left": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"middle": {
+			"item": "dimensionalpocketsii:dimensional_gem"
+		},
+		"right": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		}
+	},
+	"middleRow": {
+		"left": {
+			"item": "minecraft:netherite_ingot"
+		},
+		"right": {
+			"item": "minecraft:netherite_ingot"
+		}
+	},
+	"bottomRow": {
+		"left": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		},
+		"middle": {
+			"item": "dimensionalpocketsii:dimensional_gem"
+		},
+		"right": {
+			"item": "dimensionalpocketsii:dimensional_ingot"
+		}
+	},
+	"result": {
+		"item": "dimensionalpocketsii:dimensional_pickaxe"
+	}
+}

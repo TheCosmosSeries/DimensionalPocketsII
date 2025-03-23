@@ -30,7 +30,7 @@ public class ContainerModuleArmourWorkbench extends CosmosContainerMenuBlockEnti
 	}
 
 	public ContainerModuleArmourWorkbench(int indexIn, Inventory playerInventoryIn, Container contentsIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModBusManager.ARMOUR_WORKBENCH_CONTAINER_TYPE, indexIn, playerInventoryIn, accessIn, posIn);
+		super(ModBusManager.CONTAINER_TYPE_ARMOUR_WORKBENCH, indexIn, playerInventoryIn, accessIn, posIn);
 		
 		//Armour Slot
 		this.addSlot(new SlotColourableArmourItem(contentsIn, 0, 116, 32, 1));
@@ -152,13 +152,13 @@ public class ContainerModuleArmourWorkbench extends CosmosContainerMenuBlockEnti
 						return ItemStack.EMPTY;
 					}
 				} else {
-					if (indexIn > this.slots.size() - 13 && indexIn < this.slots.size()) {
+					if (indexIn >= this.slots.size() - 13 && indexIn < this.slots.size()) {
 						if (!this.moveItemStackTo(itemstack1, 11, this.slots.size() - 13, false)) {
 							return ItemStack.EMPTY;
 						}
 					}
 					
-					if (indexIn > 8 && indexIn < this.slots.size() - 13) {
+					if (indexIn >= 8 && indexIn < this.slots.size() - 13) {
 						if (!this.moveItemStackTo(itemstack1, this.slots.size() - 13, this.slots.size(), false)) {
 							return ItemStack.EMPTY;
 						}

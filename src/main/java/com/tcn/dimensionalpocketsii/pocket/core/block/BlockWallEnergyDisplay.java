@@ -59,35 +59,34 @@ public class BlockWallEnergyDisplay extends BlockWallModule implements IBlankCre
 			return InteractionResult.FAIL;
 		}
 		
-		if(!worldIn.isClientSide) {
-			CosmosChunkPos chunkPos = CosmosChunkPos.scaleToChunkPos(pos);
-			Pocket pocketIn = PocketRegistryManager.getPocketFromChunkPosition(chunkPos);
-			
-			if (playerIn.isShiftKeyDown()) {
-				if(pocketIn.exists()) {
-					if (CosmosUtil.holdingWrench(playerIn)) {
-						if (pocketIn.checkIfOwner(playerIn)) {
+		CosmosChunkPos chunkPos = CosmosChunkPos.scaleToChunkPos(pos);
+		Pocket pocketIn = PocketRegistryManager.getPocketFromChunkPosition(chunkPos);
+		
+		if (playerIn.isShiftKeyDown()) {
+			if(pocketIn.exists()) {
+				if (CosmosUtil.holdingWrench(playerIn)) {
+					if (pocketIn.checkIfOwner(playerIn)) {
+						if(!worldIn.isClientSide) {
 							worldIn.setBlockAndUpdate(pos, ModBusManager.BLOCK_WALL.defaultBlockState());
 							
-							if (!playerIn.isCreative()) {
-								CosmosUtil.addItem(worldIn, playerIn, ModBusManager.MODULE_ENERGY_DISPLAY, 1);
-							}
-							
-							return InteractionResult.SUCCESS;
-						} else {
-							CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
-							return InteractionResult.FAIL;
+							CosmosUtil.addItem(worldIn, playerIn, ModBusManager.MODULE_ENERGY_DISPLAY, 1);
+							pocketIn.removeUpdateable(pos);
 						}
-					} 
-					
-					else if (CosmosUtil.handEmpty(playerIn)) {
-						pocketIn.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
+						
 						return InteractionResult.SUCCESS;
+					} else {
+						CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
+						return InteractionResult.FAIL;
 					}
+				} 
+				
+				else if (CosmosUtil.handEmpty(playerIn)) {
+					pocketIn.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
-		return InteractionResult.SUCCESS;
+		return InteractionResult.FAIL;
 	}
 	
 	@Override

@@ -38,7 +38,7 @@ public class BlockWallCharger extends BlockWallModule implements IBlankCreativeT
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModBusManager.CHARGER_TILE_TYPE);
+		return createTicker(levelIn, entityTypeIn, ModBusManager.BLOCK_ENTITY_TYPE_CHARGER);
 	}
 
 	@Nullable

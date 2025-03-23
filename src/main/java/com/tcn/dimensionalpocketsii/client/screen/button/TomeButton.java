@@ -26,7 +26,7 @@ public class TomeButton extends Button {
 	private int identifier;
 
 	public TomeButton(int x, int y, int size, int identifier, int colour, ResourceLocation location, Button.OnPress pressedAction) {
-		super(x, y, size, size, ComponentHelper.locComp(""), pressedAction);
+		super(x, y, size, size, ComponentHelper.empty(), pressedAction);
 		this.x = x;
 		this.y = y;
 		this.width = size;
@@ -38,7 +38,7 @@ public class TomeButton extends Button {
 	}
 	
 	public TomeButton(int x, int y, int colour, ResourceLocation location, Button.OnPress pressedAction) {
-		super(x, y, 15, 25, ComponentHelper.locComp(""), pressedAction);
+		super(x, y, 15, 25, ComponentHelper.empty(), pressedAction);
 		this.x = x;
 		this.y = y;
 		this.width = 15;

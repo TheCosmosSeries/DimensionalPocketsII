@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIMode;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
 import com.tcn.cosmoslibrary.common.enums.EnumGeneralEnableState;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
@@ -24,7 +24,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenFocus extends CosmosScreenUIMode<ContainerFocus> {
+public class ScreenFocus extends CosmosScreenUIModeBE<ContainerFocus> {
 	
 	private DimensionalButton jumpEnabledButton;
 	private DimensionalButton shiftEnabledButton;
@@ -75,8 +75,8 @@ public class ScreenFocus extends CosmosScreenUIMode<ContainerFocus> {
 				EnumGeneralEnableState state = blockEntity.getJump();
 				
 				Component[] comp = new Component[] { 
-					ComponentHelper.locComp(ComponentColour.WHITE, false, "dimensionalpocketsii.gui.focus.jump_info"), 
-					ComponentHelper.locComp(ComponentColour.GRAY, false, "dimensionalpocketsii.gui.focus.jump_value").append(state.getColouredComp())
+					ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.focus.jump_info"), 
+					ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.focus.jump_value").append(state.getColouredComp())
 				};
 					
 				this.renderComponentTooltip(poseStack, Arrays.asList(comp), mouseX, mouseY);
@@ -84,8 +84,8 @@ public class ScreenFocus extends CosmosScreenUIMode<ContainerFocus> {
 				EnumGeneralEnableState state = blockEntity.getShift();
 				
 				Component[] comp = new Component[] { 
-					ComponentHelper.locComp(ComponentColour.WHITE, false, "dimensionalpocketsii.gui.focus.shift_info"), 
-					ComponentHelper.locComp(ComponentColour.GRAY, false, "dimensionalpocketsii.gui.focus.shift_value").append(state.getColouredComp())
+					ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.focus.shift_info"), 
+					ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.gui.focus.shift_value").append(state.getColouredComp())
 				};
 					
 				this.renderComponentTooltip(poseStack, Arrays.asList(comp), mouseX, mouseY);
@@ -101,8 +101,8 @@ public class ScreenFocus extends CosmosScreenUIMode<ContainerFocus> {
 		if (entity instanceof BlockEntityFocus) {
 			BlockEntityFocus blockEntity = (BlockEntityFocus) entity;
 			
-			this.jumpEnabledButton = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + 93, this.getScreenCoords()[1] + 19, 20, true, true, blockEntity.getJumpEnabled() ? 26 : 27, ComponentHelper.locComp(""), (button) -> { this.pushButton(button); }));
-			this.shiftEnabledButton = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + 59, this.getScreenCoords()[1] + 19, 20, true, true, blockEntity.getShiftEnabled() ? 28 : 29, ComponentHelper.locComp(""), (button) -> { this.pushButton(button); }));
+			this.jumpEnabledButton = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + 93, this.getScreenCoords()[1] + 19, 20, true, true, blockEntity.getJumpEnabled() ? 26 : 27, ComponentHelper.empty(), (button) -> { this.pushButton(button); }));
+			this.shiftEnabledButton = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + 59, this.getScreenCoords()[1] + 19, 20, true, true, blockEntity.getShiftEnabled() ? 28 : 29, ComponentHelper.empty(), (button) -> { this.pushButton(button); }));
 		}
 	}
 	

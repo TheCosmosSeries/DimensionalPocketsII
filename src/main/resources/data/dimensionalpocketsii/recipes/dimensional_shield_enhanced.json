@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:smithing",
+	"base": {
+		"item": "dimensionalpocketsii:dimensional_shield"
+	},
+	"addition": {
+		"item": "dimensionalpocketsii:dimensional_ingot_enhanced"
+	},
+	"result": {
+		"item": "dimensionalpocketsii:dimensional_shield_enhanced"
+	}
+}

@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.core.management.DimensionManager;
 import com.tcn.dimensionalpocketsii.pocket.core.blockentity.BlockEntityModuleConnector;
+import com.tcn.dimensionalpocketsii.pocket.network.packet.PacketPocketNet;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
-public class PacketSideState  {
+public class PacketSideState implements PacketPocketNet {
 	
 	private BlockPos pos;
 	

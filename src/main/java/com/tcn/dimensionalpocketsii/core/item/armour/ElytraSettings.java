@@ -53,18 +53,18 @@ public enum ElytraSettings {
 	}
 
 	public BaseComponent getColouredComp() {
-		return ComponentHelper.locComp(this.displayColour, false, this.localizedName);
+		return ComponentHelper.style(this.displayColour, this.localizedName);
 	}
 
 	public BaseComponent getColouredDisplayComp() {
-		return ComponentHelper.locComp(ComponentColour.GRAY, false, this.displayName);
+		return ComponentHelper.style(ComponentColour.GRAY, this.displayName);
 	}
 	
 	public BaseComponent getValueComp(boolean value) {
 		if (value) {
-			return ComponentHelper.locComp(ComponentColour.GREEN, true, this.trueValue);
+			return ComponentHelper.style(ComponentColour.GREEN, "bold", this.trueValue);
 		} else {
-			return ComponentHelper.locComp(ComponentColour.RED, true, this.falseValue);
+			return ComponentHelper.style(ComponentColour.RED, "bold", this.falseValue);
 		}
 	}
 

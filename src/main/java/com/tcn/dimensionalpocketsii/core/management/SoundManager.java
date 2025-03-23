@@ -17,10 +17,12 @@ public class SoundManager {
 
 		public static final SoundEvent PORTAL = new SoundEvent(new ResourceLocation(DimensionalPockets.MOD_ID + ":" + "portal_in")).setRegistryName("portal_in");
 		public static final SoundEvent WOOSH = new SoundEvent(new ResourceLocation(DimensionalPockets.MOD_ID + ":" + "woosh")).setRegistryName("woosh");
+
+		public static final SoundEvent TINK = new SoundEvent(new ResourceLocation(DimensionalPockets.MOD_ID + ":" + "tink")).setRegistryName("tink");
 		
 		@SubscribeEvent
 		public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
-			event.getRegistry().registerAll(PORTAL, WOOSH);
+			event.getRegistry().registerAll(PORTAL, WOOSH, TINK);
 			
 			DimensionalPockets.CONSOLE.startup("Sound Registration complete.");
 		}

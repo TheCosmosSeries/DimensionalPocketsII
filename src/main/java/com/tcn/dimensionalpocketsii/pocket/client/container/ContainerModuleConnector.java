@@ -25,17 +25,17 @@ public class ContainerModuleConnector extends CosmosContainerMenuBlockEntity {
 	public static ContainerModuleConnector createContainerClientSide(int windowID, Inventory playerInventory, FriendlyByteBuf extraData) {
 		BlockPos pos = extraData.readBlockPos();
 		
-		return new ContainerModuleConnector(windowID, playerInventory, new SimpleContainer(DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE), new SimpleContainer(56), pos);
+		return new ContainerModuleConnector(windowID, playerInventory, new SimpleContainer(DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH), new SimpleContainer(DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH + 2), pos);
 	}
 	
-	protected ContainerModuleConnector(int id, Inventory playerInventoryIn, Container pocket, Container contentsIn, BlockPos posIn) {
-		super(ModBusManager.CONNECTOR_CONTAINER_TYPE, id, playerInventoryIn, null, posIn);
+	protected ContainerModuleConnector(int id, Inventory playerInventoryIn, Container pocketIn, Container contentsIn, BlockPos posIn) {
+		super(ModBusManager.CONTAINER_TYPE_CONNECTOR, id, playerInventoryIn, null, posIn);
 		
 		/** - Pocket Inventory - */
 		for (int y = 0; y < 10; y++) {
 			for (int x = 0; x < 4; x++) {
 				//0 - 39
-				this.addSlot(new Slot(pocket, x + y * 4, 266 + x * 18, 17 + y * 18 ));
+				this.addSlot(new Slot(pocketIn, x + y * 4, 266 + x * 18, 17 + y * 18 ));
 			}
 		}
 		
@@ -43,21 +43,21 @@ public class ContainerModuleConnector extends CosmosContainerMenuBlockEntity {
 		for (int y = 0; y < 2; y++) {
 			for (int x = 0; x < 4; x++) {
 				//40 - 47
-				this.addSlot(new SlotRestrictedAccess(pocket, 40 + x + y * 4, 266 + x * 18, 210 + y * 18, true, true));
+				this.addSlot(new SlotRestrictedAccess(pocketIn, 40 + x + y * 4, 266 + x * 18, 210 + y * 18, true, true));
 			}
 		}
 		
 		/** - Surrounding Stacks - */
-		this.addSlot(new SlotRestrictedAccess(contentsIn, 48, 26, 46, 1, false, false));
-		this.addSlot(new SlotRestrictedAccess(contentsIn, 49, 26, 21, 1, false, false));
-		this.addSlot(new SlotRestrictedAccess(contentsIn, 50, 26, 71, 1, false, false));
-		this.addSlot(new SlotRestrictedAccess(contentsIn, 51, 26, 98, 1, false, false));
-		this.addSlot(new SlotRestrictedAccess(contentsIn, 52, 26, 123, 1, false, false));
-		this.addSlot(new SlotRestrictedAccess(contentsIn, 53, 26, 148, 1, false, false));
+		this.addSlot(new SlotRestrictedAccess(pocketIn, 48, 37, 42, 1, false, false));
+		this.addSlot(new SlotRestrictedAccess(pocketIn, 49, 16, 42, 1, false, false));
+		this.addSlot(new SlotRestrictedAccess(pocketIn, 50, 58, 42, 1, false, false));
+		this.addSlot(new SlotRestrictedAccess(pocketIn, 51, 16, 85, 1, false, false));
+		this.addSlot(new SlotRestrictedAccess(pocketIn, 52, 37, 85, 1, false, false));
+		this.addSlot(new SlotRestrictedAccess(pocketIn, 53, 58, 85, 1, false, false));
 		
 		/** - Bucket Slots -*/
-		this.addSlot(new SlotBucket(contentsIn, 54, 58, 178));
-		this.addSlot(new SlotRestrictedAccess(contentsIn, 55, 58, 201, 1, false, true));
+		this.addSlot(new SlotBucket(contentsIn, 54, 60, 184));
+		this.addSlot(new SlotRestrictedAccess(contentsIn, 55, 60, 205, 1, false, true));
 		
 		/** - Player Inventory - */
 		for (int x = 0; x < 3; ++x) {
@@ -93,7 +93,7 @@ public class ContainerModuleConnector extends CosmosContainerMenuBlockEntity {
 							return ItemStack.EMPTY;
 						}
 					} else if (index == 54) {
-						if (!this.moveItemStackTo(itemstack1, 56, this.slots.size() - 9, false)) {
+						if (!this.moveItemStackTo(itemstack1, DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH - 2, this.slots.size() - 9, false)) {
 							return ItemStack.EMPTY;
 						}
 					}
@@ -106,20 +106,21 @@ public class ContainerModuleConnector extends CosmosContainerMenuBlockEntity {
 				}
 			} 
 
-			if (index >= 0 && index < 48) {
-				if (!this.moveItemStackTo(itemstack1, 48, this.slots.size(), false)) {
+			if (index >= 0 && index < DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
+				if (!this.moveItemStackTo(itemstack1, DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, this.slots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (index > 48 && index < this.slots.size() - 9) {
-				if (!this.moveItemStackTo(itemstack1, 0, 48, false)) {
+			} else if (index >= DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH && index < this.slots.size() - 9) {
+				if (!this.moveItemStackTo(itemstack1, 0, DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (index > this.slots.size() - 9 && index < this.slots.size()) {
-				if (!this.moveItemStackTo(itemstack1, 48, this.slots.size() - 9, false)) {
-					return ItemStack.EMPTY;
+			} else if (index >= this.slots.size() - 9 && index < this.slots.size()) {
+				if (!this.moveItemStackTo(itemstack1, DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, this.slots.size() - 9, false)) {
+					if (!this.moveItemStackTo(itemstack1, 0, DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, false)) {
+						return ItemStack.EMPTY;
+					}
 				}
 			}
-			
 			
 			if (itemstack1.isEmpty()) {
 				slot.set(ItemStack.EMPTY);
@@ -127,6 +128,7 @@ public class ContainerModuleConnector extends CosmosContainerMenuBlockEntity {
 				slot.setChanged();
 			}
 		}
-		return itemstack;
+		
+		return itemstack != null ? itemstack : ItemStack.EMPTY;
 	}
 }

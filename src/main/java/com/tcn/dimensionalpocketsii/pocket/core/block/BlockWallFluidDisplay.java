@@ -4,17 +4,10 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.interfaces.IBlankCreativeTab;
-import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
-import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
-import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.dimensionalpocketsii.core.management.ConfigurationManager;
 import com.tcn.dimensionalpocketsii.core.management.ModBusManager;
-import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.blockentity.BlockEntityModuleFluidDisplay;
-import com.tcn.dimensionalpocketsii.pocket.core.management.PocketRegistryManager;
-import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +15,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -50,7 +42,7 @@ public class BlockWallFluidDisplay extends BlockWallModule implements IBlankCrea
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModBusManager.FLUID_DISPLAY_TILE_TYPE);
+		return createTicker(levelIn, entityTypeIn, ModBusManager.BLOCK_ENTITY_TYPE_FLUID_DISPLAY);
 	}
 
 	@Nullable
@@ -67,39 +59,12 @@ public class BlockWallFluidDisplay extends BlockWallModule implements IBlankCrea
 	
 	@Override
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult hit) {
-		if (CosmosUtil.getStackItem(playerIn) instanceof BlockItem) {
-			return InteractionResult.FAIL;
-		}
+		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 		
-		if(!worldIn.isClientSide) {
-			CosmosChunkPos chunkPos = CosmosChunkPos.scaleToChunkPos(pos);
-			Pocket pocketIn = PocketRegistryManager.getPocketFromChunkPosition(chunkPos);
-			
-			if (playerIn.isShiftKeyDown()) {
-				if(pocketIn.exists()) {
-					if (CosmosUtil.holdingWrench(playerIn)) {
-						if (pocketIn.checkIfOwner(playerIn)) {
-							worldIn.setBlockAndUpdate(pos, ModBusManager.BLOCK_WALL.defaultBlockState());
-							
-							if (!playerIn.isCreative()) {
-								CosmosUtil.addItem(worldIn, playerIn, ModBusManager.MODULE_FLUID_DISPLAY, 1);
-							}
-							
-							return InteractionResult.SUCCESS;
-						} else {
-							CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
-							return InteractionResult.FAIL;
-						}
-					} 
-					
-					else if (CosmosUtil.handEmpty(playerIn)) {
-						pocketIn.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
-						return InteractionResult.SUCCESS;
-					}
-				}
-			}
+		if (tileEntity instanceof BlockEntityModuleFluidDisplay) {
+			return ((BlockEntityModuleFluidDisplay) tileEntity).use(state, worldIn, pos, playerIn, handIn, hit);
 		}
-		return InteractionResult.SUCCESS;
+		return InteractionResult.PASS;
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package com.tcn.dimensionalpocketsii.pocket.core.blockentity;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumEnergyState;
 import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
+import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
 import com.tcn.cosmoslibrary.common.interfaces.blockentity.IBlockEntityUIMode;
@@ -38,6 +39,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -56,9 +58,10 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 
 	private EnumUIMode uiMode = EnumUIMode.DARK;
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
+	private EnumUILock uiLock = EnumUILock.PRIVATE;
 
 	public BlockEntityModuleCharger(BlockPos posIn, BlockState stateIn) {
-		super(ModBusManager.CHARGER_TILE_TYPE, posIn, stateIn);
+		super(ModBusManager.BLOCK_ENTITY_TYPE_CHARGER, posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -106,6 +109,7 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 		compound.putInt("energy_state", this.energy_state.getIndex());
 		
 		compound.putInt("ui_mode", this.uiMode.getIndex());
+		compound.putInt("ui_lock", this.uiLock.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
 	}
 
@@ -118,6 +122,7 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 		
 		compound.putInt("ui_mode", this.uiMode.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
+		compound.putInt("ui_lock", this.uiLock.getIndex());
 	}
 	
 	@Override
@@ -135,6 +140,7 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 		
 		this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 		this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
+		this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 	}
 
 	public void loadFromItemStack(ItemStack stackIn) {
@@ -148,6 +154,7 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 			
 			this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 			this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
+			this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 		}
 	}
 	
@@ -219,6 +226,10 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	@Override
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult hit) {
 		this.setChanged();
+
+		if (CosmosUtil.getStackItem(playerIn) instanceof BlockItem) {
+			return InteractionResult.FAIL;
+		}
 		
 		if (PocketUtil.isDimensionEqual(worldIn, DimensionManager.POCKET_WORLD)) {
 			Pocket pocket = this.getPocket();
@@ -229,9 +240,15 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 						return InteractionResult.SUCCESS;
 					} else {
 						if (playerIn instanceof ServerPlayer) {
-							NetworkHooks.openGui((ServerPlayer)playerIn, this, (packetBuffer)->{ packetBuffer.writeBlockPos(pos); });
-							return InteractionResult.SUCCESS;
+							if (this.canPlayerAccess(playerIn)) {
+								NetworkHooks.openGui((ServerPlayer)playerIn, this, (packetBuffer)->{ packetBuffer.writeBlockPos(pos); });
+							} else {
+								CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
+								return InteractionResult.FAIL;
+							}
 						}
+						
+						return InteractionResult.SUCCESS;
 					}
 				} else {
 					if(!worldIn.isClientSide) {
@@ -248,6 +265,8 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 									worldIn.removeBlockEntity(pos);
 									
 									CosmosUtil.addStack(worldIn, playerIn, stack);
+									
+									pocketIn.removeUpdateable(pos);
 									
 									return InteractionResult.SUCCESS;
 								} else {
@@ -269,7 +288,7 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 			} 
 		}
 		
-		return InteractionResult.SUCCESS;
+		return InteractionResult.FAIL;
 	}
 
 	public void chargeItem(int indexIn) {
@@ -321,7 +340,7 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 
 	@Override
 	public int getContainerSize() {
-		return 64;
+		return 6;
 	}
 
 	@Override
@@ -344,8 +363,8 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	@Override
 	public void setItem(int index, ItemStack stack) {
 		this.inventoryItems.set(index, stack);
-		if (stack.getCount() > this.getContainerSize()) {
-			stack.setCount(this.getContainerSize());
+		if (stack.getCount() > this.getMaxStackSize()) {
+			stack.setCount(this.getMaxStackSize());
 		}
 		
 		this.setChanged();
@@ -373,12 +392,12 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 
 	@Override
 	public Component getDisplayName() {
-		return ComponentHelper.locComp("dimensionalpocketsii.gui.charger");
+		return ComponentHelper.title("dimensionalpocketsii.gui.charger");
 	}
 
 	@Override
 	public Component getName() {
-		return ComponentHelper.locComp("dimensionalpocketsii.gui.charger");
+		return ComponentHelper.title("dimensionalpocketsii.gui.charger");
 	}
 	
 	@Override
@@ -440,5 +459,44 @@ public class BlockEntityModuleCharger extends BlockEntity implements IBlockInter
 	@Override
 	public void cycleUIHelp() {
 		this.uiHelp = EnumUIHelp.getNextStateFromState(this.uiHelp);
+	}
+
+	@Override
+	public EnumUILock getUILock() {
+		return this.uiLock;
+	}
+
+	@Override
+	public void setUILock(EnumUILock modeIn) {
+		this.uiLock = modeIn;
+	}
+
+	@Override
+	public void cycleUILock() {
+		this.uiLock = EnumUILock.getNextStateFromState(this.uiLock);
+	}
+
+	@Override
+	public void setOwner(Player playerIn) { }
+
+	@Override
+	public boolean canPlayerAccess(Player playerIn) {
+		if (this.getUILock().equals(EnumUILock.PUBLIC)) {
+			return true;
+		} else {
+			if (this.getPocket().checkIfOwner(playerIn)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean checkIfOwner(Player playerIn) {
+		if (this.getPocket().checkIfOwner(playerIn)) {
+			return true;
+		}
+		return false;
 	}
 }

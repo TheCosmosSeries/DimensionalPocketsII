@@ -63,6 +63,7 @@ public class DimensionalTridentEnhanced extends TridentItem implements Vanishabl
 	private boolean doesExtract;
 	private boolean doesCharge;
 	private boolean doesDisplayEnergyInTooltip;
+	private ComponentColour barColour;
 
 	public DimensionalTridentEnhanced(Item.Properties properties, CosmosEnergyItem.Properties energyProperties) {
 		super(properties);
@@ -78,8 +79,18 @@ public class DimensionalTridentEnhanced extends TridentItem implements Vanishabl
 		this.doesExtract = energyProperties.doesExtract;
 		this.doesCharge = energyProperties.doesCharge;
 		this.doesDisplayEnergyInTooltip = energyProperties.doesDisplayEnergyInTooltip;
+		this.barColour = energyProperties.barColour;
 	}
 
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slotIn, ItemStack stackIn) {
+		if (!this.hasEnergy(stackIn)) {
+			return ImmutableMultimap.of();
+		} else {
+			return this.getDefaultAttributeModifiers(slotIn);
+		}
+	}
+	
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		if (!ComponentHelper.isShiftKeyDown(Minecraft.getInstance())) {
@@ -100,7 +111,7 @@ public class DimensionalTridentEnhanced extends TridentItem implements Vanishabl
 		
 		if (stack.hasTag()) {
 			CompoundTag stackTag = stack.getTag();
-			tooltip.add(ComponentHelper.locComp(ComponentColour.GRAY, false, "cosmoslibrary.tooltip.energy_item.stored").append(ComponentHelper.locComp(Value.LIGHT_GRAY + "[ " + Value.RED + CosmosUtil.formatIntegerMillion(stackTag.getInt("energy")) + Value.LIGHT_GRAY + " / " + Value.RED + CosmosUtil.formatIntegerMillion(this.getMaxEnergyStored(stack)) + Value.LIGHT_GRAY + " ]")));
+			tooltip.add(ComponentHelper.style(ComponentColour.GRAY, "cosmoslibrary.tooltip.energy_item.stored").append(ComponentHelper.comp(Value.LIGHT_GRAY + "[ " + Value.RED + CosmosUtil.formatIntegerMillion(stackTag.getInt("energy")) + Value.LIGHT_GRAY + " / " + Value.RED + CosmosUtil.formatIntegerMillion(this.getMaxEnergyStored(stack)) + Value.LIGHT_GRAY + " ]")));
 		}
 		
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
@@ -367,7 +378,7 @@ public class DimensionalTridentEnhanced extends TridentItem implements Vanishabl
 	
 	@Override
 	public int getBarColor(ItemStack stackIn) {
-		return DimReference.CONSTANT.ENERGYBARCOLOUR.dec();
+		return this.barColour.dec();
 	}
 	
 	@Override

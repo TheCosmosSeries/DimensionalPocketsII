@@ -16,12 +16,12 @@
     "textures": {
         "particle": "dimensionalpocketsii:blocks/pocket/frame/unlocked",
         "outside": "dimensionalpocketsii:blocks/pocket/frame/unlocked",
-        "inside": "dimensionalpocketsii:blocks/pocket/frame/unlocked_inside"
+        "inside": "dimensionalpocketsii:blocks/pocket/frame/normal_inside"
     },
     "elements": [
         {
             "from": [0, 0, 0],
-            "to": [16, 16, 0.95],
+            "to": [16, 16, 1.95],
             "faces": {
                 "north": {
                     "uv": [0,0,16,16],
@@ -29,7 +29,8 @@
                 },
                 "south": {
                     "uv": [0,0,16,16],
-                    "texture": "#inside"
+                    "texture": "#inside",
+                    "tintindex": 0
                 }
             }
         }

@@ -31,7 +31,8 @@ public class ScreenModuleCrafter extends CosmosScreenUIModeRecipeBook<CraftingCo
 		this.setDark(RESOURCE.CRAFTER[1]);
 
 		this.setUIModeButtonIndex(167, 5);
-		this.setUIHelpButtonIndex(167, 19);
+		this.setUIHelpButtonIndex(167, 33);
+		this.setUILockButtonIndex(167, 19);
 		this.setUIHelpElementDeadzone(23, 13, 160, 86);
 		
 		this.setTitleLabelDims(30, 4);
@@ -80,14 +81,14 @@ public class ScreenModuleCrafter extends CosmosScreenUIModeRecipeBook<CraftingCo
 	protected void addUIHelpElements() {
 		super.addUIHelpElements();
 		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 32, 15, 56, 56, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.crafter.crafting_slots"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.crafter.crafting_slots_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.crafter.crafting_slots_two")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 32, 15, 56, 56, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.crafter.crafting_slots"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.crafter.crafting_slots_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.crafter.crafting_slots_two")
 		);
 
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 122, 29, 28, 28, ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.gui.help.crafter.result_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.crafter.result_slot_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.crafter.result_slot_two")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 122, 29, 28, 28, ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.gui.help.crafter.result_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.crafter.result_slot_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.crafter.result_slot_two")
 		);
 	}
 	

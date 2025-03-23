@@ -30,7 +30,7 @@ public final class DimensionalPockets {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onFMLClientSetup);
 		MinecraftForge.EVENT_BUS.register(this);
 		
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigurationManager.spec, "dimensionalpockets-common-rev-1.toml");
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigurationManager.spec, "dimensionalpockets-common-rev-5.1.toml");
 	}
 
 	public void onFMLCommonSetup(final FMLCommonSetupEvent event) {
@@ -40,12 +40,8 @@ public final class DimensionalPockets {
 		NetworkManager.register();
 		PocketNetworkManager.register();
 		
-		if (ConfigurationManager.getInstance().getKeepChunksLoaded()) {
-			//ForgeChunkManager.setForcedChunkLoadingCallback(MOD_ID, callback);
-			
-			//ForgeChunkManager.setForcedChunkLoadingCallback(this, new ChunkLoaderManagerRoom());
-			//ForgeChunkManager.setForcedChunkLoadingCallback(this, new ChunkLoaderManagerBlock());
-		}
+		CONSOLE.updateDebugEnabled(ConfigurationManager.getInstance().getDebugMessage());
+		CONSOLE.updateInfoEnabled(ConfigurationManager.getInstance().getInfoMessage());
 		
 		CONSOLE.startup("DimensionalPocketsII Common Setup complete.");
 	}

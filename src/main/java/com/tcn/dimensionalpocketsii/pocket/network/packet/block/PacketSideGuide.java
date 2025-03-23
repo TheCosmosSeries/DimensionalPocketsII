@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.pocket.core.blockentity.BlockEntityPocket;
+import com.tcn.dimensionalpocketsii.pocket.network.packet.PacketPocketNet;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
-public class PacketSideGuide  {
+public class PacketSideGuide implements PacketPocketNet {
 	
 	private BlockPos pos;
 	private ResourceKey<Level> dimension;

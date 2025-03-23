@@ -17,8 +17,6 @@
         "outside": "dimensionalpocketsii:blocks/wall/module/outside",
         "inside": "dimensionalpocketsii:blocks/wall/module/inside",
         "overlay": "minecraft:block/smithing_table_front",
-        "overlay_top": "minecraft:block/smithing_table_top",
-        "overlay_bottom": "minecraft:block/smithing_table_bottom",
         "wall": "dimensionalpocketsii:blocks/wall/wall"
     },
     "elements": [
@@ -85,7 +83,7 @@
                 },
                 "down": {
                     "uv": [0, 0, 16, 16],
-                    "texture": "#outside",
+                    "texture": "#wall",
                     "tintindex": 0
                 }
             }
@@ -117,7 +115,7 @@
                 },
                 "west": {
                     "uv": [0, 0, 16, 16],
-                    "texture": "#wall",
+                    "texture": "#outside",
                     "tintindex": 0
                 }
             }

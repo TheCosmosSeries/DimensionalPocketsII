@@ -32,7 +32,8 @@ public class ScreenModuleFurnace extends CosmosScreenUIModeRecipeBook<Container,
 		this.setDark(RESOURCE.FURNACE[1]);
 
 		this.setUIModeButtonIndex(167, 5);
-		this.setUIHelpButtonIndex(167, 19);
+		this.setUIHelpButtonIndex(167, 33);
+		this.setUILockButtonIndex(167, 19);
 		this.setUIHelpElementDeadzone(48, 13, 135, 72);
 		
 		this.setTitleLabelDims(this.imageWidth / 2 - 40, 4);
@@ -87,31 +88,31 @@ public class ScreenModuleFurnace extends CosmosScreenUIModeRecipeBook<Container,
 	protected void addUIHelpElements() {
 		super.addUIHelpElements();
 		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 50, 15, 20, 20, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.furnace.input_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.input_slot_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.input_slot_two")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 50, 15, 20, 20, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.furnace.input_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.input_slot_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.input_slot_two")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 50, 51, 20, 20, ComponentHelper.locComp(ComponentColour.ORANGE, false, "dimensionalpocketsii.gui.help.furnace.fuel_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.fuel_slot_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.fuel_slot_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.fuel_slot_three")
-		);
-		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 50, 36, 20, 14, ComponentHelper.locComp(ComponentColour.YELLOW, false, "dimensionalpocketsii.gui.help.furnace.burn_indicator"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.burn_indicator_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.burn_indicator_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.burn_indicator_three")
-		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 73, 33, 28, 19, ComponentHelper.locComp(ComponentColour.CYAN, false, "dimensionalpocketsii.gui.help.furnace.progress_indicator"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.progress_indicator_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.progress_indicator_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.progress_indicator_three")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 50, 51, 20, 20, ComponentHelper.style(ComponentColour.ORANGE, "dimensionalpocketsii.gui.help.furnace.fuel_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.fuel_slot_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.fuel_slot_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.fuel_slot_three")
 		);
 		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 106, 29, 28, 28, ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.gui.help.furnace.output_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.output_slot_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.output_slot_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.furnace.output_slot_three")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 50, 36, 20, 14, ComponentHelper.style(ComponentColour.YELLOW, "dimensionalpocketsii.gui.help.furnace.burn_indicator"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.burn_indicator_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.burn_indicator_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.burn_indicator_three")
+		);
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 73, 33, 28, 19, ComponentHelper.style(ComponentColour.CYAN, "dimensionalpocketsii.gui.help.furnace.progress_indicator"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.progress_indicator_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.progress_indicator_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.progress_indicator_three")
+		);
+		
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 106, 29, 28, 28, ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.gui.help.furnace.output_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.output_slot_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.output_slot_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.furnace.output_slot_three")
 		);
 	}
 	

@@ -75,19 +75,20 @@ public class PocketFileSystemManager {
 				}
 				
 				final Object save = ObfuscationReflectionHelper.getPrivateValue(MinecraftServer.class, server, "f_129744_");
-				
-				if (save instanceof LevelStorageSource.LevelStorageAccess) {
-					String save_name = ((LevelStorageAccess) save).getLevelId();
-					
-					file_path.append(save_name);
-					backup_path.append(save_name);
-				} else {
-					DimensionalPockets.CONSOLE.fatal("[File System Error] <createfile> Unable to get LevelId.");
+				try {
+					if (save instanceof LevelStorageSource.LevelStorageAccess) {
+						String save_name = ((LevelStorageAccess) save).getLevelId();
+						
+						file_path.append(save_name);
+						backup_path.append(save_name);
+					}
+				} catch (Exception e) {
+					DimensionalPockets.CONSOLE.fatal("[File System Error] <getfile> Unable to get LevelId. See stacktrace for more info:", e);
 				}
 				
 				file_path.append("/dimpockets/" + fileName + ".json");
 				backup_path.append("/dimpockets/" + fileName + "_BACKUP.json");
-		
+				
 				File save_file = server.getFile(file_path.toString());
 				File backup_file = server.getFile(backup_path.toString());
 				
@@ -108,7 +109,7 @@ public class PocketFileSystemManager {
 				return save_file;
 			}
 		} catch (Exception e) {
-			DimensionalPockets.CONSOLE.fatal("[File System Error] <createfile> Unable to create Registry File. See stacktract for more info:", e);
+			DimensionalPockets.CONSOLE.fatal("[File System Error] <getfile> Unable to create Registry File. See stacktrace for more info:", e);
 		}
 		return new File(".");
 	}
@@ -116,10 +117,10 @@ public class PocketFileSystemManager {
 	public static void saveBackLinkMap(Map<CosmosChunkPos, Pocket> backLinkMap) {
 		try {
 			File registryFile = getFile(currentBackLinkFile);
-
+			
 			Collection<Pocket> values = backLinkMap.values();
 			Pocket[] tempArray = values.toArray(new Pocket[values.size()]);
-
+			
 			try (FileWriter writer = new FileWriter(registryFile)) {
 				GSON.toJson(tempArray, writer);
 				writer.flush();
@@ -129,19 +130,20 @@ public class PocketFileSystemManager {
 		}
 	}
 
+	//@SuppressWarnings("unchecked")
 	public static Map<CosmosChunkPos, Pocket> loadBackLinkMap() {
 		Map<CosmosChunkPos, Pocket> backLinkMap = new LinkedHashMap<>();
 		
 		try {
 			File registryFile = getFile(currentBackLinkFile);
-
+			
 			Pocket[] pocket_array = null;
 			try (FileReader reader = new FileReader(registryFile)) {
 				pocket_array = GSON.fromJson(reader, Pocket[].class);
 			} catch (Exception e) {
 				DimensionalPockets.CONSOLE.fatal("[File System Error] <load> Could not load backLinkFile. See stacktrace for more info:", e);
 			}
-
+			
 			if (pocket_array != null) {
 				DimensionalPockets.CONSOLE.info("[File System Load] <loadpockets> Begin loading Pockets from backLinkFile.");
 				
@@ -165,9 +167,15 @@ public class PocketFileSystemManager {
 						link.fluid_tank.getFluidTank().setCapacity((DimReference.CONSTANT.POCKET_FLUID_CAP));
 						DimensionalPockets.CONSOLE.debugWarn("[Pocket Legacy Check] <fluidcapacity> Value different from expected. This has been corrected.");
 					}
-					
+					/*
+					if (link.item_array.size() != DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE) {
+						NonNullList<?> newList = NonNullList.withSize(DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, link.item_array);
+						
+						link.item_array = (NonNullList<ItemStack>) newList;
+						DimensionalPockets.CONSOLE.debugWarn("[Pocket Legacy Check] <itemarray> Item Array Size different from expected. This has been corrected.");
+					}
+					*/
 					backLinkMap.put(link.getChunkPos(), link);
-					
 					
 					if (link.getOwner() != null) {
 						DimensionalPockets.CONSOLE.info("[Pocket Load] <claimed> Pocket loaded: { " + link.getChunkPos() + " } Owner: { " + link.getOwnerName() + " }");
@@ -176,7 +184,7 @@ public class PocketFileSystemManager {
 					}
 				}
 				
-				DimensionalPockets.CONSOLE.info("[File System Load] <loadpockets> Finished loading Pockets from backLinkFile.");
+				DimensionalPockets.CONSOLE.debug("[File System Load] <loadpockets> Finished loading Pockets from backLinkFile.");
 			}
 		} catch (Exception e) {
 			DimensionalPockets.CONSOLE.fatal("[File System Error] <load> Could not load backLinkFile. See stacktrace for more info:", e);
@@ -188,7 +196,7 @@ public class PocketFileSystemManager {
 	public static void savePocketGenParams(PocketGenParameters pocketGenParameters) {
 		try {
 			File dataFile = getFile(pocketGenParamsFile);
-
+			
 			try (FileWriter writer = new FileWriter(dataFile)) {
 				GSON.toJson(pocketGenParameters, writer);
 			}
@@ -200,7 +208,7 @@ public class PocketFileSystemManager {
 	public static PocketGenParameters loadPocketGenParams() {
 		try {
 			File dataFile = getFile(pocketGenParamsFile);
-
+			
 			if (dataFile.exists()) {
 				try (FileReader dataReader = new FileReader(dataFile)) {
 					PocketGenParameters pocketGenParams = GSON.fromJson(dataReader, PocketGenParameters.class);

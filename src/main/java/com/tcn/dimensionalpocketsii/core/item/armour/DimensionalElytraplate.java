@@ -16,9 +16,9 @@ import com.tcn.cosmoslibrary.energy.interfaces.ICosmosEnergyItem;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyArmourItemElytra;
 import com.tcn.cosmoslibrary.energy.item.CosmosEnergyItem;
 import com.tcn.dimensionalpocketsii.client.renderer.ElytraplateBEWLR;
-import com.tcn.dimensionalpocketsii.core.item.DimensionalEnergyCell;
-import com.tcn.dimensionalpocketsii.core.item.DimensionalEnergyCellEnhanced;
 import com.tcn.dimensionalpocketsii.core.item.armour.module.BaseElytraModule;
+import com.tcn.dimensionalpocketsii.core.item.device.DimensionalEnergyCell;
+import com.tcn.dimensionalpocketsii.core.item.device.DimensionalEnergyCellEnhanced;
 import com.tcn.dimensionalpocketsii.core.management.ModBusManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.blockentity.BlockEntityPocket;
@@ -65,8 +65,8 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 			tooltip.add(ComponentHelper.getTooltipTwo("dimensionalpocketsii.item.info.elytraplate_two"));
 
 			tooltip.add(ComponentHelper.getTooltipThree("dimensionalpocketsii.item.info.elytraplate_three")
-				.append(ComponentHelper.locComp(ComponentColour.YELLOW, false, ModBusManager.SUIT_SETTINGS.getKey().getName()))
-				.append(ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.item.info.elytraplate_key"))
+				.append(ComponentHelper.style(ComponentColour.YELLOW, ModBusManager.SUIT_SETTINGS.getKey().getName()))
+				.append(ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.item.info.elytraplate_key"))
 			);
 			tooltip.add(ComponentHelper.getTooltipFour("dimensionalpocketsii.item.info.elytraplate_usage"));
 			tooltip.add(ComponentHelper.getTooltipLimit("dimensionalpocketsii.item.info.elytraplate_limitation"));
@@ -89,7 +89,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 						int x = pos_tag.getInt("x");
 						int z = pos_tag.getInt("z");
 						
-						tooltip.add(ComponentHelper.locComp(ComponentColour.GRAY, false, "dimensionalpocketsii.info.shifter.pocket").append(ComponentHelper.locComp(Value.LIGHT_GRAY + "[ " + Value.BRIGHT_BLUE + x + Value.LIGHT_GRAY + ", " + Value.BRIGHT_BLUE + z + Value.LIGHT_GRAY + " ]")));
+						tooltip.add(ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.info.shifter.pocket").append(ComponentHelper.comp(Value.LIGHT_GRAY + "[ " + Value.BRIGHT_BLUE + x + Value.LIGHT_GRAY + ", " + Value.BRIGHT_BLUE + z + Value.LIGHT_GRAY + " ]")));
 					}
 				
 					if (nbt_data.contains("player_pos")) {
@@ -99,7 +99,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 						int y = player_pos.getInt("y");
 						int z = player_pos.getInt("z");
 						
-						tooltip.add(ComponentHelper.locComp(ComponentColour.GRAY, false, "dimensionalpocketsii.info.shifter_player_pos").append(ComponentHelper.locComp(Value.LIGHT_GRAY + "[ " + Value.CYAN + x + Value.LIGHT_GRAY + ", " + Value.CYAN + y + Value.LIGHT_GRAY + ", " + Value.CYAN + z + Value.LIGHT_GRAY + " ]")));
+						tooltip.add(ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.info.shifter_player_pos").append(ComponentHelper.comp(Value.LIGHT_GRAY + "[ " + Value.CYAN + x + Value.LIGHT_GRAY + ", " + Value.CYAN + y + Value.LIGHT_GRAY + ", " + Value.CYAN + z + Value.LIGHT_GRAY + " ]")));
 									
 					}
 					
@@ -109,7 +109,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 						String namespace = dimension.getString("namespace");
 						String path = dimension.getString("path");
 						
-						tooltip.add(ComponentHelper.locComp(ComponentColour.GRAY, false, "dimensionalpocketsii.info.shifter_source_dimension").append(ComponentHelper.locComp(Value.LIGHT_GRAY + "[ " + Value.BRIGHT_GREEN + namespace + Value.LIGHT_GRAY + ": " + Value.BRIGHT_GREEN + path + Value.LIGHT_GRAY + " ]")));
+						tooltip.add(ComponentHelper.style(ComponentColour.GRAY, "dimensionalpocketsii.info.shifter_source_dimension").append(ComponentHelper.comp(Value.LIGHT_GRAY + "[ " + Value.BRIGHT_GREEN + namespace + Value.LIGHT_GRAY + ": " + Value.BRIGHT_GREEN + path + Value.LIGHT_GRAY + " ]")));
 					}
 					
 					tooltip.add(ComponentHelper.ctrlForLessDetails());
@@ -120,7 +120,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 				} else {
 					
 					if (tag.contains("settings_data")) {
-						tooltip.add(ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.item.info.elytraplate_settings"));
+						tooltip.add(ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.item.info.elytraplate_settings"));
 						
 						for (int i = 0; i < ElytraSettings.LENGTH; i++) {
 							ElytraSettings setting = ElytraSettings.getStateFromIndex(i);
@@ -128,13 +128,13 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 							boolean value = getElytraSetting(stack, setting)[1];
 							Component valueComp = setting.getValueComp(value);
 							
-							tooltip.add(setting.getColouredDisplayComp().append(ComponentHelper.locComp(Value.LIGHT_GRAY + "[ ").append(valueComp).append(ComponentHelper.locComp(Value.LIGHT_GRAY + " ]"))));
+							tooltip.add(setting.getColouredDisplayComp().append(ComponentHelper.comp(Value.LIGHT_GRAY + "[ ").append(valueComp).append(ComponentHelper.comp(Value.LIGHT_GRAY + " ]"))));
 						}
 					}
 					
 					if (!(getInstalledModules(stack).isEmpty())) {
 						ArrayList<BaseElytraModule> list = getInstalledModules(stack);
-						tooltip.add(ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.item.info.elytraplate_modules"));
+						tooltip.add(ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.item.info.elytraplate_modules"));
 						
 						for (int i = 0; i < list.size(); i++) {
 							BaseElytraModule module = list.get(i);
@@ -431,7 +431,7 @@ public class DimensionalElytraplate extends CosmosEnergyArmourItemElytra {
 					stack_tag.put("nbt_data", nbt_data);
 					
 					stackIn.setTag(stack_tag);
-					CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.locComp(ComponentColour.PURPLE, false, "dimensionalpocketsii.item.message.elytraplate.linked").append(ComponentHelper.locComp(Value.LIGHT_GRAY + " {" + x + ", " + z + "}")));
+					CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.style(ComponentColour.PURPLE, "dimensionalpocketsii.item.message.elytraplate.linked").append(ComponentHelper.comp(Value.LIGHT_GRAY + " {" + x + ", " + z + "}")));
 					
 					return true;
 				}

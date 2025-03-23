@@ -58,7 +58,7 @@ public class BlockWallFurnace extends BlockWallModule implements IBlankCreativeT
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModBusManager.FURNACE_TILE_TYPE);
+		return createTicker(levelIn, entityTypeIn, ModBusManager.BLOCK_ENTITY_TYPE_FURNACE);
 	}
 
 	@Nullable
@@ -144,13 +144,8 @@ public class BlockWallFurnace extends BlockWallModule implements IBlankCreativeT
 		return Blocks.AIR.defaultBlockState();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public ItemStack getCloneItemStack(BlockGetter blockReader, BlockPos posIn, BlockState stateIn) {
-        if (ConfigurationManager.getInstance().getCanDestroyWalls()) {
-        	return this.asBlock().getCloneItemStack(blockReader, posIn, stateIn);
-        }
-        
-        return ItemStack.EMPTY;
+		return new ItemStack(ModBusManager.MODULE_FURNACE);
     }
 }

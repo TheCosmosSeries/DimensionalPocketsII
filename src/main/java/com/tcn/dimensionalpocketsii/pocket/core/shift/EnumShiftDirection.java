@@ -48,7 +48,7 @@ public enum EnumShiftDirection {
 	}
 
 	public Component getUseName() {
-		return ComponentHelper.locComp(display_colour, true, this.localized_name);
+		return ComponentHelper.style(display_colour, "bold", this.localized_name);
 	}
 
 	public String getLocalizedName() {
@@ -75,7 +75,7 @@ public enum EnumShiftDirection {
 	}
 	
 	public Component getChatComponentForDirection() {
-		return ComponentHelper.locComp(ComponentColour.CYAN, false, "dimensionalpocketsii.pocket.direction.pre").append(getUseName()).append(ComponentHelper.locComp(ComponentColour.CYAN, false, "dimensionalpocketsii.pocket.direction.suff"));
+		return ComponentHelper.style(ComponentColour.CYAN, "dimensionalpocketsii.pocket.direction.pre").append(getUseName()).append(ComponentHelper.style(ComponentColour.CYAN, "dimensionalpocketsii.pocket.direction.suff"));
 	}
 
 	public SoundEvent getSound() {

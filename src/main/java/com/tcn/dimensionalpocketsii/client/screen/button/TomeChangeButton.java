@@ -21,7 +21,7 @@ public class TomeChangeButton extends Button {
 	private ResourceLocation texture;
 
 	public TomeChangeButton(int posX, int posY, boolean isForwardIn, boolean playTurnSoundIn, ResourceLocation textureIn, Button.OnPress onPressIn) {
-		super(posX, posY, 25, 13, ComponentHelper.locComp(""), onPressIn);
+		super(posX, posY, 25, 13, ComponentHelper.empty(), onPressIn);
 		this.isForward = isForwardIn;
 		this.playTurnSound = playTurnSoundIn;
 

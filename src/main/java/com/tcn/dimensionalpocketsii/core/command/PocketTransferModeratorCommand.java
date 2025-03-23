@@ -30,7 +30,7 @@ public class PocketTransferModeratorCommand {
 		if (pocket.exists()) {
 			pocket.updateOwner(null, newPlayer);
 		} else {
-			commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.command.recoverpocket.error.exists"));
+			commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.command.recoverpocket.error.exists"));
 		}
 		
 		return 1;

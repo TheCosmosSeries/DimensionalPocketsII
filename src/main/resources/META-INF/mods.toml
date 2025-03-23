@@ -7,11 +7,11 @@ logoFile="dimensional_logo.png"
 	
 [[mods]] #mandatory
 	modId="dimensionalpocketsii"
-	version="1.18.1-5.1.0.10"
+	version="5.1.3.20"
 	displayName="Dimensional Pockets II"
 	displayURL="https://www.curseforge.com/minecraft/mc-mods/dimensional-pockets-ii"
-	credits="NPException, VsnGamer (Elevator Code), Scarlet Spark, Apolybrium, Rechalow, Discord Members"
-	authors="TheCosmicNebula" #optional
+	credits="NPException, VsnGamer (Elevator Code), SuperMartijn642 (Chunkloading Code), Scarlet Spark, Apolybrium, Rechalow, Discord Members"
+	authors="TheCosmicNebula_" #optional
 	description='''
 Create pocket dimensions!
 '''
@@ -19,22 +19,22 @@ Create pocket dimensions!
 [[dependencies.dimensionalpocketsii]]
     modId="cosmoslibrary"
     mandatory=true
-    versionRange="[1.18.1-5.1.2,)"
+    versionRange="[5.1.8,)"
     ordering="BEFORE"
     side="BOTH"
 [[dependencies.dimensionalpocketsii]]
     modId="forge"
     mandatory=true
-    versionRange="[39,)"
+    versionRange="[39.0.63,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.dimensionalpocketsii]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.1]"
+    versionRange="[1.18.1,1.19]"
     ordering="NONE"
     side="BOTH"
-
+    
 #cosmoslibrary
 modLoader="javafml" #mandatory
 loaderVersion="[39,)" #mandatory
@@ -43,10 +43,10 @@ logoFile="cosmos_logo.png" #optional
 
 [[mods]]
 	modId="cosmoslibrary"
-	version="1.18.1-5.1.2.50"
+	version="5.1.8.10"
 	displayName="Cosmos Library"
 	displayURL="https://www.curseforge.com/minecraft/mc-mods/cosmos-library"
-	authors="TheCosmicNebula"
+	authors="TheCosmicNebula_"
 	description='''
 Library and API for TheCosmicNebula_'s Mods.
 '''
@@ -54,12 +54,13 @@ Library and API for TheCosmicNebula_'s Mods.
 [[dependencies.cosmoslibrary]]
     modId="forge"
     mandatory=true
-    versionRange="[39,)"
+    versionRange="[39.0.63,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.cosmoslibrary]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.1]"
+    versionRange="[1.18.1,1.19]"
     ordering="NONE"
     side="BOTH"
+    

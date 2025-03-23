@@ -48,7 +48,7 @@ public class BlockWallConnector extends BlockWallModule implements IBlankCreativ
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModBusManager.CONNECTOR_TILE_TYPE);
+		return createTicker(levelIn, entityTypeIn, ModBusManager.BLOCK_ENTITY_TYPE_CONNECTOR);
 	}
 
 	@Nullable

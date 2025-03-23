@@ -1,5 +1,6 @@
 package com.tcn.dimensionalpocketsii.pocket.core.blockentity;
 
+import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
@@ -12,7 +13,6 @@ import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
 import com.tcn.dimensionalpocketsii.pocket.core.util.PocketUtil;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -21,17 +21,16 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockEntityModuleFluidDisplay extends BlockEntity implements IBlockInteract {
+public class BlockEntityModuleFluidDisplay extends CosmosBlockEntityUpdateable implements IBlockInteract {
 
 	private Pocket pocket;
 	private int update = 0;
 	
 	public BlockEntityModuleFluidDisplay(BlockPos posIn, BlockState stateIn) {
-		super(ModBusManager.FLUID_DISPLAY_TILE_TYPE, posIn, stateIn);
+		super(ModBusManager.BLOCK_ENTITY_TYPE_FLUID_DISPLAY, posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -43,25 +42,7 @@ public class BlockEntityModuleFluidDisplay extends BlockEntity implements IBlock
 	}
 
 	public void sendUpdates(boolean update) {
-		if (level != null) {
-			this.setChanged();
-			BlockState state = this.getBlockState();
-			level.sendBlockUpdated(this.getBlockPos(), state, state, 3);
-			
-			if (update) {
-				if (!level.isClientSide) {
-					level.setBlockAndUpdate(this.getBlockPos(), state.updateShape(Direction.UP, this.getBlockState(), this.getLevel(), this.getBlockPos(), this.getBlockPos().offset(Direction.UP.getNormal())));
-					
-					if (this.getPocket() != null) {
-						this.getPocket().updateBaseConnector(this.getLevel());
-					}
-				}
-			} else {
-				if (!level.isClientSide) {
-					level.setBlockAndUpdate(this.getBlockPos(), state.updateShape(Direction.UP, this.getBlockState(), this.getLevel(), this.getBlockPos(), this.getBlockPos().offset(Direction.UP.getNormal())));
-				}
-			}
-		}
+		super.sendUpdates(update);
 	}
 
 	@Override
@@ -141,8 +122,7 @@ public class BlockEntityModuleFluidDisplay extends BlockEntity implements IBlock
 	public void attack(BlockState state, Level worldIn, BlockPos pos, Player player) { }
 
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult hit) {
-		worldIn.sendBlockUpdated(pos, state, state, 3);
+	public InteractionResult use(BlockState state, Level levelIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult hit) {
 		this.setChanged();
 		this.sendUpdates(true);
 		
@@ -150,37 +130,37 @@ public class BlockEntityModuleFluidDisplay extends BlockEntity implements IBlock
 			return InteractionResult.FAIL;
 		}
 		
-		if (!playerIn.isShiftKeyDown()) {
+		if (playerIn.isShiftKeyDown()) {
+			CosmosChunkPos chunkPos = CosmosChunkPos.scaleToChunkPos(pos);
+			Pocket pocketIn = PocketRegistryManager.getPocketFromChunkPosition(chunkPos);
 			
-		} else {
-			if(!worldIn.isClientSide) {
-				CosmosChunkPos chunkPos = CosmosChunkPos.scaleToChunkPos(pos);
-				Pocket pocketIn = PocketRegistryManager.getPocketFromChunkPosition(chunkPos);
-				
-				if(pocketIn.exists()) {
-					if (CosmosUtil.holdingWrench(playerIn)) {
-						if (pocketIn.checkIfOwner(playerIn)) {
-							worldIn.setBlockAndUpdate(pos, ModBusManager.BLOCK_WALL.defaultBlockState());
+			if(pocketIn.exists()) {
+				if (CosmosUtil.holdingWrench(playerIn)) {
+					if (pocketIn.checkIfOwner(playerIn)) {
+						if (!levelIn.isClientSide) {
+							levelIn.setBlockAndUpdate(pos, ModBusManager.BLOCK_WALL.defaultBlockState());
 							
-							if (!playerIn.isCreative()) {
-								CosmosUtil.addItem(worldIn, playerIn, ModBusManager.MODULE_CRAFTER, 1);
-							}
-							
-							return InteractionResult.SUCCESS;
-						} else {
-							CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
-							return InteractionResult.FAIL;
+							CosmosUtil.addItem(levelIn, playerIn, ModBusManager.MODULE_FLUID_DISPLAY, 1);
+							pocketIn.removeUpdateable(pos);
 						}
-					} 
-					
-					else if (CosmosUtil.handEmpty(playerIn)) {
-						pocketIn.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
+						
 						return InteractionResult.SUCCESS;
+					} else {
+						CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
+						return InteractionResult.FAIL;
 					}
+				} 
+				
+				else if (CosmosUtil.handEmpty(playerIn)) {
+					pocketIn.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
+					return InteractionResult.SUCCESS;
 				}
+			} else {
+				CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.action.null"));
+				return InteractionResult.FAIL;
 			}
 		}
 		
-		return InteractionResult.SUCCESS;
+		return InteractionResult.FAIL;
 	}
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tcn.cosmoslibrary.client.ui.lib.CosmosUISystem;
-import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIMode;
+import com.tcn.cosmoslibrary.client.ui.screen.CosmosScreenUIModeBE;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType;
 import com.tcn.cosmoslibrary.client.ui.screen.widget.CosmosButtonWithType.TYPE;
 import com.tcn.cosmoslibrary.common.lib.ComponentColour;
@@ -30,7 +30,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @SuppressWarnings("unused")
 @OnlyIn(Dist.CLIENT)
-public class ScreenModuleArmourWorkbench extends CosmosScreenUIMode<ContainerModuleArmourWorkbench> {
+public class ScreenModuleArmourWorkbench extends CosmosScreenUIModeBE<ContainerModuleArmourWorkbench> {
 
 	private CosmosButtonWithType applyColourButton;  private int[] ACI = new int[] { 104, 62, 18 };
 	
@@ -46,10 +46,11 @@ public class ScreenModuleArmourWorkbench extends CosmosScreenUIMode<ContainerMod
 		this.setDark(RESOURCE.ARMOUR_WORKBENCH[1]);
 
 		this.setUIModeButtonIndex(167, 5);
-		this.setUIHelpButtonIndex(167, 19);
+		this.setUIHelpButtonIndex(167, 33);
+		this.setUILockButtonIndex(167, 19);
 		this.setUIHelpElementDeadzone(13, 13, 170, 86);
 		
-		this.setTitleLabelDims(23, 4);
+		this.setTitleLabelDims(28, 4);
 		this.setInventoryLabelDims(8, 89);
 	}
 
@@ -95,19 +96,19 @@ public class ScreenModuleArmourWorkbench extends CosmosScreenUIMode<ContainerMod
 	@Override
 	public void renderStandardHoverEffect(PoseStack poseStack, Style style, int mouseX, int mouseY) {
 		if (this.applyColourButton.isMouseOver(mouseX, mouseY)) {
-			BaseComponent[] comp = new BaseComponent[] { ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.gui.armour_workbench.colour_apply_info") };
+			BaseComponent[] comp = new BaseComponent[] { ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.gui.armour_workbench.colour_apply_info") };
 			
 			this.renderComponentTooltip(poseStack, Arrays.asList(comp), mouseX, mouseY);
 		} 
 		
 		else if (this.applyModuleButton.isMouseOver(mouseX, mouseY)) {
-			BaseComponent[] comp = new BaseComponent[] { ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.gui.armour_workbench.apply_info") };
+			BaseComponent[] comp = new BaseComponent[] { ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.gui.armour_workbench.apply_info") };
 			
 			this.renderComponentTooltip(poseStack, Arrays.asList(comp), mouseX, mouseY);
 		} 
 		
 		else if (this.removeModuleButton.isMouseOver(mouseX, mouseY)) {
-			BaseComponent[] comp = new BaseComponent[] { ComponentHelper.locComp(ComponentColour.RED, false, "dimensionalpocketsii.gui.armour_workbench.remove_info") };
+			BaseComponent[] comp = new BaseComponent[] { ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.armour_workbench.remove_info") };
 			
 			this.renderComponentTooltip(poseStack, Arrays.asList(comp), mouseX, mouseY);
 		} 
@@ -122,10 +123,10 @@ public class ScreenModuleArmourWorkbench extends CosmosScreenUIMode<ContainerMod
 		
 		if (entity instanceof BlockEntityModuleArmourWorkbench) {
 			BlockEntityModuleArmourWorkbench blockEntity = (BlockEntityModuleArmourWorkbench) entity;
-			this.applyColourButton = this.addRenderableWidget(new CosmosButtonWithType(TYPE.GENERAL, this.getScreenCoords()[0] + ACI[0], this.getScreenCoords()[1] + ACI[1], ACI[2], true, true, 32, ComponentHelper.locComp(""), (button) -> { this.pushButton(this.applyColourButton); }));
+			this.applyColourButton = this.addRenderableWidget(new CosmosButtonWithType(TYPE.GENERAL, this.getScreenCoords()[0] + ACI[0], this.getScreenCoords()[1] + ACI[1], ACI[2], true, true, 32, ComponentHelper.empty(), (button) -> { this.pushButton(this.applyColourButton); }));
 			
-			this.applyModuleButton = this.addRenderableWidget(new CosmosButtonWithType(TYPE.GENERAL, this.getScreenCoords()[0] + ABI[0], this.getScreenCoords()[1] + ABI[1], ABI[2], true, true, 1, ComponentHelper.locComp(""), (button) -> { this.pushButton(this.applyModuleButton); }));
-			this.removeModuleButton = this.addRenderableWidget(new CosmosButtonWithType(TYPE.GENERAL, this.getScreenCoords()[0] + RBI[0], this.getScreenCoords()[1] + RBI[1], RBI[2], true, true, 2, ComponentHelper.locComp(""), (button) -> { this.pushButton(this.removeModuleButton); }));
+			this.applyModuleButton = this.addRenderableWidget(new CosmosButtonWithType(TYPE.GENERAL, this.getScreenCoords()[0] + ABI[0], this.getScreenCoords()[1] + ABI[1], ABI[2], true, true, 1, ComponentHelper.empty(), (button) -> { this.pushButton(this.applyModuleButton); }));
+			this.removeModuleButton = this.addRenderableWidget(new CosmosButtonWithType(TYPE.GENERAL, this.getScreenCoords()[0] + RBI[0], this.getScreenCoords()[1] + RBI[1], RBI[2], true, true, 2, ComponentHelper.empty(), (button) -> { this.pushButton(this.removeModuleButton); }));
 		}
 	}
 	
@@ -145,78 +146,78 @@ public class ScreenModuleArmourWorkbench extends CosmosScreenUIMode<ContainerMod
 	protected void addUIHelpElements() {
 		super.addUIHelpElements();
 		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 103, 61, 20, 20, ComponentHelper.locComp(ComponentColour.YELLOW, false, "dimensionalpocketsii.gui.help.armour_workbench.colour_button"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.colour_button_one"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.colour_button_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.colour_button_three")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 103, 61, 20, 20, ComponentHelper.style(ComponentColour.YELLOW, "dimensionalpocketsii.gui.help.armour_workbench.colour_button"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.colour_button_one"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.colour_button_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.colour_button_three")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 124, 61, 20, 20, ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.gui.help.armour_workbench.module_add_button"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_add_button_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_add_button_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_add_button_three")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 124, 61, 20, 20, ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.gui.help.armour_workbench.module_add_button"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_add_button_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_add_button_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_add_button_three")
 
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 145, 61, 20, 20, ComponentHelper.locComp(ComponentColour.RED, false, "dimensionalpocketsii.gui.help.armour_workbench.module_remove_button"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_three")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 145, 61, 20, 20, ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.help.armour_workbench.module_remove_button"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_remove_button_three")
 		);
 
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 112, 28, 24, 24, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.armour_workbench.focused_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.focused_slot_one"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.focused_slot_two")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 112, 28, 24, 24, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.armour_workbench.focused_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.focused_slot_one"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.focused_slot_two")
 		);
 
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 27, 19, 62, 41, ComponentHelper.locComp(ComponentColour.WHITE, false, "Module Slots"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_one"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_two"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_three"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_four"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_five"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_six")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 27, 19, 62, 41, ComponentHelper.style(ComponentColour.WHITE, "Module Slots"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_one"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_two"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_three"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_four"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_five"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.module_slots_six")
 		);
 
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 91, 19, 20, 20, ComponentHelper.locComp(ComponentColour.WHITE, false, "dimensionalpocketsii.gui.help.armour_workbench.armour_colour_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.armour_colour_slot_one"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.armour_colour_slot_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.armour_colour_slot_three"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.colour_slot_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.colour_slot_two")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 91, 19, 20, 20, ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.help.armour_workbench.armour_colour_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.armour_colour_slot_one"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.armour_colour_slot_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.armour_colour_slot_three"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.colour_slot_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.colour_slot_two")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 91, 40, 20, 20, ComponentHelper.locComp(ComponentColour.WHITE, false, "dimensionalpocketsii.gui.help.armour_workbench.wings_colour_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.wings_colour_slot_one"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.wings_colour_slot_two"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.wings_colour_slot_three"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.colour_slot_one"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.colour_slot_two")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 91, 40, 20, 20, ComponentHelper.style(ComponentColour.WHITE, "dimensionalpocketsii.gui.help.armour_workbench.wings_colour_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.wings_colour_slot_one"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.wings_colour_slot_two"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.wings_colour_slot_three"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.colour_slot_one"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.colour_slot_two")
 		);
 
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 137, 19, 20, 20, ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.gui.help.armour_workbench.applied_preview_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.applied_preview_slot_one"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.applied_preview_slot_two"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.applied_preview_slot_three")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 137, 19, 20, 20, ComponentHelper.style(ComponentColour.GREEN, "dimensionalpocketsii.gui.help.armour_workbench.applied_preview_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.applied_preview_slot_one"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.applied_preview_slot_two"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.applied_preview_slot_three")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 137, 40, 20, 20, ComponentHelper.locComp(ComponentColour.RED, false, "dimensionalpocketsii.gui.help.armour_workbench.removed_preview_slot"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.removed_preview_slot_one"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.armour_workbench.removed_preview_slot_two")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 137, 40, 20, 20, ComponentHelper.style(ComponentColour.RED, "dimensionalpocketsii.gui.help.armour_workbench.removed_preview_slot"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.removed_preview_slot_one"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.armour_workbench.removed_preview_slot_two")
 		);
 		
 		
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 19, 61, 20, 20, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.slot.helmet"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.slot.armour"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.slot.helmet_one")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 19, 61, 20, 20, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.slot.helmet"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.slot.armour"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.slot.helmet_one")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 40, 61, 20, 20, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.slot.chestplate"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.slot.armour"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.slot.chestplate_one")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 40, 61, 20, 20, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.slot.chestplate"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.slot.armour"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.slot.chestplate_one")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 61, 61, 20, 20, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.slot.leggings"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.slot.armour"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.slot.leggings_one")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 61, 61, 20, 20, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.slot.leggings"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.slot.armour"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.slot.leggings_one")
 		);
-		this.addRenderableUIHelpElement(this.getScreenCoords(), 82, 61, 20, 20, ComponentHelper.locComp(ComponentColour.LIGHT_BLUE, false, "dimensionalpocketsii.gui.help.slot.boots"), 
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.slot.armour"),
-			ComponentHelper.locComp(ComponentColour.LIGHT_GRAY, false, "dimensionalpocketsii.gui.help.slot.boots_one")
+		this.addRenderableUIHelpElement(this.getScreenCoords(), 82, 61, 20, 20, ComponentHelper.style(ComponentColour.LIGHT_BLUE, "dimensionalpocketsii.gui.help.slot.boots"), 
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.slot.armour"),
+			ComponentHelper.style(ComponentColour.LIGHT_GRAY, "dimensionalpocketsii.gui.help.slot.boots_one")
 		);
 	}
 	

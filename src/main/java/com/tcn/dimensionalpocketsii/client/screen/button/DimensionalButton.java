@@ -60,6 +60,14 @@ public class DimensionalButton extends Button {
 			this.onPress.onPress(this);
 		}
 	}
+	
+	@Override
+	public boolean isMouseOver(double mouseX, double mouseY) {
+		if (!this.active) {
+			return false;
+		}
+		return super.isMouseOver(mouseX, mouseY);
+	}
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {

@@ -24,17 +24,13 @@ import net.minecraft.world.phys.Vec3;
 public class DimShiftCommand {
 
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcherIn) {
-		dispatcherIn.register(
-		Commands.literal("dim").then(Commands.literal("shift")).requires( (commandSource) -> { return commandSource.hasPermission(2); } )
-			.then(Commands.literal("shift").then(Commands.argument("target", EntityArgument.player()).then(Commands.argument("dimension", DimensionArgument.dimension())
-				.executes((commandContext) -> { 
-					return shiftToDimension(commandContext.getSource(), EntityArgument.getPlayer(commandContext, "target"), DimensionArgument.getDimension(commandContext, "dimension"), (Vec3) null); 
-				})
-			.then(Commands.argument("targetPos", Vec3Argument.vec3())
-				.executes((commandContext) -> { 
-					return shiftToDimension(commandContext.getSource(), EntityArgument.getPlayer(commandContext, "target"), DimensionArgument.getDimension(commandContext, "dimension"), Vec3Argument.getVec3(commandContext, "targetPos")); 
-				})
-		)))));
+		dispatcherIn.register(Commands.literal("dim").then(Commands.literal("shift").requires((commandSource) -> { 
+			return commandSource.hasPermission(2);
+		})).then(Commands.literal("shift").then(Commands.argument("target", EntityArgument.player()).then(Commands.argument("dimension", DimensionArgument.dimension()).executes((commandContext) -> { 
+			return shiftToDimension(commandContext.getSource(), EntityArgument.getPlayer(commandContext, "target"), DimensionArgument.getDimension(commandContext, "dimension"), (Vec3) null); 
+		}).then(Commands.argument("targetPos", Vec3Argument.vec3()).executes((commandContext) -> { 
+			return shiftToDimension(commandContext.getSource(), EntityArgument.getPlayer(commandContext, "target"), DimensionArgument.getDimension(commandContext, "dimension"), Vec3Argument.getVec3(commandContext, "targetPos")); 
+		}))))));
 	}
 	
 	private static int shiftToDimension(CommandSourceStack commandSourceIn, ServerPlayer serverPlayer, ServerLevel serverWorldIn, @Nullable Vec3 locationIn) {
@@ -45,20 +41,20 @@ public class DimShiftCommand {
 				Shifter shifterIn = Shifter.createTeleporter(dimension, EnumShiftDirection.GENERIC, pos, serverPlayer.getRotationVector().y, serverPlayer.getRotationVector().x, true, false, false);
 				ShifterCore.shiftPlayerToDimension(serverPlayer, shifterIn);
 				
-				commandSourceIn.sendSuccess(ComponentHelper.locComp(ComponentColour.CYAN, false, "dimensionalpocketsii.direction.generic.pre")
-						.append(ComponentHelper.locComp(ComponentColour.ORANGE, false, "@" + serverPlayer.getDisplayName().getString()))
-						.append(ComponentHelper.locComp("dimensionalpocketsii.direction.generic.mid"))
-						.append(ComponentHelper.locComp(ComponentColour.GREEN, false, dimension.location().toString())), true);
+				commandSourceIn.sendSuccess(ComponentHelper.style(ComponentColour.CYAN, "dimensionalpocketsii.direction.generic.pre")
+						.append(ComponentHelper.style(ComponentColour.ORANGE, "@" + serverPlayer.getDisplayName().getString()))
+						.append(ComponentHelper.comp("dimensionalpocketsii.direction.generic.mid"))
+						.append(ComponentHelper.style(ComponentColour.GREEN, dimension.location().toString())), true);
 		} else {
 			ResourceKey<Level> dimension = serverWorldIn.dimension();
 				
 				Shifter shifterIn = Shifter.createTeleporter(dimension, EnumShiftDirection.GENERIC, serverWorldIn.getSharedSpawnPos(), serverPlayer.getRotationVector().y, serverPlayer.getRotationVector().x, true, false, false);
 				ShifterCore.shiftPlayerToDimension(serverPlayer, shifterIn);
 				
-				commandSourceIn.sendSuccess(ComponentHelper.locComp(ComponentColour.CYAN, false, "dimensionalpocketsii.direction.generic.pre")
-						.append(ComponentHelper.locComp(ComponentColour.ORANGE, false, "@" + serverPlayer.getDisplayName().getString()))
-						.append(ComponentHelper.locComp("dimensionalpocketsii.direction.generic.mid"))
-						.append(ComponentHelper.locComp(ComponentColour.GREEN, false, dimension.location().toString())), true);
+				commandSourceIn.sendSuccess(ComponentHelper.style(ComponentColour.CYAN, "dimensionalpocketsii.direction.generic.pre")
+						.append(ComponentHelper.style(ComponentColour.ORANGE, "@" + serverPlayer.getDisplayName().getString()))
+						.append(ComponentHelper.comp("dimensionalpocketsii.direction.generic.mid"))
+						.append(ComponentHelper.style(ComponentColour.GREEN, dimension.location().toString())), true);
 		}
 		
 		return 1;

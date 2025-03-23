@@ -2,9 +2,11 @@ package com.tcn.dimensionalpocketsii.pocket.core.blockentity;
 
 import java.util.Optional;
 
+import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumGenerationMode;
 import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
+import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.IFluidStorage;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
@@ -17,7 +19,6 @@ import com.tcn.dimensionalpocketsii.core.management.DimensionManager;
 import com.tcn.dimensionalpocketsii.core.management.ModBusManager;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleGenerator;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
-import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallGenerator;
 import com.tcn.dimensionalpocketsii.pocket.core.management.PocketRegistryManager;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
 import com.tcn.dimensionalpocketsii.pocket.core.util.PocketUtil;
@@ -42,11 +43,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
@@ -57,7 +58,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.network.NetworkHooks;
 
-public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInteract, Container, WorldlyContainer, MenuProvider, Nameable, IFluidHandler, IFluidStorage, IBlockEntityUIMode {
+public class BlockEntityModuleGenerator extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, WorldlyContainer, MenuProvider, Nameable, IFluidHandler, IFluidStorage, IBlockEntityUIMode {
 	
 	private NonNullList<ItemStack> inventoryItems = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
 	
@@ -79,6 +80,7 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 	
 	private EnumUIMode uiMode = EnumUIMode.DARK;
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
+	private EnumUILock uiLock = EnumUILock.PRIVATE;
 
 	public final ContainerData dataAccess = new ContainerData() {
 		@Override
@@ -128,7 +130,7 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 	};
 	
 	public BlockEntityModuleGenerator(BlockPos posIn, BlockState stateIn) {
-		super(ModBusManager.GENERATOR_TILE_TYPE, posIn, stateIn);
+		super(ModBusManager.BLOCK_ENTITY_TYPE_GENERATOR, posIn, stateIn);
 	}
 	
 	public Pocket getPocket() {
@@ -140,27 +142,7 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 	}
 
 	public void sendUpdates(boolean update) {
-		if (level != null) {
-			this.setChanged();
-			BlockState state = this.getBlockState();
-			BlockWallGenerator block = (BlockWallGenerator) state.getBlock();
-			
-			level.sendBlockUpdated(this.getBlockPos(), state, state, 3);
-			
-			if (update) {
-				if (!level.isClientSide) {
-					level.setBlockAndUpdate(this.getBlockPos(), block.defaultBlockState());
-					
-					if (this.getPocket() != null) {
-						this.getPocket().updateBaseConnector(this.getLevel());
-					}
-				}
-			} else {
-				if (!level.isClientSide) {
-					level.setBlockAndUpdate(this.getBlockPos(), block.defaultBlockState());
-				}
-			}
-		}
+		super.sendUpdates(update);
 	}
 
 	@Override
@@ -178,6 +160,7 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 		
 		compound.putInt("ui_mode", this.uiMode.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
+		compound.putInt("ui_lock", this.uiLock.getIndex());
 		
 		compound.putInt("cookTime", this.cookTime);
 		compound.putInt("burnTime", this.burnTime);
@@ -199,6 +182,7 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 		
 		compound.putInt("ui_mode", this.uiMode.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
+		compound.putInt("ui_lock", this.uiLock.getIndex());
 		
 		compound.putInt("cookTime", this.cookTime);
 		compound.putInt("burnTime", this.burnTime);
@@ -227,6 +211,7 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 		
 		this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 		this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
+		this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 		
 		this.cookTime = compound.getInt("cookTime");
 		this.burnTime = compound.getInt("burnTime");
@@ -250,6 +235,7 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 			
 			this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 			this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
+			this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 			
 			this.cookTime = compound.getInt("cookTime");
 			this.burnTime = compound.getInt("burnTime");
@@ -410,29 +396,40 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 	@Override
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult hit) {
 		this.setChanged();
+
+		if (CosmosUtil.getStackItem(playerIn) instanceof BlockItem) {
+			return InteractionResult.FAIL;
+		}
 		
 		if (PocketUtil.isDimensionEqual(worldIn, DimensionManager.POCKET_WORLD)) {
-			Pocket pocket = this.getPocket();
+			Pocket pocketIn = this.getPocket();
 			
-			if (pocket != null) {
+			if (pocketIn != null) {
 				if (!playerIn.isShiftKeyDown()) {
 					if (worldIn.isClientSide) {
 						return InteractionResult.SUCCESS;
 					} else {
 						if (playerIn instanceof ServerPlayer) {
-							NetworkHooks.openGui((ServerPlayer)playerIn, this, (packetBuffer)->{ packetBuffer.writeBlockPos(pos); });
-							return InteractionResult.SUCCESS;
+							if (this.canPlayerAccess(playerIn)) {
+								NetworkHooks.openGui((ServerPlayer)playerIn, this, (packetBuffer)->{ packetBuffer.writeBlockPos(pos); });
+								return InteractionResult.SUCCESS;
+							} else {
+								CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
+								return InteractionResult.FAIL;
+							}
 						}
+						
+						return InteractionResult.SUCCESS;
 					}
 				} else {
-					if (!CosmosUtil.holdingWrench(playerIn) && playerIn.getItemInHand(handIn).isEmpty()) {
-						pocket.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
+					if (CosmosUtil.handEmpty(playerIn)) {
+						pocketIn.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
 						
 						return InteractionResult.PASS;
-					}
+					} 
 					
-					if (CosmosUtil.holdingWrench(playerIn)) {
-						if (pocket.checkIfOwner(playerIn)) {
+					else if (CosmosUtil.holdingWrench(playerIn)) {
+						if (pocketIn.checkIfOwner(playerIn)) {
 							ItemStack stack = new ItemStack(ModBusManager.MODULE_GENERATOR);
 							this.saveToItemStack(stack);
 							
@@ -440,6 +437,8 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 							worldIn.removeBlockEntity(pos);
 							
 							CosmosUtil.addStack(worldIn, playerIn, stack);
+							
+							pocketIn.removeUpdateable(pos);
 							
 							return InteractionResult.SUCCESS;
 						} else {
@@ -450,7 +449,6 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 				}
 			} else {
 				CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.action.null"));
-				
 				return InteractionResult.FAIL;
 			}
 		}
@@ -524,7 +522,7 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 	
 	@Override
 	public Component getDisplayName() {
-		return ComponentHelper.locComp("dimensionalpocketsii.gui.generator");
+		return ComponentHelper.title("dimensionalpocketsii.gui.generator");
 	}
 	
 	@Override
@@ -560,7 +558,7 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 
 	@Override
 	public Component getName() {
-		return ComponentHelper.locComp("dimensionalpocketsii.gui.generator");
+		return ComponentHelper.title("dimensionalpocketsii.gui.generator");
 	}
 	
 	public int getFluidLevelScaled(int one) {
@@ -782,5 +780,44 @@ public class BlockEntityModuleGenerator extends BlockEntity implements IBlockInt
 	@Override
 	public void cycleUIHelp() {
 		this.uiHelp = EnumUIHelp.getNextStateFromState(this.uiHelp);
+	}
+
+	@Override
+	public EnumUILock getUILock() {
+		return this.uiLock;
+	}
+
+	@Override
+	public void setUILock(EnumUILock modeIn) {
+		this.uiLock = modeIn;
+	}
+
+	@Override
+	public void cycleUILock() {
+		this.uiLock = EnumUILock.getNextStateFromState(this.uiLock);
+	}
+
+	@Override
+	public void setOwner(Player playerIn) { }
+
+	@Override
+	public boolean canPlayerAccess(Player playerIn) {
+		if (this.getUILock().equals(EnumUILock.PUBLIC)) {
+			return true;
+		} else {
+			if (this.getPocket().checkIfOwner(playerIn)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public boolean checkIfOwner(Player playerIn) {
+		if (this.getPocket().checkIfOwner(playerIn)) {
+			return true;
+		}
+		return false;
 	}
 }

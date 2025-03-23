@@ -19,6 +19,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class DimensionalTome extends Item {
 
@@ -29,11 +31,16 @@ public class DimensionalTome extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		if (worldIn.isClientSide) {
-			Minecraft.getInstance().setScreen(new ScreenItemTome(true, playerIn.getUUID(), CosmosUtil.getStack(playerIn)));
+			this.openScreen(playerIn);
 		}
 		
 		playerIn.swing(handIn);
 		return InteractionResultHolder.pass(playerIn.getItemInHand(handIn));
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	public void openScreen(Player playerIn) {
+		Minecraft.getInstance().setScreen(new ScreenItemTome(true, playerIn.getUUID(), CosmosUtil.getStack(playerIn)));
 	}
 	
 	@Override

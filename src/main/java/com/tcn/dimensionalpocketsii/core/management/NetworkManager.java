@@ -7,7 +7,9 @@ import com.tcn.dimensionalpocketsii.core.network.elytraplate.PacketElytraItemSta
 import com.tcn.dimensionalpocketsii.core.network.elytraplate.PacketElytraSettingsChange;
 import com.tcn.dimensionalpocketsii.core.network.elytraplate.PacketElytraShift;
 import com.tcn.dimensionalpocketsii.core.network.elytraplate.PacketElytraUseEnergy;
-import com.tcn.dimensionalpocketsii.core.network.elytraplate.PacketElytraplateOpenUI;
+import com.tcn.dimensionalpocketsii.core.network.elytraplate.PacketElytraplateOpenConnector;
+import com.tcn.dimensionalpocketsii.core.network.elytraplate.PacketElytraplateOpenEnderChest;
+import com.tcn.dimensionalpocketsii.core.network.elytraplate.PacketElytraplateOpenSettings;
 import com.tcn.dimensionalpocketsii.core.network.elytraplate.PacketElytraplateUpdateUIMode;
 
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +35,10 @@ public class NetworkManager {
 		
 		INSTANCE.registerMessage(5, PacketElytraSettingsChange.class, PacketElytraSettingsChange::encode, PacketElytraSettingsChange::new, PacketElytraSettingsChange::handle);
 		INSTANCE.registerMessage(6, PacketElytraplateUpdateUIMode.class, PacketElytraplateUpdateUIMode::encode, PacketElytraplateUpdateUIMode::new, PacketElytraplateUpdateUIMode::handle);
-		INSTANCE.registerMessage(7, PacketElytraplateOpenUI.class, PacketElytraplateOpenUI::encode, PacketElytraplateOpenUI::new, PacketElytraplateOpenUI::handle);
+		
+		INSTANCE.registerMessage(7, PacketElytraplateOpenConnector.class, PacketElytraplateOpenConnector::encode, PacketElytraplateOpenConnector::new, PacketElytraplateOpenConnector::handle);
+		INSTANCE.registerMessage(8, PacketElytraplateOpenSettings.class, PacketElytraplateOpenSettings::encode, PacketElytraplateOpenSettings::new, PacketElytraplateOpenSettings::handle);
+		INSTANCE.registerMessage(9, PacketElytraplateOpenEnderChest.class, PacketElytraplateOpenEnderChest::encode, PacketElytraplateOpenEnderChest::new, PacketElytraplateOpenEnderChest::handle);
 
 		DimensionalPockets.CONSOLE.startup("Dimensional Network Setup complete.");
 	}

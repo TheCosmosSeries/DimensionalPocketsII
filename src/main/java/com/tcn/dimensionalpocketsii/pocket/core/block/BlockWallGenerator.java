@@ -38,7 +38,7 @@ public class BlockWallGenerator extends BlockWallModule implements IBlankCreativ
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level levelIn, BlockState stateIn, BlockEntityType<T> entityTypeIn) {
-		return createTicker(levelIn, entityTypeIn, ModBusManager.GENERATOR_TILE_TYPE);
+		return createTicker(levelIn, entityTypeIn, ModBusManager.BLOCK_ENTITY_TYPE_GENERATOR);
 	}
 
 	@Nullable

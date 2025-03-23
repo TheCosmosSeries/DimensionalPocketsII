@@ -34,5 +34,4 @@ public class ColourBlockPocket implements BlockColor {
 		
 		return ComponentColour.POCKET_PURPLE.dec();
 	}
-
 }

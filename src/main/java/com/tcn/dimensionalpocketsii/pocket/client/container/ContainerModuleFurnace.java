@@ -35,7 +35,7 @@ public class ContainerModuleFurnace extends CosmosContainerRecipeBookBlockEntity
 	}
 	
 	public ContainerModuleFurnace(int indexIn, Inventory playerInventoryIn, Container furnaceInventoryIn, ContainerData furnaceDataIn, BlockPos posIn) {
-		super(ModBusManager.FURNACE_CONTAINER_TYPE, indexIn, playerInventoryIn, null, posIn);
+		super(ModBusManager.CONTAINER_TYPE_FURNACE, indexIn, playerInventoryIn, null, posIn);
 		
 		this.recipeType = RecipeType.SMELTING;
 		this.recipeBookType = RecipeBookType.FURNACE;

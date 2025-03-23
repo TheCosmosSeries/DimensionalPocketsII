@@ -6,6 +6,7 @@ import com.tcn.cosmoslibrary.common.block.CosmosBlockConnectedUnbreakable;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.lib.ComponentHelper;
 import com.tcn.cosmoslibrary.common.lib.CosmosChunkPos;
+import com.tcn.cosmoslibrary.common.util.CosmosUtil;
 import com.tcn.dimensionalpocketsii.core.management.ConfigurationManager;
 import com.tcn.dimensionalpocketsii.core.management.DimensionManager;
 import com.tcn.dimensionalpocketsii.core.management.ModBusManager;
@@ -34,26 +35,22 @@ public class BlockWallEdge extends CosmosBlockConnectedUnbreakable {
 	public BlockWallEdge(Block.Properties prop) {
 		super(prop);
 	}
-	
+
 	@Override
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult hit) {
-		if (!worldIn.isClientSide) {
-			if (PocketUtil.isDimensionEqual(worldIn, DimensionManager.POCKET_WORLD)) {
-				Pocket pocket = PocketRegistryManager.getPocketFromChunkPosition(CosmosChunkPos.scaleToChunkPos(pos));
-				
-				if (pocket.exists()) {
-					if (playerIn.isShiftKeyDown()) {
-						if (playerIn.getItemInHand(handIn).isEmpty()) {
-							if (!worldIn.isClientSide) {
-								pocket.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
-								return InteractionResult.SUCCESS;
-							}
-						} 
-					}
-				} else {
-					CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.action.null"));
-					return InteractionResult.FAIL;
+		if (PocketUtil.isDimensionEqual(worldIn, DimensionManager.POCKET_WORLD)) {
+			Pocket pocket = PocketRegistryManager.getPocketFromChunkPosition(CosmosChunkPos.scaleToChunkPos(pos));
+			
+			if (pocket.exists()) {
+				if (playerIn.isShiftKeyDown()) {
+					if (CosmosUtil.handEmpty(playerIn)) {
+						pocket.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
+						return InteractionResult.SUCCESS;
+					} 
 				}
+			} else {
+				CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.action.null"));
+				return InteractionResult.FAIL;
 			}
 		}
 		return InteractionResult.FAIL;
@@ -74,6 +71,8 @@ public class BlockWallEdge extends CosmosBlockConnectedUnbreakable {
 			} else if (conn.getBlock().equals(ModBusManager.BLOCK_WALL)) {
 				return true;
 			} else if (conn.getBlock() instanceof BlockWallModule) {
+				return true;
+			} else if (conn.getBlock() instanceof BlockWallDoor) {
 				return true;
 			} else {
 				return false;

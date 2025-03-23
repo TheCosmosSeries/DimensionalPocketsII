@@ -40,16 +40,16 @@ public class PocketRecoverModeratorCommand {
 				ItemStack pocketStack = pocketIn.generateItemStackWithNBT();
 				
 				if (serverPlayer.getInventory().add(pocketStack)) {
-					commandSourceIn.sendSuccess(ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.command.recoverpocket.success.single", ": [ " + chunkPos.getX() + ", " + chunkPos.getZ() + " ]"), true);
+					commandSourceIn.sendSuccess(ComponentHelper.style2(ComponentColour.GREEN, "dimensionalpocketsii.command.recoverpocket.success.single", ": [ " + chunkPos.getX() + ", " + chunkPos.getZ() + " ]"), true);
 					System.out.println("Player: [ " + playerDisplayName + ", " + playerUUID + " ] Just activated the Recover Pocket Command. For Pocket: " + chunkPos);
 				} else {
-					commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.command.recoverpocket.error.no_space"));
+					commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.command.recoverpocket.error.no_space"));
 				}
 			} else {
-				commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.command.recoverpocket.error.exists"));
+				commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.command.recoverpocket.error.exists"));
 			}
 		} else {
-			commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.command.recoverpocket.error.creative"));
+			commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.command.recoverpocket.error.creative"));
 		}
 		
 		return 1;

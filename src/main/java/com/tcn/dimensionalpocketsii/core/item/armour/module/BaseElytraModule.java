@@ -14,7 +14,8 @@ public enum BaseElytraModule {
 	SCREEN(1, "screen", "dimensionalpocketsii.armour_module.screen", ComponentColour.CYAN, ModBusManager.ARMOUR_MODULE_SCREEN, null),
 	VISOR(2, "visor", "dimensionalpocketsii.armour_module.visor", ComponentColour.LIGHT_BLUE, ModBusManager.ARMOUR_MODULE_VISOR, ElytraSettings.VISOR),
 	SOLAR(3, "solar", "dimensionalpocketsii.armour_module.solar", ComponentColour.TURQUOISE, ModBusManager.ARMOUR_MODULE_SOLAR, ElytraSettings.SOLAR),
-	BATTERY(4, "battery", "dimensionalpocketsii.armour_module.battery", ComponentColour.RED, ModBusManager.ARMOUR_MODULE_BATTERY, ElytraSettings.CHARGER);
+	BATTERY(4, "battery", "dimensionalpocketsii.armour_module.battery", ComponentColour.RED, ModBusManager.ARMOUR_MODULE_BATTERY, ElytraSettings.CHARGER),
+	ENDER_CHEST(5, "screen_ender_chest", "dimensionalpocketsii.armour_module.ender_chest", ComponentColour.DARK_CYAN, ModBusManager.ARMOUR_MODULE_ENDER_CHEST, null);
 	
 	private int index;
 	private String name;
@@ -23,7 +24,7 @@ public enum BaseElytraModule {
 	private Item moduleItem;
 	private ElytraSettings setting;
 	
-	public static final int LENGTH = 5;
+	public static final int LENGTH = 6;
 	
 	BaseElytraModule(int indexIn, String nameIn, String localizedName, ComponentColour displayColour, Item moduleItemIn, ElytraSettings settingIn) {
 		this.index = indexIn;
@@ -43,7 +44,7 @@ public enum BaseElytraModule {
 	}
 	
 	public BaseComponent getColouredComp() {
-		return ComponentHelper.locComp(this.displayColour, false, this.localizedName);
+		return ComponentHelper.style(this.displayColour, this.localizedName);
 	}
 	
 	public Item getModuleItem() {
@@ -65,6 +66,8 @@ public enum BaseElytraModule {
 			case SOLAR:
 				return BATTERY;
 			case BATTERY:
+				return ENDER_CHEST;
+			case ENDER_CHEST:
 				return SHIFTER;
 			default:
 				throw new IllegalStateException("Unable to obtain state of [" + this + "]");
@@ -82,6 +85,8 @@ public enum BaseElytraModule {
 		case SOLAR:
 			return BATTERY;
 		case BATTERY:
+			return ENDER_CHEST;
+		case ENDER_CHEST:
 			return SHIFTER;
 		default:
 			throw new IllegalStateException("Unable to obtain state of [" + previous + "]");
@@ -100,6 +105,8 @@ public enum BaseElytraModule {
 				return SOLAR;
 			case 4:
 				return BATTERY;
+			case 5:
+				return ENDER_CHEST;
 			default:
 				throw new IllegalStateException("No state exists with index: [" + index + "]");
 		}

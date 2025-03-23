@@ -17,9 +17,9 @@ import net.minecraft.world.entity.Entity;
 public class SetSpawnCommand {
 
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcherIn) {
-		dispatcherIn.register(Commands.literal("dim").then(Commands.literal("setspawn").requires((commandSource) -> { 
+		dispatcherIn.register(Commands.literal("dim").requires((commandSource) -> { 
 			return commandSource.hasPermission(0);
-		}).then(Commands.literal("setspawn")).executes((commandContext) -> {
+		}).then(Commands.literal("setspawn").executes((commandContext) -> {
 			return setSpawn(commandContext.getSource());
 		})));
 	}
@@ -40,15 +40,15 @@ public class SetSpawnCommand {
 					if (pocket.checkIfOwner(serverPlayer)) {
 						pocket.setSpawnInPocket(spawnPos, serverPlayer.getRotationVector().y, serverPlayer.getRotationVector().x);
 						
-						commandSourceIn.sendSuccess(ComponentHelper.locComp(ComponentColour.GREEN, false, "dimensionalpocketsii.command.setspawn.success.pre", pos.getX() + ", " + pos.getY() + ", " + pos.getZ(), "dimensionalpocketsii.command.setspawn.success.suff"), true);
+						commandSourceIn.sendSuccess(ComponentHelper.style2(ComponentColour.GREEN, "dimensionalpocketsii.command.setspawn.success.pre", pos.getX() + ", " + pos.getY() + ", " + pos.getZ(), "dimensionalpocketsii.command.setspawn.success.suff"), true);
 					} else {
-						commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.pocket.status.action.not_owner"));
+						commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.pocket.status.action.not_owner"));
 					}
 				} else {
-					commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.pocket.status.action.null"));
+					commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.pocket.status.action.null"));
 				}
 			} else {
-				commandSourceIn.sendFailure(ComponentHelper.locComp("dimensionalpocketsii.command.setspawn.error.dimension"));
+				commandSourceIn.sendFailure(ComponentHelper.comp("dimensionalpocketsii.command.setspawn.error.dimension"));
 			}
 		}
 		

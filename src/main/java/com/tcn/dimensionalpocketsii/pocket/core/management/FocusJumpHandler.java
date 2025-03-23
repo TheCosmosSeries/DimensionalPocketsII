@@ -28,7 +28,7 @@ public class FocusJumpHandler {
     }
 
     private static boolean validTarget(BlockState blockState) {
-        return !blockState.getMaterial().isSolid(); // TODO maybe change this
+        return !blockState.getMaterial().isSolid();
     }
 
     private static boolean validateTargets(BlockState... states) {

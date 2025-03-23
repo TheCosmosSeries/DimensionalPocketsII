@@ -1,14 +1,17 @@
 package com.tcn.dimensionalpocketsii.pocket.core.blockentity;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import javax.annotation.Nullable;
 
 import com.tcn.cosmoslibrary.client.interfaces.IBlockEntityClientUpdated;
+import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumConnectionType;
 import com.tcn.cosmoslibrary.common.enums.EnumSideState;
 import com.tcn.cosmoslibrary.common.enums.EnumUIHelp;
+import com.tcn.cosmoslibrary.common.enums.EnumUILock;
 import com.tcn.cosmoslibrary.common.enums.EnumUIMode;
 import com.tcn.cosmoslibrary.common.interfaces.IFluidStorage;
 import com.tcn.cosmoslibrary.common.interfaces.block.IBlockInteract;
@@ -54,7 +57,6 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
@@ -73,21 +75,22 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import net.minecraftforge.network.NetworkHooks;
 
-public class BlockEntityModuleConnector extends BlockEntity implements IBlockInteract, Container, MenuProvider, Nameable, WorldlyContainer, IBlockEntitySided, IFluidHandler, IFluidStorage, IBlockEntityClientUpdated.FluidTile, IBlockEntityConnectionType, IBlockEntityUIMode {
+public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable implements IBlockInteract, Container, MenuProvider, Nameable, WorldlyContainer, IBlockEntitySided, IFluidHandler, IFluidStorage, IBlockEntityClientUpdated.FluidTile, IBlockEntityConnectionType, IBlockEntityUIMode {
 
 	private EnumSideState[] SIDE_STATE_ARRAY = EnumSideState.getStandardArray();
 	private EnumConnectionType TYPE = EnumConnectionType.getStandardValue();
 	
-	private NonNullList<ItemStack> inventoryItems = NonNullList.<ItemStack>withSize(8, ItemStack.EMPTY);
+	private NonNullList<ItemStack> inventoryItems = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
 	
 	private Pocket pocket;
 	private int update = 0;
 
 	private EnumUIMode uiMode = EnumUIMode.DARK;
 	private EnumUIHelp uiHelp = EnumUIHelp.HIDDEN;
+	private EnumUILock uiLock = EnumUILock.PRIVATE;
 
 	public BlockEntityModuleConnector(BlockPos posIn, BlockState stateIn) {
-		super(ModBusManager.CONNECTOR_TILE_TYPE, posIn, stateIn);
+		super(ModBusManager.BLOCK_ENTITY_TYPE_CONNECTOR, posIn, stateIn);
 	}
 	
 	public BlockEntityModuleConnector(BlockPos posIn) {
@@ -103,7 +106,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 	}
 
 	@Override
-	public void sendUpdates(boolean update) {
+	public void sendUpdates(boolean forceUpdate) {
 		if (level != null) {
 			this.setChanged();
 			BlockState state = this.getBlockState();
@@ -111,7 +114,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 			
 			level.sendBlockUpdated(this.getBlockPos(), state, state, 3);
 			
-			if (update) {
+			if (forceUpdate) {
 				if (!level.isClientSide) {
 					level.setBlockAndUpdate(this.getBlockPos(), block.updateState(state, this.getBlockPos(), level));
 					
@@ -142,6 +145,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 
 		compound.putInt("ui_mode", this.uiMode.getIndex());
 		compound.putInt("ui_help", this.uiHelp.getIndex());
+		compound.putInt("ui_lock", this.uiLock.getIndex());
 	}
 	
 	@Override
@@ -163,6 +167,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 		
 		this.uiMode = EnumUIMode.getStateFromIndex(compound.getInt("ui_mode"));
 		this.uiHelp = EnumUIHelp.getStateFromIndex(compound.getInt("ui_help"));
+		this.uiLock = EnumUILock.getStateFromIndex(compound.getInt("ui_lock"));
 	}
 	
 	/**
@@ -204,16 +209,20 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 	}
 	
 	@Override
-	public void onLoad() { }
+	public void onLoad() { 
+		if (!this.inventoryItems.get(0).getItem().equals(Items.BUCKET)) {
+			this.inventoryItems.clear();
+		}
+	}
 	
 	public static void tick(Level levelIn, BlockPos posIn, BlockState stateIn, BlockEntityModuleConnector entityIn) {
 		if (entityIn.getPocket() != null) {
-			entityIn.setSurroundingStacks();
+			//entityIn.setSurroundingStacks();
 			//entityIn.syncWithPocketInventory();
 			entityIn.checkFluidSlots();
 		}
 		
-		for (Direction d : Direction.values()) {
+		Arrays.stream(Direction.values()).parallel().forEach((d) -> {
 			BlockEntity tile = entityIn.getLevel().getBlockEntity(entityIn.getBlockPos().offset(d.getNormal()));
 
 			if (!(tile instanceof BlockEntityModuleConnector) && !(tile instanceof BlockEntityModuleFurnace) 
@@ -225,13 +234,18 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 						if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_OUTPUT)) {
 							if (tile.getCapability(CapabilityEnergy.ENERGY, d).resolve().isPresent()) {
 								LazyOptional<?> consumer = tile.getCapability(CapabilityEnergy.ENERGY, d);
-	
+
 								if (consumer.resolve().get() instanceof IEnergyStorage) {
 									IEnergyStorage storage = (IEnergyStorage) consumer.resolve().get();
-	
-									if (storage.canReceive()) {
-										entityIn.getPocket().extractEnergy(storage.receiveEnergy(entityIn.getPocket().getMaxExtract(), false), false);
-										entityIn.sendUpdates(true);
+
+									if (storage.canReceive() && entityIn.canExtract(d)) {
+										int extract = entityIn.getPocket().extractEnergy(entityIn.getPocket().getMaxExtract(), true);
+										int actualExtract = storage.receiveEnergy(extract, true);
+										
+										if (actualExtract > 0) {
+											entityIn.getPocket().extractEnergy(storage.receiveEnergy(actualExtract, false), false);
+											entityIn.sendUpdates(true);
+										}
 									}
 								}
 							}
@@ -243,8 +257,13 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 									IEnergyStorage storage = (IEnergyStorage) consumer.resolve().get();
 	
 									if (storage.canExtract() && entityIn.canReceive(d)) {
-										entityIn.getPocket().receiveEnergy(storage.extractEnergy(entityIn.getPocket().getMaxReceive(), false), false);
-										entityIn.sendUpdates(true);
+										int extract = storage.extractEnergy(entityIn.getPocket().getMaxReceive(), true);
+										int actualExtract = entityIn.getPocket().receiveEnergy(extract, true);
+										
+										if (actualExtract > 0) {
+											entityIn.getPocket().receiveEnergy(storage.extractEnergy(actualExtract, false), false);
+											entityIn.sendUpdates(true);
+										}
 									}
 								}
 							}
@@ -301,7 +320,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 						if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_OUTPUT)) {
 							if (tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d).resolve().isPresent()) {
 								LazyOptional<?> consumer = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d);
-	
+								
 								if (consumer.resolve().get() instanceof IFluidHandler) {
 									IFluidHandler storage = (IFluidHandler) consumer.resolve().get();
 									
@@ -321,7 +340,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 						} else if (entityIn.getSide(d).equals(EnumSideState.INTERFACE_INPUT)) {
 							if (tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d).resolve().isPresent()) {
 								LazyOptional<?> consumer = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d);
-	
+								
 								if (consumer.resolve().get() instanceof IFluidHandler) {
 									IFluidHandler storage = (IFluidHandler) consumer.resolve().get();
 									
@@ -341,7 +360,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 					}
 				}
 			}
-		}
+		});
 		
 		if (entityIn.update > 0) {
 			entityIn.update--;
@@ -356,6 +375,10 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 
 	@Override
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult hit) {
+		if (CosmosUtil.getStackItem(playerIn) instanceof BlockItem) {
+			return InteractionResult.FAIL;
+		}
+		
 		if (PocketUtil.isDimensionEqual(worldIn, DimensionManager.POCKET_WORLD)) {
 			Pocket pocketIn = this.getPocket();
 			
@@ -367,15 +390,14 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 								worldIn.setBlockAndUpdate(pos, ModBusManager.BLOCK_WALL.defaultBlockState());
 								worldIn.removeBlockEntity(pos);
 								
-								if (!playerIn.isCreative()) {
-									CosmosUtil.addItem(worldIn, playerIn, ModBusManager.MODULE_CONNECTOR, 1);
-								}
+								CosmosUtil.addItem(worldIn, playerIn, ModBusManager.MODULE_CONNECTOR, 1);
+								pocketIn.removeUpdateable(pos);
 							}
 							
 							return InteractionResult.SUCCESS;
 						} else {
 							CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
-							return InteractionResult.SUCCESS;
+							return InteractionResult.FAIL;
 						}
 					} else if (CosmosUtil.handEmpty(playerIn)) {
 						pocketIn.shift(playerIn, EnumShiftDirection.LEAVE, null, null, null);
@@ -387,7 +409,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 							this.cycleSide(Direction.UP, true);
 						}
 						
-						CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.locComp(ComponentColour.CYAN, false, "dimensionalpocketsii.pocket.status.cycle_side").append(this.getSide(Direction.UP).getColouredComp()));
+						CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.style(ComponentColour.CYAN, "dimensionalpocketsii.pocket.status.cycle_side").append(this.getSide(Direction.UP).getColouredComp()));
 						return InteractionResult.SUCCESS;
 					}
 					
@@ -402,57 +424,34 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 								pocketIn.setDisplayColour(playerIn, worldIn, colour.dec());
 								this.sendUpdates(true);
 								
-								CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.locComp(ComponentColour.CYAN, false, "dimensionalpocketsii.pocket.status.colour_update").append(colour.getColouredName()));
+								CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.style(ComponentColour.CYAN, "dimensionalpocketsii.pocket.status.colour_update").append(colour.getColouredName()));
 								return InteractionResult.SUCCESS;
 							} else {
 								return InteractionResult.FAIL;
 							}
 						} else {
 							CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
-							return InteractionResult.SUCCESS;
+							return InteractionResult.FAIL;
 						}
 					}
-					
-					/*
-					else if (CosmosUtil.getStackItem(playerIn) instanceof BucketItem) {
-						if (this.getConnectionType().equals(EnumConnectionType.FLUID)) {
-							Optional<FluidStack> fluidStack = FluidUtil.getFluidContained(CosmosUtil.getStack(playerIn));
-							
-							if (fluidStack.isPresent()) {
-								FluidStack fluid = fluidStack.get();
-								
-								if (fluid != null) {
-									int amount = this.fill(fluid, FluidAction.SIMULATE);
-									
-									if (amount == fluid.getAmount()) {
-										this.fill(fluid, FluidAction.EXECUTE);
-									}
-								}
-							} else {
-								if (this.getCurrentFluidAmount() > 0) {
-									FluidUtil.tryFillContainer(CosmosUtil.getStack(playerIn), this.getTank(), 1000, playerIn, true);
-								}
-							}
-						}
-					}
-					*/
-					
-					else if (!(CosmosUtil.getStackItem(playerIn) instanceof BlockItem)) {
-						if (pocketIn.checkIfOwner(playerIn)) {
-							if (playerIn instanceof ServerPlayer) {
+					if (worldIn.isClientSide) {
+						return InteractionResult.SUCCESS;
+					} else {
+						if (playerIn instanceof ServerPlayer) {
+							if (pocketIn.checkIfOwner(playerIn)) {
 								NetworkHooks.openGui((ServerPlayer) playerIn, this, (packetBuffer)->{ packetBuffer.writeBlockPos(this.getBlockPos()); });
+							} else {
+								CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
+								return InteractionResult.FAIL;
 							}
-							
-							return InteractionResult.SUCCESS;
-						} else {
-							CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.no_access"));
-							return InteractionResult.SUCCESS;
 						}
+						
+						return InteractionResult.SUCCESS;
 					}
 				}
 			} else {
 				CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.action.null"));
-				return InteractionResult.SUCCESS;
+				return InteractionResult.FAIL;
 			}
 		}
 
@@ -678,12 +677,12 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 
 	@Override
 	public Component getDisplayName() {
-		return ComponentHelper.locComp("dimensionalpocketsii.gui.connector.header");
+		return ComponentHelper.title("dimensionalpocketsii.gui.connector.header");
 	}
 
 	@Override
 	public Component getName() {
-		return ComponentHelper.locComp("dimensionalpocketsii.gui.connector.header");
+		return ComponentHelper.title("dimensionalpocketsii.gui.connector.header");
 	}
 
 	@Override
@@ -699,15 +698,15 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 		if (this.level != null) {
 			return this.getPocket().getContainerSize();
 		}
-		return 48;
+		return DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH;
 	}
 
 	@Override
 	public ItemStack getItem(int index) {
-		if (index < 48) {
+		if (index < DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			return this.getPocket().getItem(index);
 		} else {
-			return this.inventoryItems.get(index - 48);
+			return this.inventoryItems.get(index - DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
 		}
 	}
 
@@ -715,10 +714,10 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 	public ItemStack removeItem(int index, int count) {
 		this.setChanged();
 		
-		if (index < 48) {
+		if (index < DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			return this.getPocket().removeItem(index, count);
 		} else {
-			return ContainerHelper.removeItem(inventoryItems, index - 48, count);
+			return ContainerHelper.removeItem(inventoryItems, index - DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, count);
 		}
 	}
 
@@ -726,19 +725,19 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 	public ItemStack removeItemNoUpdate(int index) {
 		this.setChanged();
 		
-		if (index < 48) {
+		if (index < DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			return this.getPocket().removeItemNoUpdate(index);
 		} else {
-			return ContainerHelper.takeItem(this.inventoryItems, index - 48);
+			return ContainerHelper.takeItem(this.inventoryItems, index - DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH);
 		}
 	}
 	
 	@Override
 	public void setItem(int index, ItemStack stack) {
-		if (index < 48) {
+		if (index < DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH) {
 			this.getPocket().setItem(index, stack);
 		} else {
-			this.inventoryItems.set(index - 48, stack);
+			this.inventoryItems.set(index - DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE_WITH, stack);
 		}
 		
 		this.setChanged();
@@ -789,30 +788,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 		return new int[] { 40, 41, 42, 43, 44, 45, 46, 47 };
 	}
 	
-	public void setSurroundingStacks() {
-		Pocket pocket = this.getPocket();
-		
-		if(pocket != null) {
-			if (!this.level.isClientSide) {
-				Level blockLevel = this.getPocket().getSourceBlockLevel();
-				BlockPos blockPos = this.getPocket().getLastBlockPos();
-				
-				if (blockLevel != null) {
-					BlockEntity blockTile = blockLevel.getBlockEntity(blockPos);
-					
-					if (blockTile != null && blockTile instanceof BlockEntityPocket) {
-						for (Direction c : Direction.values()) {
-							Block block_other = blockLevel.getBlockState(blockPos.offset(c.getNormal())).getBlock();
-							this.setItem(c.get3DDataValue() + DimReference.CONSTANT.POCKET_HELD_ITEMS_SIZE, new ItemStack(block_other));
-						}
-					}
-				}
-			}
-		}
-	}
-
 	public boolean canExtract(Direction directionIn) {
-		this.sendUpdates(true);
 		EnumConnectionType type = this.getConnectionType();
 		
 		if (type.equals(EnumConnectionType.ENERGY)) {
@@ -829,7 +805,6 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 	}
 
 	public boolean canReceive(Direction directionIn) {
-		this.sendUpdates(true);
 		EnumConnectionType type = this.getConnectionType();
 		
 		if (type.equals(EnumConnectionType.ENERGY)) {
@@ -844,43 +819,81 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 			return false;
 		}
 	}
-	
+
 	private LazyOptional<IFluidHandler> createFluidProxy(@Nullable Direction directionIn) {
 		return LazyOptional.of(() -> new IFluidHandler() {
 
 			@Override
 			public int getTanks() {
-				return BlockEntityModuleConnector.this.getPocket().getTanks();
+				if (BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.FLUID)) {
+					return BlockEntityModuleConnector.this.getPocket().getTanks();
+				}
+				
+				return 0;
 			}
 
 			@Override
 			public FluidStack getFluidInTank(int tank) {
-				return BlockEntityModuleConnector.this.getPocket().getFluidInTank();
+				if (BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.FLUID)) {
+					return BlockEntityModuleConnector.this.getPocket().getFluidInTank();
+				}
+				
+				return FluidStack.EMPTY;
 			}
 
 			@Override
 			public int getTankCapacity(int tank) {
-				return BlockEntityModuleConnector.this.getPocket().getFluidTankCapacity();
+				if (BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.FLUID)) {
+					return BlockEntityModuleConnector.this.getPocket().getFluidTankCapacity();
+				}
+				
+				return 0;
 			}
 
 			@Override
 			public boolean isFluidValid(int tank, FluidStack stack) {
-				return true;
+				if (BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.FLUID)) {
+					if (!BlockEntityModuleConnector.this.getSide(directionIn.getOpposite()).equals(EnumSideState.DISABLED)) {
+						return true;
+					}
+				}
+				
+				return false;
 			}
 
 			@Override
 			public int fill(FluidStack resource, FluidAction action) {
-				return BlockEntityModuleConnector.this.getPocket().fill(resource, action);
+				if (BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.FLUID)) {
+					if (!BlockEntityModuleConnector.this.getSide(directionIn.getOpposite()).equals(EnumSideState.DISABLED)) {
+						return BlockEntityModuleConnector.this.getPocket().fill(resource, action);
+					}
+				}
+				
+				return 0;
 			}
 
 			@Override
 			public FluidStack drain(FluidStack resource, FluidAction action) {
-				return BlockEntityModuleConnector.this.getPocket().drain(resource, action);
+				if (BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.FLUID)) {
+					if (!BlockEntityModuleConnector.this.getSide(directionIn.getOpposite()).equals(EnumSideState.DISABLED)) {
+						BlockEntityModuleConnector.this.sendUpdates(true);
+						return BlockEntityModuleConnector.this.getPocket().drain(resource, action);
+					}
+				}
+				
+				return FluidStack.EMPTY;
 			}
 
 			@Override
 			public FluidStack drain(int maxDrain, FluidAction action) {
-				return BlockEntityModuleConnector.this.getPocket().drain(maxDrain, action);
+				if (BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.FLUID)) {
+					if (!BlockEntityModuleConnector.this.getSide(directionIn.getOpposite()).equals(EnumSideState.DISABLED)) {
+						BlockEntityModuleConnector.this.sendUpdates(true);
+						return BlockEntityModuleConnector.this.getPocket().drain(maxDrain, action);
+					}
+				}
+				
+				return FluidStack.EMPTY;
 			}
 			
 		});
@@ -890,6 +903,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
         return LazyOptional.of(() -> new IEnergyStorage() {
             @Override
             public int extractEnergy(int maxExtract, boolean simulate) {
+            	BlockEntityModuleConnector.this.sendUpdates(true);
                 return BlockEntityModuleConnector.this.getPocket().extractEnergy(maxExtract, simulate);
             }
 
@@ -905,6 +919,7 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 
             @Override
             public int receiveEnergy(int maxReceive, boolean simulate) {
+            	BlockEntityModuleConnector.this.sendUpdates(true);
                 return BlockEntityModuleConnector.this.getPocket().receiveEnergy(maxReceive, simulate);
             }
 
@@ -977,5 +992,44 @@ public class BlockEntityModuleConnector extends BlockEntity implements IBlockInt
 	@Override
 	public void cycleUIHelp() {
 		this.uiHelp = EnumUIHelp.getNextStateFromState(this.uiHelp);
+	}
+
+	@Override
+	public EnumUILock getUILock() {
+		return this.uiLock;
+	}
+
+	@Override
+	public void setUILock(EnumUILock modeIn) {
+		this.uiLock = modeIn;
+	}
+
+	@Override
+	public void cycleUILock() {
+		this.uiLock = EnumUILock.getNextStateFromState(this.uiLock);
+	}
+
+	@Override
+	public void setOwner(Player playerIn) { }
+
+	@Override
+	public boolean canPlayerAccess(Player playerIn) {
+		if (this.getUILock().equals(EnumUILock.PUBLIC)) {
+			return true;
+		} else {
+			if (this.getPocket().checkIfOwner(playerIn)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean checkIfOwner(Player playerIn) {
+		if (this.getPocket().checkIfOwner(playerIn)) {
+			return true;
+		}
+		return false;
 	}
 }

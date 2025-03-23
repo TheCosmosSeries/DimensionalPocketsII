@@ -37,7 +37,7 @@ public class ContainerModuleCrafter extends CosmosContainerRecipeBookBlockEntity
 	}
 
 	public ContainerModuleCrafter(int indexIn, Inventory playerInventoryIn, ContainerLevelAccess accessIn, BlockPos posIn) {
-		super(ModBusManager.CRAFTER_CONTAINER_TYPE, indexIn, playerInventoryIn, accessIn, posIn);
+		super(ModBusManager.CONTAINER_TYPE_CRAFTER, indexIn, playerInventoryIn, accessIn, posIn);
 		
 		this.addSlot(new ResultSlot(playerInventoryIn.player, this.craftSlots, this.resultSlots, 0, 128, 35));
 
