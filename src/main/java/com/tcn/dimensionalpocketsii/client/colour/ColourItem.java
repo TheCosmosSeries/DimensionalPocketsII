@@ -61,7 +61,7 @@ public class ColourItem implements ItemColor {
 					}
 				}
 			}
-		} else if (item instanceof CosmosArmourItemElytra itemElytra) {
+		} else if (item instanceof CosmosArmourItemElytra) {
 			if (stackIn.has(DataComponents.CUSTOM_DATA)) {
 				CompoundTag stack_tag = stackIn.get(DataComponents.CUSTOM_DATA).copyTag();
 				
@@ -94,7 +94,7 @@ public class ColourItem implements ItemColor {
 			}
 		}
 		
-		else if (item instanceof CosmosArmourItemColourable itemArmourColourable) {
+		else if (item instanceof CosmosArmourItemColourable) {
 			if (stackIn.has(DataComponents.CUSTOM_DATA)) {
 				CompoundTag stack_tag = stackIn.get(DataComponents.CUSTOM_DATA).copyTag();
 				

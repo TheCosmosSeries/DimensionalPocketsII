@@ -719,7 +719,6 @@ public class PocketsRegistrationManager {
 							if (location.getLayer().equals("inner_armor")) {
 								layers[0] = location;
 							}
-							
 							if (location.getLayer().equals("outer_armor")) {
 								layers[1] = location;
 							}
@@ -763,8 +762,7 @@ public class PocketsRegistrationManager {
 	@OnlyIn(Dist.CLIENT)
 	public static void onModelRegistryEvent(ModelEvent.RegisterAdditional event) {
 		CosmosRuntime.Client.registerStandaloneItemModels(event, DimensionalPockets.MOD_ID, 
-			"dimensional_elytraplate_base", "dimensional_elytraplate_shifter", "dimensional_elytraplate_connect",
-			"dimensional_elytraplate_visor", "dimensional_elytraplate_solar", "dimensional_elytraplate_battery"
+			"dimensional_elytraplate_base", "dimensional_elytraplate_shifter", "dimensional_elytraplate_connect", "dimensional_elytraplate_visor", "dimensional_elytraplate_solar", "dimensional_elytraplate_battery"
 		);
 		
 		DimensionalPockets.CONSOLE.startup("Additional Model registration complete...");
@@ -779,9 +777,7 @@ public class PocketsRegistrationManager {
 		SUIT_SETTINGS = new KeyMapping("dimensionalpocketsii.keybind.suit_mode_change", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_APOSTROPHE, "dimensionalpocketsii.keybind.category");
 		SUIT_FIREWORK = new KeyMapping("dimensionalpocketsii.keybind.suit_firework", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_BRACKET, "dimensionalpocketsii.keybind.category");
 		
-		CosmosRuntime.Client.registerKeyMappings(event, 
-			SUIT_SCREEN, SUIT_SCREEN_ENDER_CHEST, SUIT_SHIFT, SUIT_SETTINGS, SUIT_FIREWORK
-		);
+		CosmosRuntime.Client.registerKeyMappings(event, SUIT_SCREEN, SUIT_SCREEN_ENDER_CHEST, SUIT_SHIFT, SUIT_SETTINGS, SUIT_FIREWORK);
 		
 		DimensionalPockets.CONSOLE.startup("Keybindings registration complete...");
 	}
@@ -852,13 +848,8 @@ public class PocketsRegistrationManager {
 
 	@SubscribeEvent
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		CosmosRuntime.Server.registerBlockEnergyCapabilities(event, 
-			BLOCK_ENTITY_TYPE_POCKET.get(), BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get(), BLOCK_ENTITY_TYPE_CONNECTOR.get()
-		);
-		
-		CosmosRuntime.Server.registerBlockFluidCapabilities(event, 
-			BLOCK_ENTITY_TYPE_POCKET.get(), BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get(), BLOCK_ENTITY_TYPE_CONNECTOR.get()
-		);
+		CosmosRuntime.Server.registerBlockEnergyCapabilities(event, BLOCK_ENTITY_TYPE_POCKET.get(), BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get(), BLOCK_ENTITY_TYPE_CONNECTOR.get());
+		CosmosRuntime.Server.registerBlockFluidCapabilities(event, BLOCK_ENTITY_TYPE_POCKET.get(), BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get(), BLOCK_ENTITY_TYPE_CONNECTOR.get());
 		
 		CosmosRuntime.Server.registerItemEnergyCapabilities(event, 
 			DIMENSIONAL_SHIFTER.get(), DIMENSIONAL_SHIFTER_ENHANCED.get(),
@@ -891,9 +882,7 @@ public class PocketsRegistrationManager {
 			BLOCK_WALL_CREATIVE_ENERGY.get(), BLOCK_WALL_CREATIVE_FLUID.get()
 		);
 		
-		CosmosRuntime.Client.setRenderLayers(RenderType.translucent(),
-			BLOCK_WALL_GLASS.get()
-		);;
+		CosmosRuntime.Client.setRenderLayers(RenderType.translucent(), BLOCK_WALL_GLASS.get());
 		
 		ItemProperties.register(DIMENSIONAL_BOW.get(), ResourceLocation.parse("pull"), (stack, level, entity, seed) -> { if (entity == null) { return 0.0F; } else { return entity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 20.0F; }});
 		ItemProperties.register(DIMENSIONAL_BOW.get(), ResourceLocation.parse("pulling"), (stack, level, entity, seed) -> { return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F; });
