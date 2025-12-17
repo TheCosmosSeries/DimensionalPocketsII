@@ -295,7 +295,9 @@ public class PocketsGameEventsManager {
 		// force use block even if hand is not empty
 		if (block == PocketsRegistrationManager.BLOCK_POCKET.get() ||
 				block == PocketsRegistrationManager.BLOCK_POCKET_ENHANCED.get() ||
-				block == PocketsRegistrationManager.BLOCK_WALL.get()) {
+				block == PocketsRegistrationManager.BLOCK_WALL.get()||
+				block == PocketsRegistrationManager.BLOCK_WALL_EDGE.get()
+		) {
 			event.setUseItem(TriState.FALSE);
 			event.setUseBlock(TriState.TRUE);
 		}
