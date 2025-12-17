@@ -37,6 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.neoforged.api.distmarker.Dist;
@@ -44,8 +45,10 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent.Key;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -285,5 +288,16 @@ public class PocketsGameEventsManager {
 	
 	@SubscribeEvent
 	public static void onPlayerLoggedInEvent(final PlayerEvent.PlayerLoggedInEvent event) { }
-	
+
+	@SubscribeEvent
+	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		Block block = (event.getLevel().getBlockState(event.getPos()).getBlock());
+		// force use block even if hand is not empty
+		if (block == PocketsRegistrationManager.BLOCK_POCKET.get() ||
+				block == PocketsRegistrationManager.BLOCK_POCKET_ENHANCED.get() ||
+				block == PocketsRegistrationManager.BLOCK_WALL.get()) {
+			event.setUseItem(TriState.FALSE);
+			event.setUseBlock(TriState.TRUE);
+		}
+	}
 }
