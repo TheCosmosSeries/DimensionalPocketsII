@@ -189,6 +189,7 @@
 	"item.dimensionalpocketsii.module_armour_workbench": "Armour Workbench Module",
 	"item.dimensionalpocketsii.module_upgrade_station": "Upgrade Station Module",
 	"item.dimensionalpocketsii.module_generator": "Pocket Generator Module",
+	"item.dimensionalpocketsii.module_generator_automated": "Automated Pocket Generator Module",
 	"item.dimensionalpocketsii.module_anvil": "Pocket Anvil Module",
 	
 	"item.dimensionalpocketsii.module_glass": "Pocket Glass Module",
@@ -348,6 +349,11 @@
 	"dimensionalpocketsii.gui.generator": "Generator Module",
 	"dimensionalpocketsii.gui.generator.mode_info": "Change Generation Mode.",
 	"dimensionalpocketsii.gui.generator.mode_value": "Generation Mode: ",
+	
+
+	"dimensionalpocketsii.gui.generator_automated": "Automated Generator Module",
+	"dimensionalpocketsii.gui.generator_automated.mode_info": "Change Automation Mode.",
+	"dimensionalpocketsii.gui.generator_automated.mode_value": "Automation Mode: ",
 	
 	"dimensionalpocketsii.gui.anvil": "Anvil Module",
 	
@@ -538,6 +544,19 @@
 	"dimensionalpocketsii.gui.help.generator.burn_indicator_one": "This is a display of how much time",
 	"dimensionalpocketsii.gui.help.generator.burn_indicator_two": "is currently left of the current Item",
 	"dimensionalpocketsii.gui.help.generator.burn_indicator_three": "or Fluid for generating Power.",
+	
+	"dimensionalpocketsii.gui.help.generator.cog": "Automation Indicator",
+	"dimensionalpocketsii.gui.help.generator.cog_one": "This is an indicator of which",
+	"dimensionalpocketsii.gui.help.generator.cog_two": "Automation mode this Generator",
+	"dimensionalpocketsii.gui.help.generator.cog_three": "is currently in.",
+	
+	"dimensionalpocketsii.gui.help.generator_automated.mode_button": "Mode Change Button",
+	"dimensionalpocketsii.gui.help.generator_automated.mode_button_one": "This button toggles between two modes:",
+	"dimensionalpocketsii.gui.help.generator_automated.mode_button_two_pre": "Automated",
+	"dimensionalpocketsii.gui.help.generator_automated.mode_button_two": ", which pulls fluid from the Pocket",
+	"dimensionalpocketsii.gui.help.generator_automated.mode_button_two__": "and:",
+	"dimensionalpocketsii.gui.help.generator_automated.mode_button_three_pre": "Non-Automated",
+	"dimensionalpocketsii.gui.help.generator_automated.mode_button_three": ", which does not.",
 	
 	"dimensionalpocketsii.gui.help.generator.fluid_display": "Fluid Display",
 	"dimensionalpocketsii.gui.help.generator.fluid_display_one": "This is a real-time measurement",
@@ -966,6 +985,10 @@
 	"dimensionalpocketsii.info.module.generator": "Used to Generate FE Energy for your Pocket.",
 	"dimensionalpocketsii.info.module.generator_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
 	"dimensionalpocketsii.info.module.generator_shift_two": "To remove: shift-right click on the Generator with a Wrench.",
+	
+	"dimensionalpocketsii.info.module.generator_automated": "Generator MK2. Can automatically pull fluid from Pocket storage.",
+	"dimensionalpocketsii.info.module.generator_automated_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",
+	"dimensionalpocketsii.info.module.generator_automated_shift_two": "To remove: shift-right click on the Generator with a Wrench.",
 	
 	"dimensionalpocketsii.info.module.connector": "Used to Configure your Pocket.",
 	"dimensionalpocketsii.info.module.connector_shift_one": "To create: shift-right click this on any wall block inside your Pocket.",

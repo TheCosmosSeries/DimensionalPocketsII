@@ -10,6 +10,7 @@ import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleAr
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleCharger;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleConnector;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleGenerator;
+import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleGeneratorAutomated;
 import com.tcn.dimensionalpocketsii.pocket.core.management.PocketFocusManager;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.PacketAllowedPlayer;
@@ -26,6 +27,7 @@ import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketArmourItem;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketChargerEnergyState;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketFocus;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketFocusTeleport;
+import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketGeneratorAutomatedMode;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketGeneratorEmptyTank;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketGeneratorMode;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketWorkbench;
@@ -274,8 +276,31 @@ public class PocketServerPacketHandler {
 				if (entity instanceof BlockEntityModuleGenerator blockEntity) {
 					blockEntity.cycleGenerationMode();
 					DimensionalPockets.CONSOLE.debug("[Packet Delivery Success] {generator} <generationmode> Generation Mode cycled.");
-				} else {
+				} 
+				
+				/*if (entity instanceof BlockEntityModuleGeneratorAutomated blockEntity) {
+					blockEntity.cycleGenerationMode();
+					DimensionalPockets.CONSOLE.debug("[Packet Delivery Success] {generator} <generationmode> Generation Mode cycled.");
+				} */
+				
+				else {
 					DimensionalPockets.CONSOLE.debugWarn("[Packet Delivery Failure] {generator} <generationmode> Block Entity not equal to expected.");
+				}
+			});
+		}
+
+		if (data instanceof PacketGeneratorAutomatedMode packet) {
+			context.enqueueWork(() -> {
+				ServerLevel world = ServerLifecycleHooks.getCurrentServer().getLevel(PocketsDimensionManager.POCKET_WORLD);
+				BlockEntity entity = world.getBlockEntity(packet.pos());
+				
+				if (entity instanceof BlockEntityModuleGeneratorAutomated blockEntity) {
+					blockEntity.cycleAutomationMode();
+					DimensionalPockets.CONSOLE.debug("[Packet Delivery Success] {generator} <generationmode> Generation Mode cycled.");
+				} 
+				
+				else {
+					DimensionalPockets.CONSOLE.debugWarn("[Packet Delivery Failure] {generator_automated} <automationmode> Block Entity not equal to expected.");
 				}
 			});
 		}
@@ -286,6 +311,9 @@ public class PocketServerPacketHandler {
 				BlockEntity entity = world.getBlockEntity(packet.pos());
 				
 				if (entity instanceof BlockEntityModuleGenerator blockEntity) {
+					blockEntity.getFluidTank().setFluid(FluidStack.EMPTY);
+					DimensionalPockets.CONSOLE.debug("[Packet Delivery Success] {generator} <emptytank> Fluid Tank Emptied.");
+				} if (entity instanceof BlockEntityModuleGeneratorAutomated blockEntity) {
 					blockEntity.getFluidTank().setFluid(FluidStack.EMPTY);
 					DimensionalPockets.CONSOLE.debug("[Packet Delivery Success] {generator} <emptytank> Fluid Tank Emptied.");
 				} else {

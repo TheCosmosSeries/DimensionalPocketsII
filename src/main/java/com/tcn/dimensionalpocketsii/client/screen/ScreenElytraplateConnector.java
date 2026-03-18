@@ -222,9 +222,10 @@ public class ScreenElytraplateConnector extends AbstractContainerScreen<Containe
 
 	@Override
 	protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-		graphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, this.getUIMode().equals(EnumUIMode.DARK) ? CosmosUISystem.DEFAULT_COLOUR_FONT_LIST : ComponentColour.BLACK.dec(), false);
+		int textColour = this.getUIMode().equals(EnumUIMode.DARK) ? CosmosUISystem.DEFAULT_COLOUR_FONT_LIST : ComponentColour.BLACK.dec();
 		
-		graphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, this.getUIMode().equals(EnumUIMode.DARK) ? CosmosUISystem.DEFAULT_COLOUR_FONT_LIST : ComponentColour.BLACK.dec(), false);
+		graphics.drawString(this.font, ComponentHelper.style(textColour, this.title.getString()), this.titleLabelX, this.titleLabelY, textColour, false);
+		graphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, textColour, false);
 	}
 	
 	public void renderComponentHoverEffect(GuiGraphics graphics, Style style, int mouseX, int mouseY) {

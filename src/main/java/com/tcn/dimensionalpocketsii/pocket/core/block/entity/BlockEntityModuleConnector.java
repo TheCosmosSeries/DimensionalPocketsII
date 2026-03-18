@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.tcn.cosmoslibrary.common.blockentity.CosmosBlockEntityUpdateable;
 import com.tcn.cosmoslibrary.common.capability.IEnergyCapBE;
 import com.tcn.cosmoslibrary.common.capability.IFluidCapBE;
+import com.tcn.cosmoslibrary.common.capability.IItemCapBE;
 import com.tcn.cosmoslibrary.common.chat.CosmosChatUtil;
 import com.tcn.cosmoslibrary.common.enums.EnumConnectionType;
 import com.tcn.cosmoslibrary.common.enums.EnumSideState;
@@ -68,8 +69,9 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.items.IItemHandler;
 
-public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable implements IBlockInteract, MenuProvider, Nameable, WorldlyContainer, IBESided, IFluidHandler, IFluidStorage, IBEUpdates.FluidBE, IBEConnectionType, IBEUIMode, IBEUILockable, IEnergyCapBE, IFluidCapBE {
+public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable implements IBlockInteract, MenuProvider, Nameable, WorldlyContainer, IBESided, IFluidHandler, IFluidStorage, IBEUpdates.FluidBE, IBEConnectionType, IBEUIMode, IBEUILockable, IEnergyCapBE, IFluidCapBE, IItemCapBE {
 
 	private EnumSideState[] SIDE_STATE_ARRAY = EnumSideState.getStandardArray();
 	private EnumConnectionType TYPE = EnumConnectionType.getStandardValue();
@@ -240,6 +242,20 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 			entityIn.pullFluid(Direction.SOUTH);
 			entityIn.pullFluid(Direction.EAST);
 			entityIn.pullFluid(Direction.WEST);
+
+			entityIn.pushItems(Direction.DOWN);
+			entityIn.pushItems(Direction.UP);
+			entityIn.pushItems(Direction.NORTH);
+			entityIn.pushItems(Direction.SOUTH);
+			entityIn.pushItems(Direction.EAST);
+			entityIn.pushItems(Direction.WEST);
+			
+			entityIn.pullItems(Direction.DOWN);
+			entityIn.pullItems(Direction.UP);
+			entityIn.pullItems(Direction.NORTH);
+			entityIn.pullItems(Direction.SOUTH);
+			entityIn.pullItems(Direction.EAST);
+			entityIn.pullItems(Direction.WEST);
 		}
 		
 //		Arrays.stream(Direction.values()).parallel().forEach((d) -> {
@@ -412,7 +428,7 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 		BlockEntity entity = this.getLevel().getBlockEntity(otherPos);
 
 		if (this.getConnectionType().equals(EnumConnectionType.FLUID)) {
-		if (entity != null && !entity.isRemoved()) {
+			if (entity != null && !entity.isRemoved()) {
 				if (this.getSide(directionIn).equals(EnumSideState.INTERFACE_INPUT)) {
 					Object object = this.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, otherPos, directionIn);
 					
@@ -425,6 +441,75 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
 								if (lost > 0) {
 									this.fill(stack, FluidAction.EXECUTE);
 									storage.drain(lost, FluidAction.EXECUTE);
+								}
+							}
+						}
+					}
+				}
+			} else {
+				return;
+			}
+		} else {
+			return;
+		}
+	}
+
+	public void pushItems(Direction directionIn) {
+		BlockPos otherPos = this.getBlockPos().offset(directionIn.getNormal());
+		BlockEntity entity = this.getLevel().getBlockEntity(otherPos);
+
+		if (this.getConnectionType().equals(EnumConnectionType.ITEM)) {
+			if (entity != null && !entity.isRemoved()) {
+				if (!(entity instanceof BlockEntityModuleConnector) && !(entity instanceof BlockEntityModuleFurnace) && !(entity instanceof BlockEntityModuleArmourWorkbench) && !(entity instanceof BlockEntityModuleCrafter) && !(entity instanceof BlockEntityModuleCharger)) {
+					if (this.getSide(directionIn).equals(EnumSideState.INTERFACE_OUTPUT)) {
+						if (this.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, otherPos, directionIn) instanceof IItemHandler storage) {
+							for (int i = 40; i < 48; i++) {
+								if (!(this.getPocket().getItem(i).isEmpty())) {
+									for (int j = 0; j < storage.getSlots(); j++) {
+										if (storage.isItemValid(j, this.getPocket().getItem(i))) {
+											ItemStack stack = storage.getStackInSlot(j);
+											
+											if ((ItemStack.isSameItem(stack, this.getPocket().getItem(i)) && stack.getCount() < 64) || stack.isEmpty()) {
+												storage.insertItem(j, this.getPocket().removeItem(i, 1), false);
+												this.sendUpdates(true);
+												break;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			} else {
+				return;
+			}
+		} else {
+			return;
+		}
+	}
+	
+	public void pullItems(Direction directionIn) {
+		BlockPos otherPos = this.getBlockPos().offset(directionIn.getNormal());
+		BlockEntity entity = this.getLevel().getBlockEntity(otherPos);
+
+		if (this.getConnectionType().equals(EnumConnectionType.ITEM)) {
+			if (entity != null && !entity.isRemoved()) {
+				if (!(entity instanceof BlockEntityModuleConnector) && !(entity instanceof BlockEntityModuleFurnace) && !(entity instanceof BlockEntityModuleArmourWorkbench) && !(entity instanceof BlockEntityModuleCrafter) && !(entity instanceof BlockEntityModuleCharger)) {
+					if (this.getSide(directionIn).equals(EnumSideState.INTERFACE_INPUT)) {
+						if (this.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, otherPos, directionIn) instanceof IItemHandler storage) {
+							for (int i = 40; i < 48; i++) {
+								for (int j = 0; j < storage.getSlots(); j++) {
+									ItemStack homeStack = this.getPocket().getItem(i);
+									
+									if ((ItemStack.isSameItem(homeStack, storage.getStackInSlot(j)) && homeStack.getCount() < 64) || homeStack.isEmpty()) {
+										if (!storage.extractItem(j, 1, true).isEmpty()) {
+											
+											this.getPocket().insertItem(i, storage.extractItem(j, 1, false), false);
+											this.sendUpdates(true);
+											return;
+										}
+									}
 								}
 							}
 						}
@@ -1006,6 +1091,56 @@ public class BlockEntityModuleConnector extends CosmosBlockEntityUpdateable impl
             }
         };
     }
+
+	@Override
+	public IItemHandler getItemCapability(Direction directionIn) {
+		return new IItemHandler() {
+
+			@Override
+			public int getSlots() {
+				return 8;
+			}
+
+			@Override
+			public ItemStack getStackInSlot(int slot) {
+				return BlockEntityModuleConnector.this.getPocket().getItem(slot);
+			}
+
+			@Override
+			public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+				if (BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.ITEM)) {
+					if (slot > 40 && slot < 48) {
+						BlockEntityModuleConnector.this.sendUpdates(true);
+						return BlockEntityModuleConnector.this.getPocket().insertItem(slot, stack, simulate);
+					}
+				}
+				return stack;
+			}
+
+			@Override
+			public ItemStack extractItem(int slot, int amount, boolean simulate) {
+				if (BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.ITEM)) {
+					if (slot > 40 && slot < 48) {
+						BlockEntityModuleConnector.this.sendUpdates(true);
+						return BlockEntityModuleConnector.this.getPocket().extractItem(slot, amount, simulate);
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+
+			@Override
+			public int getSlotLimit(int slot) {
+				return 64;
+			}
+
+			@Override
+			public boolean isItemValid(int slot, ItemStack stack) {
+				return !BlockEntityModuleConnector.this.getSide(directionIn).equals(EnumSideState.DISABLED) && !BlockEntityModuleConnector.this.getSide(directionIn).equals(EnumSideState.INTERFACE_OUTPUT) && BlockEntityModuleConnector.this.getConnectionType().equals(EnumConnectionType.ITEM);
+			}
+			
+		};
+	}
+	
 /*
 	LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.DOWN, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
 	

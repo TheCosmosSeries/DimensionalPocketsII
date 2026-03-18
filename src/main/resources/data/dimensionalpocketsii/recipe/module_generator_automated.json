@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" F ",
+		"HMH",
+		" F "
+	],
+	"key": {
+		"M": {
+			"item": "dimensionalpocketsii:module_generator"
+		},
+		"F" :{
+			"item": "minecraft:flint"
+		},
+		"H" :{
+			"item": "minecraft:hopper"
+		}
+	},
+	"result": {
+		"id": "dimensionalpocketsii:module_generator_automated"
+	}
+}

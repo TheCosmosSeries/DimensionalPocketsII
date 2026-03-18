@@ -860,70 +860,53 @@ public class Pocket implements IEnergyHolder, Container {
 
 	@Nonnull
 	public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-		if (stack.isEmpty()) {
-			return ItemStack.EMPTY;
-		}
+		if (stack.isEmpty() || slot < 0 || slot >= 64) {
+            return stack;
+        }
 
-		ItemStack stackInSlot = this.getItem(slot);
+        ItemStack existing = item_array.get(slot);
 
-		int m;
-		if (!stackInSlot.isEmpty()) {
-			if (stackInSlot.getCount() >= Math.min(stackInSlot.getMaxStackSize(), 64)) {
-				return stack;
-			}
-						
-			if (stack.getCount() <= stackInSlot.getMaxStackSize() && ItemStack.isSameItemSameComponents(stack, stackInSlot)) {
-				return stack;
-			}
-				
-			if (!this.canPlaceItem(slot, stack)) {
-				return stack;
-			}
+        if (existing.isEmpty()) {
+            int insertAmount = Math.min(stack.getCount(), stack.getMaxStackSize());
 
-			m = Math.min(stack.getMaxStackSize(), 64) - stackInSlot.getCount();
+            if (!simulate) {
+                ItemStack newStack = stack.copy();
+                newStack.setCount(insertAmount);
+                item_array.set(slot, newStack);
+            }
 
-			if (stack.getCount() <= m) {
-				if (!simulate) {
-					ItemStack copy = stack.copy();
-					copy.grow(stackInSlot.getCount());
-					this.setItem(slot, copy);
-				}
+            if (stack.getCount() > insertAmount) {
+                ItemStack remainder = stack.copy();
+                remainder.shrink(insertAmount);
+                return remainder;
+            } else {
+                return ItemStack.EMPTY;
+            }
+        }
 
-				return ItemStack.EMPTY;
-			} else {
-				stack = stack.copy();
-				if (!simulate) {
-					ItemStack copy = stack.split(m);
-					copy.grow(stackInSlot.getCount());
-					this.setItem(slot, copy);
-					return stack;
-				} else {
-					stack.shrink(m);
-					return stack;
-				}
-			}
-		} else {
-			if (!this.canPlaceItem(slot, stack))
-				return stack;
+        if (!ItemStack.isSameItemSameComponents(existing, stack)) {
+            return stack;
+        }
 
-			m = Math.min(stack.getMaxStackSize(), 64);
-			if (m < stack.getCount()) {
-				
-				stack = stack.copy();
-				if (!simulate) {
-					this.setItem(slot, stack.split(m));
-					return stack;
-				} else {
-					stack.shrink(m);
-					return stack;
-				}
-			} else {
-				if (!simulate) {
-					this.setItem(slot, stack);
-				}
-				return ItemStack.EMPTY;
-			}
-		}
+        int maxStackSize = existing.getMaxStackSize();
+        int currentCount = existing.getCount();
+        int insertAmount = Math.min(stack.getCount(), maxStackSize - currentCount);
+
+        if (insertAmount <= 0) {
+            return stack;
+        }
+
+        if (!simulate) {
+            existing.grow(insertAmount);
+        }
+
+        if (stack.getCount() > insertAmount) {
+            ItemStack remainder = stack.copy();
+            remainder.shrink(insertAmount);
+            return remainder;
+        }
+
+        return ItemStack.EMPTY;
 	}
 
 	@Nonnull
@@ -1605,9 +1588,33 @@ public class Pocket implements IEnergyHolder, Container {
 					
 					BlockPos test = location.toBlockPos();
 					BlockPos spawn = this.getSpawnPos();
+					BlockPos combined = MathHelper.addBlockPos(test, spawn);
+					
+					float spawnYaw = this.spawn_pos.getYaw();
+					float spawnPitch = this.spawn_pos.getPitch();
+					
+					if (this.getChunkInfo().isSingleChunk()) {
+						if (combined.getX() > 13 || combined.getZ() > 13  || combined.getX() < 1 || combined.getZ() < 1) {
+							test = EnumSafeTeleport.getValidTeleportLocation(StorageManager.getServerLevel(), MathHelper.addBlockPos(chunk, new BlockPos(7, 2, 7))).toBlockPos();
+							spawn = new BlockPos(7, 2, 7);
+							spawnYaw = 0.0F;
+							spawnPitch = 0.0F;
+							DimensionalPockets.CONSOLE.debug("SINGLE CHUNK OUT OF BOUNDS DETECTED");
+						}
+						
+					} else {
+						if (combined.getX() > 29 || combined.getZ() > 29  || combined.getX() < 1 || combined.getZ() < 1) {
+							test = EnumSafeTeleport.getValidTeleportLocation(StorageManager.getServerLevel(), MathHelper.addBlockPos(chunk, new BlockPos(15, 2, 15))).toBlockPos();
+							spawn = new BlockPos(15, 2, 15);
+							spawnYaw = 0.0F;
+							spawnPitch = 0.0F;
+							DimensionalPockets.CONSOLE.debug("QUAD CHUNK OUT OF BOUNDS DETECTED");
+						}
+					}
+					
 					BlockPos shiftPos = MathHelper.addBlockPos(chunk, spawn, test);
 					
-					Shifter shifter = Shifter.createTeleporter(PocketsDimensionManager.POCKET_WORLD, direction, shiftPos, this.spawn_pos.getYaw(), this.spawn_pos.getPitch(), false, true, false);
+					Shifter shifter = Shifter.createTeleporter(PocketsDimensionManager.POCKET_WORLD, direction, shiftPos, spawnYaw, spawnPitch, false, true, false);
 					
 					this.generatePocket(server_player, source_world);
 					ShifterCore.shiftPlayerToDimension(server_player, shifter, !safeLocation);
@@ -1615,6 +1622,23 @@ public class Pocket implements IEnergyHolder, Container {
 					if (stack != null) {
 						CoreTriggers.triggerUseShifter(server_player, stack);
 					}
+				} else if ((this.getChunkInfo().isSingleChunk() && !MathHelper.blockPosEqual(this.getSpawnPos(), new BlockPos(7,2,7))) || (!this.getChunkInfo().isSingleChunk()) && !MathHelper.blockPosEqual(this.getSpawnPos(), new BlockPos(15,2,15))) {
+					BlockPos spawnPos = this.getChunkInfo().isSingleChunk() ? new BlockPos(7,2,7) : new BlockPos(15,2,15);
+					
+					boolean safeLocation = EnumSafeTeleport.isSafeTeleportLocation(StorageManager.getServerLevel(), MathHelper.addBlockPos(chunk, spawnPos));
+					
+					BlockPos test = location.toBlockPos();
+					BlockPos shiftPos = MathHelper.addBlockPos(chunk, spawnPos, test);
+					
+					Shifter shifter = Shifter.createTeleporter(PocketsDimensionManager.POCKET_WORLD, direction, shiftPos, 0.0F, 0.0F, false, true, false);
+					
+					this.generatePocket(server_player, source_world);
+					ShifterCore.shiftPlayerToDimension(server_player, shifter, !safeLocation);
+					
+					if (stack != null) {
+						CoreTriggers.triggerUseShifter(server_player, stack);
+					}
+					CosmosChatUtil.sendServerPlayerMessage(server_player, ComponentHelper.style(ComponentColour.ORANGE, "bold", "Custom spawn point blocked. Defaulting."));
 				} else {
 					ShifterCore.sendPlayerToBedWithMessage(server_player, direction, "dimensionalpocketsii.pocket.status.location_blocked");
 				}

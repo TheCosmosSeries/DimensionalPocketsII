@@ -71,6 +71,7 @@ import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleConne
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleCrafter;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleFurnace;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleGenerator;
+import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleGeneratorAutomated;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleSmithingTable;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerModuleUpgradeStation;
 import com.tcn.dimensionalpocketsii.pocket.client.container.ContainerPocket;
@@ -86,6 +87,7 @@ import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenModuleConnector;
 import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenModuleCrafter;
 import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenModuleFurnace;
 import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenModuleGenerator;
+import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenModuleGeneratorAutomated;
 import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenModuleSmithingTable;
 import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenModuleUpgradeStation;
 import com.tcn.dimensionalpocketsii.pocket.client.screen.ScreenPocket;
@@ -106,6 +108,7 @@ import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallEnergyDisplay;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallFluidDisplay;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallFurnace;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallGenerator;
+import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallGeneratorAutomated;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallGlass;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallSmithingTable;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockWallUpgradeStation;
@@ -124,6 +127,7 @@ import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleCr
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleFluidDisplay;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleFurnace;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleGenerator;
+import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleGeneratorAutomated;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleSmithingTable;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleUpgradeStation;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityPocket;
@@ -142,6 +146,7 @@ import com.tcn.dimensionalpocketsii.pocket.core.item.module.ModuleFluidDisplay;
 import com.tcn.dimensionalpocketsii.pocket.core.item.module.ModuleFocus;
 import com.tcn.dimensionalpocketsii.pocket.core.item.module.ModuleFurnace;
 import com.tcn.dimensionalpocketsii.pocket.core.item.module.ModuleGenerator;
+import com.tcn.dimensionalpocketsii.pocket.core.item.module.ModuleGeneratorAutomated;
 import com.tcn.dimensionalpocketsii.pocket.core.item.module.ModuleGlass;
 import com.tcn.dimensionalpocketsii.pocket.core.item.module.ModuleSmithingTable;
 import com.tcn.dimensionalpocketsii.pocket.core.item.module.ModuleUpgradeStation;
@@ -526,6 +531,7 @@ public class PocketsRegistrationManager {
 	public static final DeferredItem<Item> MODULE_FLUID_DISPLAY = addToItemTab(ITEMS.register("module_fluid_display", () -> new ModuleFluidDisplay(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
 	public static final DeferredItem<Item> MODULE_ARMOUR_WORKBENCH = addToItemTab(ITEMS.register("module_armour_workbench", () -> new ModuleArmourWorkbench(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
 	public static final DeferredItem<Item> MODULE_GENERATOR = addToItemTab(ITEMS.register("module_generator", () -> new ModuleGenerator(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
+	public static final DeferredItem<Item> MODULE_GENERATOR_AUTOMATED = addToItemTab(ITEMS.register("module_generator_automated", () -> new ModuleGeneratorAutomated(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
 	public static final DeferredItem<Item> MODULE_UPGRADE_STATION = addToItemTab(ITEMS.register("module_upgrade_station", () -> new ModuleUpgradeStation(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
 	public static final DeferredItem<Item> MODULE_FOCUS = addToItemTab(ITEMS.register("module_focus", () -> new ModuleFocus(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
 	public static final DeferredItem<Item> MODULE_ANVIL = addToItemTab(ITEMS.register("module_anvil", () -> new ModuleAnvil(new Item.Properties().stacksTo(8).rarity(RARITY_ENHANCED))));
@@ -647,6 +653,11 @@ public class PocketsRegistrationManager {
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BlockEntityModuleGenerator>> BLOCK_ENTITY_TYPE_GENERATOR = BLOCK_ENTITY_TYPES.register("tile_entity_generator", () -> BlockEntityType.Builder.of(BlockEntityModuleGenerator::new, BLOCK_WALL_GENERATOR.get()).build(null));
 	public static final DeferredHolder<MenuType<?>, MenuType<ContainerModuleGenerator>> CONTAINER_TYPE_GENERATOR = MENU_TYPES.register("container_generator", () -> IMenuTypeExtension.create(ContainerModuleGenerator::new));
 
+	public static final DeferredBlock<Block> BLOCK_WALL_GENERATOR_AUTOMATED = BLOCKS.register("block_wall_generator_automated", () -> new BlockWallGeneratorAutomated(Block.Properties.of().strength(-1, 3600000.0F).lightLevel((state) -> { return 15; })));
+	public static final DeferredItem<Item> ITEM_WALL_GENERATOR_AUTOMATED = ITEMS.register("block_wall_generator_automated", () -> new BlockItem(BLOCK_WALL_GENERATOR.get(), new Item.Properties()));
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BlockEntityModuleGeneratorAutomated>> BLOCK_ENTITY_TYPE_GENERATOR_AUTOMATED = BLOCK_ENTITY_TYPES.register("tile_entity_generator_automated", () -> BlockEntityType.Builder.of(BlockEntityModuleGeneratorAutomated::new, BLOCK_WALL_GENERATOR_AUTOMATED.get()).build(null));
+	public static final DeferredHolder<MenuType<?>, MenuType<ContainerModuleGeneratorAutomated>> CONTAINER_TYPE_GENERATOR_AUTOMATED = MENU_TYPES.register("container_generator_automated", () -> IMenuTypeExtension.create(ContainerModuleGeneratorAutomated::new));
+
 	public static final DeferredBlock<Block> BLOCK_WALL_ANVIL = BLOCKS.register("block_wall_anvil", () -> new BlockWallAnvil(Block.Properties.of().strength(-1, 3600000.0F).lightLevel((state) -> { return 15; })));
 	public static final DeferredItem<Item> ITEM_WALL_ANVIL = ITEMS.register("block_wall_anvil", () -> new BlockItem(BLOCK_WALL_ANVIL.get(), new Item.Properties()));
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BlockEntityModuleAnvil>> BLOCK_ENTITY_TYPE_ANVIL = BLOCK_ENTITY_TYPES.register("tile_entity_anvil", () -> BlockEntityType.Builder.of(BlockEntityModuleAnvil::new, BLOCK_WALL_ANVIL.get()).build(null));
@@ -726,7 +737,7 @@ public class PocketsRegistrationManager {
 					}
 					
 					if (layers[0] != null && layers[1] != null) {
-						humanRenderer.addLayer(new CosmosLayerArmourColourable<>(humanRenderer, new HumanoidModel<>(modelSet.bakeLayer(layers[0])), new HumanoidModel<>(modelSet.bakeLayer(layers[1])), mc.getModelManager()));
+						humanRenderer.addLayer(new CosmosLayerArmourColourable<>(humanRenderer, new HumanoidModel<>(modelSet.bakeLayer(layers[0])), new HumanoidModel<>(modelSet.bakeLayer(layers[1])), mc.getModelManager(), ComponentColour.POCKET_PURPLE_LIGHT, ComponentColour.WHITE, ComponentColour.WHITE));
 						DimensionalPockets.CONSOLE.debug("LivingEntityRenderer for: { " + entityType.getDescriptionId() + " } Dimensional Armour Layer added.");
 					}
 					
@@ -741,7 +752,7 @@ public class PocketsRegistrationManager {
 
 		if (playerRendererAlt != null) {
 			playerRendererAlt.addLayer(new CosmosLayerElytra<>(playerRendererAlt, modelSet, ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "textures/entity/dimensional_elytra_base.png")));
-			playerRendererAlt.addLayer(new CosmosLayerArmourColourable<>(playerRendererAlt, new HumanoidModel<>(modelSet.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel<>(modelSet.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), mc.getModelManager()));
+			playerRendererAlt.addLayer(new CosmosLayerArmourColourable<>(playerRendererAlt, new HumanoidModel<>(modelSet.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel<>(modelSet.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), mc.getModelManager(), ComponentColour.POCKET_PURPLE_LIGHT, ComponentColour.WHITE, ComponentColour.WHITE));
 			DimensionalPockets.CONSOLE.debug("Player Renderer {default} Custom Layers added.");
 		} else {
 			DimensionalPockets.CONSOLE.fatal("Player Renderer {default} NULL!! Report this issue to the Mod Author");
@@ -749,7 +760,7 @@ public class PocketsRegistrationManager {
 		
 		if (playerRendererSlim != null) {
 			playerRendererSlim.addLayer(new CosmosLayerElytra<>(playerRendererSlim, modelSet, ResourceLocation.fromNamespaceAndPath(DimensionalPockets.MOD_ID, "textures/entity/dimensional_elytra_base.png")));
-			playerRendererSlim.addLayer(new CosmosLayerArmourColourable<>(playerRendererSlim, new HumanoidModel<>(modelSet.bakeLayer(ModelLayers.PLAYER_SLIM_INNER_ARMOR)), new HumanoidModel<>(modelSet.bakeLayer(ModelLayers.PLAYER_SLIM_OUTER_ARMOR)), mc.getModelManager()));
+			playerRendererSlim.addLayer(new CosmosLayerArmourColourable<>(playerRendererSlim, new HumanoidModel<>(modelSet.bakeLayer(ModelLayers.PLAYER_SLIM_INNER_ARMOR)), new HumanoidModel<>(modelSet.bakeLayer(ModelLayers.PLAYER_SLIM_OUTER_ARMOR)), mc.getModelManager(), ComponentColour.POCKET_PURPLE_LIGHT, ComponentColour.WHITE, ComponentColour.WHITE));
 			DimensionalPockets.CONSOLE.debug("Player Renderer {slim} Custom Layers added.");
 		} else {
 			DimensionalPockets.CONSOLE.fatal("Player Renderer {slim} NULL!! Report this issue to the Mod Author");
@@ -792,7 +803,7 @@ public class PocketsRegistrationManager {
 		
 			BLOCK_WALL_CONNECTOR.get(), BLOCK_WALL_CHARGER.get(), BLOCK_WALL_CRAFTER.get(), BLOCK_WALL_SMITHING_TABLE.get(), BLOCK_FOCUS.get(),
 			BLOCK_WALL_FURNACE.get(), BLOCK_WALL_BLAST_FURNACE.get(), BLOCK_WALL_ENERGY_DISPLAY.get(), BLOCK_WALL_FLUID_DISPLAY.get(), 
-			BLOCK_WALL_ARMOUR_WORKBENCH.get(), BLOCK_WALL_UPGRADE_STATION.get(), BLOCK_WALL_GENERATOR.get(), BLOCK_WALL_ANVIL.get()
+			BLOCK_WALL_ARMOUR_WORKBENCH.get(), BLOCK_WALL_UPGRADE_STATION.get(), BLOCK_WALL_GENERATOR.get(), BLOCK_WALL_GENERATOR_AUTOMATED.get(), BLOCK_WALL_ANVIL.get()
 		);
 		
 		DimensionalPockets.CONSOLE.startup("Block Colour registration complete...");
@@ -836,6 +847,7 @@ public class PocketsRegistrationManager {
 		event.register(CONTAINER_TYPE_ARMOUR_WORKBENCH.get(), ScreenModuleArmourWorkbench::new);
 		event.register(CONTAINER_TYPE_UPGRADE_STATION.get(), ScreenModuleUpgradeStation::new);
 		event.register(CONTAINER_TYPE_GENERATOR.get(), ScreenModuleGenerator::new);
+		event.register(CONTAINER_TYPE_GENERATOR_AUTOMATED.get(), ScreenModuleGeneratorAutomated::new);
 		event.register(CONTAINER_TYPE_ANVIL.get(), ScreenModuleAnvil::new);
 		event.register(CONTAINER_TYPE_FOCUS.get(), ScreenFocus::new);
 		
@@ -850,6 +862,7 @@ public class PocketsRegistrationManager {
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
 		CosmosRuntime.Server.registerBlockEnergyCapabilities(event, BLOCK_ENTITY_TYPE_POCKET.get(), BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get(), BLOCK_ENTITY_TYPE_CONNECTOR.get());
 		CosmosRuntime.Server.registerBlockFluidCapabilities(event, BLOCK_ENTITY_TYPE_POCKET.get(), BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get(), BLOCK_ENTITY_TYPE_CONNECTOR.get());
+		CosmosRuntime.Server.registerBlockItemCapabilities(event, BLOCK_ENTITY_TYPE_POCKET.get(), BLOCK_ENTITY_TYPE_POCKET_ENHANCED.get(), BLOCK_ENTITY_TYPE_CONNECTOR.get());
 		
 		CosmosRuntime.Server.registerItemEnergyCapabilities(event, 
 			DIMENSIONAL_SHIFTER.get(), DIMENSIONAL_SHIFTER_ENHANCED.get(),
@@ -876,7 +889,7 @@ public class PocketsRegistrationManager {
 			BLOCK_POCKET.get(), BLOCK_POCKET_ENHANCED.get(),
 		
 			BLOCK_WALL_CHARGER.get(), BLOCK_WALL_CONNECTOR.get(), BLOCK_WALL_CRAFTER.get(), BLOCK_WALL_SMITHING_TABLE.get(), BLOCK_WALL_FURNACE.get(), BLOCK_WALL_BLAST_FURNACE.get(), 
-			BLOCK_WALL_ENERGY_DISPLAY.get(), BLOCK_WALL_FLUID_DISPLAY.get(), BLOCK_WALL_ARMOUR_WORKBENCH.get(), BLOCK_WALL_UPGRADE_STATION.get(), BLOCK_WALL_GENERATOR.get(),
+			BLOCK_WALL_ENERGY_DISPLAY.get(), BLOCK_WALL_FLUID_DISPLAY.get(), BLOCK_WALL_ARMOUR_WORKBENCH.get(), BLOCK_WALL_UPGRADE_STATION.get(), BLOCK_WALL_GENERATOR.get(),  BLOCK_WALL_GENERATOR_AUTOMATED.get(),
 			BLOCK_DIMENSIONAL_CORE.get(), BLOCK_FOCUS.get(), BLOCK_WALL_ANVIL.get(),
 		
 			BLOCK_WALL_CREATIVE_ENERGY.get(), BLOCK_WALL_CREATIVE_FLUID.get()

@@ -59,12 +59,13 @@ public class ScreenPocketEnhanced extends CosmosScreenBlockEntityListUI<Containe
 	private DimensionalButton buttonWest;  private int[] WBI = new int[] { 36, 63, 18 };
 
 	private CosmosButtonWithType buttonLock; private int[] LBI = new int[] { 13, 124 };
-	private CosmosButtonWithType buttonAllowedPlayers; private int[] APBI = new int[] { 13, 145 };
-	private DimensionalButton buttonTrapPlayers; private int[] TPBI = new int[] { 36, 124 };
-	private CosmosButtonWithType buttonHostileSpawn; private int[] HSBI = new int[] { 36, 145 };
+	private CosmosButtonWithType buttonAllowedPlayers; private int[] APBI = new int[] { 36, 124 };
+	private DimensionalButton buttonTrapPlayers; private int[] TPBI = new int[] { 59, 124 };
 	
-	private DimensionalButton buttonPlaceHolder0; private int[] PB0I = new int[] { 59, 124 };
-	private DimensionalButton buttonSideGuide; private int[] SIBI = new int[] { 59, 145 };
+	private CosmosButtonWithType buttonHostileSpawn; private int[] HSBI = new int[] { 24, 145 };
+	private DimensionalButton buttonSideGuide; private int[] SIBI = new int[] { 48, 145 };
+	
+	//private DimensionalButton buttonPlaceHolder0; private int[] PB0I = new int[] { 59, 124 };
 	
 	public ScreenPocketEnhanced(ContainerPocketEnhanced containerIn, Inventory playerInventoryIn, Component title) {
 		super(containerIn, playerInventoryIn, title);
@@ -203,7 +204,7 @@ public class ScreenPocketEnhanced extends CosmosScreenBlockEntityListUI<Containe
 				this.buttonTextPlus = this.addRenderableWidget(new CosmosButtonWithType(TYPE.GENERAL, this.getScreenCoords()[0] + TABI[0], this.getScreenCoords()[1] + TABI[1], 18, !(this.textField.getValue().isEmpty()), true, 1,  ComponentHelper.empty(), (button, isLeftClick) -> { this.clickButton(this.buttonTextPlus, isLeftClick); }));
 				this.buttonTextMinus = this.addRenderableWidget(new CosmosButtonWithType(TYPE.GENERAL, this.getScreenCoords()[0] + TMBI[0], this.getScreenCoords()[1] + TMBI[1], 18, true, true, 2,  ComponentHelper.empty(), (button, isLeftClick) -> { this.clickButton(this.buttonTextMinus, isLeftClick); }));
 
-				this.buttonPlaceHolder0 = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + PB0I[0], this.getScreenCoords()[1] + PB0I[1], 18, true, true, 30, ComponentHelper.empty(), (button) -> { this.clickButton(this.buttonPlaceHolder0, true); }, (button) -> { return button.get(); }));
+				//this.buttonPlaceHolder0 = this.addRenderableWidget(new DimensionalButton(this.getScreenCoords()[0] + PB0I[0], this.getScreenCoords()[1] + PB0I[1], 18, false, true, 32, ComponentHelper.empty(), (button) -> { this.clickButton(this.buttonPlaceHolder0, true); }, (button) -> { return button.get(); }));
 			}
 		}
 	}

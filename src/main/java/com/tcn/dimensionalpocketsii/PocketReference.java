@@ -167,6 +167,10 @@ public class PocketReference {
 			public static final ResourceLocation[] GENERATOR_OVERLAY = new ResourceLocation[] { ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator/overlay.png"), ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator/overlay_dark.png") };
 			public static final ResourceLocation[] GENERATOR_BASE = new ResourceLocation[] { ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator/base.png"), ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator/base_dark.png") };
 
+			public static final ResourceLocation[] GENERATOR_AUTOMATED = new ResourceLocation[] { ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator_auto/background.png"), ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator_auto/background_dark.png") };
+			public static final ResourceLocation[] GENERATOR_OVERLAY_AUTOMATED = new ResourceLocation[] { ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator_auto/overlay.png"), ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator_auto/overlay_dark.png") };
+			public static final ResourceLocation[] GENERATOR_BASE_AUTOMATED = new ResourceLocation[] { ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator_auto/base.png"), ResourceLocation.parse(PocketReference.RESOURCE.GUI + "generator_auto/base_dark.png") };
+
 			public static final ResourceLocation[] CRAFTER = new ResourceLocation[] { ResourceLocation.parse(PocketReference.RESOURCE.GUI + "crafter/background.png"), ResourceLocation.parse(PocketReference.RESOURCE.GUI + "crafter/background_dark.png") };
 			public static final ResourceLocation[] CRAFTER_OVERLAY = new ResourceLocation[] { ResourceLocation.parse(PocketReference.RESOURCE.GUI + "crafter/overlay.png"), ResourceLocation.parse(PocketReference.RESOURCE.GUI + "crafter/overlay_dark.png") };
 			public static final ResourceLocation[] CRAFTER_BASE = new ResourceLocation[] { ResourceLocation.parse(PocketReference.RESOURCE.GUI + "crafter/base.png"), ResourceLocation.parse(PocketReference.RESOURCE.GUI + "crafter/base_dark.png") };

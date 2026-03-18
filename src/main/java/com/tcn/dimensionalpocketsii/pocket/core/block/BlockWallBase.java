@@ -15,6 +15,7 @@ import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleBl
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleCharger;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleFurnace;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleGenerator;
+import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleGeneratorAutomated;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleSmithingTable;
 import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityModuleUpgradeStation;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
@@ -357,6 +358,29 @@ public class BlockWallBase extends CosmosBlockUnbreakable {
 											((BlockEntityModuleGenerator) levelIn.getBlockEntity(pos)).loadFromItemStack(CosmosUtil.getStack(playerIn), levelIn.registryAccess());
 										}
 	
+										if (!playerIn.isCreative()) {
+											playerIn.getInventory().getSelected().shrink(1);
+										}
+									}
+
+									return ItemInteractionResult.sidedSuccess(levelIn.isClientSide());
+								} else {
+									CosmosChatUtil.sendServerPlayerMessage(playerIn, ComponentHelper.getErrorText("dimensionalpocketsii.pocket.status.action.not_owner"));
+									return ItemInteractionResult.FAIL;
+								}
+							}
+
+							else if (CosmosUtil.handItem(playerIn, PocketsRegistrationManager.MODULE_GENERATOR_AUTOMATED.get())) {
+								if (pocket.checkIfOwner(playerIn)) {
+									if (!levelIn.isClientSide) {
+										levelIn.setBlockAndUpdate(pos, PocketsRegistrationManager.BLOCK_WALL_GENERATOR_AUTOMATED.get().defaultBlockState());
+	
+										BlockEntity entity = levelIn.getBlockEntity(pos);
+										
+										if (entity instanceof BlockEntityModuleGeneratorAutomated) {
+											((BlockEntityModuleGeneratorAutomated) levelIn.getBlockEntity(pos)).loadFromItemStack(CosmosUtil.getStack(playerIn), levelIn.registryAccess());
+										}
+										
 										if (!playerIn.isCreative()) {
 											playerIn.getInventory().getSelected().shrink(1);
 										}

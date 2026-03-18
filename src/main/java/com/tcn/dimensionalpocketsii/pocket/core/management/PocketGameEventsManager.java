@@ -14,6 +14,7 @@ import com.tcn.dimensionalpocketsii.DimensionalPockets;
 import com.tcn.dimensionalpocketsii.core.command.PocketCommands;
 import com.tcn.dimensionalpocketsii.core.management.PocketsConfigManager;
 import com.tcn.dimensionalpocketsii.core.management.PocketsDimensionManager;
+import com.tcn.dimensionalpocketsii.core.management.PocketsRegistrationManager;
 import com.tcn.dimensionalpocketsii.pocket.core.Pocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.AbstractBlockPocket;
 import com.tcn.dimensionalpocketsii.pocket.core.block.BlockFocus;
@@ -30,9 +31,9 @@ import com.tcn.dimensionalpocketsii.pocket.core.block.entity.BlockEntityFocus;
 import com.tcn.dimensionalpocketsii.pocket.core.event.PocketBlockEvent;
 import com.tcn.dimensionalpocketsii.pocket.core.event.PocketEvent;
 import com.tcn.dimensionalpocketsii.pocket.core.gson.PocketChunkInfo;
+import com.tcn.dimensionalpocketsii.pocket.core.registry.BackupManager.BackupType;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.ChunkLoadingManager;
 import com.tcn.dimensionalpocketsii.pocket.core.registry.StorageManager;
-import com.tcn.dimensionalpocketsii.pocket.core.registry.BackupManager.BackupType;
 import com.tcn.dimensionalpocketsii.pocket.core.shift.EnumShiftDirection;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketFocusTeleport;
 
@@ -55,6 +56,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -68,6 +70,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.CommandEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -145,7 +148,7 @@ public class PocketGameEventsManager {
 	@SubscribeEvent
 	@SuppressWarnings("resource")
 	@OnlyIn(Dist.CLIENT)
-	public static void onInputEvent(InputEvent.Key event){
+	public static void onInputEvent(InputEvent.Key event) {
 		LocalPlayer player = Minecraft.getInstance().player;
 		
 		if (player == null || player.isSpectator() || !player.isAlive() || player.input == null) {
@@ -489,8 +492,6 @@ public class PocketGameEventsManager {
 				if (!world.isClientSide()) {
 					Pocket pocket = StorageManager.getPocketFromChunkPosition(world, chunkPos);
 					
-					DimensionalPockets.CONSOLE.debug("HERE");
-					
 					if (pocket != null) {
 						if (clazz.equals(MobCategory.MONSTER)) {
 							if (!pocket.getHostileSpawnStateValue() || PocketsConfigManager.getInstance().getStopHostileSpawns()) {
@@ -747,6 +748,26 @@ public class PocketGameEventsManager {
 					}
 				}
 			}
+		}
+	}
+	
+	
+	/**
+	 * Credit to NoYavy via GitHub for this fix.
+	 * @see <a href="https://github.com/TheCosmosSeries/DimensionalPocketsII/pull/130">https://github.com/TheCosmosSeries/DimensionalPocketsII/pull/130</a>
+	 **/
+	@SubscribeEvent
+	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		Block block = event.getLevel().getBlockState(event.getPos()).getBlock();
+		ItemStack itemStack = event.getItemStack();
+				
+		if (itemStack.getItem() == PocketsRegistrationManager.DIMENSIONAL_SHIFTER.get() || itemStack.getItem() == PocketsRegistrationManager.DIMENSIONAL_SHIFTER_ENHANCED.get() || itemStack.getItem() == PocketsRegistrationManager.DIMENSIONAL_ELYTRAPLATE.get() || itemStack.getItem() instanceof BlockItem) {
+			return;
+		}
+		
+		if (block == PocketsRegistrationManager.BLOCK_POCKET.get() || block == PocketsRegistrationManager.BLOCK_POCKET_ENHANCED.get() || block == PocketsRegistrationManager.BLOCK_WALL.get() || block == PocketsRegistrationManager.BLOCK_WALL_EDGE.get()) {
+			event.setUseItem(TriState.FALSE);
+			event.setUseBlock(TriState.TRUE);
 		}
 	}
 }

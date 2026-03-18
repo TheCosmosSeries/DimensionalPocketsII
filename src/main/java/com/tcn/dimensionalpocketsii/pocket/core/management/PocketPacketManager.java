@@ -14,11 +14,12 @@ import com.tcn.dimensionalpocketsii.pocket.network.packet.connector.PacketConnec
 import com.tcn.dimensionalpocketsii.pocket.network.packet.connector.PacketSideState;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketArmourItem;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketChargerEnergyState;
-import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketWorkbench;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketFocus;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketFocusTeleport;
+import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketGeneratorAutomatedMode;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketGeneratorEmptyTank;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketGeneratorMode;
+import com.tcn.dimensionalpocketsii.pocket.network.packet.misc.PacketWorkbench;
 import com.tcn.dimensionalpocketsii.pocket.network.packet.system.PacketSystem;
 
 import net.neoforged.bus.api.SubscribeEvent;
@@ -50,6 +51,7 @@ public class PocketPacketManager {
 		registrar.playToServer(PacketArmourItem.TYPE, PacketArmourItem.STREAM_CODEC, PocketServerPacketHandler::handleDataOnNetwork);
 		registrar.playToServer(PacketChargerEnergyState.TYPE, PacketChargerEnergyState.STREAM_CODEC, PocketServerPacketHandler::handleDataOnNetwork);
 		registrar.playToServer(PacketGeneratorMode.TYPE, PacketGeneratorMode.STREAM_CODEC, PocketServerPacketHandler::handleDataOnNetwork);
+		registrar.playToServer(PacketGeneratorAutomatedMode.TYPE, PacketGeneratorAutomatedMode.STREAM_CODEC, PocketServerPacketHandler::handleDataOnNetwork);
 		registrar.playToServer(PacketGeneratorEmptyTank.TYPE, PacketGeneratorEmptyTank.STREAM_CODEC, PocketServerPacketHandler::handleDataOnNetwork);
 		
 		registrar.playToServer(PacketWorkbench.TYPE, PacketWorkbench.STREAM_CODEC, PocketServerPacketHandler::handleDataOnNetwork);
